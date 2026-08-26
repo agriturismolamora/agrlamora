@@ -295,6 +295,7 @@ export function BookingBar() {
   const [open, setOpen] = useState<PopoverKey>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [nearFooter, setNearFooter] = useState(false);
+  const [pulse, setPulse] = useState(false);
   const booking = useBookingState();
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -334,6 +335,22 @@ export function BookingBar() {
     return () => io.disconnect();
   }, []);
 
+  // Handoff dal concierge chat ("vai alla prenotazione"): su mobile apre la
+  // bottom sheet, su desktop la barra è già sempre visibile, quindi la
+  // evidenziamo con un breve pulse invece di duplicare la UI di prenotazione.
+  useEffect(() => {
+    function onOpenRequest() {
+      if (window.innerWidth < 768) {
+        setSheetOpen(true);
+      } else {
+        setPulse(true);
+        window.setTimeout(() => setPulse(false), 1200);
+      }
+    }
+    window.addEventListener("la-mora:open-booking", onOpenRequest);
+    return () => window.removeEventListener("la-mora:open-booking", onOpenRequest);
+  }, []);
+
   return (
     // Fixed rispetto al viewport: stessa posizione tra Hero e sezioni
     // successive, non più ancorata alla sola Hero. z-[70]: sopra i contenuti
@@ -355,7 +372,9 @@ export function BookingBar() {
           anche a 1440/1920px, come da riferimento Lasala. */}
       <div
         ref={rootRef}
-        className="hidden w-[min(78vw,1050px)] max-w-full overflow-hidden rounded-[3px] bg-cream shadow-[0_24px_50px_-24px_rgba(28,33,23,0.55)] md:grid xl:w-[min(60vw,1080px)]"
+        className={`hidden w-[min(78vw,1050px)] max-w-full overflow-hidden rounded-[3px] bg-cream shadow-[0_24px_50px_-24px_rgba(28,33,23,0.55)] transition-[box-shadow,transform] duration-300 md:grid xl:w-[min(60vw,1080px)] ${
+          pulse ? "scale-[1.015] shadow-[0_0_0_4px_rgba(159,65,79,0.45),0_24px_50px_-24px_rgba(28,33,23,0.55)]" : ""
+        }`}
         style={{
           gridTemplateColumns: "1fr 1fr .9fr .95fr 60px",
         }}

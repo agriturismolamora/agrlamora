@@ -14,6 +14,8 @@ import { TrustSection } from "@/components/trust-section";
 import { DirectBooking } from "@/components/direct-booking";
 import { LocationMap } from "@/components/location-map";
 import { SiteFooter } from "@/components/site-footer";
+import { ConciergeChat } from "@/components/concierge-chat";
+import { PromoPopup } from "@/components/promo-popup";
 
 const JSON_LD = {
   "@context": "https://schema.org",
@@ -59,6 +61,8 @@ export default function Home() {
           della pagina, resta visibile dalla hero fino in fondo (si dissolve
           in prossimità del footer, vedi booking-bar.tsx). */}
       <BookingBar />
+      <ConciergeChat />
+      <PromoPopup />
     </>
   );
 }
