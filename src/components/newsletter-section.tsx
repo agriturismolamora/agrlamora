@@ -1,24 +1,69 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 
-/* Modulo iscrizione newsletter: solo UI per ora, nessun servizio di invio
-   email collegato (serve un provider tipo Mailchimp/Brevo, con relative
-   credenziali del titolare — lavoro futuro, come per le recensioni
-   Google). Niente messaggio di finta conferma: lo stato dopo l'invio è
-   onesto sul fatto che non è ancora collegato a nulla. */
+declare global {
+  interface Window {
+    grecaptcha?: {
+      ready: (cb: () => void) => void;
+      execute: (siteKey: string, opts: { action: string }) => Promise<string>;
+    };
+  }
+}
+
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
+/* Modulo iscrizione newsletter: reCAPTCHA v3 reale (non simulato) quando
+   NEXT_PUBLIC_RECAPTCHA_SITE_KEY è configurata — il badge visibile di
+   Google viene nascosto via CSS (globals.css) solo perché al suo posto
+   mostriamo il testo di attribuzione richiesto dai loro termini d'uso.
+   Senza la chiave, nessun claim falso: si vede solo la nota generica.
+   L'invio vero dell'email resta comunque non collegato (serve un
+   provider tipo Mailchimp/Brevo — lavoro futuro): il messaggio finale
+   lo dice in modo onesto. */
 export function NewsletterSection() {
   const [email, setEmail] = useState("");
   const [accepted, setAccepted] = useState(false);
-  const [status, setStatus] = useState<"idle" | "error" | "sent">("idle");
+  const [status, setStatus] = useState<"idle" | "checking" | "error" | "recaptcha-error" | "sent">("idle");
 
-  function handleSubmit(e: FormEvent) {
+  useEffect(() => {
+    if (!RECAPTCHA_SITE_KEY || document.querySelector("script[data-recaptcha]")) return;
+    const script = document.createElement("script");
+    script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+    script.async = true;
+    script.dataset.recaptcha = "true";
+    document.head.appendChild(script);
+  }, []);
+
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!accepted) {
       setStatus("error");
       return;
     }
-    setStatus("sent");
+
+    if (!RECAPTCHA_SITE_KEY || !window.grecaptcha) {
+      setStatus("sent");
+      return;
+    }
+
+    setStatus("checking");
+    try {
+      const token = await new Promise<string>((resolve, reject) => {
+        window.grecaptcha!.ready(() => {
+          window.grecaptcha!.execute(RECAPTCHA_SITE_KEY, { action: "newsletter" }).then(resolve, reject);
+        });
+      });
+      const res = await fetch("/api/verify-recaptcha", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+      const data = await res.json();
+      setStatus(data.success ? "sent" : "recaptcha-error");
+    } catch {
+      setStatus("recaptcha-error");
+    }
   }
 
   return (
@@ -45,13 +90,14 @@ export function NewsletterSection() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="La tua email"
                 aria-label="La tua email"
-                className="min-w-0 flex-1 rounded-[3px] border border-ink/20 bg-white px-5 py-4 text-[14px] text-ink outline-none placeholder:text-ink-soft/60 focus:border-raspberry"
+                className="min-w-0 flex-1 rounded-[3px] border border-ink/20 bg-cream px-5 py-4 text-[14px] text-ink outline-none placeholder:text-ink-soft/60 focus:border-raspberry"
               />
               <button
                 type="submit"
-                className="group inline-flex shrink-0 items-center justify-center gap-2.5 whitespace-nowrap rounded-[3px] bg-raspberry px-7 py-4 font-sans text-[11px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:bg-[#8a3844]"
+                disabled={status === "checking"}
+                className="group inline-flex shrink-0 items-center justify-center gap-2.5 whitespace-nowrap rounded-[3px] bg-raspberry px-7 py-4 font-sans text-[11px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:bg-[#8a3844] disabled:opacity-60"
               >
-                Iscriviti
+                {status === "checking" ? "Verifica…" : "Iscriviti"}
                 <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                   →
                 </span>
@@ -69,20 +115,49 @@ export function NewsletterSection() {
                 className="mt-0.5 h-4 w-4 shrink-0 accent-raspberry"
               />
               <span>
-                Accetto la{" "}
+                Accetto i{" "}
                 <a href="#" className="underline underline-offset-2 hover:text-raspberry">
-                  privacy policy
+                  termini e le condizioni d&apos;uso
                 </a>
                 *
               </span>
             </label>
             {status === "error" && (
               <p role="alert" className="mt-2 text-[12px] text-raspberry">
-                Devi accettare la privacy policy per iscriverti.
+                Devi accettare i termini e le condizioni d&apos;uso per iscriverti.
+              </p>
+            )}
+            {status === "recaptcha-error" && (
+              <p role="alert" className="mt-2 text-[12px] text-raspberry">
+                Verifica antispam non superata. Riprova tra qualche secondo.
               </p>
             )}
 
-            <p className="mt-4 text-[11px] text-ink-soft/70">Puoi annullare l&apos;iscrizione in qualsiasi momento.</p>
+            {RECAPTCHA_SITE_KEY ? (
+              <p className="mt-4 text-[11px] leading-[1.6] text-ink-soft/70">
+                Questo sito è protetto da reCAPTCHA e si applicano le{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-2"
+                >
+                  Norme sulla privacy
+                </a>{" "}
+                e i{" "}
+                <a
+                  href="https://policies.google.com/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-2"
+                >
+                  Termini di servizio
+                </a>{" "}
+                di Google.
+              </p>
+            ) : (
+              <p className="mt-4 text-[11px] text-ink-soft/70">Puoi annullare l&apos;iscrizione in qualsiasi momento.</p>
+            )}
           </form>
         )}
       </div>
