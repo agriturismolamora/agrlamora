@@ -1,26 +1,70 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Palette La Mora: campagna umbra, non il blu del riferimento Awwwards.
+   Verde oliva profondo, terracotta, crema calda, oro tenue. Palette fissa,
+   nessuna variante dark mode automatica: non richiesta dal progetto. */
+@theme {
+  --color-cream: #f8f2e7;
+  --color-cream-dim: #efe6d4;
+  --color-olive-950: #1c2117;
+  --color-olive-900: #262e1f;
+  --color-olive-700: #45532f;
+  --color-olive-500: #6b7a4c;
+  --color-terracotta: #b5562f;
+  --color-terracotta-dark: #8f4324;
+  --color-gold: #b6923c;
+  --color-ink: #241f17;
+  --color-ink-soft: #5c5344;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Cormorant Garamond: font editoriale (nav, titoli, hero, dropdown premium).
+     Montserrat: font funzionale/UI (CTA, booking bar, label, microcopy) — resta
+     il font di default del body per leggibilità. */
+  --font-display: var(--font-cormorant);
+  --font-sans: var(--font-montserrat);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 100;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.375rem;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Benefit marquee (Sezione 2): scorrimento orizzontale continuo e senza
+   scatti. Il contenuto è duplicato nel markup così -50% coincide esattamente
+   con una copia intera della sequenza. Definito qui (non come utility
+   arbitraria Tailwind) per evitare i problemi di ordine tra blocchi @media
+   già riscontrati con le varianti min-[]/max-[] altrove nel progetto. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 32s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
 }

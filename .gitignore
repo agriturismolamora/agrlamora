@@ -36,6 +36,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# clip video grezze scaricate/generate: mai in deploy o in git, resta solo
+# il file processato in public/videos/
+/raw-hero-clips/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
