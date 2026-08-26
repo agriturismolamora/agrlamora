@@ -76,7 +76,7 @@ export function ReviewsCarousel({ reviews }: { reviews: GoogleReview[] }) {
   }
 
   return (
-    <div className="relative">
+    <div className="relative min-w-0">
       <div
         ref={scrollerRef}
         className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
