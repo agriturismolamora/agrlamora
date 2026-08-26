@@ -46,10 +46,9 @@ export function Hero() {
       />
 
       {/* Livello 2: contenuto. Centrato in modo assoluto sull'intero viewport
-          della hero (non sul container della navbar), leggermente sopra il
-          centro geometrico per lasciare respiro alla booking bar sospesa. */}
+          della hero (non sul container della navbar). */}
       <div
-        className="absolute left-1/2 top-[46%] z-[2] flex -translate-x-1/2 -translate-y-1/2 flex-col items-center px-6 text-center text-cream"
+        className="absolute left-1/2 top-1/2 z-[2] flex -translate-x-1/2 -translate-y-1/2 flex-col items-center px-6 text-center text-cream"
       >
         <h1 className="sr-only">
           Agriturismo La Mora — Appartamenti indipendenti ad Assisi, Umbria

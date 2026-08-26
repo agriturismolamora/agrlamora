@@ -8,7 +8,7 @@ import { Reveal } from "@/components/scroll-reveal";
    altrove (StructureHighlights usa l'altra foto colazione disponibile). */
 export function BreakfastStory() {
   return (
-    <section aria-labelledby="breakfast-heading" className="bg-cream py-24 sm:py-32">
+    <section aria-labelledby="breakfast-heading" className="bg-cream pb-24 pt-10 sm:pb-32 sm:pt-12">
       <div className="mx-auto grid max-w-[1100px] gap-14 px-6 sm:px-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-20">
         <Reveal>
           <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">Colazione</span>

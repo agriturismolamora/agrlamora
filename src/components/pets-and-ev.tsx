@@ -8,7 +8,7 @@ import { Reveal } from "@/components/scroll-reveal";
    ciascuno. */
 export function PetsAndEv() {
   return (
-    <section aria-labelledby="pets-ev-heading" className="bg-cream py-20 sm:py-24">
+    <section aria-labelledby="pets-ev-heading" className="bg-cream pb-10 pt-20 sm:pb-12 sm:pt-24">
       <h2 id="pets-ev-heading" className="sr-only">
         Animali ammessi e ricarica per auto elettriche
       </h2>

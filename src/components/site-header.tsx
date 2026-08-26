@@ -473,7 +473,7 @@ export function SiteHeader() {
                 alt="Agriturismo La Mora, Assisi - Perugia (Umbria)"
                 width={148}
                 height={111}
-                className="h-9 w-auto"
+                className="h-14 w-auto sm:h-16"
               />
             </Link>
             <button
