@@ -65,18 +65,23 @@ export function PromoPopup() {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[250] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="promo-popup-heading">
+    <div
+      className="fixed inset-0 z-[250] flex items-center justify-center overflow-y-auto p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="promo-popup-heading"
+    >
       <div
         onClick={() => setOpen(false)}
         aria-hidden="true"
         className="absolute inset-0 bg-ink/60"
       />
-      <div className="relative flex w-full max-w-[880px] flex-col overflow-hidden rounded-[6px] bg-cream shadow-[0_40px_90px_-30px_rgba(0,0,0,0.6)] sm:flex-row">
+      <div className="relative my-auto flex w-full max-w-[880px] flex-col overflow-hidden rounded-[6px] bg-cream shadow-[0_40px_90px_-30px_rgba(0,0,0,0.6)] sm:flex-row">
         <button
           type="button"
           onClick={() => setOpen(false)}
           aria-label="Chiudi"
-          className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-cream/90 text-ink shadow-sm transition-colors hover:bg-cream"
+          className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-cream/90 text-ink shadow-sm transition-colors hover:bg-cream"
         >
           <CloseIcon />
         </button>

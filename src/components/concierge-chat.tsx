@@ -184,7 +184,7 @@ export function ConciergeChat() {
         <div
           role="complementary"
           aria-label="Concierge virtuale Agriturismo La Mora"
-          className="absolute bottom-[68px] right-0 flex h-[480px] w-[min(92vw,360px)] flex-col overflow-hidden rounded-[6px] bg-cream shadow-[0_30px_70px_-20px_rgba(28,33,23,0.5)]"
+          className="absolute bottom-[68px] right-0 flex h-[min(480px,70dvh)] w-[min(92vw,360px)] flex-col overflow-hidden rounded-[6px] bg-cream shadow-[0_30px_70px_-20px_rgba(28,33,23,0.5)]"
         >
           <div className="flex items-center justify-between bg-olive-950 px-5 py-4 text-cream">
             <div className="flex items-center gap-2.5">

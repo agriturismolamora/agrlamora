@@ -104,7 +104,7 @@ function Calendar({
           onClick={() =>
             setViewMonth((m) => new Date(m.getFullYear(), m.getMonth() - 1, 1))
           }
-          className="rounded-full p-1.5 text-ink transition-colors hover:bg-cream-dim hover:text-terracotta"
+          className="flex h-9 w-9 items-center justify-center rounded-full text-ink transition-colors hover:bg-cream-dim hover:text-terracotta"
         >
           ‹
         </button>
@@ -117,7 +117,7 @@ function Calendar({
           onClick={() =>
             setViewMonth((m) => new Date(m.getFullYear(), m.getMonth() + 1, 1))
           }
-          className="rounded-full p-1.5 text-ink transition-colors hover:bg-cream-dim hover:text-terracotta"
+          className="flex h-9 w-9 items-center justify-center rounded-full text-ink transition-colors hover:bg-cream-dim hover:text-terracotta"
         >
           ›
         </button>
