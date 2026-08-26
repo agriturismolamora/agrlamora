@@ -338,13 +338,18 @@ export function SiteHeader() {
       >
         <div
           className={`mx-auto flex max-w-[1600px] items-center justify-between transition-[padding] duration-300 ease-out ${
-            sticky ? "py-2.5" : "py-5"
+            sticky ? "py-3" : "py-5"
           }`}
           style={{ paddingInline: "clamp(20px, 4vw, 56px)" }}
         >
           <div className="flex min-w-0 items-center">
             {/* Logo piccolo: SOLO nello stato sticky. Sulla hero il brand è
-                rappresentato esclusivamente dal grande logo centrale. */}
+                rappresentato esclusivamente dal grande logo centrale.
+                Il file reale è uno stemma circolare ~4:3 (testo ad arco +
+                illustrazione + wordmark), non un logotipo orizzontale: va
+                dimensionato sull'altezza per restare leggibile (max-height
+                52px) e non sulla larghezza, altrimenti l'immagine dovrebbe
+                superare i 90px di altezza e sforare l'header. */}
             {sticky && (
               <>
                 <Link
@@ -355,14 +360,14 @@ export function SiteHeader() {
                   <Image
                     src="/images/logo/logo-bianco-agriturismo-la-mora.png"
                     alt="Agriturismo La Mora, Assisi - Perugia (Umbria)"
-                    width={145}
-                    height={109}
-                    className="h-8 w-auto sm:h-[34px]"
+                    width={140}
+                    height={105}
+                    className="h-12 w-auto sm:h-[52px]"
                   />
                 </Link>
                 <span
                   aria-hidden="true"
-                  className="mx-4 hidden h-[42px] w-px bg-cream/40 min-[1100px]:block"
+                  className="ml-5 mr-8 hidden h-11 w-px bg-[#f1f1f1]/35 min-[1100px]:block"
                 />
               </>
             )}

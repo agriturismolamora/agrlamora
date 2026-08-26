@@ -51,6 +51,9 @@ export function Hero() {
       <div
         className="absolute left-1/2 top-[46%] z-[2] flex -translate-x-1/2 -translate-y-1/2 flex-col items-center px-6 text-center text-cream"
       >
+        <h1 className="sr-only">
+          Agriturismo La Mora — Appartamenti indipendenti ad Assisi, Umbria
+        </h1>
         <span className="text-[13px] font-medium uppercase tracking-[0.4em] text-cream/90">
           Assisi · Umbria
         </span>

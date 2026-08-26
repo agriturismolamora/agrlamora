@@ -16,6 +16,14 @@
   --color-ink: #241f17;
   --color-ink-soft: #5c5344;
 
+  /* Raspberry La Mora: campionato dai lamponi del logo (media rilevata
+     #e82f4b, HSL ~351°/80%/55%) e desaturato verso una tonalità
+     rosa-rosso terroso — stessa tinta del logo, non il rosa/rosso acceso
+     originale. --color-raspberry è scurito quanto basta per un contrasto
+     verificato ≥4.5:1 con testo #F1F1F1 (WCAG AA). */
+  --color-raspberry: #9f414f;
+  --color-raspberry-light: #b86f7a;
+
   /* Cormorant Garamond: font editoriale (nav, titoli, hero, dropdown premium).
      Montserrat: font funzionale/UI (CTA, booking bar, label, microcopy) — resta
      il font di default del body per leggibilità. */

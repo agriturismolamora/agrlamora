@@ -245,14 +245,14 @@ function FieldButton({
         type="button"
         onClick={onClick}
         aria-expanded={active}
-        className={`flex w-full flex-col items-start justify-center gap-1 px-6 py-[22px] text-left transition-colors ${
+        className={`flex w-full flex-col items-start justify-center gap-1 px-[22px] py-5 text-left transition-colors ${
           active ? "bg-ink/[0.035]" : "hover:bg-ink/[0.02]"
         }`}
       >
-        <span className="text-[9px] font-semibold uppercase tracking-[0.06em] text-ink-soft">
+        <span className="text-[8px] font-semibold uppercase tracking-[0.05em] text-ink-soft">
           {label}
         </span>
-        <span className="truncate font-display text-[17px] font-medium leading-none text-ink">
+        <span className="truncate font-display text-[16px] font-medium leading-none text-ink">
           {value}
         </span>
       </button>
@@ -294,6 +294,7 @@ function useBookingState() {
 export function BookingBar() {
   const [open, setOpen] = useState<PopoverKey>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [nearFooter, setNearFooter] = useState(false);
   const booking = useBookingState();
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -314,21 +315,49 @@ export function BookingBar() {
     };
   }, []);
 
+  // Vicino al footer la barra fissa coprirebbe indirizzo/contatti reali del
+  // footer stesso: si dissolve con una transizione elegante, senza mai
+  // sparire dal DOM (resta raggiungibile da tastiera se il focus è dentro).
+  useEffect(() => {
+    const footer = document.getElementById("site-footer");
+    if (!footer || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        function onChange() {
+          setNearFooter(entry.isIntersecting);
+        }
+        onChange();
+      },
+      { rootMargin: "0px 0px -15% 0px" }
+    );
+    io.observe(footer);
+    return () => io.disconnect();
+  }, []);
+
   return (
     // Fixed rispetto al viewport: stessa posizione tra Hero e sezioni
     // successive, non più ancorata alla sola Hero. z-[70]: sopra i contenuti
     // di pagina (0–2), sotto sticky header (100) e pannello MENU (150).
     // pointer-events-none sulla riga piena, riattivati solo sul contenuto
     // (w-max) per non intercettare click nello spazio vuoto ai lati.
-    <div className="pointer-events-none fixed inset-x-0 bottom-5 z-[70] flex justify-center px-4 sm:px-6">
-      <div className="pointer-events-auto w-max max-w-full">
-      {/* Desktop / tablet */}
+    <div
+      className="pointer-events-none fixed inset-x-0 bottom-5 z-[70] flex justify-center px-4 transition-all duration-500 ease-out sm:px-6"
+      style={
+        nearFooter
+          ? { opacity: 0, transform: "translateY(16px)" }
+          : { opacity: 1, transform: "translateY(0)" }
+      }
+    >
+      <div className={`w-max max-w-full ${nearFooter ? "pointer-events-none" : "pointer-events-auto"}`}>
+      {/* Desktop / tablet. Larghezza a due livelli: più generosa (78vw) alle
+          risoluzioni intermedie dove 60vw sarebbe troppo stretta, più
+          contenuta (60vw, cap 1080px) da 1280px in su — elegante e compatta
+          anche a 1440/1920px, come da riferimento Lasala. */}
       <div
         ref={rootRef}
-        className="hidden w-[min(72vw,1260px)] max-w-full overflow-hidden rounded-[3px] bg-cream shadow-[0_24px_50px_-24px_rgba(28,33,23,0.55)] md:grid"
+        className="hidden w-[min(78vw,1050px)] max-w-full overflow-hidden rounded-[3px] bg-cream shadow-[0_24px_50px_-24px_rgba(28,33,23,0.55)] md:grid xl:w-[min(60vw,1080px)]"
         style={{
-          gridTemplateColumns:
-            "minmax(0,1fr) minmax(0,1fr) minmax(0,.85fr) minmax(180px,.9fr) 64px",
+          gridTemplateColumns: "1fr 1fr .9fr .95fr 60px",
         }}
       >
         <FieldButton
@@ -392,14 +421,14 @@ export function BookingBar() {
 
         <button
           type="button"
-          className="h-full w-full whitespace-nowrap bg-terracotta-dark px-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#7a3a1e]"
+          className="h-full w-full whitespace-nowrap bg-raspberry px-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
         >
           Prenota ora
         </button>
         <a
           href={PHONE_TEL}
           aria-label="Chiama Agriturismo La Mora"
-          className="flex h-full w-full items-center justify-center bg-gold text-cream transition-colors hover:bg-[#a5832f]"
+          className="flex h-full w-full items-center justify-center bg-raspberry-light text-cream transition-colors hover:bg-[#ad5864]"
         >
           <PhoneIcon />
         </a>
@@ -410,7 +439,7 @@ export function BookingBar() {
         <button
           type="button"
           onClick={() => setSheetOpen(true)}
-          className="rounded-[3px] bg-terracotta-dark px-8 py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors hover:bg-[#7a3a1e]"
+          className="rounded-[3px] bg-raspberry px-8 py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors hover:bg-[#8a3844]"
         >
           Verifica disponibilità
         </button>
@@ -553,7 +582,7 @@ function MobileBookingSheet({
 
         <button
           type="button"
-          className="mt-5 w-full rounded-[3px] bg-terracotta-dark py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#7a3a1e]"
+          className="mt-5 w-full rounded-[3px] bg-raspberry py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
         >
           Prenota ora
         </button>
