@@ -10,7 +10,7 @@ import { PetsAndEv } from "@/components/pets-and-ev";
 import { BreakfastStory } from "@/components/breakfast-story";
 import { ExperiencesSection } from "@/components/experiences-section";
 import { TerritorySection } from "@/components/territory-section";
-import { TrustSection } from "@/components/trust-section";
+import { ReviewsSection } from "@/components/reviews-section";
 import { DirectBooking } from "@/components/direct-booking";
 import { LocationMap } from "@/components/location-map";
 import { SiteFooter } from "@/components/site-footer";
@@ -52,7 +52,7 @@ export default function Home() {
         <BreakfastStory />
         <ExperiencesSection />
         <TerritorySection />
-        <TrustSection />
+        <ReviewsSection />
         <DirectBooking />
         <LocationMap />
       </main>

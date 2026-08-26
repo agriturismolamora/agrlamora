@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
+  images: {
+    // Foto profilo reali dei recensori, servite da Google (Places API).
+    remotePatterns: [{ protocol: "https", hostname: "lh3.googleusercontent.com" }],
+  },
 };
 
 export default nextConfig;
