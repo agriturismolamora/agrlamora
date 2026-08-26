@@ -1,0 +1,38 @@
+import Image from "next/image";
+
+/* Striscia certificazioni: stesso meccanismo di scorrimento infinito del
+   BenefitMarquee (.animate-marquee, definito in globals.css), ma sfondo
+   diverso (cream-dim invece di cream) per marcare visivamente il cambio
+   di sezione, come richiesto. Tutti i loghi in public/certificazioni/,
+   in un riquadro di dimensioni identiche (object-contain, mai ritagliati)
+   così restano allineati alla stessa altezza nonostante le proporzioni
+   diverse dei singoli file. */
+const CERTIFICATIONS = [
+  { src: "/certificazioni/ICEA%20certification.png", alt: "Certificazione ICEA" },
+  { src: "/certificazioni/agriturismo%20italia%20certifiazione.png", alt: "Certificazione Agriturismo Italia" },
+  { src: "/certificazioni/beb%20certification.png", alt: "Certificazione Bed & Breakfast" },
+  { src: "/certificazioni/top%20bnb%20certification.png", alt: "Certificazione Top B&B" },
+  { src: "/certificazioni/tripadvisor%20certification.svg", alt: "Certificazione TripAdvisor" },
+] as const;
+
+function CertLogo({ src, alt }: (typeof CERTIFICATIONS)[number]) {
+  return (
+    <div className="flex shrink-0 items-center px-9 md:px-12">
+      <div className="relative h-14 w-[120px] md:h-16 md:w-[140px]">
+        <Image src={src} alt={alt} fill sizes="140px" className="object-contain" />
+      </div>
+    </div>
+  );
+}
+
+export function CertificationsMarquee() {
+  return (
+    <section aria-label="Certificazioni e riconoscimenti" className="overflow-hidden bg-cream-dim py-8 md:py-10">
+      <div className="flex w-max animate-marquee">
+        {[...CERTIFICATIONS, ...CERTIFICATIONS].map((cert, i) => (
+          <CertLogo key={`${cert.alt}-${i}`} {...cert} />
+        ))}
+      </div>
+    </section>
+  );
+}

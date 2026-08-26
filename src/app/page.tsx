@@ -13,6 +13,8 @@ import { TerritorySection } from "@/components/territory-section";
 import { ReviewsSection } from "@/components/reviews-section";
 import { DirectBooking } from "@/components/direct-booking";
 import { LocationMap } from "@/components/location-map";
+import { NewsletterSection } from "@/components/newsletter-section";
+import { CertificationsMarquee } from "@/components/certifications-marquee";
 import { SiteFooter } from "@/components/site-footer";
 import { ConciergeChat } from "@/components/concierge-chat";
 import { PromoPopup } from "@/components/promo-popup";
@@ -55,6 +57,8 @@ export default function Home() {
         <ReviewsSection />
         <DirectBooking />
         <LocationMap />
+        <NewsletterSection />
+        <CertificationsMarquee />
       </main>
       <SiteFooter />
       {/* Widget di prenotazione persistente: fixed, indipendente dal flusso
