@@ -11,9 +11,12 @@ const WHATSAPP_URL = "https://wa.me/393934363917";
 const EMAIL = "agriturismolamora@gmail.com";
 
 /* Sezione finale prima del footer: mappa reale (asset obbligatorio del
-   cliente) + pannello contatti. object-contain, non cover: è una cartina
-   con testo leggibile, un crop la deformerebbe/taglierebbe. Nessuna
-   coordinata inventata: il link Maps usa l'indirizzo reale via ricerca. */
+   cliente) + pannello contatti. object-cover, a riempire il riquadro senza
+   bordi su nessuno dei 4 lati (richiesta esplicita): la mappa è quadrata
+   (1254×1254), quindi un object-position center taglia in modo simmetrico
+   sui lati eccedenti, senza mai deformare le proporzioni né inclinare il
+   contenuto. Nessuna coordinata inventata: il link Maps usa l'indirizzo
+   reale via ricerca. */
 export function LocationMap() {
   return (
     <section aria-labelledby="location-heading" className="bg-cream">
@@ -24,7 +27,7 @@ export function LocationMap() {
             alt="Mappa della zona intorno ad Agriturismo La Mora, ad Assisi"
             fill
             sizes="(max-width: 1024px) 100vw, 58vw"
-            className="object-contain p-4 sm:p-8"
+            className="object-cover object-center"
           />
         </Reveal>
 

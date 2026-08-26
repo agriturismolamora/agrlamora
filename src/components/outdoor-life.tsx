@@ -9,7 +9,7 @@ import { Reveal } from "@/components/scroll-reveal";
    usate altrove in homepage. */
 const FACTS = [
   { label: "Piscina panoramica", detail: "6×12 metri, aperta dal 1° giugno al 28 settembre" },
-  { label: "Giardino recintato", detail: "negli appartamenti Gemelli e Sagittario, con doccia esterna per i cani" },
+  { label: "Giardino recintato", detail: "negli appartamenti Gemelli e Sagittario" },
   { label: "Parco giochi e sport", detail: "altalene, scivoli, campo da calcetto in erba naturale, ping-pong; culla e seggiolone su richiesta" },
 ] as const;
 
@@ -18,8 +18,8 @@ export function OutdoorLife() {
     <section aria-labelledby="outdoor-life-heading" className="relative bg-cream-dim">
       <div className="relative h-[62vh] min-h-[380px] w-full overflow-hidden sm:h-[72vh]">
         <Image
-          src="/images/piscina/esterno parco agriturismo con scivolo per bambini.jpg"
-          alt="Parco giochi e area verde di Agriturismo La Mora, con la piscina sullo sfondo"
+          src="/images/piscina/foto piscina di giorno.webp"
+          alt="La piscina panoramica di Agriturismo La Mora vista di giorno"
           fill
           sizes="100vw"
           className="object-cover"

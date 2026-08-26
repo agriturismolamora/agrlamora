@@ -6,7 +6,9 @@ import { ImmersiveStory } from "@/components/immersive-story";
 import { ApartmentsCarousel } from "@/components/apartments-carousel";
 import { StructureHighlights } from "@/components/structure-highlights";
 import { OutdoorLife } from "@/components/outdoor-life";
+import { PetsAndEv } from "@/components/pets-and-ev";
 import { BreakfastStory } from "@/components/breakfast-story";
+import { ExperiencesSection } from "@/components/experiences-section";
 import { TerritorySection } from "@/components/territory-section";
 import { TrustSection } from "@/components/trust-section";
 import { DirectBooking } from "@/components/direct-booking";
@@ -44,7 +46,9 @@ export default function Home() {
         <ApartmentsCarousel />
         <StructureHighlights />
         <OutdoorLife />
+        <PetsAndEv />
         <BreakfastStory />
+        <ExperiencesSection />
         <TerritorySection />
         <TrustSection />
         <DirectBooking />

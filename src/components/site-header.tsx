@@ -84,6 +84,7 @@ const LANGUAGES = ["IT", "EN", "FR", "DE"] as const;
 const PHONE_DISPLAY = "075 8041164";
 const PHONE_TEL = "tel:+390758041164";
 const WHATSAPP_HREF = "https://wa.me/393934363917";
+const EMAIL = "agriturismolamora@gmail.com";
 
 /* Soglia oltre la quale si considera "in cima" (Stato A) e soglia minima di
    scroll ignorata per non far lampeggiare l'header a ogni micro-movimento. */
@@ -250,7 +251,6 @@ function DesktopDropdown({ item, align }: { item: NavItem; align: DropdownAlign 
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [mobileSubOpen, setMobileSubOpen] = useState<string | null>(null);
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
   const mode = useHeaderScrollMode(menuOpen);
@@ -448,17 +448,19 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* Pannello MENU: elenca sempre tutte le voci (incl. Recensioni/Contatti),
-          è la rete di sicurezza per tablet/mobile e resta disponibile anche a
-          desktop pieno, come nel riferimento. z-index sopra l'header (100),
-          sotto i dropdown di navigazione (200) e la modale booking (300). */}
+      {/* Pannello MENU: overlay a schermo intero, editoriale e centrato
+          (ispirato a Lasala Plaza) — sostituisce l'accordion mobile con
+          un'unica lista piatta, grande, centrata; niente sotto-menu annidati.
+          z-index sopra l'header (100), sotto i dropdown di navigazione (200)
+          e la modale booking (300). h-dvh invece di h-screen per evitare il
+          salto dato dalla barra degli indirizzi mobile. */}
       <div
         id="site-menu-panel"
-        className={`fixed inset-x-0 top-0 z-[150] max-h-screen overflow-y-auto bg-olive-950 text-cream shadow-2xl transition-[opacity,transform] duration-250 ease-out ${
+        className={`fixed inset-0 z-[150] h-dvh overflow-y-auto bg-olive-950 text-cream shadow-2xl transition-[opacity,transform] duration-250 ease-out ${
           menuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-3 opacity-0"
         }`}
       >
-        <div className="mx-auto max-w-[1600px] px-6 pb-10 pt-6 sm:px-10">
+        <div className="mx-auto flex min-h-full w-full max-w-[1600px] flex-col px-6 pb-10 pt-6 sm:px-10">
           <div className="flex items-center justify-between pb-6">
             <Link
               href="/"
@@ -485,55 +487,25 @@ export function SiteHeader() {
             </button>
           </div>
 
-          <nav aria-label="Navigazione completa">
-            <ul className="flex flex-col divide-y divide-cream/10 border-t border-cream/10">
-              {[...NAV_LEFT, ...NAV_RIGHT.map((r) => ({ ...r, children: [] as NavChild[] }))].map((item) => (
-                <li key={item.label} className="py-1">
-                  {item.children.length > 0 ? (
-                    <div>
-                      <button
-                        type="button"
-                        className="flex w-full items-center justify-between py-3 text-left font-display text-2xl"
-                        aria-expanded={mobileSubOpen === item.label}
-                        onClick={() =>
-                          setMobileSubOpen((cur) => (cur === item.label ? null : item.label))
-                        }
-                      >
-                        {item.label}
-                        <ChevronIcon open={mobileSubOpen === item.label} />
-                      </button>
-                      {mobileSubOpen === item.label && (
-                        <ul className="pb-3 pl-4">
-                          {item.children.map((child) => (
-                            <li key={child.label}>
-                              <a
-                                href={child.href}
-                                target={child.external ? "_blank" : undefined}
-                                rel={child.external ? "noopener noreferrer" : undefined}
-                                className="block py-2 text-[15px] text-cream/75 transition-colors hover:text-gold"
-                                onClick={() => setMenuOpen(false)}
-                              >
-                                {child.label}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      className="block py-3 font-display text-2xl transition-colors hover:text-gold"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  )}
+          <nav
+            aria-label="Navigazione completa"
+            className="flex flex-1 flex-col items-center justify-center py-8 text-center"
+          >
+            <ul className="flex flex-col items-center gap-1 sm:gap-2">
+              {[...NAV_LEFT, ...NAV_RIGHT].map((item) => (
+                <li key={item.label}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="inline-block py-1.5 font-display text-[27px] font-normal leading-tight text-cream transition-colors duration-200 hover:text-gold sm:text-[34px]"
+                  >
+                    {item.label}
+                  </Link>
                 </li>
               ))}
             </ul>
 
-            <div className="mt-6 flex items-center gap-2">
+            <div className="mt-9 flex items-center gap-2 sm:mt-11">
               {LANGUAGES.map((lang) => (
                 <button
                   key={lang}
@@ -545,23 +517,50 @@ export function SiteHeader() {
               ))}
             </div>
 
-            <div className="mt-6 flex flex-col gap-2.5 border-t border-cream/10 pt-6 sm:flex-row">
-              <a
-                href={PHONE_TEL}
-                className="flex items-center justify-center gap-2 rounded-[3px] bg-cream/10 py-3 text-[13px] font-semibold uppercase tracking-[0.04em] transition-colors hover:bg-cream/15 sm:flex-1"
-              >
-                <PhoneIcon />
-                Chiama {PHONE_DISPLAY}
-              </a>
-              <a
-                href={WHATSAPP_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 rounded-[3px] border border-cream/20 py-3 text-[13px] font-semibold uppercase tracking-[0.04em] transition-colors hover:border-gold hover:text-gold sm:flex-1"
-              >
-                <WhatsAppIcon />
-                Scrivi su WhatsApp
-              </a>
+            <div className="mt-10 flex flex-col items-center gap-6 border-t border-cream/10 pt-10 sm:mt-12 sm:pt-12">
+              <address className="text-center text-[14px] not-italic leading-[1.8] text-gold/90">
+                <p>Via Fonte Citerna, 7 — 06081 Assisi (PG)</p>
+                <p>
+                  <a href={PHONE_TEL} className="transition-colors hover:text-cream">
+                    {PHONE_DISPLAY}
+                  </a>
+                  {" · "}
+                  <a
+                    href={WHATSAPP_HREF}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-cream"
+                  >
+                    WhatsApp
+                  </a>
+                </p>
+                <p>
+                  <a href={`mailto:${EMAIL}`} className="transition-colors hover:text-cream">
+                    {EMAIL}
+                  </a>
+                </p>
+              </address>
+
+              <div className="flex flex-col items-center gap-3">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cream/50">Seguici</span>
+                <div className="flex items-center gap-3">
+                  {/* TODO: collegare ai profili social reali quando confermati dal titolare */}
+                  <a
+                    href="#"
+                    aria-label="Facebook Agriturismo La Mora"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-cream/25 text-cream/85 transition-colors hover:border-gold hover:text-gold"
+                  >
+                    <SocialIcon kind="facebook" />
+                  </a>
+                  <a
+                    href="#"
+                    aria-label="Instagram Agriturismo La Mora"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-cream/25 text-cream/85 transition-colors hover:border-gold hover:text-gold"
+                  >
+                    <SocialIcon kind="instagram" />
+                  </a>
+                </div>
+              </div>
             </div>
           </nav>
         </div>
