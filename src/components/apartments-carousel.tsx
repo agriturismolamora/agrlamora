@@ -150,13 +150,13 @@ function slotTransform(rel: number, cardWidth: number): CardTransform {
 }
 
 /* Deve combaciare ESATTAMENTE con il margin-top reale del contenitore delle
-   card (sm:mt-16 = 64px, sempre attivo perché questo componente esiste solo
+   card (sm:mt-28 = 112px, sempre attivo perché questo componente esiste solo
    da 768px in su). Prima valeva solo 20px "a stima": la card veniva quindi
-   dimensionata ~40px più alta di quanto la regione avesse davvero libero, e
-   quei 40px in eccesso finivano per mangiarsi visivamente il gap dal titolo
-   (bug segnalato più volte). Se il margin-top qui sotto cambia, aggiornare
-   anche questa costante — altrimenti si ripresenta lo stesso bug. */
-const VERTICAL_BREATHING_ROOM = 64;
+   dimensionata più alta di quanto la regione avesse davvero libero, e
+   l'eccesso finiva per mangiarsi visivamente il gap dal titolo (bug
+   segnalato più volte). Se il margin-top del contenitore card cambia,
+   aggiornare anche questa costante — altrimenti si ripresenta lo stesso bug. */
+const VERTICAL_BREATHING_ROOM = 112;
 
 /* clamp(300px, 28vw, 470px) replicato in JS per calcolare gli offset in
    px degli slot senza dover misurare il DOM ad ogni frame. La larghezza
@@ -276,6 +276,84 @@ function ConstellationField({ reducedMotion }: { reducedMotion: boolean }) {
   );
 }
 
+/* Iconcine dei dettagli rapidi (ospiti/letti/bagni/mq): line-art minimale,
+   stroke 1.5, stesso linguaggio delle altre icone del sito (PhoneIcon,
+   WhatsAppIcon...). Colore ereditato (currentColor) così seguono il cream
+   con drop-shadow del testo accanto, restando leggibili su qualunque foto. */
+function GuestsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true">
+      <circle cx="12" cy="7.5" r="3.2" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function BedIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true">
+      <path
+        d="M3 18v-7.5A1.5 1.5 0 0 1 4.5 9H12v4h8a1.5 1.5 0 0 1 1.5 1.5V18M3 18v2.5M3 18h18v2.5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="7" cy="10.7" r="1.4" stroke="currentColor" strokeWidth="1.4" />
+    </svg>
+  );
+}
+
+function ShowerIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true">
+      <path
+        d="M6 9V6.5A3.5 3.5 0 0 1 9.5 3h1A3.5 3.5 0 0 1 14 6.5V9M4 9h16M8 13v.01M12 13v.01M16 13v.01M8 17v.01M12 17v.01M16 17v.01"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function FloorplanIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true">
+      <rect x="3.5" y="3.5" width="17" height="17" rx="1" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M12 3.5V13M12 13H20.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/* Riga di dettagli sempre visibile (non solo in hover): l'obiettivo esplicito
+   è che l'utente capisca capienza/letti/bagni/mq direttamente dalla card,
+   senza dover aprire la scheda dell'appartamento. Numeri nudi accanto alle
+   icone (non "4 ospiti", "4 letti"...): più compatti su card che arrivano a
+   scalare fino a ~0.87×, restano comunque leggibili grazie all'icona che
+   dà il contesto — l'etichetta completa resta disponibile via aria-label. */
+function StatsRow({ apt }: { apt: Apartment }) {
+  const items = [
+    { Icon: GuestsIcon, value: String(apt.maxGuests), label: `${apt.maxGuests} ospiti` },
+    { Icon: BedIcon, value: String(apt.beds), label: `${apt.beds} letti` },
+    { Icon: ShowerIcon, value: String(apt.bathrooms), label: `${apt.bathrooms} bagno${apt.bathrooms > 1 ? "i" : ""}` },
+    { Icon: FloorplanIcon, value: `${apt.sqm} m²`, label: `${apt.sqm} metri quadrati` },
+  ];
+  return (
+    <div className="mt-2 flex items-center justify-center gap-3 text-cream drop-shadow-[0_1px_3px_rgba(0,0,0,0.55)]">
+      {items.map(({ Icon, value, label }, i) => (
+        <span key={i} aria-label={label} className="flex items-center gap-1">
+          <Icon />
+          <span aria-hidden="true" className="text-[10px] font-medium tabular-nums">
+            {value}
+          </span>
+        </span>
+      ))}
+    </div>
+  );
+}
+
 function CardFace({
   apt,
   showPanel,
@@ -300,18 +378,34 @@ function CardFace({
     >
       <Image src={apt.image} alt={apt.alt} fill quality={92} sizes={sizes} className="object-cover" />
 
+      {/* Scrim di leggibilità per nome + riga statistiche: indipendente dal
+          filtro brightness/saturate già applicato all'intero elemento (che
+          serve solo alla profondità tra card centrale/laterali), garantisce
+          contrasto sufficiente qualunque sia la foto sottostante. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[46%]"
+        style={{ background: "linear-gradient(0deg, rgba(10,10,8,.62) 0%, rgba(10,10,8,0) 100%)" }}
+      />
+
       {/* Niente dimming aggiuntivo qui legato a "è la card centrale?": la
           differenza di profondità la dà già il filtro brightness/saturate
           scritto direttamente sull'elemento (vedi applyPositions), che
           resta sempre in sync con la posizione reale della card anche
-          quando lo scroll cambia molto rapidamente. */}
-      <div className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-4">
+          quando lo scroll cambia molto rapidamente. Si dissolve (non si
+          smonta) quando il pannello hover appare, per non dover far
+          combaciare a pixel le due altezze. */}
+      <div
+        className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-4 transition-opacity duration-300 ease-out"
+        style={{ opacity: showPanel ? 0 : 1 }}
+      >
         <span className="mb-1.5 text-cream drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
           <ZodiacMark sign={apt.zodiac} className="h-7 w-7" />
         </span>
         <span className="font-display text-[26px] text-cream drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">
           {apt.name}
         </span>
+        <StatsRow apt={apt} />
       </div>
 
       <div
@@ -349,7 +443,7 @@ function CardFace({
 
 function SectionHeading() {
   return (
-    <div className="relative z-[2] mx-auto flex max-w-[720px] flex-col items-center px-6 pt-16 text-center sm:pt-20">
+    <div className="relative z-[2] mx-auto flex max-w-[720px] flex-col items-center px-6 pt-8 text-center sm:pt-10">
       <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">Gli appartamenti</span>
       <h2 className="mt-5 font-display text-[clamp(32px,3vw,54px)] font-normal leading-[1.05] text-ink">
         Cinque appartamenti, cinque costellazioni
@@ -537,7 +631,7 @@ function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
           role="region"
           aria-roledescription="carousel"
           aria-label="Appartamenti di Agriturismo La Mora"
-          className="relative z-[2] mt-14 min-h-0 flex-1 sm:mt-16"
+          className="relative z-[2] mt-24 min-h-0 flex-1 sm:mt-28"
         >
           {APARTMENTS.map((apt, i) => {
             const showPanel = revealed === i;
@@ -567,7 +661,7 @@ function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
           })}
         </div>
 
-        <div ref={ctaRef} className="relative z-[2] flex justify-center pb-24 pt-16 sm:pb-28 sm:pt-20" style={{ opacity: 0, pointerEvents: "none" }}>
+        <div ref={ctaRef} className="relative z-[2] flex justify-center pb-24 pt-24 sm:pb-28 sm:pt-28" style={{ opacity: 0, pointerEvents: "none" }}>
           <Link
             href="/alloggi/"
             className="group inline-flex items-center gap-2.5 rounded-[3px] bg-raspberry px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:bg-[#8a3844]"

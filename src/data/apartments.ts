@@ -8,6 +8,14 @@ export type Apartment = {
   alt: string;
   href: string;
   petFriendly?: boolean;
+  /* Dati reali confermati (occupazione/letti/bagni/mq), stesso formato
+     "Specifiche" già usato in ogni scheda appartamento del sito — non i
+     numeri discordanti che comparivano nei paragrafi descrittivi (es.
+     "55 mq" per Sagittario/Gemelli, corretto a 45 dal titolare). */
+  maxGuests: number;
+  beds: number;
+  bathrooms: number;
+  sqm: number;
 };
 
 /* Stesse route già usate nel dropdown "Alloggi" dell'header (non
@@ -24,6 +32,10 @@ export const APARTMENTS: Apartment[] = [
     alt: "Camera da letto dell'appartamento Gemelli, Agriturismo La Mora",
     href: "/alloggi/gemelli/",
     petFriendly: true,
+    maxGuests: 4,
+    beds: 4,
+    bathrooms: 1,
+    sqm: 45,
   },
   {
     slug: "bilancia",
@@ -32,6 +44,10 @@ export const APARTMENTS: Apartment[] = [
     image: "/images/alloggi/appartamento bilancia/letto matrimoniale bilancia.webp",
     alt: "Camera da letto dell'appartamento Bilancia, Agriturismo La Mora",
     href: "/alloggi/bilancia/",
+    maxGuests: 8,
+    beds: 8,
+    bathrooms: 1,
+    sqm: 75,
   },
   {
     slug: "pesci",
@@ -40,6 +56,10 @@ export const APARTMENTS: Apartment[] = [
     image: "/images/alloggi/appartamento pesci/vista da davanti letto matrimoniale stanza pesci.jpeg",
     alt: "Camera da letto dell'appartamento Pesci, Agriturismo La Mora",
     href: "/alloggi/pesci/",
+    maxGuests: 4,
+    beds: 4,
+    bathrooms: 1,
+    sqm: 45,
   },
   {
     slug: "acquario",
@@ -54,6 +74,10 @@ export const APARTMENTS: Apartment[] = [
     image: "/images/alloggi/appartamento acquario/letto piu letto a castello acquario.jpeg",
     alt: "Camera da letto dell'appartamento Acquario, Agriturismo La Mora",
     href: "/alloggi/acquario/",
+    maxGuests: 4,
+    beds: 4,
+    bathrooms: 1,
+    sqm: 45,
   },
   {
     slug: "sagittario",
@@ -66,5 +90,9 @@ export const APARTMENTS: Apartment[] = [
     alt: "Interno arredato dell'appartamento Sagittario, Agriturismo La Mora",
     href: "/alloggi/sagittario/",
     petFriendly: true,
+    maxGuests: 6,
+    beds: 6,
+    bathrooms: 1,
+    sqm: 45,
   },
 ];
