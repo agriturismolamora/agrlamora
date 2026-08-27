@@ -150,25 +150,31 @@ function slotTransform(rel: number, cardWidth: number): CardTransform {
 }
 
 /* Deve combaciare ESATTAMENTE con il margin-top reale del contenitore delle
-   card (sm:mt-28 = 112px, sempre attivo perché questo componente esiste solo
+   card (sm:mt-10 = 40px, sempre attivo perché questo componente esiste solo
    da 768px in su). Prima valeva solo 20px "a stima": la card veniva quindi
    dimensionata più alta di quanto la regione avesse davvero libero, e
    l'eccesso finiva per mangiarsi visivamente il gap dal titolo (bug
    segnalato più volte). Se il margin-top del contenitore card cambia,
    aggiornare anche questa costante — altrimenti si ripresenta lo stesso bug. */
-const VERTICAL_BREATHING_ROOM = 112;
+const VERTICAL_BREATHING_ROOM = 40;
 
-/* clamp(300px, 28vw, 470px) replicato in JS per calcolare gli offset in
+/* clamp(360px, 34vw, 580px) replicato in JS per calcolare gli offset in
    px degli slot senza dover misurare il DOM ad ogni frame. La larghezza
-   finale è la più piccola tra il vincolo di larghezza (28vw) e quello
+   finale è la più piccola tra il vincolo di larghezza (34vw) e quello
    d'altezza (spazio verticale REALMENTE disponibile — 100vh meno le
-   altezze vere di titolo e CTA, misurate nel DOM — diviso 1.25, aspect
-   4:5): su schermi bassi vince il secondo, garantendo zero overlap by
+   altezze vere di titolo e CTA, misurate nel DOM — per l'aspect 4:5):
+   su schermi bassi vince il secondo, garantendo zero overlap by
    construction invece di sperare che ci sia sempre spazio a sufficienza. */
 function cardWidthForViewport(vw: number, vh: number, headingH: number, ctaH: number) {
-  const widthBound = clamp(vw * 0.28, 300, 470);
+  const widthBound = clamp(vw * 0.37, 380, 620);
   const availableHeight = vh - headingH - ctaH - VERTICAL_BREATHING_ROOM;
-  const heightBound = clamp(availableHeight, 280, 580) * 0.8;
+  // Il moltiplicatore (0.72, non 1/1.25=0.8) non è solo l'aspect 4:5: una
+  // card RUOTATA (fino a 16° per le laterali visibili) ha un bounding box
+  // verticale più alto della sua altezza nominale — a card grandi quel
+  // margine extra basta a far toccare card oblique con titolo/CTA (bug
+  // reale osservato: gap negativo). Il fattore in più è il margine di
+  // sicurezza per quella crescita da rotazione.
+  const heightBound = clamp(availableHeight, 340, 720) * 0.72;
   return Math.min(widthBound, heightBound);
 }
 
@@ -289,18 +295,52 @@ function GuestsIcon() {
   );
 }
 
+/* Letto a castello, non un letto singolo generico: quasi tutti gli
+   appartamenti ne hanno uno reale (unico dato verificato per la
+   configurazione letti), un'icona più specifica comunica meglio la
+   dotazione reale rispetto a un letto anonimo. */
 function BedIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true">
-      <path
-        d="M3 18v-7.5A1.5 1.5 0 0 1 4.5 9H12v4h8a1.5 1.5 0 0 1 1.5 1.5V18M3 18v2.5M3 18h18v2.5"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <circle cx="7" cy="10.7" r="1.4" stroke="currentColor" strokeWidth="1.4" />
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true">
+      <path d="M3 3.5h11a2 2 0 0 1 2 2V8H3V3.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <circle cx="6" cy="5.6" r="0.9" fill="currentColor" />
+      <path d="M3 8h15a2 2 0 0 1 2 2v2H3v-4Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <circle cx="6" cy="10" r="0.9" fill="currentColor" />
+      <path d="M3 12v6.5M20 12v6.5M3 18.5h17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
+  );
+}
+
+/* Muso di cane semplificato per il badge "pet friendly": orecchie a
+   punta, occhi e tartufo, leggibile anche a ~16px dentro un cerchietto. */
+function DogIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+      <path
+        d="M7 5 4.8 9.2M17 5l2.2 4.2M6 12.5C6 9 8.7 6.7 12 6.7s6 2.3 6 5.8c0 3.9-2.7 6.8-6 6.8s-6-2.9-6-6.8Z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+      <circle cx="9.6" cy="12.3" r="1" fill="currentColor" />
+      <circle cx="14.4" cy="12.3" r="1" fill="currentColor" />
+      <path d="M10.8 15.3c.3.5.7.7 1.2.7s.9-.2 1.2-.7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/* Badge circolare "pet friendly": sempre visibile (non lega al hover come
+   la riga statistiche), ancorato in alto a destra sulla card intera così
+   ruota/scala insieme ad essa senza calcoli aggiuntivi. */
+function PetBadge() {
+  return (
+    <span
+      aria-label="Appartamento pet friendly"
+      className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-cream text-olive-950 shadow-[0_6px_16px_rgba(0,0,0,0.3)]"
+    >
+      <DogIcon />
+    </span>
   );
 }
 
@@ -341,11 +381,11 @@ function StatsRow({ apt }: { apt: Apartment }) {
     { Icon: FloorplanIcon, value: `${apt.sqm} m²`, label: `${apt.sqm} metri quadrati` },
   ];
   return (
-    <div className="mt-2 flex items-center justify-center gap-3 text-cream drop-shadow-[0_1px_3px_rgba(0,0,0,0.55)]">
+    <div className="mt-3 flex items-center justify-center gap-3 rounded-full bg-ink/35 px-3.5 py-1.5 text-cream backdrop-blur-[2px]">
       {items.map(({ Icon, value, label }, i) => (
         <span key={i} aria-label={label} className="flex items-center gap-1">
           <Icon />
-          <span aria-hidden="true" className="text-[10px] font-medium tabular-nums">
+          <span aria-hidden="true" className="text-[11px] font-medium tabular-nums">
             {value}
           </span>
         </span>
@@ -371,12 +411,14 @@ function CardFace({
 }) {
   return (
     <div
-      className="group relative aspect-[4/5] overflow-hidden rounded-2xl bg-ink/5 shadow-[0_18px_45px_rgba(0,0,0,0.08)]"
+      className="group relative aspect-[4/5] overflow-hidden rounded-2xl bg-ink/5 shadow-[0_35px_70px_-20px_rgba(28,33,23,0.45)] ring-1 ring-black/[0.06]"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onClick={onClick}
     >
       <Image src={apt.image} alt={apt.alt} fill quality={92} sizes={sizes} className="object-cover" />
+
+      {apt.petFriendly && <PetBadge />}
 
       {/* Scrim di leggibilità per nome + riga statistiche: indipendente dal
           filtro brightness/saturate già applicato all'intero elemento (che
@@ -396,13 +438,13 @@ function CardFace({
           smonta) quando il pannello hover appare, per non dover far
           combaciare a pixel le due altezze. */}
       <div
-        className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-4 transition-opacity duration-300 ease-out"
+        className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-5 transition-opacity duration-300 ease-out"
         style={{ opacity: showPanel ? 0 : 1 }}
       >
-        <span className="mb-1.5 text-cream drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
-          <ZodiacMark sign={apt.zodiac} className="h-7 w-7" />
+        <span className="mb-2 text-cream drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
+          <ZodiacMark sign={apt.zodiac} className="h-8 w-8" />
         </span>
-        <span className="font-display text-[26px] text-cream drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">
+        <span className="font-display text-[30px] text-cream drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">
           {apt.name}
         </span>
         <StatsRow apt={apt} />
@@ -443,7 +485,7 @@ function CardFace({
 
 function SectionHeading() {
   return (
-    <div className="relative z-[2] mx-auto flex max-w-[720px] flex-col items-center px-6 pt-8 text-center sm:pt-10">
+    <div className="relative z-[2] mx-auto flex max-w-[720px] flex-col items-center px-6 pt-6 text-center sm:pt-8">
       <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">Gli appartamenti</span>
       <h2 className="mt-5 font-display text-[clamp(32px,3vw,54px)] font-normal leading-[1.05] text-ink">
         Cinque appartamenti, cinque costellazioni
@@ -631,7 +673,7 @@ function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
           role="region"
           aria-roledescription="carousel"
           aria-label="Appartamenti di Agriturismo La Mora"
-          className="relative z-[2] mt-24 min-h-0 flex-1 sm:mt-28"
+          className="relative z-[2] mt-8 min-h-0 flex-1 sm:mt-10"
         >
           {APARTMENTS.map((apt, i) => {
             const showPanel = revealed === i;
@@ -642,12 +684,12 @@ function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
                   cardRefs.current[i] = el;
                 }}
                 className="absolute left-1/2 top-1/2 will-change-transform"
-                style={{ width: "clamp(300px, 28vw, 470px)" }}
+                style={{ width: "clamp(360px, 34vw, 580px)" }}
               >
                 <CardFace
                   apt={apt}
                   showPanel={showPanel}
-                  sizes="(max-width: 1200px) 44vw, 470px"
+                  sizes="(max-width: 1200px) 50vw, 580px"
                   onMouseEnter={() => {
                     if (cardRefs.current[i]?.dataset.center === "1") reveal(i);
                   }}
@@ -661,7 +703,7 @@ function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
           })}
         </div>
 
-        <div ref={ctaRef} className="relative z-[2] flex justify-center pb-24 pt-24 sm:pb-28 sm:pt-28" style={{ opacity: 0, pointerEvents: "none" }}>
+        <div ref={ctaRef} className="relative z-[2] flex justify-center pb-16 pt-8 sm:pb-20 sm:pt-10" style={{ opacity: 0, pointerEvents: "none" }}>
           <Link
             href="/alloggi/"
             className="group inline-flex items-center gap-2.5 rounded-[3px] bg-raspberry px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:bg-[#8a3844]"
