@@ -311,35 +311,13 @@ function BedIcon() {
   );
 }
 
-/* Muso di cane semplificato per il badge "pet friendly": orecchie a
-   punta, occhi e tartufo, leggibile anche a ~16px dentro un cerchietto. */
-function DogIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
-      <path
-        d="M7 5 4.8 9.2M17 5l2.2 4.2M6 12.5C6 9 8.7 6.7 12 6.7s6 2.3 6 5.8c0 3.9-2.7 6.8-6 6.8s-6-2.9-6-6.8Z"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-      />
-      <circle cx="9.6" cy="12.3" r="1" fill="currentColor" />
-      <circle cx="14.4" cy="12.3" r="1" fill="currentColor" />
-      <path d="M10.8 15.3c.3.5.7.7 1.2.7s.9-.2 1.2-.7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-/* Badge circolare "pet friendly": sempre visibile (non lega al hover come
+/* Badge testuale "pet friendly": sempre visibile (non lega al hover come
    la riga statistiche), ancorato in alto a destra sulla card intera così
    ruota/scala insieme ad essa senza calcoli aggiuntivi. */
 function PetBadge() {
   return (
-    <span
-      aria-label="Appartamento pet friendly"
-      className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-cream text-olive-950 shadow-[0_6px_16px_rgba(0,0,0,0.3)]"
-    >
-      <DogIcon />
+    <span className="absolute right-3 top-3 z-10 rounded-full bg-cream px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.06em] text-olive-950 shadow-[0_6px_16px_rgba(0,0,0,0.3)]">
+      Pet friendly
     </span>
   );
 }
