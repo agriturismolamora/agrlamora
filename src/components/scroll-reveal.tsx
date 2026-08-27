@@ -22,14 +22,18 @@ export function Reveal({
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    function showImmediately() {
+      setVisible(true);
+    }
+
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
-      setVisible(true);
+      showImmediately();
       return;
     }
     const el = ref.current;
     if (!el || typeof IntersectionObserver === "undefined") {
-      setVisible(true);
+      showImmediately();
       return;
     }
     const io = new IntersectionObserver(

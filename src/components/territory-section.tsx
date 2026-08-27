@@ -9,7 +9,7 @@ import { Reveal } from "@/components/scroll-reveal";
    generico. */
 export function TerritorySection() {
   return (
-    <section aria-labelledby="territory-heading" className="bg-olive-950 py-24 text-cream sm:py-32">
+    <section id="section-territorio" aria-labelledby="territory-heading" className="bg-olive-950 py-24 text-cream sm:py-32">
       <div className="mx-auto max-w-[1300px] px-6 sm:px-10">
         <Reveal className="mx-auto max-w-[700px] text-center">
           <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cream/70">Il territorio</span>

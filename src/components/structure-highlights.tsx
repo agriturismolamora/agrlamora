@@ -1,79 +1,97 @@
 import Image from "next/image";
 import Link from "next/link";
 
-/* Blocco 4 (PLAN.md §2): editoriale split + lista servizi. Copy originale
-   su fatti verificati (piscina, colazione bio, attività/territorio) — non
-   il testo del riferimento Lasala. */
-const SERVICE_LINKS = [
-  { label: "Piscina", href: "/piscina/" },
-  { label: "Colazione Bio", href: "/agriturismo-con-colazione-inclusa-assisi/" },
-  { label: "Attività & Territorio", href: "/agriturismo-famiglie-ad-assisi-e-dintorni/" },
+/* Indice editoriale (non il classico "foto grande + titolo + paragrafo"):
+   colonna intro sticky a sinistra, lista a destra con rientro alternato
+   (asimmetria deliberata, non 4 card uguali). Ogni riga porta una miniatura
+   reale con il numero d'ordine sovrapposto. Solo fatti reali già verificati
+   altrove nel progetto — nessun nuovo dato inventato qui. */
+const SIGNATURES = [
+  {
+    tag: "01",
+    title: "Pet friendly",
+    detail: "Giardino privato recintato per gli appartamenti Gemelli e Sagittario, con doccia esterna per i cani.",
+    href: "/alloggi/",
+    image: "/images/alloggi/appartamento gemelli/area cani appartamento gemelli esterno .jpg",
+    alt: "Giardino recintato per cani dell'appartamento Gemelli, Agriturismo La Mora",
+  },
+  {
+    tag: "02",
+    title: "Mobilità pulita",
+    detail: "Ricarica per auto elettriche da 22 kW e noleggio e-bike, disponibili direttamente in struttura.",
+    href: "/agriturismo-famiglie-ad-assisi-e-dintorni/",
+    image: "/images/servizi-extra/ricarica-elettrica/ricarica elettrica macchina.jpg",
+    alt: "Colonnina di ricarica per auto elettriche nel parcheggio di Agriturismo La Mora",
+  },
+  {
+    tag: "03",
+    title: "Colazione bio",
+    detail: "Preparata ogni mattina da Giuseppina con prodotti del territorio, dalle 7:00 alle 9:30.",
+    href: "/agriturismo-con-colazione-inclusa-assisi/",
+    image: "/images/colazione/colazione bio agriturismo la mora.webp",
+    alt: "Colazione biologica servita ogni mattina ad Agriturismo La Mora",
+  },
+  {
+    tag: "04",
+    title: "Pensato per le famiglie",
+    detail: "Piscina panoramica, parco giochi e appartamenti indipendenti per soggiornare senza pensieri.",
+    href: "/agriturismo-famiglie-ad-assisi-e-dintorni/",
+    image: "/images/piscina/esterno agriturismo con vista struttura e rete calcio piu campo da calcio.jpg",
+    alt: "Area esterna di Agriturismo La Mora con piscina e campo da calcio",
+  },
 ] as const;
 
 export function StructureHighlights() {
   return (
-    <section className="relative overflow-hidden bg-cream py-24 sm:py-32">
-      <div className="mx-auto grid max-w-[1400px] items-center gap-16 px-6 sm:px-10 lg:grid-cols-2 lg:gap-24">
-        {/* Colonna fotografica: foto grande + inset più piccola sovrapposta. */}
-        <div className="relative mx-auto w-full max-w-[520px] pb-10 pr-8 sm:pb-14 sm:pr-14 lg:mx-0">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[3px] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.35)]">
-            <Image
-              src="/images/piscina/piscina agriturismo la mora lato.jpeg"
-              alt="Piscina panoramica di Agriturismo La Mora circondata dal verde della campagna umbra"
-              fill
-              sizes="(max-width: 1024px) 85vw, 520px"
-              className="object-cover"
-            />
-          </div>
-          <div className="absolute bottom-0 right-0 w-[52%] max-w-[230px] overflow-hidden rounded-[3px] border-[6px] border-cream shadow-[0_20px_45px_-15px_rgba(0,0,0,0.4)]">
-            <div className="relative aspect-[4/5]">
-              <Image
-                src="/images/colazione/colazione bio agriturismo la mora.webp"
-                alt="Colazione biologica servita agli ospiti di Agriturismo La Mora"
-                fill
-                sizes="230px"
-                className="object-cover"
-              />
-            </div>
-          </div>
+    <section id="section-highlights" className="relative overflow-hidden bg-cream py-24 sm:py-32">
+      <div className="mx-auto grid max-w-[1300px] gap-12 px-6 sm:px-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">Perché La Mora</span>
+          <h2 className="mt-5 font-display text-[clamp(32px,3.6vw,52px)] font-normal leading-[1.12] text-ink [text-wrap:balance]">
+            Non il solito agriturismo.
+          </h2>
+          <p className="mt-5 max-w-[380px] font-display text-[21px] italic leading-[1.35] text-ink-soft [text-wrap:balance]">
+            È una casa, con tutto quello che serve per sentirsi a proprio agio.
+          </p>
         </div>
 
-        {/* Colonna editoriale. */}
-        <div className="mx-auto w-full max-w-[520px] lg:mx-0">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">
-            La vita alla Mora
-          </span>
-          <h2 className="mt-5 font-display text-[clamp(30px,3vw,46px)] font-normal leading-[1.12] text-ink [text-wrap:balance]">
-            Il tempo qui si misura in tuffi in piscina, colazioni lente e strade da scoprire in bicicletta.
-          </h2>
-          <ul className="mt-10 flex flex-col divide-y divide-ink/10 border-t border-ink/10">
-            {SERVICE_LINKS.map((service) => (
-              <li key={service.label}>
-                <Link
-                  href={service.href}
-                  className="group flex items-center justify-between py-4 font-display text-xl text-ink transition-colors hover:text-raspberry"
-                >
-                  {service.label}
-                  <span
-                    aria-hidden="true"
-                    className="text-sm text-ink-soft transition-transform duration-200 group-hover:translate-x-1 group-hover:text-raspberry"
-                  >
-                    →
+        <ul className="flex flex-col divide-y divide-ink/10 border-t border-ink/10">
+          {SIGNATURES.map((s, i) => (
+            <li key={s.title}>
+              <Link
+                href={s.href}
+                className={`group flex items-center gap-5 py-7 transition-colors sm:gap-8 sm:py-8 ${
+                  i % 2 === 1 ? "sm:pl-14" : ""
+                }`}
+              >
+                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[3px] sm:h-28 sm:w-28">
+                  <Image
+                    src={s.image}
+                    alt={s.alt}
+                    fill
+                    sizes="(max-width: 640px) 80px, 112px"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <span className="absolute left-1.5 top-1.5 font-display text-[11px] text-cream/90 [text-shadow:0_1px_3px_rgba(0,0,0,0.6)]">
+                    {s.tag}
                   </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <Link
-            href="/chi-siamo/"
-            className="group mt-10 inline-flex items-center gap-2.5 rounded-[3px] bg-raspberry px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:bg-[#8a3844]"
-          >
-            Scopri la struttura
-            <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-              →
-            </span>
-          </Link>
-        </div>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-display text-[21px] leading-[1.15] text-ink transition-colors group-hover:text-raspberry sm:text-[26px]">
+                    {s.title}
+                  </h3>
+                  <p className="mt-2 max-w-[420px] text-[13px] leading-[1.65] text-ink-soft">{s.detail}</p>
+                </div>
+                <span
+                  aria-hidden="true"
+                  className="hidden shrink-0 text-ink-soft transition-transform duration-200 group-hover:translate-x-1 group-hover:text-raspberry sm:block"
+                >
+                  →
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

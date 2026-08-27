@@ -6,18 +6,19 @@ import { ImmersiveStory } from "@/components/immersive-story";
 import { ApartmentsCarousel } from "@/components/apartments-carousel";
 import { StructureHighlights } from "@/components/structure-highlights";
 import { OutdoorLife } from "@/components/outdoor-life";
-import { PetsAndEv } from "@/components/pets-and-ev";
-import { BreakfastStory } from "@/components/breakfast-story";
 import { ExperiencesSection } from "@/components/experiences-section";
 import { TerritorySection } from "@/components/territory-section";
 import { ReviewsSection } from "@/components/reviews-section";
 import { DirectBooking } from "@/components/direct-booking";
 import { LocationMap } from "@/components/location-map";
+import { LaMoraDaVivere } from "@/components/la-mora-da-vivere";
 import { NewsletterSection } from "@/components/newsletter-section";
 import { CertificationsMarquee } from "@/components/certifications-marquee";
 import { SiteFooter } from "@/components/site-footer";
 import { ConciergeChat } from "@/components/concierge-chat";
 import { PromoPopup } from "@/components/promo-popup";
+import { SectionProgressDots } from "@/components/section-progress-dots";
+import { BackToTop } from "@/components/back-to-top";
 
 const JSON_LD = {
   "@context": "https://schema.org",
@@ -50,13 +51,12 @@ export default function Home() {
         <ApartmentsCarousel />
         <StructureHighlights />
         <OutdoorLife />
-        <PetsAndEv />
-        <BreakfastStory />
         <ExperiencesSection />
         <TerritorySection />
         <ReviewsSection />
         <DirectBooking />
         <LocationMap />
+        <LaMoraDaVivere />
         <NewsletterSection />
         <CertificationsMarquee />
       </main>
@@ -67,6 +67,8 @@ export default function Home() {
       <BookingBar />
       <ConciergeChat />
       <PromoPopup />
+      <SectionProgressDots />
+      <BackToTop />
     </>
   );
 }

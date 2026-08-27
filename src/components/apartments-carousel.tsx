@@ -898,7 +898,7 @@ export function ApartmentsCarousel() {
      orizzontale delle card fantasma resta garantito dall'overflow-hidden
      già presente sul div sticky stesso (non un antenato, quindi sicuro). */
   return (
-    <section className="relative bg-[#f1f1f1]">
+    <section id="section-apartments" className="relative bg-[#f1f1f1]">
       {reducedMotion ? (
         <StaticGrid />
       ) : tier === "mobile" ? (

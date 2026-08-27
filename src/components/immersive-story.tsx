@@ -97,6 +97,7 @@ export function ImmersiveStory() {
   return (
     <section
       ref={wrapperRef}
+      id="section-story"
       className={reducedMotion ? "relative" : "relative min-h-[130vh] sm:min-h-[150vh]"}
     >
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">

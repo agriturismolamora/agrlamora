@@ -17,7 +17,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-[100svh] overflow-hidden bg-olive-950">
+    <section id="section-hero" className="relative min-h-[100svh] overflow-hidden bg-olive-950">
       {/* Livello 0: fotografia/video di sfondo. */}
       <video
         ref={videoRef}

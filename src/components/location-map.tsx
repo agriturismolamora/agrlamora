@@ -19,7 +19,7 @@ const EMAIL = "agriturismolamora@gmail.com";
    reale via ricerca. */
 export function LocationMap() {
   return (
-    <section aria-labelledby="location-heading" className="bg-cream">
+    <section id="section-map" aria-labelledby="location-heading" className="bg-cream">
       <div className="flex flex-col lg:flex-row">
         <Reveal className="relative aspect-[4/3] w-full bg-cream-dim sm:aspect-[16/10] lg:aspect-auto lg:w-[58%]">
           <Image
