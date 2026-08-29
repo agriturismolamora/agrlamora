@@ -2,16 +2,18 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { Reveal } from "@/components/scroll-reveal";
 
-/* Sezione scura "editoriale + galleria" (PLAN.md Blocco 5, mai costruita
-   finora): il testo resta fisso al centro, mentre sulla sinistra scorre una
-   fila di foto verticali reali della struttura in generale (non legate a un
-   singolo appartamento/esperienza — MAI usate altrove in home), guidata 1:1
-   dallo scroll dell'utente tramite lo stesso schema "wrapper alto + sticky"
-   già usato da apartments-carousel.tsx (niente preventDefault sulla rotella:
-   lo scroll nativo resta sempre intatto, cambia solo cosa succede mentre la
-   sezione è agganciata). A fine corsa le foto sono tutte uscite a sinistra
-   e la sezione si sgancia, lasciando proseguire lo scroll normale. */
+/* Sezione scura "editoriale + galleria" (PLAN.md Blocco 5): il testo resta
+   fisso al centro, mentre una fila di foto verticali reali della struttura
+   in generale (non legate a un singolo appartamento/esperienza — MAI usate
+   altrove in home) attraversa TUTTA la sezione da destra a sinistra, guidata
+   1:1 dallo scroll dell'utente — passa anche dietro a testo/CTA (z-index più
+   basso, non un "buco" nella corsia) — tramite lo stesso schema "wrapper alto
+   + sticky" già usato da apartments-carousel.tsx (niente preventDefault sulla
+   rotella: lo scroll nativo resta sempre intatto, cambia solo cosa succede
+   mentre la sezione è agganciata). A fine corsa le foto sono tutte uscite a
+   sinistra e la sezione si sgancia, lasciando proseguire lo scroll normale. */
 const GALLERY_IMAGES = [
   { src: "/images/struttura/foto dell esterno della struttura.webp", alt: "Esterno di Agriturismo La Mora" },
   { src: "/images/struttura/immagine cucina arredata.jpeg", alt: "Cucina arredata di uno degli appartamenti" },
@@ -22,17 +24,14 @@ const GALLERY_IMAGES = [
 ] as const;
 
 const OUTER_VH = 220;
-const LANE_VW = 28;
-const CARD_VW = 11;
-const GAP_VW = 1.6;
+const CARD_VW = 14;
+const GAP_VW = 2.2;
 const STRIP_VW = GALLERY_IMAGES.length * (CARD_VW + GAP_VW);
+const EDGE_BUFFER_VW = 20;
 const ROTATIONS = [-3, 2, -2, 3, -2.5, 2.5];
 const OFFSETS = [-16, 14, -8, 18, -14, 10];
 
-/* TODO: sostituire con l'URL reale del profilo Instagram della struttura
-   (non ancora confermato — vedi PLAN.md Blocco 5, "verificare con il
-   titolare se esiste un profilo attivo prima di implementare il link"). */
-const INSTAGRAM_URL = "#";
+const INSTAGRAM_URL = "https://www.instagram.com/paolo.720/";
 
 function InstagramIcon() {
   return (
@@ -109,9 +108,10 @@ export function InstagramGallery() {
     };
   }, [reducedMotion, isDesktop]);
 
-  // La striscia parte in parte visibile nella corsia sinistra ed esce
-  // interamente oltre il bordo sinistro della viewport a fine corsa.
-  const translateVW = LANE_VW * 0.5 - progress * (STRIP_VW + LANE_VW + 15);
+  // La striscia parte interamente fuori dal bordo destro della viewport ed
+  // esce interamente oltre il bordo sinistro a fine corsa, attraversando
+  // tutta la sezione (testo/CTA compresi, grazie allo z-index più basso).
+  const translateVW = 100 - progress * (STRIP_VW + 100 + EDGE_BUFFER_VW);
 
   return (
     <section
@@ -125,8 +125,7 @@ export function InstagramGallery() {
         {!reducedMotion && isDesktop && (
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-y-0 left-0 z-[1] hidden overflow-hidden lg:block"
-            style={{ width: `${LANE_VW}vw` }}
+            className="pointer-events-none absolute inset-0 z-[1] hidden overflow-hidden lg:block"
           >
             <div
               className="flex h-full items-center"
@@ -145,7 +144,7 @@ export function InstagramGallery() {
           </div>
         )}
 
-        <div className="relative z-[2] mx-auto max-w-[640px] px-6 text-center sm:px-10">
+        <Reveal className="relative z-[2] mx-auto max-w-[640px] px-6 text-center sm:px-10">
           <p className="font-display text-[clamp(24px,3.4vw,40px)] font-normal italic leading-[1.3] text-cream [text-wrap:balance]">
             Viaggiare è una forma di restare. Scopri i piccoli momenti che porterai a casa se vieni a trovarci.
           </p>
@@ -158,7 +157,7 @@ export function InstagramGallery() {
             Segui su Instagram
             <InstagramIcon />
           </a>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

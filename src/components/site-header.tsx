@@ -305,7 +305,13 @@ export function SiteHeader() {
             <a href="#" aria-label="Facebook Agriturismo La Mora" className="opacity-75 transition-opacity hover:opacity-100">
               <SocialIcon kind="facebook" />
             </a>
-            <a href="#" aria-label="Instagram Agriturismo La Mora" className="opacity-75 transition-opacity hover:opacity-100">
+            <a
+              href="https://www.instagram.com/paolo.720/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram Agriturismo La Mora"
+              className="opacity-75 transition-opacity hover:opacity-100"
+            >
               <SocialIcon kind="instagram" />
             </a>
           </div>
@@ -553,7 +559,9 @@ export function SiteHeader() {
                     <SocialIcon kind="facebook" />
                   </a>
                   <a
-                    href="#"
+                    href="https://www.instagram.com/paolo.720/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     aria-label="Instagram Agriturismo La Mora"
                     className="flex h-9 w-9 items-center justify-center rounded-full border border-cream/25 text-cream/85 transition-colors hover:border-gold hover:text-gold"
                   >

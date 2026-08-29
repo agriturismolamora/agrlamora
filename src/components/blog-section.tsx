@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Reveal } from "@/components/scroll-reveal";
 
 /* Blog/editoriale (PLAN.md Blocco 6, mai costruito finora): i 20 articoli
    veri arriveranno con la produzione contenuti SEO/GEO — per ora 5 card
@@ -45,7 +46,7 @@ export function BlogSection() {
   return (
     <section id="section-blog" aria-labelledby="blog-heading" className="bg-cream-dim py-24 sm:py-28">
       <div className="mx-auto max-w-[1400px] px-6 sm:px-10">
-        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+        <Reveal className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div className="max-w-[640px]">
             <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">
               Dal blog de La Mora
@@ -66,13 +67,15 @@ export function BlogSection() {
               →
             </span>
           </Link>
-        </div>
+        </Reveal>
 
         {/* Desktop/tablet: ventaglio di card sovrapposte, quella in hover
             prevale (scale + z-index) sulle altre senza spostarle. Mobile:
             striscia scorrevole con snap, niente sovrapposizione (l'hover non
-            esiste su touch). */}
-        <div className="mt-14 hidden sm:mt-16 lg:flex lg:justify-center">
+            esiste su touch). Il reveal è su tutta la fila (non per-card):
+            i margini negativi/z-index dell'overlap vivono sui Link, un
+            fade-in per-card romperebbe quella geometria. */}
+        <Reveal delay={100} className="mt-14 hidden sm:mt-16 lg:flex lg:justify-center">
           {POSTS.map((post, i) => (
             <Link
               key={post.title}
@@ -110,9 +113,9 @@ export function BlogSection() {
               </div>
             </Link>
           ))}
-        </div>
+        </Reveal>
 
-        <div className="mt-14 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 sm:mt-16 lg:hidden">
+        <Reveal delay={100} className="mt-14 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 sm:mt-16 lg:hidden">
           {POSTS.map((post) => (
             <Link
               key={post.title}
@@ -139,7 +142,7 @@ export function BlogSection() {
               </div>
             </Link>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );

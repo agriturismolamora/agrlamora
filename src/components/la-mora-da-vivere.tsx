@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState, type ComponentType } from "react";
+import { useEffect, useState, type ComponentType } from "react";
+import { Reveal } from "@/components/scroll-reveal";
 
 /* Sezione interattiva "un highlight alla volta": icone monocromatiche
    lineari (stesso linguaggio delle altre icone del progetto), nessun dot
    locale — l'indicatore globale della homepage (section-progress-dots.tsx)
-   si occupa della navigazione tra macro-sezioni. Solo fatti reali già
-   verificati altrove nel progetto. */
+   si occupa della navigazione tra macro-sezioni. Selezione solo via click
+   (niente auto-avanzamento/blocco scroll con la rotella: l'utente sceglie
+   liberamente quale icona guardare). Solo fatti reali già verificati
+   altrove nel progetto. */
 function LandscapeIcon() {
   return (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
@@ -161,24 +164,9 @@ const HIGHLIGHTS: Highlight[] = [
   },
 ];
 
-const N = HIGHLIGHTS.length;
-
-function mod(n: number, m: number) {
-  return ((n % m) + m) % m;
-}
-
-const WHEEL_COOLDOWN_MS = 260;
-
 export function LaMoraDaVivere() {
   const [active, setActive] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-  const activeRef = useRef(0);
-  const wheelLockRef = useRef(false);
-
-  useEffect(() => {
-    activeRef.current = active;
-  }, [active]);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -190,50 +178,20 @@ export function LaMoraDaVivere() {
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
-  // addEventListener manuale (non onWheel React): i synthetic handler onWheel
-  // sono passive di default, preventDefault() al loro interno non avrebbe
-  // alcun effetto reale (e genera solo un warning in console).
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-
-    function handleWheel(e: WheelEvent) {
-      if (e.deltaY === 0) return;
-      const goingDown = e.deltaY > 0;
-      const atStart = activeRef.current === 0;
-      const atEnd = activeRef.current === N - 1;
-      // Ai bordi lascia proseguire lo scroll normale della pagina: non deve
-      // mai "intrappolare" l'utente in questa sezione.
-      if ((goingDown && atEnd) || (!goingDown && atStart)) return;
-
-      e.preventDefault();
-      if (wheelLockRef.current) return;
-      wheelLockRef.current = true;
-      setActive((i) => mod(i + (goingDown ? 1 : -1), N));
-      window.setTimeout(() => {
-        wheelLockRef.current = false;
-      }, WHEEL_COOLDOWN_MS);
-    }
-
-    el.addEventListener("wheel", handleWheel, { passive: false });
-    return () => el.removeEventListener("wheel", handleWheel);
-  }, []);
-
   const current = HIGHLIGHTS[active];
 
   return (
     <section
-      ref={sectionRef}
       id="section-vivere"
       aria-label="La Mora da vivere"
       className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-olive-950 py-20 text-cream sm:py-24"
     >
-      <div className="relative z-[2] mx-auto max-w-[820px] px-6 text-center sm:px-10">
+      <Reveal className="relative z-[2] mx-auto max-w-[820px] px-6 text-center sm:px-10">
         <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-cream/55">La Mora da vivere</span>
         <h2 className="mt-6 font-display text-[clamp(30px,4.4vw,58px)] font-normal leading-[1.1] [text-wrap:balance]">
           <span className="text-cream">Il piacere è</span> <span className="italic text-cream/40">nei dettagli.</span>
         </h2>
-      </div>
+      </Reveal>
 
       <div
         role="tablist"

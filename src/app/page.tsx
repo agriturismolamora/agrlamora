@@ -52,8 +52,8 @@ export default function Home() {
         <ImmersiveStory />
         <ApartmentsCarousel />
         <StructureHighlights />
-        <OutdoorLife />
         <ExperiencesSection />
+        <OutdoorLife />
         <TerritorySection />
         <ReviewsSection />
         <DirectBooking />
