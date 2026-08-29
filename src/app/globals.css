@@ -24,6 +24,13 @@
   --color-raspberry: #9f414f;
   --color-raspberry-light: #b86f7a;
 
+  /* Cielo notturno stellato (sezione Appartamenti, apartments-carousel.tsx):
+     unica eccezione alla palette campagna umbra, usata solo per questo
+     sfondo decorativo — un blu-nero profondo e un bianco freddo, non i
+     toni caldi del resto del sito, per leggere davvero come "notte". */
+  --color-midnight: #0b0f1e;
+  --color-starlight: #eef1fb;
+
   /* Cormorant Garamond: font editoriale (nav, titoli, hero, dropdown premium).
      Montserrat: font funzionale/UI (CTA, booking bar, label, microcopy) — resta
      il font di default del body per leggibilità. */
@@ -100,6 +107,26 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .animate-panel-fade {
     animation: none;
+  }
+}
+
+/* Twinkle delle stelle nello sfondo notturno del carousel Appartamenti
+   (apartments-carousel.tsx): timing (durata/delay) randomizzato per stella
+   direttamente in JS via style inline, qui solo la curva condivisa. Nessuna
+   lettura di scroll/stato del carousel: strato puramente decorativo, mai a
+   rischio di disallinearsi dalla logica (già delicata) di posizionamento
+   delle card. Disattivato via prop reducedMotion nel componente stesso
+   (stesso pattern già usato da ConstellationField in quel file), non qui:
+   le stelle restano visibili e ferme, solo senza l'animazione. */
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.25;
+    transform: scale(0.75);
   }
 }
 

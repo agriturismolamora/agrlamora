@@ -22,7 +22,7 @@ export function LocationMap() {
   return (
     <section id="section-map" aria-labelledby="location-heading" className="bg-cream lg:min-h-[140vh]">
       <PinnedHold>
-      <div className="flex flex-col lg:flex-row">
+      <div className="flex flex-col lg:h-[100svh] lg:flex-row">
         <Reveal className="relative aspect-[4/3] w-full bg-cream-dim sm:aspect-[16/10] lg:aspect-auto lg:w-[58%]">
           <Image
             src="/images/home/mappa%20della%20zona%20agriturismo%20la%20mora.png"

@@ -269,7 +269,7 @@ function ConstellationField({ reducedMotion }: { reducedMotion: boolean }) {
           }}
           className="absolute inset-0"
         >
-          <svg viewBox="0 0 1200 640" className="absolute inset-0 h-full w-full text-olive-950" style={{ opacity: 0.06 }}>
+          <svg viewBox="0 0 1200 640" className="absolute inset-0 h-full w-full text-starlight" style={{ opacity: 0.12 }}>
             <polyline points={d.points} fill="none" stroke="currentColor" strokeWidth="1" />
             {d.points.split(" ").map((p, pi) => {
               const [x, y] = p.split(",");
@@ -277,6 +277,62 @@ function ConstellationField({ reducedMotion }: { reducedMotion: boolean }) {
             })}
           </svg>
         </div>
+      ))}
+    </div>
+  );
+}
+
+/* Sfondo "cielo notturno stellato": tema decorativo della sezione (richiesta
+   esplicita — "trasformare lo sfondo in un cielo notturno stellato
+   animatissimo, rendendo sempre e comunque le card visibili"), che riprende
+   il claim già presente nel titolo ("cinque costellazioni"). Posizioni fisse
+   generate da un PRNG con seed costante (mai Math.random() in render: su un
+   componente server-renderizzato darebbe un mismatch di hydration tra
+   server e client) — un array statico, calcolato una sola volta al caricamento
+   del modulo. Nessun listener di scroll, nessuna lettura dello stato del
+   carousel: strato puramente decorativo e indipendente al 100% dalla logica
+   (già delicata, vedi commenti sopra) di posizionamento delle card — non può
+   in nessun modo interferire con quella logica. */
+function seededRandom(seed: number) {
+  let s = seed % 2147483647;
+  if (s <= 0) s += 2147483646;
+  return () => {
+    s = (s * 16807) % 2147483647;
+    return (s - 1) / 2147483646;
+  };
+}
+
+const STAR_COUNT = 110;
+const STARS = (() => {
+  const rand = seededRandom(1337);
+  return Array.from({ length: STAR_COUNT }, () => ({
+    left: rand() * 100,
+    top: rand() * 100,
+    size: 1 + rand() * 2.2,
+    delay: rand() * 5,
+    duration: 2.6 + rand() * 3.4,
+  }));
+})();
+
+function StarField({ reducedMotion }: { reducedMotion: boolean }) {
+  return (
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+      {STARS.map((star, i) => (
+        <span
+          key={i}
+          className="absolute rounded-full bg-starlight"
+          style={{
+            left: `${star.left.toFixed(2)}%`,
+            top: `${star.top.toFixed(2)}%`,
+            width: `${star.size.toFixed(2)}px`,
+            height: `${star.size.toFixed(2)}px`,
+            opacity: reducedMotion ? 0.7 : undefined,
+            boxShadow: `0 0 ${(star.size * 2).toFixed(1)}px rgba(238,241,251,0.55)`,
+            animation: reducedMotion
+              ? undefined
+              : `star-twinkle ${star.duration.toFixed(2)}s ease-in-out ${star.delay.toFixed(2)}s infinite`,
+          }}
+        />
       ))}
     </div>
   );
@@ -464,8 +520,8 @@ function CardFace({
 function SectionHeading() {
   return (
     <div className="relative z-[2] mx-auto flex max-w-[720px] flex-col items-center px-6 pt-6 text-center sm:pt-8">
-      <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">Gli appartamenti</span>
-      <h2 className="mt-5 font-display text-[clamp(32px,3vw,54px)] font-normal leading-[1.05] text-ink">
+      <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cream/70">Gli appartamenti</span>
+      <h2 className="mt-5 font-display text-[clamp(32px,3vw,54px)] font-normal leading-[1.05] text-cream">
         Cinque appartamenti, cinque costellazioni
       </h2>
     </div>
@@ -644,6 +700,7 @@ function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
   return (
     <div ref={outerRef} className="relative" style={{ height: `${OUTER_VH}vh` }}>
       <div className="sticky top-0 flex h-[100svh] flex-col overflow-hidden">
+        <StarField reducedMotion={reducedMotion} />
         <ConstellationField reducedMotion={reducedMotion} />
         <SectionHeading />
 
@@ -771,6 +828,7 @@ function MobileCarousel({ reducedMotion }: { reducedMotion: boolean }) {
 
   return (
     <div className="relative overflow-hidden pb-16 pt-4">
+      <StarField reducedMotion={reducedMotion} />
       <ConstellationField reducedMotion={reducedMotion} />
       <SectionHeading />
 
@@ -856,6 +914,7 @@ function StaticGrid() {
 
   return (
     <div className="relative overflow-hidden pb-16 pt-4 sm:pb-20">
+      <StarField reducedMotion={true} />
       <SectionHeading />
       <div className="relative z-[2] mt-10 flex flex-wrap items-start justify-center gap-6 px-6 sm:mt-12">
         {APARTMENTS.map((apt) => (
@@ -898,7 +957,7 @@ export function ApartmentsCarousel() {
      orizzontale delle card fantasma resta garantito dall'overflow-hidden
      già presente sul div sticky stesso (non un antenato, quindi sicuro). */
   return (
-    <section id="section-apartments" data-snap-exempt="true" className="relative bg-[#f1f1f1]">
+    <section id="section-apartments" data-snap-exempt="true" className="relative bg-midnight">
       {reducedMotion ? (
         <StaticGrid />
       ) : tier === "mobile" ? (
