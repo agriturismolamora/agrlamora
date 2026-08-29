@@ -130,6 +130,33 @@ body {
   }
 }
 
+/* Respiro lento dell'icona mora nel loader delle pagine interne
+   (page-loader.tsx): mai una rotazione da spinner, solo una leggera
+   variazione di opacità/scala che comunica "sta caricando" restando
+   coerente con l'identità del brand. */
+@keyframes mora-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.94);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-mora-breathe {
+  animation: mora-breathe 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-mora-breathe {
+    animation: none;
+    opacity: 1;
+  }
+}
+
 /* Il badge fluttuante di reCAPTCHA v3 è nascosto: i Termini di Google lo
    permettono SOLO perché mostriamo il testo di attribuzione richiesto nel
    modulo newsletter (newsletter-section.tsx). Se lo script non è caricato

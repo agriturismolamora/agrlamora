@@ -1,3 +1,4 @@
+import { HomeIntro } from "@/components/home-intro";
 import { SiteHeader } from "@/components/site-header";
 import { Hero } from "@/components/hero";
 import { BookingBar } from "@/components/booking-bar";
@@ -45,6 +46,7 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }} />
+      <HomeIntro />
       <SiteHeader />
       <main id="main" tabIndex={-1}>
         <Hero />
