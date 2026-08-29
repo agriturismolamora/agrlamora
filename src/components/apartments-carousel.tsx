@@ -389,7 +389,7 @@ function CardFace({
 }) {
   return (
     <div
-      className="group relative aspect-[4/5] overflow-hidden rounded-2xl bg-ink/5 shadow-[0_35px_70px_-20px_rgba(28,33,23,0.45)] ring-1 ring-black/[0.06]"
+      className="group relative aspect-[4/5] overflow-hidden bg-ink/5 shadow-[0_25px_55px_-25px_rgba(28,33,23,0.4)]"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onClick={onClick}

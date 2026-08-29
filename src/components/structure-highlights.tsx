@@ -1,97 +1,116 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
-/* Indice editoriale (non il classico "foto grande + titolo + paragrafo"):
-   colonna intro sticky a sinistra, lista a destra con rientro alternato
-   (asimmetria deliberata, non 4 card uguali). Ogni riga porta una miniatura
-   reale con il numero d'ordine sovrapposto. Solo fatti reali già verificati
-   altrove nel progetto — nessun nuovo dato inventato qui. */
+/* Indice editoriale: foto a piena altezza a sinistra (tocca il bordo del
+   browser, nessun container che la isoli), lista a destra con 3 righe
+   cliccabili separate da una linea orizzontale, ciascuna con il proprio CTA.
+   Passare il mouse (o il focus da tastiera) su una riga cambia la foto a
+   sinistra in crossfade — non un semplice hover-color, una vera anteprima
+   dedicata a quel fatto.
+
+   Argomenti scelti apposta DIVERSI da quelli già coperti altrove in home
+   (Esperienze: e-bike/cavalli/piscina/famiglia/territorio — La Mora da
+   Vivere: pet friendly/EV/colazione/famiglie/appartamenti/gestione
+   familiare/piscina/territorio — LocationMap: campagna/aeroporto): qui solo
+   fatti reali non ancora raccontati in nessun'altra sezione. */
 const SIGNATURES = [
   {
     tag: "01",
-    title: "Pet friendly",
-    detail: "Giardino privato recintato per gli appartamenti Gemelli e Sagittario, con doccia esterna per i cani.",
+    title: "Tutti i comfort di una casa vera",
+    detail: "Wi-Fi, aria condizionata, cassaforte e TV satellitare in ogni appartamento: nessun pensiero da organizzare.",
     href: "/alloggi/",
-    image: "/images/alloggi/appartamento gemelli/area cani appartamento gemelli esterno .jpg",
-    alt: "Giardino recintato per cani dell'appartamento Gemelli, Agriturismo La Mora",
+    image: "/images/struttura/immagine di una sala dell agriturismo.webp",
+    alt: "Sala interna arredata di uno degli appartamenti di Agriturismo La Mora",
+    fit: "cover",
   },
   {
     tag: "02",
-    title: "Mobilità pulita",
-    detail: "Ricarica per auto elettriche da 22 kW e noleggio e-bike, disponibili direttamente in struttura.",
-    href: "/agriturismo-famiglie-ad-assisi-e-dintorni/",
-    image: "/images/servizi-extra/ricarica-elettrica/ricarica elettrica macchina.jpg",
-    alt: "Colonnina di ricarica per auto elettriche nel parcheggio di Agriturismo La Mora",
+    title: "Un agriturismo riconosciuto",
+    detail: "Certificato di Eccellenza 2025 e Travellers' Choice Tripadvisor, guadagnati recensione dopo recensione.",
+    href: "/recensioni/",
+    image: "/images/footer/certificazioni/certificato di eccellenza 2025 la mora.png",
+    alt: "Certificato di Eccellenza 2025 assegnato ad Agriturismo La Mora",
+    fit: "contain",
   },
   {
     tag: "03",
-    title: "Colazione bio",
-    detail: "Preparata ogni mattina da Giuseppina con prodotti del territorio, dalle 7:00 alle 9:30.",
-    href: "/agriturismo-con-colazione-inclusa-assisi/",
-    image: "/images/colazione/colazione bio agriturismo la mora.webp",
-    alt: "Colazione biologica servita ogni mattina ad Agriturismo La Mora",
-  },
-  {
-    tag: "04",
-    title: "Pensato per le famiglie",
-    detail: "Piscina panoramica, parco giochi e appartamenti indipendenti per soggiornare senza pensieri.",
-    href: "/agriturismo-famiglie-ad-assisi-e-dintorni/",
-    image: "/images/piscina/esterno agriturismo con vista struttura e rete calcio piu campo da calcio.jpg",
-    alt: "Area esterna di Agriturismo La Mora con piscina e campo da calcio",
+    title: "Tutto pronto quando arrivi",
+    detail: "Biancheria da letto e da bagno già preparata, ogni dettaglio sistemato prima ancora del check-in.",
+    href: "/chi-siamo/",
+    image: "/images/struttura/letto matrimoniale arredato.jpeg",
+    alt: "Camera con letto matrimoniale pronto in uno degli appartamenti di Agriturismo La Mora",
+    fit: "cover",
   },
 ] as const;
 
 export function StructureHighlights() {
+  const [active, setActive] = useState(0);
+
   return (
-    <section id="section-highlights" className="relative overflow-hidden bg-cream py-24 sm:py-32">
-      <div className="mx-auto grid max-w-[1300px] gap-12 px-6 sm:px-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
-        <div className="lg:sticky lg:top-32 lg:self-start">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">Perché La Mora</span>
-          <h2 className="mt-5 font-display text-[clamp(32px,3.6vw,52px)] font-normal leading-[1.12] text-ink [text-wrap:balance]">
-            Non il solito agriturismo.
-          </h2>
-          <p className="mt-5 max-w-[380px] font-display text-[21px] italic leading-[1.35] text-ink-soft [text-wrap:balance]">
-            È una casa, con tutto quello che serve per sentirsi a proprio agio.
-          </p>
+    <section id="section-highlights" className="relative overflow-hidden bg-cream">
+      <div className="grid grid-cols-1 lg:grid-cols-2 lg:items-stretch">
+        {/* Colonna fotografica: full-bleed, nessun container/padding a
+            sinistra così tocca davvero il bordo del browser su desktop. */}
+        <div className="relative order-1 aspect-[4/5] sm:aspect-[16/10] lg:order-1 lg:aspect-auto lg:min-h-[640px]">
+          {SIGNATURES.map((s, i) => (
+            <div
+              key={s.title}
+              aria-hidden={i !== active}
+              className={`absolute inset-0 transition-opacity duration-500 ease-out ${
+                s.fit === "contain" ? "bg-cream-dim" : ""
+              }`}
+              style={{ opacity: i === active ? 1 : 0 }}
+            >
+              <Image
+                src={s.image}
+                alt={s.alt}
+                fill
+                priority={i === 0}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className={s.fit === "contain" ? "object-contain p-16" : "object-cover"}
+              />
+            </div>
+          ))}
         </div>
 
-        <ul className="flex flex-col divide-y divide-ink/10 border-t border-ink/10">
-          {SIGNATURES.map((s, i) => (
-            <li key={s.title}>
-              <Link
-                href={s.href}
-                className={`group flex items-center gap-5 py-7 transition-colors sm:gap-8 sm:py-8 ${
-                  i % 2 === 1 ? "sm:pl-14" : ""
-                }`}
+        {/* Colonna editoriale. */}
+        <div className="order-2 flex flex-col justify-center px-6 py-14 sm:px-10 sm:py-16 lg:order-2 lg:px-16 lg:py-20 xl:px-20">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">Perché La Mora</span>
+          <h2 className="mt-5 max-w-[440px] font-display text-[clamp(28px,3vw,42px)] font-normal leading-[1.15] text-ink [text-wrap:balance]">
+            Non il solito agriturismo.
+          </h2>
+
+          <ul className="mt-10 flex flex-col divide-y divide-ink/10 border-t border-ink/10">
+            {SIGNATURES.map((s, i) => (
+              <li
+                key={s.title}
+                onMouseEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
+                className="py-6"
               >
-                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[3px] sm:h-28 sm:w-28">
-                  <Image
-                    src={s.image}
-                    alt={s.alt}
-                    fill
-                    sizes="(max-width: 640px) 80px, 112px"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <span className="absolute left-1.5 top-1.5 font-display text-[11px] text-cream/90 [text-shadow:0_1px_3px_rgba(0,0,0,0.6)]">
-                    {s.tag}
-                  </span>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-display text-[21px] leading-[1.15] text-ink transition-colors group-hover:text-raspberry sm:text-[26px]">
+                <span className="block font-display text-sm text-ink-soft/50">{s.tag}</span>
+                <Link href={s.href} className="group mt-1 block">
+                  <h3 className="font-display text-[22px] leading-[1.2] text-ink transition-colors group-hover:text-raspberry sm:text-[26px]">
                     {s.title}
                   </h3>
-                  <p className="mt-2 max-w-[420px] text-[13px] leading-[1.65] text-ink-soft">{s.detail}</p>
-                </div>
-                <span
-                  aria-hidden="true"
-                  className="hidden shrink-0 text-ink-soft transition-transform duration-200 group-hover:translate-x-1 group-hover:text-raspberry sm:block"
+                  <p className="mt-2 max-w-[400px] text-[13px] leading-[1.65] text-ink-soft">{s.detail}</p>
+                </Link>
+                <Link
+                  href={s.href}
+                  className="group/cta mt-4 inline-flex items-center gap-2 font-sans text-[10px] font-semibold uppercase tracking-[0.06em] text-ink transition-colors hover:text-raspberry"
                 >
-                  →
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+                  Scopri di più
+                  <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover/cta:translate-x-1">
+                    →
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

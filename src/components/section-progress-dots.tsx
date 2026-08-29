@@ -15,6 +15,7 @@ const SECTIONS = [
   { id: "section-highlights", label: "Perché La Mora" },
   { id: "section-experiences", label: "Esperienze" },
   { id: "section-territorio", label: "Territorio" },
+  { id: "section-instagram", label: "Instagram" },
   { id: "section-map", label: "Dove siamo" },
   { id: "section-vivere", label: "La Mora da vivere" },
 ] as const;

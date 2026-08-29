@@ -10,6 +10,8 @@ import { ExperiencesSection } from "@/components/experiences-section";
 import { TerritorySection } from "@/components/territory-section";
 import { ReviewsSection } from "@/components/reviews-section";
 import { DirectBooking } from "@/components/direct-booking";
+import { BlogSection } from "@/components/blog-section";
+import { InstagramGallery } from "@/components/instagram-gallery";
 import { LocationMap } from "@/components/location-map";
 import { LaMoraDaVivere } from "@/components/la-mora-da-vivere";
 import { NewsletterSection } from "@/components/newsletter-section";
@@ -55,6 +57,8 @@ export default function Home() {
         <TerritorySection />
         <ReviewsSection />
         <DirectBooking />
+        <BlogSection />
+        <InstagramGallery />
         <LocationMap />
         <LaMoraDaVivere />
         <NewsletterSection />
