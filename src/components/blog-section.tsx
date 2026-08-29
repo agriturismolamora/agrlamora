@@ -5,41 +5,44 @@ import { PinnedHold } from "@/components/pinned-hold";
 
 /* Blog/editoriale (PLAN.md Blocco 6, mai costruito finora): i 20 articoli
    veri arriveranno con la produzione contenuti SEO/GEO — per ora 5 card
-   placeholder coerenti nel tono, legate a luoghi reali del territorio non
-   ancora fotografati altrove in home (TerritorySection copre già Basilica
-   di San Francesco/Eremo delle Carceri/Perugia: qui solo posti diversi).
-   Da sostituire con i link/anteprime reali quando gli articoli saranno
-   pubblicati. */
+   placeholder. Le foto qui sotto sono l'UNICA eccezione nel sito alla
+   regola "solo foto reali da public/": scaricate da Unsplash (licenza
+   Unsplash, libere da diritti) su richiesta esplicita del titolare, solo
+   per queste card segnaposto — Basilica di Santa Maria degli Angeli e
+   Cascate delle Marmore sono il luogo reale, Bosco di San Francesco/San
+   Damiano/Monte Subasio sono foto d'atmosfera coerenti col tema (nessuna
+   foto libera del luogo esatto trovata). Da sostituire con foto reali de
+   La Mora o le anteprime reali degli articoli quando saranno pubblicati. */
 const POSTS = [
   {
     category: "Territorio",
     title: "Basilica di Santa Maria degli Angeli: cosa vedere",
-    image: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg",
+    image: "/images/blog/basilica-santa-maria-degli-angeli.jpg",
     alt: "Basilica di Santa Maria degli Angeli, ad Assisi",
   },
   {
     category: "Natura",
     title: "Il Bosco di San Francesco, tra i sentieri del FAI",
-    image: "/images/territorio/assisi/bosco di san francesco assisi.jpg",
-    alt: "Bosco di San Francesco ad Assisi",
+    image: "/images/blog/bosco-san-francesco.jpg",
+    alt: "Sentiero nel bosco, Umbria",
   },
   {
     category: "Territorio",
     title: "Il Santuario di San Damiano, fuori dalle mura di Assisi",
-    image: "/images/territorio/assisi/san damiano santuario dintorni assisi.jpg",
-    alt: "Santuario di San Damiano, nei dintorni di Assisi",
+    image: "/images/blog/santuario-san-damiano.jpg",
+    alt: "Piccola chiesa in pietra, stile santuario francescano",
   },
   {
     category: "Gita di un giorno",
     title: "Cascate delle Marmore: come arrivarci da Assisi",
-    image: "/images/territorio/dintorni/cascate delle marmore.jpg",
+    image: "/images/blog/cascate-delle-marmore.jpg",
     alt: "Cascate delle Marmore, in Umbria",
   },
   {
     category: "Natura",
     title: "Monte Subasio: i sentieri sopra Assisi",
-    image: "/images/territorio/dintorni/monte subasio alto.jpg",
-    alt: "Monte Subasio, sopra Assisi",
+    image: "/images/blog/monte-subasio.jpg",
+    alt: "Sentiero di montagna erboso, Umbria",
   },
 ] as const;
 

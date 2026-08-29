@@ -28,7 +28,7 @@ export const APARTMENTS: Apartment[] = [
     slug: "gemelli",
     name: "Gemelli",
     zodiac: "gemelli",
-    image: "/images/alloggi/appartamento gemelli/camera da letto app gemelli.jpeg",
+    image: "/images/alloggi/appartamento gemelli/stanza letto app gemelli.jpeg",
     alt: "Camera da letto dell'appartamento Gemelli, Agriturismo La Mora",
     href: "/alloggi/gemelli/",
     petFriendly: true,
@@ -41,7 +41,7 @@ export const APARTMENTS: Apartment[] = [
     slug: "bilancia",
     name: "Bilancia",
     zodiac: "bilancia",
-    image: "/images/alloggi/appartamento bilancia/letto matrimoniale bilancia.webp",
+    image: "/images/alloggi/appartamento bilancia/foto letto matrimoniale verticale bilancia.jpeg",
     alt: "Camera da letto dell'appartamento Bilancia, Agriturismo La Mora",
     href: "/alloggi/bilancia/",
     maxGuests: 8,
@@ -65,14 +65,8 @@ export const APARTMENTS: Apartment[] = [
     slug: "acquario",
     name: "Acquario",
     zodiac: "acquario",
-    /* Tutte le foto disponibili per questo appartamento in /public sono
-       thumbnail a bassa risoluzione (verificato: nessun file più grande
-       esiste nella cartella, .jpeg e .webp inclusi) — questa (tavolo/sala)
-       è la meno penalizzata dal limite. Il limite di risoluzione resta lo
-       stesso su qualunque file di questa cartella finché non arriva una
-       foto reale del titolare a risoluzione piena. */
-    image: "/images/alloggi/appartamento acquario/tavolo sala acquario.jpeg",
-    alt: "Tavolo e sala arredata dell'appartamento Acquario, Agriturismo La Mora",
+    image: "/images/alloggi/appartamento acquario/orizzontale letto acquario.jpeg",
+    alt: "Camera da letto dell'appartamento Acquario, Agriturismo La Mora",
     href: "/alloggi/acquario/",
     maxGuests: 4,
     beds: 4,

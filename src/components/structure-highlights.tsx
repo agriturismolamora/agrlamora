@@ -12,8 +12,8 @@ import { PinnedHold } from "@/components/pinned-hold";
    3 argomenti "fondamentali" scelti su richiesta esplicita — gli stessi
    temi prima raccontati in "Esperienze La Mora" (sezione eliminata: questo
    contenuto ci si sovrappone di proposito, non è un errore di ripetizione). */
-const HERO_IMAGE = "/images/home/foto della piscina agriturismo la mora.webp";
-const HERO_ALT = "Piscina di Agriturismo La Mora";
+const HERO_IMAGE = "/images/struttura/foto vista alto agriturismo la mora assisi.webp";
+const HERO_ALT = "Vista dall'alto di Agriturismo La Mora, Assisi";
 
 const SIGNATURES = [
   { tag: "01", title: "Colazione biologica", href: "/agriturismo-con-colazione-inclusa-assisi/" },

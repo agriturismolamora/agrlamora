@@ -209,79 +209,6 @@ function useReducedMotion() {
   return reduced;
 }
 
-/* Decorazioni line-art: costellazioni astratte, texture quasi impercettibile
-   (opacity 0.04–0.08), con un parallax verticale lentissimo (pochi px) letto
-   direttamente dallo scroll — nessun re-render React, scrittura diretta sul
-   DOM per restare fluido, disattivato con prefers-reduced-motion. */
-function ConstellationField({ reducedMotion }: { reducedMotion: boolean }) {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const layerRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    if (reducedMotion) return;
-    let ticking = false;
-
-    function paint() {
-      const wrap = wrapRef.current;
-      if (wrap) {
-        const rect = wrap.getBoundingClientRect();
-        const center = rect.top + rect.height / 2 - window.innerHeight / 2;
-        layerRefs.current.forEach((el, i) => {
-          if (!el) return;
-          const speed = (i + 1) * 4;
-          const shift = Math.max(-speed, Math.min(speed, -center / 60));
-          el.style.transform = `translateY(${shift.toFixed(2)}px)`;
-        });
-      }
-      ticking = false;
-    }
-
-    function onScroll() {
-      if (!ticking) {
-        window.requestAnimationFrame(paint);
-        ticking = true;
-      }
-    }
-
-    paint();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, [reducedMotion]);
-
-  const dots = [
-    { points: "120,90 165,60 210,110 260,70" },
-    { points: "900,140 950,190 1005,150 1050,205" },
-    { points: "300,520 340,470 390,500" },
-    { points: "1120,460 1160,510 1100,540 1150,570" },
-  ];
-
-  return (
-    <div ref={wrapRef} aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-      {dots.map((d, i) => (
-        <div
-          key={i}
-          ref={(el) => {
-            layerRefs.current[i] = el;
-          }}
-          className="absolute inset-0"
-        >
-          <svg viewBox="0 0 1200 640" className="absolute inset-0 h-full w-full text-starlight" style={{ opacity: 0.12 }}>
-            <polyline points={d.points} fill="none" stroke="currentColor" strokeWidth="1" />
-            {d.points.split(" ").map((p, pi) => {
-              const [x, y] = p.split(",");
-              return <circle key={pi} cx={x} cy={y} r="2.2" fill="currentColor" />;
-            })}
-          </svg>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 /* Sfondo "cielo notturno stellato": tema decorativo della sezione (richiesta
    esplicita — "trasformare lo sfondo in un cielo notturno stellato
    animatissimo, rendendo sempre e comunque le card visibili"), che riprende
@@ -570,6 +497,13 @@ function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
       el.style.transform = `translate3d(calc(-50% + ${t.x.toFixed(2)}px), -50%, 0) rotate(${t.rotate.toFixed(2)}deg) scale(${t.scale.toFixed(3)})`;
       el.style.opacity = t.opacity.toFixed(3);
       el.style.filter = `brightness(${t.brightness.toFixed(3)}) saturate(${t.saturate.toFixed(3)})`;
+      // Alone di luce "da stella" dietro ogni card: sempre presente e tenue
+      // (coerente con il cielo notturno dello sfondo), molto più intenso
+      // sulla card che sta arrivando al centro. Guidato dallo stesso `rel`
+      // continuo già usato per posizione/rotazione/scala: mai un secondo
+      // stato da tenere sincronizzato a parte.
+      const glowT = clamp(1 - Math.abs(rel), 0, 1);
+      el.style.boxShadow = `0 0 ${(22 + glowT * 46).toFixed(0)}px ${(glowT * 6).toFixed(0)}px rgba(238,241,251,${(0.16 + glowT * 0.6).toFixed(3)})`;
       el.style.zIndex = String(Math.round(100 - Math.abs(rel) * 10));
       el.style.pointerEvents = t.opacity < 0.05 ? "none" : "auto";
       el.dataset.center = i === nearest ? "1" : "0";
@@ -701,7 +635,6 @@ function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
     <div ref={outerRef} className="relative" style={{ height: `${OUTER_VH}vh` }}>
       <div className="sticky top-0 flex h-[100svh] flex-col overflow-hidden">
         <StarField reducedMotion={reducedMotion} />
-        <ConstellationField reducedMotion={reducedMotion} />
         <SectionHeading />
 
         <div
@@ -829,7 +762,6 @@ function MobileCarousel({ reducedMotion }: { reducedMotion: boolean }) {
   return (
     <div className="relative overflow-hidden pb-16 pt-4">
       <StarField reducedMotion={reducedMotion} />
-      <ConstellationField reducedMotion={reducedMotion} />
       <SectionHeading />
 
       <div
@@ -852,6 +784,9 @@ function MobileCarousel({ reducedMotion }: { reducedMotion: boolean }) {
           const rotate = reducedMotion ? 0 : offset === 0 ? 0 : MOBILE_ROTATE * Math.sign(offset);
           const scale = abs === 0 ? 1 : 0.94;
           const opacity = hidden ? 0 : abs === 0 ? 1 : 0.9;
+          // Stesso alone "da stella" del carousel desktop: tenue su tutte le
+          // card visibili, più intenso su quella al centro.
+          const glowT = abs === 0 ? 1 : abs === 1 ? 0 : 0;
 
           return (
             <div
@@ -863,10 +798,11 @@ function MobileCarousel({ reducedMotion }: { reducedMotion: boolean }) {
                 opacity,
                 zIndex: 10 - abs,
                 pointerEvents: hidden ? "none" : undefined,
+                boxShadow: `0 0 ${22 + glowT * 46}px ${glowT * 6}px rgba(238,241,251,${(0.16 + glowT * 0.6).toFixed(3)})`,
                 transition:
                   reducedMotion
                     ? "opacity 320ms ease"
-                    : "transform 480ms cubic-bezier(.22,1,.36,1), opacity 480ms cubic-bezier(.22,1,.36,1)",
+                    : "transform 480ms cubic-bezier(.22,1,.36,1), opacity 480ms cubic-bezier(.22,1,.36,1), box-shadow 480ms cubic-bezier(.22,1,.36,1)",
               }}
             >
               <CardFace
