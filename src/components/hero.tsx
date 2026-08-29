@@ -29,9 +29,10 @@ export function Hero() {
         preload="auto"
         aria-hidden="true"
         tabIndex={-1}
-        poster="/images/piscina/piscina%20agriturismo%20la%20mora.webp"
+        poster="/videos/hero/agriturismo-la-mora-hero-poster.jpg"
       >
-        <source src="/videos/hero-loop.mp4" type="video/mp4" />
+        <source src="/videos/hero/agriturismo-la-mora-hero.webm" type="video/webm" />
+        <source src="/videos/hero/agriturismo-la-mora-hero.mp4" type="video/mp4" />
       </video>
 
       {/* Livello 1: scrim verde scuro coerente col brand — leggibilità per
