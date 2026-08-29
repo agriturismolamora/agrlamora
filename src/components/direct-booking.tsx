@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/scroll-reveal";
+import { PinnedHold } from "@/components/pinned-hold";
 
 /* Prenotazione diretta: solo condizioni reali da PROJECT-BRIEF.md (sconto
    7+ notti, sconto clienti di ritorno, caparra/saldo). Niente "miglior
@@ -23,8 +24,9 @@ const POINTS = [
 
 export function DirectBooking() {
   return (
-    <section aria-labelledby="direct-booking-heading" className="bg-cream py-24 sm:py-28">
-      <div className="mx-auto max-w-[1000px] px-6 text-center sm:px-10">
+    <section aria-labelledby="direct-booking-heading" className="bg-cream py-24 sm:py-28 lg:min-h-[140vh] lg:py-0">
+      <PinnedHold>
+      <div className="mx-auto max-w-[1000px] px-6 text-center sm:px-10 lg:py-24">
         <Reveal>
           <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">
             Prenotazione diretta
@@ -57,6 +59,7 @@ export function DirectBooking() {
           </dl>
         </Reveal>
       </div>
+      </PinnedHold>
     </section>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
+import { Reveal } from "@/components/scroll-reveal";
 
 declare global {
   interface Window {
@@ -68,7 +69,7 @@ export function NewsletterSection() {
 
   return (
     <section aria-labelledby="newsletter-heading" className="bg-cream py-20 sm:py-24">
-      <div className="mx-auto max-w-[720px] px-6 text-center sm:px-10">
+      <Reveal className="mx-auto max-w-[720px] px-6 text-center sm:px-10" as="div">
         <h2
           id="newsletter-heading"
           className="font-display text-[clamp(26px,3vw,36px)] font-normal leading-[1.2] text-ink"
@@ -160,7 +161,7 @@ export function NewsletterSection() {
             )}
           </form>
         )}
-      </div>
+      </Reveal>
     </section>
   );
 }

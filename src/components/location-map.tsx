@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Reveal } from "@/components/scroll-reveal";
+import { PinnedHold } from "@/components/pinned-hold";
 
 const ADDRESS = "Via Fonte Citerna, 7 — 06081 Assisi PG";
 const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(
@@ -19,7 +20,8 @@ const EMAIL = "agriturismolamora@gmail.com";
    reale via ricerca. */
 export function LocationMap() {
   return (
-    <section id="section-map" aria-labelledby="location-heading" className="bg-cream">
+    <section id="section-map" aria-labelledby="location-heading" className="bg-cream lg:min-h-[140vh]">
+      <PinnedHold>
       <div className="flex flex-col lg:flex-row">
         <Reveal className="relative aspect-[4/3] w-full bg-cream-dim sm:aspect-[16/10] lg:aspect-auto lg:w-[58%]">
           <Image
@@ -87,6 +89,7 @@ export function LocationMap() {
           </Reveal>
         </div>
       </div>
+      </PinnedHold>
     </section>
   );
 }

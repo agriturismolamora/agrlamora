@@ -184,52 +184,54 @@ export function LaMoraDaVivere() {
     <section
       id="section-vivere"
       aria-label="La Mora da vivere"
-      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-olive-950 py-20 text-cream sm:py-24"
+      className="relative bg-olive-950 text-cream lg:min-h-[140vh]"
     >
-      <Reveal className="relative z-[2] mx-auto max-w-[820px] px-6 text-center sm:px-10">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-cream/55">La Mora da vivere</span>
-        <h2 className="mt-6 font-display text-[clamp(30px,4.4vw,58px)] font-normal leading-[1.1] [text-wrap:balance]">
-          <span className="text-cream">Il piacere è</span> <span className="italic text-cream/40">nei dettagli.</span>
-        </h2>
-      </Reveal>
+      <div className="flex min-h-[100svh] flex-col items-center justify-center py-20 sm:py-24 lg:sticky lg:top-0">
+        <Reveal className="relative z-[2] mx-auto max-w-[820px] px-6 text-center sm:px-10">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-cream/55">La Mora da vivere</span>
+          <h2 className="mt-6 font-display text-[clamp(30px,4.4vw,58px)] font-normal leading-[1.1] [text-wrap:balance]">
+            <span className="text-cream">Il piacere è</span> <span className="italic text-cream/40">nei dettagli.</span>
+          </h2>
+        </Reveal>
 
-      <div
-        role="tablist"
-        aria-label="Highlight di Agriturismo La Mora"
-        className="relative z-[2] mt-12 flex max-w-[720px] flex-wrap items-center justify-center gap-2.5 px-6 sm:mt-14 sm:gap-3"
-      >
-        {HIGHLIGHTS.map((item, i) => {
-          const isActive = i === active;
-          return (
-            <button
-              key={item.label}
-              type="button"
-              role="tab"
-              aria-selected={isActive}
-              aria-label={item.label}
-              onClick={() => setActive(i)}
-              className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-[6px] border transition-all duration-300 sm:h-14 sm:w-14 ${
-                isActive
-                  ? "border-gold text-gold shadow-[0_0_0_1px_rgba(182,146,60,0.4),0_0_20px_rgba(182,146,60,0.3)]"
-                  : "border-cream/15 text-cream/40 hover:border-cream/35 hover:text-cream/70"
-              }`}
-            >
-              <item.Icon />
-            </button>
-          );
-        })}
-      </div>
+        <div
+          role="tablist"
+          aria-label="Highlight di Agriturismo La Mora"
+          className="relative z-[2] mt-12 flex max-w-[720px] flex-wrap items-center justify-center gap-2.5 px-6 sm:mt-14 sm:gap-3"
+        >
+          {HIGHLIGHTS.map((item, i) => {
+            const isActive = i === active;
+            return (
+              <button
+                key={item.label}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-label={item.label}
+                onClick={() => setActive(i)}
+                className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-[6px] border transition-all duration-300 sm:h-14 sm:w-14 ${
+                  isActive
+                    ? "border-gold text-gold shadow-[0_0_0_1px_rgba(182,146,60,0.4),0_0_20px_rgba(182,146,60,0.3)]"
+                    : "border-cream/15 text-cream/40 hover:border-cream/35 hover:text-cream/70"
+                }`}
+              >
+                <item.Icon />
+              </button>
+            );
+          })}
+        </div>
 
-      <div
-        key={current.label}
-        role="tabpanel"
-        aria-live="polite"
-        className={`relative z-[2] mt-12 max-w-[560px] px-6 text-center sm:mt-14 ${reducedMotion ? "" : "animate-panel-fade"}`}
-      >
-        <h3 className="font-display text-[26px] font-normal uppercase leading-[1.2] text-cream sm:text-[30px]">
-          {current.title}
-        </h3>
-        <p className="mt-3 text-[14px] leading-[1.7] text-cream/70">{current.description}</p>
+        <div
+          key={current.label}
+          role="tabpanel"
+          aria-live="polite"
+          className={`relative z-[2] mt-12 max-w-[560px] px-6 text-center sm:mt-14 ${reducedMotion ? "" : "animate-panel-fade"}`}
+        >
+          <h3 className="font-display text-[26px] font-normal uppercase leading-[1.2] text-cream sm:text-[30px]">
+            {current.title}
+          </h3>
+          <p className="mt-3 text-[14px] leading-[1.7] text-cream/70">{current.description}</p>
+        </div>
       </div>
     </section>
   );

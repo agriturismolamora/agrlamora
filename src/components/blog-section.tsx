@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
+import { PinnedHold } from "@/components/pinned-hold";
 
 /* Blog/editoriale (PLAN.md Blocco 6, mai costruito finora): i 20 articoli
    veri arriveranno con la produzione contenuti SEO/GEO — per ora 5 card
@@ -44,8 +45,9 @@ const POSTS = [
 
 export function BlogSection() {
   return (
-    <section id="section-blog" aria-labelledby="blog-heading" className="bg-cream-dim py-24 sm:py-28">
-      <div className="mx-auto max-w-[1400px] px-6 sm:px-10">
+    <section id="section-blog" aria-labelledby="blog-heading" className="bg-cream-dim py-24 sm:py-28 lg:min-h-[140vh] lg:py-0">
+      <PinnedHold>
+      <div className="mx-auto max-w-[1400px] px-6 sm:px-10 lg:py-24">
         <Reveal className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div className="max-w-[640px]">
             <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">
@@ -144,6 +146,7 @@ export function BlogSection() {
           ))}
         </Reveal>
       </div>
+      </PinnedHold>
     </section>
   );
 }

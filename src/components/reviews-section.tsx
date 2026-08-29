@@ -2,6 +2,7 @@ import { getGoogleReviews } from "@/lib/google-reviews";
 import { GoogleMark, StarRow } from "@/components/review-icons";
 import { ReviewsCarousel } from "@/components/reviews-carousel";
 import { Reveal } from "@/components/scroll-reveal";
+import { PinnedHold } from "@/components/pinned-hold";
 
 /* URL reale della pagina TripAdvisor della struttura (derivato dal link di
    esempio fornito dal cliente: g187905 = Assisi, d1021888 = La Mora),
@@ -20,8 +21,9 @@ export async function ReviewsSection() {
   const hasLiveReviews = data.configured && data.reviews.length > 0;
 
   return (
-    <section aria-labelledby="reviews-heading" className="overflow-hidden bg-cream-dim py-24 sm:py-28">
-      <div className="mx-auto max-w-[1300px] px-6 sm:px-10">
+    <section aria-labelledby="reviews-heading" className="bg-cream-dim py-24 sm:py-28 lg:min-h-[140vh] lg:py-0">
+      <PinnedHold>
+      <div className="mx-auto max-w-[1300px] px-6 sm:px-10 lg:py-24">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-16">
           <Reveal>
             <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">
@@ -96,6 +98,7 @@ export async function ReviewsSection() {
           </Reveal>
         </div>
       </div>
+      </PinnedHold>
     </section>
   );
 }
