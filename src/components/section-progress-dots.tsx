@@ -13,11 +13,10 @@ const SECTIONS = [
   { id: "section-story", label: "La Mora" },
   { id: "section-apartments", label: "Appartamenti" },
   { id: "section-highlights", label: "Perché La Mora" },
-  { id: "section-experiences", label: "Esperienze" },
-  { id: "section-territorio", label: "Territorio" },
   { id: "section-instagram", label: "Instagram" },
-  { id: "section-map", label: "Dove siamo" },
+  { id: "section-territorio", label: "Territorio" },
   { id: "section-vivere", label: "La Mora da vivere" },
+  { id: "section-map", label: "Dove siamo" },
 ] as const;
 
 /* Punto di riferimento della viewport usato per decidere quale sezione è

@@ -66,13 +66,13 @@ export const APARTMENTS: Apartment[] = [
     name: "Acquario",
     zodiac: "acquario",
     /* Tutte le foto disponibili per questo appartamento in /public sono
-       thumbnail a 120×90px (verificato: nessun file più grande esiste
-       nella cartella, .jpeg e .webp inclusi) — cambiata inquadratura per
-       scelta del titolare, ma il limite di risoluzione resta lo stesso su
-       qualunque file di questa cartella finché non arriva una foto reale
-       a risoluzione piena. */
-    image: "/images/alloggi/appartamento acquario/letto piu letto a castello acquario.jpeg",
-    alt: "Camera da letto dell'appartamento Acquario, Agriturismo La Mora",
+       thumbnail a bassa risoluzione (verificato: nessun file più grande
+       esiste nella cartella, .jpeg e .webp inclusi) — questa (tavolo/sala)
+       è la meno penalizzata dal limite. Il limite di risoluzione resta lo
+       stesso su qualunque file di questa cartella finché non arriva una
+       foto reale del titolare a risoluzione piena. */
+    image: "/images/alloggi/appartamento acquario/tavolo sala acquario.jpeg",
+    alt: "Tavolo e sala arredata dell'appartamento Acquario, Agriturismo La Mora",
     href: "/alloggi/acquario/",
     maxGuests: 4,
     beds: 4,

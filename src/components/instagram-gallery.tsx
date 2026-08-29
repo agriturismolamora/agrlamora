@@ -5,31 +5,39 @@ import { useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/scroll-reveal";
 
 /* Sezione scura "editoriale + galleria" (PLAN.md Blocco 5): il testo resta
-   fisso al centro, mentre una fila di foto verticali reali della struttura
-   in generale (non legate a un singolo appartamento/esperienza — MAI usate
-   altrove in home) attraversa TUTTA la sezione da destra a sinistra, guidata
-   1:1 dallo scroll dell'utente — passa anche dietro a testo/CTA (z-index più
-   basso, non un "buco" nella corsia) — tramite lo stesso schema "wrapper alto
-   + sticky" già usato da apartments-carousel.tsx (niente preventDefault sulla
-   rotella: lo scroll nativo resta sempre intatto, cambia solo cosa succede
-   mentre la sezione è agganciata). A fine corsa le foto sono tutte uscite a
-   sinistra e la sezione si sgancia, lasciando proseguire lo scroll normale. */
-const GALLERY_IMAGES = [
-  { src: "/images/struttura/foto dell esterno della struttura.webp", alt: "Esterno di Agriturismo La Mora" },
-  { src: "/images/struttura/immagine cucina arredata.jpeg", alt: "Cucina arredata di uno degli appartamenti" },
-  { src: "/images/struttura/sala arredata di una delle stanze.jpeg", alt: "Sala interna arredata della struttura" },
-  { src: "/images/struttura/foto di un bagno dell agriturismo.webp", alt: "Bagno di uno degli appartamenti" },
-  { src: "/images/struttura/immagine stanza con letto arredato.jpeg", alt: "Camera da letto arredata della struttura" },
-  { src: "/images/struttura/immagine di una stanza alloggio agriturismo la mora.webp", alt: "Interno di uno degli alloggi di Agriturismo La Mora" },
-] as const;
+   fisso al centro, mentre foto verticali reali della struttura in generale
+   (non legate a un singolo appartamento/esperienza — MAI usate altrove in
+   home) fluttuano sparse attraverso TUTTA la sezione da destra a sinistra,
+   guidate dallo scroll dell'utente — passano anche dietro a testo/CTA
+   (z-index più basso) — tramite lo stesso schema "wrapper alto + sticky"
+   già usato da apartments-carousel.tsx (niente preventDefault sulla rotella:
+   lo scroll nativo resta sempre intatto, cambia solo cosa succede mentre la
+   sezione è agganciata). Ogni foto ha la propria altezza, velocità e punto
+   di partenza (non una fila unica che scorre in blocco): l'effetto voluto è
+   "galleggiante", non un nastro trasportatore. A fine corsa sono tutte
+   uscite a sinistra e la sezione si sgancia, lasciando proseguire lo scroll
+   normale. */
+type GalleryCard = {
+  src: string;
+  alt: string;
+  top: number; // % dall'alto della sezione
+  widthVw: number;
+  startVw: number; // posizione di partenza (oltre il bordo destro)
+  speed: number; // moltiplicatore di velocità: card diverse, ritmo diverso
+  rotation: number;
+};
+
+const GALLERY_CARDS: GalleryCard[] = [
+  { src: "/images/struttura/foto dell esterno della struttura.webp", alt: "Esterno di Agriturismo La Mora", top: 8, widthVw: 12, startVw: 105, speed: 0.85, rotation: -6 },
+  { src: "/images/struttura/immagine cucina arredata.jpeg", alt: "Cucina arredata di uno degli appartamenti", top: 58, widthVw: 14, startVw: 130, speed: 1.2, rotation: 4 },
+  { src: "/images/struttura/sala arredata di una delle stanze.jpeg", alt: "Sala interna arredata della struttura", top: 28, widthVw: 10, startVw: 95, speed: 1.0, rotation: -3 },
+  { src: "/images/struttura/foto di un bagno dell agriturismo.webp", alt: "Bagno di uno degli appartamenti", top: 72, widthVw: 13, startVw: 145, speed: 0.7, rotation: 7 },
+  { src: "/images/struttura/immagine stanza con letto arredato.jpeg", alt: "Camera da letto arredata della struttura", top: 42, widthVw: 9, startVw: 115, speed: 1.35, rotation: -5 },
+  { src: "/images/struttura/immagine di una stanza alloggio agriturismo la mora.webp", alt: "Interno di uno degli alloggi di Agriturismo La Mora", top: 16, widthVw: 12, startVw: 160, speed: 0.95, rotation: 3 },
+];
 
 const OUTER_VH = 220;
-const CARD_VW = 14;
-const GAP_VW = 2.2;
-const STRIP_VW = GALLERY_IMAGES.length * (CARD_VW + GAP_VW);
-const EDGE_BUFFER_VW = 20;
-const ROTATIONS = [-3, 2, -2, 3, -2.5, 2.5];
-const OFFSETS = [-16, 14, -8, 18, -14, 10];
+const TRAVEL_VW = 260;
 
 const INSTAGRAM_URL = "https://www.instagram.com/paolo.720/";
 
@@ -108,39 +116,34 @@ export function InstagramGallery() {
     };
   }, [reducedMotion, isDesktop]);
 
-  // La striscia parte interamente fuori dal bordo destro della viewport ed
-  // esce interamente oltre il bordo sinistro a fine corsa, attraversando
-  // tutta la sezione (testo/CTA compresi, grazie allo z-index più basso).
-  const translateVW = 100 - progress * (STRIP_VW + 100 + EDGE_BUFFER_VW);
-
   return (
     <section
       ref={outerRef}
       id="section-instagram"
+      data-snap-exempt="true"
       aria-label="Agriturismo La Mora su Instagram"
       className="relative bg-olive-950"
       style={{ height: reducedMotion || !isDesktop ? undefined : `${OUTER_VH}vh` }}
     >
       <div className="sticky top-0 flex min-h-[70vh] items-center justify-center overflow-hidden py-24 lg:min-h-0 lg:h-[100svh] lg:py-0">
         {!reducedMotion && isDesktop && (
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-[1] hidden overflow-hidden lg:block"
-          >
-            <div
-              className="flex h-full items-center"
-              style={{ gap: `${GAP_VW}vw`, transform: `translateX(${translateVW}vw)` }}
-            >
-              {GALLERY_IMAGES.map((img, i) => (
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] hidden overflow-hidden lg:block">
+            {GALLERY_CARDS.map((card) => {
+              const x = card.startVw - progress * card.speed * TRAVEL_VW;
+              return (
                 <div
-                  key={img.src}
-                  className="relative aspect-[3/4] shrink-0 overflow-hidden rounded-2xl shadow-[0_25px_50px_-20px_rgba(0,0,0,0.6)]"
-                  style={{ width: `${CARD_VW}vw`, transform: `translateY(${OFFSETS[i]}px) rotate(${ROTATIONS[i]}deg)` }}
+                  key={card.src}
+                  className="absolute aspect-[3/4] overflow-hidden rounded-2xl shadow-[0_25px_50px_-20px_rgba(0,0,0,0.6)]"
+                  style={{
+                    top: `${card.top}%`,
+                    width: `${card.widthVw}vw`,
+                    transform: `translateX(${x}vw) rotate(${card.rotation}deg)`,
+                  }}
                 >
-                  <Image src={img.src} alt={img.alt} fill sizes="20vw" className="object-cover" />
+                  <Image src={card.src} alt={card.alt} fill sizes="18vw" className="object-cover" />
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
         )}
 
