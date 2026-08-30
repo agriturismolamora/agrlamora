@@ -445,7 +445,7 @@ export function SiteHeader() {
               onClick={() => setMenuOpen((v) => !v)}
               aria-expanded={menuOpen}
               aria-controls="site-menu-panel"
-              className="flex items-center gap-2 transition-colors hover:text-gold"
+              className="-my-3 flex items-center gap-2 py-3 transition-colors hover:text-gold"
             >
               Menu
               <MenuGlyph open={menuOpen} />
@@ -486,7 +486,7 @@ export function SiteHeader() {
               type="button"
               onClick={() => setMenuOpen(false)}
               aria-label="Chiudi il menu"
-              className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.04em] transition-colors hover:text-gold"
+              className="-my-3 flex items-center gap-2 py-3 text-[11px] font-semibold uppercase tracking-[0.04em] transition-colors hover:text-gold"
             >
               Chiudi
               <MenuGlyph open={true} />

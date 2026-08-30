@@ -91,7 +91,7 @@ export function NewsletterSection() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="La tua email"
                 aria-label="La tua email"
-                className="min-w-0 flex-1 rounded-[3px] border border-ink/20 bg-cream px-5 py-4 text-[14px] text-ink outline-none placeholder:text-ink-soft/60 focus:border-raspberry"
+                className="min-w-0 flex-1 rounded-[3px] border border-ink/20 bg-cream px-5 py-4 text-[16px] text-ink outline-none placeholder:text-ink-soft/60 focus:border-raspberry sm:text-[14px]"
               />
               <button
                 type="submit"
