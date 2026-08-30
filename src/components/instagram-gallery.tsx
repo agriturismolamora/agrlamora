@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/scroll-reveal";
+import { HoverFill } from "@/components/hover-fill";
 
 /* Sezione scura "editoriale + galleria" (PLAN.md Blocco 5): il testo resta
    fisso al centro, mentre foto verticali reali della struttura in generale
@@ -155,10 +156,13 @@ export function InstagramGallery() {
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="group mt-8 inline-flex items-center gap-2.5 rounded-full border border-cream/25 px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.08em] text-cream transition-colors duration-200 hover:border-cream/60"
+            className="group relative mt-8 inline-flex items-center gap-2.5 overflow-hidden rounded-lg border border-cream/25 px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.08em] text-cream transition-colors duration-200 hover:border-cream/60"
           >
-            Segui su Instagram
-            <InstagramIcon />
+            <HoverFill color="#9f414f" />
+            <span className="relative z-10 inline-flex items-center gap-2.5">
+              Segui su Instagram
+              <InstagramIcon />
+            </span>
           </a>
         </Reveal>
       </div>

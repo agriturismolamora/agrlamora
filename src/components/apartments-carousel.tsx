@@ -12,6 +12,7 @@ import {
 } from "react";
 import { APARTMENTS, type Apartment } from "@/data/apartments";
 import { ZodiacMark } from "@/components/zodiac-mark";
+import { HoverFill } from "@/components/hover-fill";
 
 const N = APARTMENTS.length;
 const MAX_POS = N - 1;
@@ -674,11 +675,14 @@ function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
         <div ref={ctaRef} className="relative z-[2] flex justify-center pb-16 pt-8 sm:pb-20 sm:pt-10" style={{ opacity: 0, pointerEvents: "none" }}>
           <Link
             href="/alloggi/"
-            className="group inline-flex items-center gap-2.5 rounded-[3px] bg-raspberry px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:bg-[#8a3844]"
+            className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
           >
-            Tutti gli appartamenti
-            <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-              →
+            <HoverFill color="#8a3844" />
+            <span className="relative z-10 inline-flex items-center gap-2.5">
+              Tutti gli appartamenti
+              <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+                →
+              </span>
             </span>
           </Link>
         </div>
@@ -826,11 +830,14 @@ function MobileCarousel({ reducedMotion }: { reducedMotion: boolean }) {
       <div className="relative z-[2] mt-12 flex justify-center">
         <Link
           href="/alloggi/"
-          className="group inline-flex items-center gap-2.5 rounded-[3px] bg-raspberry px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:bg-[#8a3844]"
+          className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
         >
-          Tutti gli appartamenti
-          <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-            →
+          <HoverFill color="#8a3844" />
+          <span className="relative z-10 inline-flex items-center gap-2.5">
+            Tutti gli appartamenti
+            <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+              →
+            </span>
           </span>
         </Link>
       </div>
@@ -868,11 +875,14 @@ function StaticGrid() {
       <div className="relative z-[2] mt-12 flex justify-center">
         <Link
           href="/alloggi/"
-          className="group inline-flex items-center gap-2.5 rounded-[3px] bg-raspberry px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:bg-[#8a3844]"
+          className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
         >
-          Tutti gli appartamenti
-          <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-            →
+          <HoverFill color="#8a3844" />
+          <span className="relative z-10 inline-flex items-center gap-2.5">
+            Tutti gli appartamenti
+            <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+              →
+            </span>
           </span>
         </Link>
       </div>

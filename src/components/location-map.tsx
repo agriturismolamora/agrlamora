@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Reveal } from "@/components/scroll-reveal";
 import { PinnedHold } from "@/components/pinned-hold";
+import { HoverFill } from "@/components/hover-fill";
 
 const ADDRESS = "Via Fonte Citerna, 7 — 06081 Assisi PG";
 const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(
@@ -70,11 +71,14 @@ export function LocationMap() {
                 href={MAPS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-2.5 rounded-[3px] bg-raspberry px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:bg-[#8a3844]"
+                className="group relative inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
               >
-                Apri in Google Maps
-                <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-                  →
+                <HoverFill color="#8a3844" />
+                <span className="relative z-10 inline-flex items-center gap-2.5">
+                  Apri in Google Maps
+                  <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+                    →
+                  </span>
                 </span>
               </a>
               <a

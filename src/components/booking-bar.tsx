@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useApartmentsSectionActive } from "@/hooks/use-apartments-active";
 
 const PHONE_TEL = "tel:+390758041164";
 
@@ -298,6 +299,7 @@ export function BookingBar() {
   const [pulse, setPulse] = useState(false);
   const booking = useBookingState();
   const rootRef = useRef<HTMLDivElement>(null);
+  const inApartments = useApartmentsSectionActive();
 
   useEffect(() => {
     function onClick(e: MouseEvent) {
@@ -440,14 +442,18 @@ export function BookingBar() {
 
         <button
           type="button"
-          className="h-full w-full whitespace-nowrap bg-raspberry px-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
+          className={`h-full w-full whitespace-nowrap px-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-500 ${
+            inApartments ? "bg-[#141a30] hover:bg-[#1c2440]" : "bg-raspberry hover:bg-[#8a3844]"
+          }`}
         >
           Prenota ora
         </button>
         <a
           href={PHONE_TEL}
           aria-label="Chiama Agriturismo La Mora"
-          className="flex h-full w-full items-center justify-center bg-raspberry-light text-cream transition-colors hover:bg-[#ad5864]"
+          className={`flex h-full w-full items-center justify-center text-cream transition-colors duration-500 ${
+            inApartments ? "bg-[#1f2742] hover:bg-[#28305a]" : "bg-raspberry-light hover:bg-[#ad5864]"
+          }`}
         >
           <PhoneIcon />
         </a>

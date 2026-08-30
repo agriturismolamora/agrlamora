@@ -1,7 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { Reveal } from "@/components/scroll-reveal";
 import { PinnedHold } from "@/components/pinned-hold";
+import { HoverFill } from "@/components/hover-fill";
 
 /* Blog/editoriale (PLAN.md Blocco 6, mai costruito finora): i 20 articoli
    veri arriveranno con la produzione contenuti SEO/GEO — per ora 5 card
@@ -47,6 +51,13 @@ const POSTS = [
 ] as const;
 
 export function BlogSection() {
+  /* z-index dell'hover deve vivere in state React: uno style inline con
+     zIndex fisso (necessario per l'ordine base a ventaglio, i+1) batte
+     sempre una classe hover: di Tailwind a parità di elemento, quindi
+     "hover:z-20" da solo non ha mai funzionato — la card in hover restava
+     comunque sotto le vicine con i più alto. */
+  const [hovered, setHovered] = useState<number | null>(null);
+
   return (
     <section id="section-blog" aria-labelledby="blog-heading" className="bg-cream-dim py-24 sm:py-28 lg:min-h-[140vh] lg:py-0">
       <PinnedHold>
@@ -65,11 +76,14 @@ export function BlogSection() {
           </div>
           <Link
             href="/blog/"
-            className="group inline-flex shrink-0 items-center gap-2.5 rounded-[3px] bg-olive-950 px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:bg-[#141810]"
+            className="group relative inline-flex shrink-0 items-center gap-2.5 overflow-hidden rounded-lg bg-olive-950 px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
           >
-            Tutti gli articoli
-            <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-              →
+            <HoverFill color="#141810" />
+            <span className="relative z-10 inline-flex items-center gap-2.5">
+              Tutti gli articoli
+              <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+                →
+              </span>
             </span>
           </Link>
         </Reveal>
@@ -85,15 +99,20 @@ export function BlogSection() {
             <Link
               key={post.title}
               href="/blog/"
-              className={`group/card relative aspect-[3/4] w-[240px] shrink-0 overflow-hidden shadow-[0_25px_55px_-25px_rgba(28,33,23,0.5)] outline-none transition-transform duration-300 ease-out hover:z-20 hover:scale-[1.08] focus-visible:z-20 focus-visible:scale-[1.08] xl:w-[270px] ${
+              onMouseEnter={() => setHovered(i)}
+              onMouseLeave={() => setHovered(null)}
+              onFocus={() => setHovered(i)}
+              onBlur={() => setHovered(null)}
+              className={`group/card relative aspect-[3/4] w-[240px] shrink-0 overflow-hidden shadow-[0_25px_55px_-25px_rgba(28,33,23,0.5)] outline-none transition-transform duration-300 ease-out hover:scale-[1.08] focus-visible:scale-[1.08] xl:w-[270px] ${
                 i > 0 ? "-ml-16 xl:-ml-20" : ""
               }`}
-              style={{ zIndex: i + 1 }}
+              style={{ zIndex: hovered === i ? 50 : i + 1 }}
             >
               <Image
                 src={post.image}
                 alt={post.alt}
                 fill
+                quality={90}
                 sizes="270px"
                 className="object-cover transition-transform duration-500 ease-out group-hover/card:scale-[1.06]"
               />
@@ -127,7 +146,7 @@ export function BlogSection() {
               href="/blog/"
               className="group/card relative aspect-[3/4] w-[220px] shrink-0 snap-start overflow-hidden"
             >
-              <Image src={post.image} alt={post.alt} fill sizes="220px" className="object-cover" />
+              <Image src={post.image} alt={post.alt} fill quality={90} sizes="220px" className="object-cover" />
               <div
                 aria-hidden="true"
                 className="absolute inset-0"

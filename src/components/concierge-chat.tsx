@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useApartmentsSectionActive } from "@/hooks/use-apartments-active";
 
 const PHONE_DISPLAY = "075 8041164";
 const WHATSAPP_URL = "https://wa.me/393934363917";
@@ -130,6 +131,7 @@ export function ConciergeChat() {
   const [open, setOpen] = useState(false);
   const [greeted, setGreeted] = useState(false);
   const [nearFooter, setNearFooter] = useState(false);
+  const inApartments = useApartmentsSectionActive();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const listRef = useRef<HTMLDivElement>(null);
@@ -276,7 +278,9 @@ export function ConciergeChat() {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-label={open ? "Chiudi il concierge virtuale" : "Apri il concierge virtuale"}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-raspberry text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors hover:bg-[#8a3844]"
+        className={`flex h-14 w-14 items-center justify-center rounded-full text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors duration-500 ${
+          inApartments && !open ? "bg-[#141a30] hover:bg-[#1c2440]" : "bg-raspberry hover:bg-[#8a3844]"
+        }`}
       >
         {open ? <CloseIcon /> : <ChatBubbleIcon />}
       </button>

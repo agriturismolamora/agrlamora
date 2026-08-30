@@ -15,7 +15,7 @@ const FACTS = [
 
 export function OutdoorLife() {
   return (
-    <section aria-labelledby="outdoor-life-heading" className="relative bg-olive-950">
+    <section aria-labelledby="outdoor-life-heading" className="relative bg-cream">
       <div className="relative h-[62vh] min-h-[380px] w-full overflow-hidden sm:h-[72vh]">
         <Image
           src="/images/piscina/foto piscina di giorno.webp"
@@ -38,18 +38,18 @@ export function OutdoorLife() {
         <Reveal>
           <h2
             id="outdoor-life-heading"
-            className="font-display text-[clamp(30px,4vw,52px)] font-normal leading-[1.15] text-cream [text-wrap:balance]"
+            className="font-display text-[clamp(30px,4vw,52px)] font-normal leading-[1.15] text-ink [text-wrap:balance]"
           >
             Una piscina panoramica, un prato dove i bambini corrono, sedie all&apos;ombra per chi invece si ferma.
           </h2>
         </Reveal>
 
         <Reveal delay={120}>
-          <dl className="mx-auto mt-12 grid max-w-[820px] grid-cols-1 gap-8 border-t border-cream/15 pt-10 text-left sm:grid-cols-3 sm:text-center">
+          <dl className="mx-auto mt-12 grid max-w-[820px] grid-cols-1 gap-8 border-t border-ink/10 pt-10 text-left sm:grid-cols-3 sm:text-center">
             {FACTS.map((fact) => (
               <div key={fact.label}>
-                <dt className="font-display text-xl text-cream">{fact.label}</dt>
-                <dd className="mt-1.5 text-[13px] text-cream/70">{fact.detail}</dd>
+                <dt className="font-display text-xl text-ink">{fact.label}</dt>
+                <dd className="mt-1.5 text-[13px] text-ink-soft">{fact.detail}</dd>
               </div>
             ))}
           </dl>
@@ -58,7 +58,7 @@ export function OutdoorLife() {
         <Reveal delay={220}>
           <Link
             href="/piscina/"
-            className="group mt-12 inline-flex items-center gap-2.5 rounded-[3px] border border-cream/25 px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:border-raspberry-light hover:text-raspberry-light"
+            className="group mt-12 inline-flex items-center gap-2.5 rounded-[3px] border border-ink/20 px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-ink transition-colors duration-200 hover:border-raspberry hover:text-raspberry"
           >
             Scopri la piscina
             <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
+import { HoverFill } from "@/components/hover-fill";
 
 /* Territorio: griglia asimmetrica con gerarchia geografica (Assisi grande,
    dintorni più piccoli) invece di una lista di destinazioni. Copy scritto
@@ -85,11 +86,14 @@ export function TerritorySection() {
         <Reveal delay={300} className="mt-10 flex justify-center">
           <Link
             href="/territorio/"
-            className="group inline-flex items-center gap-2.5 rounded-[3px] bg-raspberry px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:bg-[#8a3844]"
+            className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
           >
-            Scopri il territorio
-            <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-              →
+            <HoverFill color="#8a3844" />
+            <span className="relative z-10 inline-flex items-center gap-2.5">
+              Scopri il territorio
+              <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+                →
+              </span>
             </span>
           </Link>
         </Reveal>

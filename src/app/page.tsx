@@ -6,6 +6,7 @@ import { BenefitMarquee } from "@/components/benefit-marquee";
 import { ImmersiveStory } from "@/components/immersive-story";
 import { ApartmentsCarousel } from "@/components/apartments-carousel";
 import { StructureHighlights } from "@/components/structure-highlights";
+import { RankingSection } from "@/components/ranking-section";
 import { OutdoorLife } from "@/components/outdoor-life";
 import { TerritorySection } from "@/components/territory-section";
 import { ReviewsSection } from "@/components/reviews-section";
@@ -54,6 +55,7 @@ export default function Home() {
         <ImmersiveStory />
         <ApartmentsCarousel />
         <StructureHighlights />
+        <RankingSection />
         <InstagramGallery />
         <BlogSection />
         <OutdoorLife />

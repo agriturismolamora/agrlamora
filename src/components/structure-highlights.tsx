@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { PinnedHold } from "@/components/pinned-hold";
+import { HoverFill } from "@/components/hover-fill";
 
 /* Indice editoriale: foto fissa a piena altezza a sinistra (tocca il bordo
    del browser, nessun container che la isoli), lista a destra con 3 righe
@@ -71,11 +72,14 @@ export function StructureHighlights() {
             <Reveal delay={300}>
               <Link
                 href="/chi-siamo/"
-                className="group mt-8 inline-flex items-center gap-2.5 rounded-[3px] bg-raspberry px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:bg-[#8a3844]"
+                className="group relative mt-8 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
               >
-                Scopri chi siamo
-                <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-                  →
+                <HoverFill color="#8a3844" />
+                <span className="relative z-10 inline-flex items-center gap-2.5">
+                  Scopri chi siamo
+                  <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+                    →
+                  </span>
                 </span>
               </Link>
             </Reveal>

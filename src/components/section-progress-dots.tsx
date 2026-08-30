@@ -13,6 +13,7 @@ const SECTIONS = [
   { id: "section-story", label: "La Mora" },
   { id: "section-apartments", label: "Appartamenti" },
   { id: "section-highlights", label: "Perché La Mora" },
+  { id: "section-ranking", label: "Riconoscimenti" },
   { id: "section-instagram", label: "Instagram" },
   { id: "section-territorio", label: "Territorio" },
   { id: "section-vivere", label: "La Mora da vivere" },

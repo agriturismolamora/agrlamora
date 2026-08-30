@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { Reveal } from "@/components/scroll-reveal";
+import { HoverFill } from "@/components/hover-fill";
 
 declare global {
   interface Window {
@@ -96,11 +97,14 @@ export function NewsletterSection() {
               <button
                 type="submit"
                 disabled={status === "checking"}
-                className="group inline-flex shrink-0 items-center justify-center gap-2.5 whitespace-nowrap rounded-[3px] bg-raspberry px-7 py-4 font-sans text-[11px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:bg-[#8a3844] disabled:opacity-60"
+                className="group relative inline-flex shrink-0 items-center justify-center gap-2.5 overflow-hidden whitespace-nowrap rounded-lg bg-raspberry px-7 py-4 font-sans text-[11px] font-semibold uppercase tracking-[0.05em] text-cream disabled:opacity-60"
               >
-                {status === "checking" ? "Verifica…" : "Iscriviti"}
-                <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-                  →
+                <HoverFill color="#8a3844" />
+                <span className="relative z-10 inline-flex items-center gap-2.5">
+                  {status === "checking" ? "Verifica…" : "Iscriviti"}
+                  <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+                    →
+                  </span>
                 </span>
               </button>
             </div>
