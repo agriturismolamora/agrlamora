@@ -9,8 +9,13 @@ const nextConfig: NextConfig = {
     root: path.resolve(__dirname),
   },
   images: {
-    // Foto profilo reali dei recensori, servite da Google (Places API).
-    remotePatterns: [{ protocol: "https", hostname: "lh3.googleusercontent.com" }],
+    remotePatterns: [
+      // Foto profilo reali dei recensori, servite da Google (Places API).
+      { protocol: "https", hostname: "lh3.googleusercontent.com" },
+      // Foto reali della Pagina Facebook (Graph API) — sottodomini variabili
+      // tipo scontent-xxx.fbcdn.net, da cui il wildcard.
+      { protocol: "https", hostname: "*.fbcdn.net" },
+    ],
   },
 };
 
