@@ -18,8 +18,8 @@ const CERTIFICATIONS = [
 function CertLogo({ src, alt }: (typeof CERTIFICATIONS)[number]) {
   return (
     <div className="flex shrink-0 items-center px-9 md:px-12">
-      <div className="relative h-14 w-[120px] md:h-16 md:w-[140px]">
-        <Image src={src} alt={alt} fill sizes="140px" className="object-contain" />
+      <div className="relative h-16 w-[135px] md:h-[76px] md:w-[158px]">
+        <Image src={src} alt={alt} fill sizes="158px" className="object-contain" />
       </div>
     </div>
   );

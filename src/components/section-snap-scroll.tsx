@@ -6,23 +6,23 @@ import { useEffect } from "react";
    scroll fluido continuo, ma un avanzamento a scatti tra le sezioni della
    home). Approccio: non CSS scroll-snap-type puro — con sezioni "pinned"
    molto più alte della viewport (carousel appartamenti 460vh, immersive
-   story 130-150vh, galleria Instagram 220vh) uno snap CSS "mandatory"
-   agganciato al wrapper esterno di quelle sezioni tenta di tornare
-   all'inizio della sezione dopo OGNI singolo gesto di scroll, intrappolando
-   l'utente vicino all'inizio invece di lasciarlo avanzare nel loro scroll
-   interno — un difetto noto di CSS scroll-snap con sezioni multi-viewport.
+   story 130-150vh) uno snap CSS "mandatory" agganciato al wrapper esterno
+   di quelle sezioni tenta di tornare all'inizio della sezione dopo OGNI
+   singolo gesto di scroll, intrappolando l'utente vicino all'inizio invece
+   di lasciarlo avanzare nel loro scroll interno — un difetto noto di CSS
+   scroll-snap con sezioni multi-viewport.
 
    Soluzione: individua da solo, a runtime, tutte le sezioni dirette di
    <main> (nessuna lista duplicata da mantenere in sync con page.tsx).
-   Quelle marcate data-snap-exempt="true" (le tre pinned sopra) restano
-   valide come PUNTO DI ARRIVO dello snap (ci si aggancia normalmente
-   all'inizio), ma mentre l'utente vi si trova dentro non scatta nessun
-   ulteriore snap: il loro scroll interno resta libero e intatto.
+   Quelle marcate data-snap-exempt="true" (le pinned sopra) restano valide
+   come PUNTO DI ARRIVO dello snap (ci si aggancia normalmente all'inizio),
+   ma mentre l'utente vi si trova dentro non scatta nessun ulteriore snap:
+   il loro scroll interno resta libero e intatto.
 
-   Solo desktop (stesso limite di isDesktop già usato da instagram-gallery
-   e dal fallback mobile di apartments-carousel: su schermi piccoli lo
-   scroll a scatti via JS su gesti touch è tipicamente fastidioso) e
-   disattivato con prefers-reduced-motion. */
+   Solo desktop (stesso limite di isDesktop già usato dal fallback mobile
+   di apartments-carousel: su schermi piccoli lo scroll a scatti via JS su
+   gesti touch è tipicamente fastidioso) e disattivato con
+   prefers-reduced-motion. */
 const SETTLE_MS = 200;
 const SNAP_LOCK_MS = 1000;
 const MIN_DISTANCE_PX = 40;

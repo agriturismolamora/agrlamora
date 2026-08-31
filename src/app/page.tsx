@@ -12,7 +12,7 @@ import { TerritorySection } from "@/components/territory-section";
 import { ReviewsSection } from "@/components/reviews-section";
 import { DirectBooking } from "@/components/direct-booking";
 import { BlogSection } from "@/components/blog-section";
-import { InstagramGallery } from "@/components/instagram-gallery";
+import { FacebookFeed } from "@/components/facebook-feed";
 import { LocationMap } from "@/components/location-map";
 import { LaMoraDaVivere } from "@/components/la-mora-da-vivere";
 import { NewsletterSection } from "@/components/newsletter-section";
@@ -56,7 +56,7 @@ export default function Home() {
         <ApartmentsCarousel />
         <StructureHighlights />
         <RankingSection />
-        <InstagramGallery />
+        <FacebookFeed />
         <BlogSection />
         <OutdoorLife />
         <TerritorySection />
