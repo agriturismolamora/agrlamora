@@ -163,19 +163,21 @@ const VERTICAL_BREATHING_ROOM = 40;
    px degli slot senza dover misurare il DOM ad ogni frame. La larghezza
    finale è la più piccola tra il vincolo di larghezza (34vw) e quello
    d'altezza (spazio verticale REALMENTE disponibile — 100vh meno le
-   altezze vere di titolo e CTA, misurate nel DOM — per l'aspect 4:5):
+   altezze vere di titolo e CTA, misurate nel DOM — per l'aspect 3:4):
    su schermi bassi vince il secondo, garantendo zero overlap by
    construction invece di sperare che ci sia sempre spazio a sufficienza. */
 function cardWidthForViewport(vw: number, vh: number, headingH: number, ctaH: number) {
   const widthBound = clamp(vw * 0.37, 380, 620);
   const availableHeight = vh - headingH - ctaH - VERTICAL_BREATHING_ROOM;
-  // Il moltiplicatore (0.72, non 1/1.25=0.8) non è solo l'aspect 4:5: una
+  // Il moltiplicatore (0.675, non 1/(4/3)=0.75) non è solo l'aspect 3:4: una
   // card RUOTATA (fino a 16° per le laterali visibili) ha un bounding box
   // verticale più alto della sua altezza nominale — a card grandi quel
   // margine extra basta a far toccare card oblique con titolo/CTA (bug
   // reale osservato: gap negativo). Il fattore in più è il margine di
-  // sicurezza per quella crescita da rotazione.
-  const heightBound = clamp(availableHeight, 340, 720) * 0.72;
+  // sicurezza per quella crescita da rotazione (stesso rapporto di sicurezza
+  // già validato con l'aspect 4:5 precedente: 0.72/0.8 = 0.9, riapplicato
+  // qui come 0.75×0.9).
+  const heightBound = clamp(availableHeight, 340, 720) * 0.675;
   return Math.min(widthBound, heightBound);
 }
 
@@ -373,7 +375,7 @@ function CardFace({
 }) {
   return (
     <div
-      className="group relative aspect-[4/5] overflow-hidden bg-ink/5 shadow-[0_25px_55px_-25px_rgba(28,33,23,0.4)]"
+      className="group relative aspect-[3/4] overflow-hidden bg-ink/5 shadow-[0_25px_55px_-25px_rgba(28,33,23,0.4)]"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onClick={onClick}
@@ -675,9 +677,9 @@ function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
         <div ref={ctaRef} className="relative z-[2] flex justify-center pb-16 pt-8 sm:pb-20 sm:pt-10" style={{ opacity: 0, pointerEvents: "none" }}>
           <Link
             href="/alloggi/"
-            className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
+            className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-[#0b0f1e]"
           >
-            <HoverFill color="#8a3844" />
+            <HoverFill color="#8f7330" />
             <span className="relative z-10 inline-flex items-center gap-2.5">
               Tutti gli appartamenti
               <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
@@ -776,7 +778,7 @@ function MobileCarousel({ reducedMotion }: { reducedMotion: boolean }) {
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
         onKeyDown={handleKeyDown}
-        className="relative z-[2] mt-10 h-[440px] w-full touch-pan-y select-none outline-none"
+        className="relative z-[2] mt-10 h-[480px] w-full touch-pan-y select-none outline-none"
       >
         {APARTMENTS.map((apt, i) => {
           const offset = circularOffset(i, active, N);
@@ -830,9 +832,9 @@ function MobileCarousel({ reducedMotion }: { reducedMotion: boolean }) {
       <div className="relative z-[2] mt-12 flex justify-center">
         <Link
           href="/alloggi/"
-          className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
+          className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-[#0b0f1e]"
         >
-          <HoverFill color="#8a3844" />
+          <HoverFill color="#8f7330" />
           <span className="relative z-10 inline-flex items-center gap-2.5">
             Tutti gli appartamenti
             <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
@@ -875,9 +877,9 @@ function StaticGrid() {
       <div className="relative z-[2] mt-12 flex justify-center">
         <Link
           href="/alloggi/"
-          className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
+          className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-[#0b0f1e]"
         >
-          <HoverFill color="#8a3844" />
+          <HoverFill color="#8f7330" />
           <span className="relative z-10 inline-flex items-center gap-2.5">
             Tutti gli appartamenti
             <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">

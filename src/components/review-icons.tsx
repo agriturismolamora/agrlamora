@@ -12,6 +12,28 @@ export function GoogleMark({ size = 26 }: { size?: number }) {
   );
 }
 
+/* Marchio Tripadvisor (i due "occhi" a cerchio + testo), stesso principio
+   di GoogleMark: usato SOLO come attribuzione della piattaforma accanto a
+   un link reale verso la vera pagina TripAdvisor della struttura — mai come
+   sigillo/certificazione auto-costruita che implichi un riconoscimento
+   ufficiale mai rilasciato. Colore uguale al verde ufficiale del brand
+   (#00AF87), forma semplificata ma riconoscibile. */
+export function TripadvisorMark({ size = 26 }: { size?: number }) {
+  const h = size * (34 / 130);
+  return (
+    <svg viewBox="0 0 130 34" width={size} height={h} aria-hidden="true">
+      <circle cx="18" cy="19" r="13" fill="none" stroke="#00AF87" strokeWidth="2.4" />
+      <circle cx="18" cy="19" r="4.2" fill="#00AF87" />
+      <circle cx="47" cy="19" r="13" fill="none" stroke="#00AF87" strokeWidth="2.4" />
+      <circle cx="47" cy="19" r="4.2" fill="#00AF87" />
+      <path d="M14 6.5C19 3 27 3 32 6.5" fill="none" stroke="#00AF87" strokeWidth="2.4" strokeLinecap="round" />
+      <text x="64" y="25" fontFamily="Arial, Helvetica, sans-serif" fontWeight="700" fontSize="16" fill="#00AF87">
+        tripadvisor
+      </text>
+    </svg>
+  );
+}
+
 export function StarRow({ rating, size = 14 }: { rating: number; size?: number }) {
   return (
     <div className="flex items-center gap-0.5" role="img" aria-label={`Valutazione ${rating} su 5 stelle`}>

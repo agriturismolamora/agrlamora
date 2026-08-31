@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { PinnedHold } from "@/components/pinned-hold";
@@ -30,20 +31,31 @@ export function RankingSection() {
         style={{ background: "radial-gradient(circle, rgba(182,146,60,0.25) 0%, rgba(182,146,60,0) 70%)" }}
       />
       <PinnedHold>
-        <div className="relative z-[2] mx-auto max-w-[720px] px-6 py-24 text-center sm:px-10 sm:py-28">
+        <div className="relative z-[2] mx-auto max-w-[720px] px-6 py-20 text-center sm:px-10 sm:py-24">
           <Reveal>
             <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">Riconoscimenti</span>
           </Reveal>
 
+          {/* Il badge del certificato è disegnato in inchiostro scuro su
+              sfondo trasparente (pensato per una superficie chiara): sullo
+              sfondo bronzo scuro della sezione sarebbe quasi illeggibile.
+              La targa crema risolve il contrasto e si legge anche come
+              elemento "da cornice/attestato" coerente col tono premium. */}
           <Reveal delay={100}>
-            <div className="mt-6 font-display text-[clamp(96px,16vw,180px)] font-normal leading-none text-gold">
-              N.1
+            <div className="mx-auto mt-7 w-full max-w-[300px] rounded-2xl bg-cream px-5 py-4 shadow-[0_25px_60px_-20px_rgba(0,0,0,0.55)]">
+              <Image
+                src="/certificazioni/agriturismo numero 1 ad assisi agriturismo la mora.png"
+                alt="Agriturismo La Mora — N.1 Agriturismo ad Assisi, miglior prezzo secondo TripAdvisor"
+                width={1536}
+                height={1024}
+                className="h-auto w-full"
+              />
             </div>
           </Reveal>
 
           <Reveal delay={200}>
-            <p className="mt-2 font-display text-[clamp(20px,2.4vw,28px)] font-normal text-cream [text-wrap:balance]">
-              su <CountUp to={38} className="tabular-nums" /> agriturismi ad Assisi
+            <p className="mt-6 font-display text-[clamp(20px,2.4vw,28px)] font-normal text-cream [text-wrap:balance]">
+              Il numero uno su <CountUp to={38} className="tabular-nums" /> agriturismi ad Assisi
             </p>
           </Reveal>
 

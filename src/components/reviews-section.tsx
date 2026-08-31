@@ -1,5 +1,5 @@
 import { getGoogleReviews } from "@/lib/google-reviews";
-import { GoogleMark, StarRow } from "@/components/review-icons";
+import { GoogleMark, StarRow, TripadvisorMark } from "@/components/review-icons";
 import { ReviewsCarousel } from "@/components/reviews-carousel";
 import { Reveal } from "@/components/scroll-reveal";
 import { PinnedHold } from "@/components/pinned-hold";
@@ -97,6 +97,18 @@ export async function ReviewsSection() {
             )}
           </Reveal>
         </div>
+
+        {/* Attribuzione piattaforme: piccola, in fondo alla sezione — comunica
+            che le recensioni sono reali e raccolte sia da Google sia da
+            TripAdvisor, senza reintrodurre un badge/certificazione. */}
+        <Reveal delay={160}>
+          <div className="mt-14 flex items-center justify-center gap-2 text-[10px] uppercase tracking-[0.14em] text-ink-soft/70 sm:mt-16">
+            <span>Recensioni reali da</span>
+            <GoogleMark size={14} />
+            <span>e</span>
+            <TripadvisorMark size={20} />
+          </div>
+        </Reveal>
       </div>
       </PinnedHold>
     </section>
