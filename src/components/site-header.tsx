@@ -61,11 +61,7 @@ const NAV_LEFT: NavItem[] = [
     href: "/offerte/",
     children: [
       { label: "Cofanetti regalo", href: "/offerte/cofanetti-regalo/" },
-      {
-        label: "Smartbox",
-        href: "https://myaccount.smartbox.com/it/voucher/register/",
-        external: true,
-      },
+      { label: "Smartbox", href: "/offerte/smartbox/" },
     ],
   },
 ];
