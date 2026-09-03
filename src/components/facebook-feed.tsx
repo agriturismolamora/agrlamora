@@ -26,14 +26,16 @@ const FALLBACK_PHOTOS = [
   },
 ] as const;
 
-function FacebookIcon() {
+/* Logo Facebook originale (cerchio blu ufficiale #1877F2 + "f" bianca),
+   stesso principio di GoogleMark/TripadvisorMark in review-icons.tsx: colori
+   di brand reali, usato come attribuzione della piattaforma. */
+function FacebookMark({ size = 22 }: { size?: number }) {
   return (
-    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true">
+    <svg viewBox="0 0 48 48" width={size} height={size} aria-hidden="true">
+      <circle cx="24" cy="24" r="24" fill="#1877F2" />
       <path
-        d="M15.5 8.5H18V5.3h-2.5C13.2 5.3 11.5 7 11.5 9.3V11H9.3v3.2h2.2V19h3.2v-4.8h2.4l.6-3.2h-3V9.3c0-.5.3-.8.9-.8Z"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinejoin="round"
+        d="M31 24.5h-4.7V40h-6.4V24.5H16.5V19h3.4v-3.3c0-4 1.9-6.7 6.7-6.7h4v5.5h-2.6c-1.7 0-1.9.7-1.9 1.9V19h4.6l-.7 5.5Z"
+        fill="#fff"
       />
     </svg>
   );
@@ -49,9 +51,7 @@ export async function FacebookFeed() {
         <Reveal>
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1f180e] text-cream">
-                <FacebookIcon />
-              </span>
+              <FacebookMark size={40} />
               <div>
                 <h2 id="facebook-heading" className="font-display text-[19px] font-normal leading-tight text-ink">
                   Seguici su Facebook
@@ -70,7 +70,8 @@ export async function FacebookFeed() {
               className="group relative inline-flex shrink-0 items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-5 py-3 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]"
             >
               <HoverFill color="#8f7330" />
-              <span className="relative z-10 inline-flex items-center gap-2.5">
+              <span className="relative z-10 inline-flex items-center gap-2">
+                <FacebookMark size={16} />
                 Vai alla pagina
                 <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                   →

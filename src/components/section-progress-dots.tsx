@@ -17,10 +17,10 @@ const SECTIONS = [
   { id: "section-highlights", label: "Perché La Mora" },
   { id: "section-price-comparison", label: "Prenota diretto" },
   { id: "section-ranking", label: "Riconoscimenti" },
-  { id: "section-facebook", label: "Facebook" },
   { id: "section-territorio", label: "Territorio" },
   { id: "section-vivere", label: "La Mora da vivere" },
   { id: "section-map", label: "Dove siamo" },
+  { id: "section-facebook", label: "Facebook" },
 ] as const;
 
 /* Punto di riferimento della viewport usato per decidere quale sezione è

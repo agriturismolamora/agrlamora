@@ -36,13 +36,13 @@ export default function Home() {
       <StructureHighlights />
       <PriceComparisonSection />
       <RankingSection />
-      <FacebookFeed />
       <BlogSection />
       <OutdoorLife />
       <TerritorySection />
       <ReviewsSection />
       <LaMoraDaVivere />
       <LocationMap />
+      <FacebookFeed />
       <NewsletterSection />
       <CertificationsMarquee />
       <PromoPopup />

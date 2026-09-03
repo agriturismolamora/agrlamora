@@ -36,35 +36,25 @@ export async function ReviewsSection() {
               Il giudizio di chi è già stato qui.
             </h2>
 
-            <div className="mt-9 flex flex-col gap-6 sm:gap-7">
-              <div className="flex items-center gap-4">
-                <GoogleMark size={38} />
-                {hasLiveReviews && data.rating ? (
-                  <div>
-                    <div className="flex items-baseline gap-2">
-                      <span className="font-display text-3xl text-ink">{data.rating.toFixed(1)}</span>
-                      <StarRow rating={data.rating} size={15} />
-                    </div>
-                    {data.totalReviews !== null && (
-                      <span className="text-[12px] text-ink-soft">{data.totalReviews} recensioni Google</span>
-                    )}
-                  </div>
-                ) : (
-                  <span className="text-[13px] leading-[1.5] text-ink-soft">
-                    Recensioni Google
-                    <br />
-                    verificate in arrivo
-                  </span>
-                )}
-              </div>
-
-              <div className="flex items-center gap-4 border-t border-ink/10 pt-6 sm:gap-5">
-                <TripadvisorMark size={130} />
+            <div className="mt-8 flex items-center gap-3.5">
+              <GoogleMark size={30} />
+              {hasLiveReviews && data.rating ? (
                 <div>
-                  <span className="block font-display text-3xl text-ink">N.1</span>
-                  <span className="text-[12px] text-ink-soft">su 38 agriturismi ad Assisi</span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-display text-3xl text-ink">{data.rating.toFixed(1)}</span>
+                    <StarRow rating={data.rating} size={15} />
+                  </div>
+                  {data.totalReviews !== null && (
+                    <span className="text-[12px] text-ink-soft">{data.totalReviews} recensioni Google</span>
+                  )}
                 </div>
-              </div>
+              ) : (
+                <span className="text-[13px] leading-[1.5] text-ink-soft">
+                  Recensioni Google
+                  <br />
+                  verificate in arrivo
+                </span>
+              )}
             </div>
 
             <div className="mt-7 flex flex-col gap-2.5">
@@ -107,6 +97,19 @@ export async function ReviewsSection() {
             )}
           </Reveal>
         </div>
+
+        {/* Attribuzione piattaforme: piccola, centrata, in fondo alla sezione —
+            loghi originali un po' più grandi del primo tentativo (che li
+            rendeva illeggibili) ma senza diventare un blocco statistico a
+            sé stante come nella versione intermedia. */}
+        <Reveal delay={160}>
+          <div className="mt-14 flex items-center justify-center gap-2.5 text-[10px] uppercase tracking-[0.14em] text-ink-soft/70 sm:mt-16">
+            <span>Recensioni reali da</span>
+            <GoogleMark size={20} />
+            <span>e</span>
+            <TripadvisorMark size={85} />
+          </div>
+        </Reveal>
       </div>
       </PinnedHold>
     </section>

@@ -1,45 +1,52 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import { CountUp } from "@/components/count-up";
 import { StarRow } from "@/components/review-icons";
-import { LaurelMedallion } from "@/components/laurel-medallion";
 
-/* Rifatta da zero (richiesta esplicita): via il pannello fotografico e il
-   badge "certificato" (immagine che riusava il logo Tripadvisor — mai
-   davvero risolto il problema di brand, la soluzione corretta è non
-   usarlo affatto). Ora: nessuna foto, una medaglia originale disegnata a
-   corona d'alloro come protagonista visivo, sfondo scuro pieno e un
-   bagliore dorato appena percettibile dietro — l'obiettivo è "sembrare un
-   riconoscimento importante", non un banner. Testo ridotto all'essenziale:
-   niente paragrafo lungo, solo i fatti (posizione, valutazione, il
-   vantaggio del diretto in una riga sola). */
+/* Impaginazione confermata dal titolare, sfondo passato da scuro a chiaro
+   (l'inchiostro scuro del badge non si leggeva su sfondo scuro) e la
+   medaglia disegnata sostituita di nuovo dal badge reale fornito dal
+   titolare. Nota per il futuro: quel badge riutilizza il logo/marchio
+   TripAdvisor in una grafica auto-prodotta ("Miglior Prezzo" non è una
+   categoria di premio che TripAdvisor rilascia davvero) — rischio di
+   marchio già segnalato esplicitamente al titolare; usato qui su sua
+   richiesta ripetuta ed esplicita, non una scelta presa di iniziativa. */
 const TRIPADVISOR_URL = "https://www.tripadvisor.it/ShowUserReviews-g187905-d1021888-r1068110253";
 
 export function RankingHero() {
   return (
-    <section id="section-ranking" aria-labelledby="ranking-heading" className="relative overflow-hidden bg-[#1f180e] py-24 sm:py-28">
+    <section id="section-ranking" aria-labelledby="ranking-heading" className="relative overflow-hidden bg-cream-dim py-24 sm:py-28">
       <h2 id="ranking-heading" className="sr-only">
         Agriturismo La Mora è il numero 1 su TripAdvisor tra 38 agriturismi ad Assisi
       </h2>
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-70"
-        style={{ background: "radial-gradient(circle, rgba(182,146,60,0.16) 0%, rgba(182,146,60,0) 72%)" }}
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-60"
+        style={{ background: "radial-gradient(circle, rgba(182,146,60,0.14) 0%, rgba(182,146,60,0) 72%)" }}
       />
 
       <div className="relative z-[1] mx-auto flex max-w-[560px] flex-col items-center px-6 text-center sm:px-10">
         <Reveal>
-          <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">Riconoscimenti</span>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-olive-950">Riconoscimenti</span>
         </Reveal>
 
         <Reveal delay={100}>
-          <LaurelMedallion size={188} className="mt-8 text-gold" />
+          <div className="mt-8 w-full max-w-[240px]">
+            <Image
+              src="/certificazioni/agriturismo numero 1 ad assisi agriturismo la mora.png"
+              alt="Agriturismo La Mora — N.1 Agriturismo ad Assisi, miglior prezzo secondo TripAdvisor"
+              width={1536}
+              height={1024}
+              className="h-auto w-full"
+            />
+          </div>
         </Reveal>
 
         <Reveal delay={200}>
-          <p className="mt-2 font-display text-[19px] font-normal leading-[1.3] text-cream [text-wrap:balance]">
+          <p className="mt-2 font-display text-[19px] font-normal leading-[1.3] text-ink [text-wrap:balance]">
             Su <CountUp to={38} className="tabular-nums" /> agriturismi ad Assisi
           </p>
         </Reveal>
@@ -47,12 +54,12 @@ export function RankingHero() {
         <Reveal delay={280}>
           <div className="mt-5 flex flex-col items-center gap-2">
             <StarRow rating={5} size={15} />
-            <span className="text-[10px] uppercase tracking-[0.12em] text-cream/50">Secondo le recensioni TripAdvisor</span>
+            <span className="text-[10px] uppercase tracking-[0.12em] text-ink-soft">Secondo le recensioni TripAdvisor</span>
           </div>
         </Reveal>
 
         <Reveal delay={360}>
-          <p className="mt-6 max-w-[380px] text-[14px] leading-[1.7] text-cream/65">
+          <p className="mt-6 max-w-[380px] text-[14px] leading-[1.7] text-ink-soft">
             Non lo diciamo noi: sono le recensioni degli ospiti a metterci al primo posto — e a dirti che, prenotando
             diretto, hai anche il prezzo migliore.
           </p>
