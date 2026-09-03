@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 /* Macro-sezioni reali della homepage, nello stesso ordine in cui compaiono
    nel DOM (src/app/page.tsx). Sezioni brevi/di supporto (BenefitMarquee,
-   OutdoorLife, ReviewsSection, DirectBooking, NewsletterSection,
+   OutdoorLife, ReviewsSection, PriceComparisonSection, NewsletterSection,
    CertificationsMarquee) non hanno un proprio dot: restano "coperte" dal dot
    della sezione narrativa precedente, così il totale resta contenuto invece
    di esplodere a una voce per componente. */

@@ -59,7 +59,7 @@ export function PromoPopup() {
 
   function goToDirectBooking() {
     setOpen(false);
-    document.getElementById("direct-booking-heading")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById("price-comparison-heading")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   if (!open) return null;

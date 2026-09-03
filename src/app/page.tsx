@@ -10,7 +10,7 @@ import { RankingSection } from "@/components/ranking-section";
 import { OutdoorLife } from "@/components/outdoor-life";
 import { TerritorySection } from "@/components/territory-section";
 import { ReviewsSection } from "@/components/reviews-section";
-import { DirectBooking } from "@/components/direct-booking";
+import { PriceComparisonSection } from "@/components/price-comparison-section";
 import { BlogSection } from "@/components/blog-section";
 import { FacebookFeed } from "@/components/facebook-feed";
 import { LocationMap } from "@/components/location-map";
@@ -61,7 +61,7 @@ export default function Home() {
         <OutdoorLife />
         <TerritorySection />
         <ReviewsSection />
-        <DirectBooking />
+        <PriceComparisonSection />
         <LaMoraDaVivere />
         <LocationMap />
         <NewsletterSection />
