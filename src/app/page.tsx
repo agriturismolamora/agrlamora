@@ -34,13 +34,13 @@ export default function Home() {
       <ImmersiveStory />
       <ApartmentsCarousel />
       <StructureHighlights />
+      <PriceComparisonSection />
       <RankingSection />
       <FacebookFeed />
       <BlogSection />
       <OutdoorLife />
       <TerritorySection />
       <ReviewsSection />
-      <PriceComparisonSection />
       <LaMoraDaVivere />
       <LocationMap />
       <NewsletterSection />

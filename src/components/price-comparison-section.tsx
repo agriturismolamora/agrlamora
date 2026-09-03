@@ -25,7 +25,7 @@ const POINTS = [
 
 export function PriceComparisonSection() {
   return (
-    <section aria-labelledby="price-comparison-heading" className="bg-[#1f180e] py-24 sm:py-28">
+    <section id="section-price-comparison" aria-labelledby="price-comparison-heading" className="bg-[#1f180e] py-24 sm:py-28">
       <div className="mx-auto max-w-[860px] px-6 sm:px-10">
         <Reveal>
           <div className="text-center">

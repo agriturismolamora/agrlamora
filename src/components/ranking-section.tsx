@@ -4,8 +4,9 @@ import { RankingHero } from "@/components/ranking-hero";
 type Quote = { name: string; text: string };
 
 /* Estratto breve di ogni recensione Google reale (mai testo inventato) per
-   la striscia a scorrimento continuo sotto il pannello fotografico —
-   stesso meccanismo .animate-marquee già in produzione su
+   la striscia a scorrimento continuo sotto la medaglia — stesso sfondo
+   scuro di RankingHero, nessuna cucitura visiva tra le due. Stesso
+   meccanismo .animate-marquee già in produzione su
    BenefitMarquee/CertificationsMarquee, qui applicato a citazioni vere
    invece che a loghi. Taglio SEMPRE al bordo parola più vicino ai 100
    caratteri (mai per frase: un punto dopo un'abbreviazione tipo "S." per
