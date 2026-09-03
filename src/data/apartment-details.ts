@@ -102,17 +102,25 @@ export const APARTMENT_DETAILS: Record<string, ApartmentDetail> = {
   sagittario: {
     tagline: "Un gazebo tutto suo, per le cene che durano fino a tardi.",
     description: [
-      "Sagittario è il più capiente tra gli appartamenti a piano terra: fino a sei persone, giardino privato recintato e un gazebo esterno che è lo spazio informale dove si mangia quando fa caldo, si beve un caffè la mattina, o semplicemente ci si siede a guardare i bambini giocare.",
+      "Sagittario è il più capiente tra gli appartamenti a piano terra: fino a sei persone, camera con letto matrimoniale e letto a castello, giardino privato recintato e un gazebo esterno che è lo spazio informale dove si mangia quando fa caldo, si beve un caffè la mattina, o semplicemente ci si siede a guardare i bambini giocare.",
       "Come Gemelli, accetta animali: il recinto privato lascia i cani liberi di muoversi senza pensieri, e la vicinanza al parco giochi lo rende comodo per chi viaggia con figli piccoli.",
     ],
     distinctiveFeature: "Gazebo esterno privato e giardino recintato, fino a 6 ospiti",
     specificAmenities: ["Giardino privato recintato", "Gazebo esterno", "Pet friendly (25€/soggiorno)"],
     gallery: [
-      { src: "/images/alloggi/appartamento sagittario/arredamento tavolo sagittario.jpeg", alt: "Interno arredato dell'appartamento Sagittario" },
+      { src: "/images/alloggi/appartamento sagittario/IMG_8781.jpeg", alt: "Gazebo e giardino privato dell'appartamento Sagittario" },
       { src: "/images/alloggi/appartamento sagittario/gazebo sagittario 1.jpeg", alt: "Gazebo privato dell'appartamento Sagittario" },
-      { src: "/images/alloggi/appartamento sagittario/gazebo sagittario 2.jpeg", alt: "Zona pranzo sotto il gazebo di Sagittario" },
+      { src: "/images/alloggi/appartamento sagittario/IMG_8782.jpeg", alt: "Zona pranzo sotto il gazebo di Sagittario" },
+      { src: "/images/alloggi/appartamento sagittario/gazebo sagittario 2.jpeg", alt: "Tavolo sotto il gazebo di Sagittario" },
       { src: "/images/alloggi/appartamento sagittario/gazebo sagittario 3.jpeg", alt: "Vista del gazebo esterno di Sagittario" },
       { src: "/images/alloggi/appartamento sagittario/Area cani appartamento sagittario.jpg", alt: "Giardino privato recintato di Sagittario" },
+      { src: "/images/alloggi/appartamento sagittario/arredamento tavolo sagittario.jpeg", alt: "Interno arredato dell'appartamento Sagittario" },
+      { src: "/images/alloggi/appartamento sagittario/IMG_8896.jpeg", alt: "Camera da letto dell'appartamento Sagittario" },
+      { src: "/images/alloggi/appartamento sagittario/IMG_8897.jpeg", alt: "Camera con letto a castello dell'appartamento Sagittario" },
+      { src: "/images/alloggi/appartamento sagittario/IMG_8899.jpeg", alt: "Vista della camera da letto di Sagittario" },
+      { src: "/images/alloggi/appartamento sagittario/IMG_8901.jpeg", alt: "Zona pranzo interna dell'appartamento Sagittario" },
+      { src: "/images/alloggi/appartamento sagittario/IMG_8893.jpeg", alt: "Bagno con doccia dell'appartamento Sagittario" },
+      { src: "/images/alloggi/appartamento sagittario/IMG_8900.jpeg", alt: "Bagno dell'appartamento Sagittario" },
     ],
   },
 };

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
@@ -159,7 +160,7 @@ export default function AttivitaPage() {
             <h2 className="font-display text-[clamp(24px,2.8vw,32px)] font-normal leading-[1.2] text-cream [text-wrap:balance]">
               Ti aspettiamo in campagna.
             </h2>
-            <a
+            <Link
               href="/alloggi/"
               className="group relative mt-7 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-7 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]"
             >
@@ -170,7 +171,7 @@ export default function AttivitaPage() {
                   →
                 </span>
               </span>
-            </a>
+            </Link>
           </Reveal>
         </div>
       </section>

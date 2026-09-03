@@ -71,8 +71,8 @@ const NAV_LEFT: NavItem[] = [
 const NAV_LEFT_TABLET = new Set(["Alloggi", "La Mora", "Territorio", "Offerte"]);
 
 const NAV_RIGHT: NavChild[] = [
-  { label: "Recensioni", href: "/recensioni/" },
-  { label: "Contatti", href: "/contatti/" },
+  { label: "Recensioni", href: "/#section-reviews" },
+  { label: "Contatti", href: "/#section-map" },
 ];
 
 const LANGUAGES = ["IT", "EN", "FR", "DE"] as const;

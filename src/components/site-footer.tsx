@@ -11,8 +11,8 @@ const NAV = [
   { label: "Chi siamo", href: "/chi-siamo/" },
   { label: "Territorio", href: "/territorio/" },
   { label: "Offerte", href: "/offerte/" },
-  { label: "Recensioni", href: "/recensioni/" },
-  { label: "Contatti", href: "/contatti/" },
+  { label: "Recensioni", href: "/#section-reviews" },
+  { label: "Contatti", href: "/#section-map" },
 ] as const;
 
 /* Footer minimale e scuro (continua l'olive-950 del pannello mappa sopra,

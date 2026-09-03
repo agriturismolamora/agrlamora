@@ -46,7 +46,7 @@ export default function ChiSiamoPage() {
         <div className="mx-auto max-w-[720px] px-6 sm:px-10">
           <Reveal>
             <p className="font-display text-[19px] italic leading-[1.6] text-ink [text-wrap:balance]">
-              La Mora è un'azienda agricola: la gestiscono Giuseppina e Paolo, con la loro famiglia, non un gruppo
+              La Mora è un&apos;azienda agricola: la gestiscono Giuseppina e Paolo, con la loro famiglia, non un gruppo
               alberghiero. Quando scrivi o chiami, rispondono loro.
             </p>
           </Reveal>

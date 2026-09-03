@@ -21,7 +21,7 @@ export async function ReviewsSection() {
   const hasLiveReviews = data.configured && data.reviews.length > 0;
 
   return (
-    <section aria-labelledby="reviews-heading" className="bg-cream-dim py-24 sm:py-28 lg:min-h-[140vh] lg:py-0">
+    <section id="section-reviews" aria-labelledby="reviews-heading" className="bg-cream-dim py-24 sm:py-28 lg:min-h-[140vh] lg:py-0">
       <PinnedHold>
       <div className="mx-auto max-w-[1300px] px-6 sm:px-10 lg:py-24">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-16">
