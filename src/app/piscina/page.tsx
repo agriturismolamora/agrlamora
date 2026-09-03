@@ -97,6 +97,47 @@ export default function PiscinaPage() {
         </div>
       </section>
 
+      <section className="bg-cream py-16 sm:py-20">
+        <div className="mx-auto grid max-w-[1100px] grid-cols-1 items-center gap-10 px-6 sm:grid-cols-2 sm:px-10 sm:gap-16">
+          <Reveal>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-[3px]">
+              <Image
+                src="/images/piscina/esterno parco agriturismo con casetta.webp"
+                alt="Area relax accanto alla piscina di Agriturismo La Mora"
+                fill
+                sizes="(max-width: 640px) 100vw, 500px"
+                className="object-cover"
+              />
+            </div>
+          </Reveal>
+          <Reveal delay={80}>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-olive-950">Relax</span>
+            <h2 className="mt-3 font-display text-[26px] font-normal leading-[1.2] text-ink">
+              Non solo per nuotare.
+            </h2>
+            <p className="mt-4 text-[14px] leading-[1.75] text-ink-soft">
+              Le sedie all&apos;ombra intorno alla vasca sono pensate per chi si ferma a leggere mentre i bambini
+              giocano in acqua, o per un caffè lento guardando la campagna. La piscina è visibile da gran parte del
+              giardino: anche chi non nuota resta comunque dentro l&apos;atmosfera.
+            </p>
+            <p className="mt-4 text-[14px] leading-[1.75] text-ink-soft">
+              È a pochi passi dagli appartamenti — si scende in costume, non serve organizzare nulla.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="bg-cream-dim py-16 sm:py-20">
+        <div className="mx-auto max-w-[900px] px-6 text-center sm:px-10">
+          <Reveal>
+            <p className="font-display text-[22px] font-normal italic leading-[1.5] text-ink [text-wrap:balance]">
+              &ldquo;Emplacement calme, piscine très bien entretenue.&rdquo;
+            </p>
+            <span className="mt-3 block text-[11px] uppercase tracking-[0.1em] text-ink-soft">Ludivine, Francia — Google</span>
+          </Reveal>
+        </div>
+      </section>
+
       <section className="bg-[#1f180e] py-16 text-center sm:py-20">
         <div className="mx-auto max-w-[480px] px-6 sm:px-10">
           <Reveal>

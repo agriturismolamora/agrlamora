@@ -13,12 +13,6 @@ export function LaurelMedallion({ size = 200, className = "" }: { size?: number;
   const count = 8;
   for (let i = 0; i < count; i++) {
     const t = i / (count - 1);
-    const angleStart = 200;
-    const angleEnd = 340;
-    const angle = angleStart + t * (angleEnd - angleStart);
-    const rad = (angle * Math.PI) / 180;
-    const lx = cx - r * 0.78 * Math.cos(rad - Math.PI);
-    const ly = cy - r * 0.78 * Math.sin(rad - Math.PI);
     const leafSize = 9 + t * 6;
     // ramo sinistro
     leaves.push(

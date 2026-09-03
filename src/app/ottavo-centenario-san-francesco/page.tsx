@@ -106,6 +106,33 @@ export default function OttavoCentenarioPage() {
           </Reveal>
         </div>
       </section>
+
+      <section className="bg-cream-dim py-16 sm:py-20">
+        <div className="mx-auto grid max-w-[1100px] grid-cols-1 items-center gap-10 px-6 sm:grid-cols-2 sm:px-10 sm:gap-16">
+          <Reveal>
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
+              <Image
+                src="/images/ottavo centenario san francesco/san francesco.jpg"
+                alt="San Francesco d'Assisi"
+                fill
+                sizes="(max-width: 640px) 100vw, 500px"
+                className="object-cover"
+              />
+            </div>
+          </Reveal>
+          <Reveal delay={80}>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-olive-950">Un consiglio pratico</span>
+            <h2 className="mt-3 font-display text-[26px] font-normal leading-[1.2] text-ink [text-wrap:balance]">
+              Prenota con anticipo, se vieni in questo periodo.
+            </h2>
+            <p className="mt-4 text-[14px] leading-[1.75] text-ink-soft">
+              Un anno di celebrazioni porta più visitatori del solito ad Assisi, e la disponibilità nei periodi
+              centrali si esaurisce prima. Se hai già in mente delle date, meglio verificare presto — noi rispondiamo
+              direttamente, senza intermediari, e ti diciamo subito cosa è ancora libero.
+            </p>
+          </Reveal>
+        </div>
+      </section>
     </>
   );
 }

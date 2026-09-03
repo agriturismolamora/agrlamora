@@ -17,6 +17,13 @@ const FACTS = [
   { label: "Supplemento salata", value: "+10€ a persona" },
 ];
 
+const PRODUCTS = [
+  "Marmellate fatte in casa",
+  "Frutta di stagione",
+  "Olio EVO della struttura",
+  "Caffè, cappuccino, tè o ginseng su richiesta",
+];
+
 export default function ColazioneBioPage() {
   return (
     <>
@@ -60,6 +67,15 @@ export default function ColazioneBioPage() {
                 deve partire presto verso Assisi o l&apos;aeroporto di Perugia.
               </p>
             </article>
+
+            <ul className="mt-8 grid grid-cols-1 gap-x-6 gap-y-3 border-y border-ink/10 py-6 text-[13px] text-ink sm:grid-cols-2">
+              {PRODUCTS.map((p) => (
+                <li key={p} className="flex items-center gap-2.5">
+                  <span aria-hidden="true" className="h-1 w-1 shrink-0 rounded-full bg-gold" />
+                  {p}
+                </li>
+              ))}
+            </ul>
 
             <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-[3px]">
               <Image

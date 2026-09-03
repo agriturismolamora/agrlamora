@@ -44,14 +44,32 @@ const BOXES = [
 export default function CofanettiRegaloPage() {
   return (
     <>
-      <section className="bg-cream pb-4 pt-16 sm:pt-20">
-        <div className="mx-auto max-w-[900px] px-6 text-center sm:px-10">
+      <section className="relative flex h-[50vh] min-h-[380px] items-end overflow-hidden">
+        <Image
+          src="/images/piscina/foto esterno prato verde con panchina in legno e campo da calcio.webp"
+          alt="Il prato verde di Agriturismo La Mora"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(180deg, rgba(20,14,7,.1) 0%, rgba(20,14,7,.72) 100%)" }}
+        />
+        <div className="relative z-[1] mx-auto w-full max-w-[700px] px-6 pb-12 text-center sm:px-10">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-cream/75">Offerte</span>
+          <h1 className="mt-3 font-display text-[clamp(30px,4.6vw,48px)] font-normal leading-[1.15] text-cream [text-wrap:balance]">
+            Regala un soggiorno a La Mora.
+          </h1>
+        </div>
+      </section>
+
+      <section className="bg-cream pb-4 pt-14 sm:pt-16">
+        <div className="mx-auto max-w-[700px] px-6 text-center sm:px-10">
           <Reveal>
-            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">Offerte</span>
-            <h1 className="mx-auto mt-5 max-w-[620px] font-display text-[clamp(32px,4.6vw,50px)] font-normal leading-[1.15] text-ink [text-wrap:balance]">
-              Regala un soggiorno a La Mora.
-            </h1>
-            <p className="mx-auto mt-5 max-w-[540px] text-[15px] leading-[1.75] text-ink-soft">
+            <p className="text-[15px] leading-[1.8] text-ink-soft">
               Quattro cofanetti pensati per occasioni diverse. &ldquo;Bilocale&rdquo; è una tipologia, non un
               appartamento specifico tra i cinque: l&apos;assegnazione avviene su una delle unità di quel tipo
               disponibili per le date scelte.
@@ -97,6 +115,33 @@ export default function CofanettiRegaloPage() {
               </div>
             </Reveal>
           ))}
+        </div>
+      </section>
+
+      <section className="bg-[#1f180e] py-16 text-center sm:py-20">
+        <div className="mx-auto max-w-[480px] px-6 sm:px-10">
+          <Reveal>
+            <h2 className="font-display text-[clamp(24px,2.8vw,32px)] font-normal leading-[1.2] text-cream [text-wrap:balance]">
+              Non sai quale scegliere?
+            </h2>
+            <p className="mt-4 text-[14px] leading-[1.7] text-cream/65">
+              Scrivici l&apos;occasione e per chi è il regalo: ti aiutiamo a scegliere il cofanetto giusto.
+            </p>
+            <a
+              href="https://wa.me/393934363917?text=Ciao!%20Vorrei%20un%20consiglio%20su%20quale%20cofanetto%20regalo%20scegliere."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative mt-7 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-7 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]"
+            >
+              <HoverFill color="#8f7330" />
+              <span className="relative z-10 inline-flex items-center gap-2.5">
+                Scrivici su WhatsApp
+                <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+                  →
+                </span>
+              </span>
+            </a>
+          </Reveal>
         </div>
       </section>
     </>
