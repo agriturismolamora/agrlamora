@@ -6,49 +6,14 @@ import { useState } from "react";
 import { Reveal } from "@/components/scroll-reveal";
 import { PinnedHold } from "@/components/pinned-hold";
 import { HoverFill } from "@/components/hover-fill";
+import { BLOG_POSTS } from "@/data/blog-posts";
 
-/* Blog/editoriale (PLAN.md Blocco 6, mai costruito finora): i 20 articoli
-   veri arriveranno con la produzione contenuti SEO/GEO — per ora 5 card
-   placeholder. Le foto qui sotto sono l'UNICA eccezione nel sito alla
-   regola "solo foto reali da public/": scaricate da Unsplash (licenza
-   Unsplash, libere da diritti) su richiesta esplicita del titolare, solo
-   per queste card segnaposto — Basilica di Santa Maria degli Angeli e
-   Cascate delle Marmore sono il luogo reale, Bosco di San Francesco/San
-   Damiano/Monte Subasio sono foto d'atmosfera coerenti col tema (nessuna
-   foto libera del luogo esatto trovata). Da sostituire con foto reali de
-   La Mora o le anteprime reali degli articoli quando saranno pubblicati. */
-const POSTS = [
-  {
-    category: "Territorio",
-    title: "Basilica di Santa Maria degli Angeli: cosa vedere",
-    image: "/images/blog/basilica-santa-maria-degli-angeli.jpg",
-    alt: "Basilica di Santa Maria degli Angeli, ad Assisi",
-  },
-  {
-    category: "Natura",
-    title: "Il Bosco di San Francesco, tra i sentieri del FAI",
-    image: "/images/blog/bosco-san-francesco.jpg",
-    alt: "Sentiero nel bosco, Umbria",
-  },
-  {
-    category: "Territorio",
-    title: "Il Santuario di San Damiano, fuori dalle mura di Assisi",
-    image: "/images/blog/santuario-san-damiano.jpg",
-    alt: "Piccola chiesa in pietra, stile santuario francescano",
-  },
-  {
-    category: "Gita di un giorno",
-    title: "Cascate delle Marmore: come arrivarci da Assisi",
-    image: "/images/blog/cascate-delle-marmore.jpg",
-    alt: "Cascate delle Marmore, in Umbria",
-  },
-  {
-    category: "Natura",
-    title: "Monte Subasio: i sentieri sopra Assisi",
-    image: "/images/blog/monte-subasio.jpg",
-    alt: "Sentiero di montagna erboso, Umbria",
-  },
-] as const;
+/* Blog/editoriale (PLAN.md Blocco 6): 5 articoli veri, non più segnaposto —
+   stessi dati di src/data/blog-posts.ts, che alimenta anche /blog/ e le
+   singole pagine articolo. Le foto stock Unsplash che erano l'unica
+   eccezione documentata nel progetto alla regola "solo foto reali" sono
+   state sostituite con foto reali del territorio (public/images/territorio/). */
+const POSTS = BLOG_POSTS;
 
 export function BlogSection() {
   /* z-index dell'hover deve vivere in state React: uno style inline con
@@ -97,8 +62,8 @@ export function BlogSection() {
         <Reveal delay={100} className="mt-14 hidden sm:mt-16 lg:flex lg:justify-center">
           {POSTS.map((post, i) => (
             <Link
-              key={post.title}
-              href="/blog/"
+              key={post.slug}
+              href={`/blog/${post.slug}/`}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
               onFocus={() => setHovered(i)}
@@ -142,8 +107,8 @@ export function BlogSection() {
         <Reveal delay={100} className="mt-14 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 sm:mt-16 lg:hidden">
           {POSTS.map((post) => (
             <Link
-              key={post.title}
-              href="/blog/"
+              key={post.slug}
+              href={`/blog/${post.slug}/`}
               className="group/card relative aspect-[3/4] w-[220px] shrink-0 snap-start overflow-hidden"
             >
               <Image src={post.image} alt={post.alt} fill quality={90} sizes="220px" className="object-cover" />

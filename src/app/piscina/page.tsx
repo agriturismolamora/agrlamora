@@ -48,7 +48,12 @@ export default function PiscinaPage() {
             <p className="text-[15px] leading-[1.85] text-ink-soft">
               6×12 metri, aperta dal 1° giugno al 28 settembre: la piscina è il centro delle giornate a La Mora,
               circondata da sedie all&apos;ombra per chi preferisce guardare invece di nuotare. Accanto, un&apos;area
-              giochi per i più piccoli e un campo da calcetto in erba naturale.
+              giochi per i più piccoli e un campo da calcetto in erba naturale — trovi tutte le altre attività della
+              struttura nella pagina{" "}
+              <Link href="/agriturismo-famiglie-ad-assisi-e-dintorni/" className="text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry">
+                Attività
+              </Link>
+              .
             </p>
           </Reveal>
 

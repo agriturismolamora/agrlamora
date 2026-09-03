@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Reveal } from "@/components/scroll-reveal";
 import { StarRow } from "@/components/review-icons";
@@ -127,18 +128,26 @@ export default function ChiSiamoPage() {
               abbastanza fuori per tornare la sera in un posto silenzioso, con gli ulivi intorno e la piscina che
               aspetta.
             </p>
-            <a
-              href="/territorio/"
-              className="group relative mt-8 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-terracotta px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
-            >
-              <HoverFill color="#8f4324" />
-              <span className="relative z-10 inline-flex items-center gap-2.5">
-                Scopri il territorio
-                <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-                  →
+            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+              <Link
+                href="/territorio/"
+                className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-terracotta px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
+              >
+                <HoverFill color="#8f4324" />
+                <span className="relative z-10 inline-flex items-center gap-2.5">
+                  Scopri il territorio
+                  <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+                    →
+                  </span>
                 </span>
-              </span>
-            </a>
+              </Link>
+              <Link
+                href="/alloggi/"
+                className="text-[11px] font-semibold uppercase tracking-[0.06em] text-ink-soft underline decoration-ink-soft/30 underline-offset-4 hover:text-raspberry"
+              >
+                Prenota il tuo soggiorno
+              </Link>
+            </div>
           </Reveal>
         </div>
       </section>

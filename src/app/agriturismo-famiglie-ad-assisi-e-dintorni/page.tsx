@@ -66,6 +66,13 @@ export default function AttivitaPage() {
                   Immersa nel verde, con vista sulla campagna umbra e sedute all&apos;ombra per chi preferisce
                   restare a guardare. Il punto d&apos;incontro della giornata, tra un&apos;uscita ad Assisi e l&apos;altra.
                 </p>
+                <Link
+                  href="/piscina/"
+                  className="mt-4 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-raspberry"
+                >
+                  Scopri di più sulla piscina
+                  <span aria-hidden="true">→</span>
+                </Link>
               </div>
             </div>
           </Reveal>
@@ -150,6 +157,21 @@ export default function AttivitaPage() {
                 />
               </div>
             </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="bg-cream-dim py-14 sm:py-16">
+        <div className="mx-auto max-w-[1100px] px-6 sm:px-10">
+          <Reveal>
+            <p className="text-[14px] leading-[1.8] text-ink-soft">
+              Tutto questo è a portata di mano senza muoversi dalla struttura. Per quello che c&apos;è fuori dai
+              cancelli — Assisi, i dintorni, Perugia — la guida completa è nella pagina{" "}
+              <Link href="/territorio/" className="text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry">
+                Territorio
+              </Link>
+              .
+            </p>
           </Reveal>
         </div>
       </section>

@@ -173,6 +173,25 @@ export default function TerritorioPage() {
         </div>
       </section>
 
+      <section className="bg-cream-dim py-14 sm:py-16">
+        <div className="mx-auto max-w-[1100px] px-6 sm:px-10">
+          <Reveal>
+            <p className="text-[14px] leading-[1.8] text-ink-soft">
+              Il 2026 aggiunge un motivo in più per visitare Assisi: leggi di più sull&apos;
+              <Link href="/ottavo-centenario-san-francesco/" className="text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry">
+                Ottavo Centenario di San Francesco
+              </Link>
+              . E se tra una tappa e l&apos;altra cercate qualcosa da fare senza uscire dalla struttura, trovate tutto
+              nella pagina{" "}
+              <Link href="/agriturismo-famiglie-ad-assisi-e-dintorni/" className="text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry">
+                Attività
+              </Link>
+              .
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
       <section className="bg-[#1f180e] py-16 text-center sm:py-20">
         <div className="mx-auto max-w-[480px] px-6 sm:px-10">
           <Reveal>

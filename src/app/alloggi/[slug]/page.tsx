@@ -170,6 +170,28 @@ export default async function ApartmentPage({ params }: { params: Promise<Params
         </div>
       </section>
 
+      {/* Link interni contestuali: cosa fare oltre l'appartamento */}
+      <section className="bg-cream-dim py-10">
+        <div className="mx-auto max-w-[1200px] px-6 text-center sm:px-10">
+          <Reveal>
+            <p className="text-[13px] leading-[1.7] text-ink-soft">
+              Da {apt.name}, tutta l&apos;Umbria è vicina: scopri{" "}
+              <Link href="/territorio/" className="text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry">
+                il territorio
+              </Link>{" "}
+              intorno ad Assisi o le{" "}
+              <Link
+                href="/agriturismo-famiglie-ad-assisi-e-dintorni/"
+                className="text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry"
+              >
+                attività
+              </Link>{" "}
+              disponibili in struttura, piscina inclusa.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
       {/* 6. Conversione finale */}
       <section className="bg-[#1f180e] py-20 text-center sm:py-24">
         <div className="mx-auto max-w-[560px] px-6 sm:px-10">

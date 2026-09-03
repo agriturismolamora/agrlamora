@@ -49,7 +49,7 @@ export function PriceComparisonSection() {
               Sito ufficiale
             </span>
 
-            <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.14em] text-cream/60">Prenota direttamente</p>
+            <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.14em] text-cream/60">Tariffa diretta</p>
 
             {DIRECT_PRICE_EUR !== null ? (
               <>
@@ -64,7 +64,7 @@ export function PriceComparisonSection() {
               </>
             ) : (
               <p className="mx-auto mt-3 max-w-[360px] font-display text-[clamp(22px,3vw,28px)] font-normal leading-[1.3] text-gold">
-                Chiedici la tariffa migliore per queste date
+                Richiedi il miglior prezzo
               </p>
             )}
 
@@ -113,7 +113,8 @@ export function PriceComparisonSection() {
         <Reveal delay={260}>
           <p className="mt-5 text-center text-[11px] leading-[1.6] text-cream/40">
             Prezzi rilevati il {CHECKED_ON_LABEL}, confronto statico aggiornato manualmente — non un motore di
-            prenotazione in tempo reale. Le tariffe delle piattaforme possono variare nel tempo.
+            prenotazione in tempo reale. Le tariffe delle piattaforme possono variare nel tempo e in base alle
+            condizioni selezionate.
           </p>
         </Reveal>
 

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
@@ -94,6 +95,12 @@ export default function ColazioneBioPage() {
                 <HoverFill color="#8a3844" />
                 <span className="relative z-10">Scrivici su WhatsApp</span>
               </a>
+              <Link
+                href="/alloggi/"
+                className="mt-4 block text-center text-[11px] font-semibold uppercase tracking-[0.06em] text-ink-soft underline decoration-ink-soft/30 underline-offset-4 hover:text-raspberry"
+              >
+                Scopri gli appartamenti
+              </Link>
             </aside>
           </Reveal>
         </div>

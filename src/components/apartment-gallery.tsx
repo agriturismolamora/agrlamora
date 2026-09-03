@@ -1,43 +1,125 @@
 "use client";
 
 import Image from "next/image";
+import { useCallback, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { useLightbox } from "@/components/gallery-lightbox";
 import type { GalleryImage } from "@/data/apartment-details";
 
-/* Composizione editoriale variata (non una griglia uniforme): ogni terza
-   foto è grande e orizzontale (span 2 colonne), le altre più piccole e
-   verticali — un ritmo "grande / coppia / grande / coppia" invece di un
-   muro di thumbnail identici. Click su qualunque foto apre il lightbox
-   (useLightbox) su quell'indice esatto. */
-function spanClass(i: number) {
-  return i % 3 === 0 ? "sm:col-span-2 aspect-[16/10]" : "aspect-[4/5]";
+const SWIPE_THRESHOLD = 46;
+
+/* Galleria come slider/carousel (richiesta esplicita del titolare — le
+   foto "sparse" in griglia editoriale non gli piacevano): una foto grande
+   alla volta, frecce ← → pulite, contatore "01 / N", swipe su mobile,
+   frecce da tastiera quando il carousel ha il focus. La foto resta sempre
+   protagonista — nessuna striscia di thumbnail, mai richiesta come
+   necessaria dalla UX qui. Click sulla foto apre lo stesso lightbox
+   fullscreen già usato altrove, sull'indice corrente. Transizione morbida
+   (600ms, mai a scatto) via translateX su un'unica pista di slide — non
+   un remount per foto, così resta fluida anche scorrendo rapidamente. */
+function pad(n: number) {
+  return String(n + 1).padStart(2, "0");
 }
 
 export function ApartmentGallery({ images }: { images: GalleryImage[] }) {
+  const [current, setCurrent] = useState(0);
   const { open, Lightbox } = useLightbox(images);
+  const dragStartX = useRef<number | null>(null);
+
+  const goTo = useCallback(
+    (i: number) => setCurrent(((i % images.length) + images.length) % images.length),
+    [images.length]
+  );
+  const prev = useCallback(() => goTo(current - 1), [current, goTo]);
+  const next = useCallback(() => goTo(current + 1), [current, goTo]);
+
+  function onKeyDown(e: KeyboardEvent) {
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      prev();
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      next();
+    }
+  }
+
+  function onPointerDown(e: PointerEvent) {
+    dragStartX.current = e.clientX;
+  }
+  function onPointerUp(e: PointerEvent) {
+    if (dragStartX.current === null) return;
+    const delta = e.clientX - dragStartX.current;
+    dragStartX.current = null;
+    if (Math.abs(delta) >= SWIPE_THRESHOLD) {
+      if (delta < 0) next();
+      else prev();
+    }
+  }
 
   return (
-    <>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        {images.map((img, i) => (
-          <button
-            key={img.src}
-            type="button"
-            onClick={() => open(i)}
-            aria-label={`Apri a schermo intero: ${img.alt}`}
-            className={`group relative overflow-hidden rounded-[3px] bg-ink/5 ${spanClass(i)}`}
-          >
-            <Image
-              src={img.src}
-              alt={img.alt}
-              fill
-              sizes={i % 3 === 0 ? "(max-width: 640px) 100vw, 800px" : "(max-width: 640px) 100vw, 390px"}
-              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-            />
-          </button>
-        ))}
+    <div>
+      <div
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Galleria fotografica"
+        tabIndex={0}
+        onKeyDown={onKeyDown}
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+        className="relative aspect-[4/3] touch-pan-y select-none overflow-hidden rounded-[3px] bg-ink/5 outline-none sm:aspect-[16/10]"
+      >
+        <div
+          className="flex h-full transition-transform duration-[600ms] ease-[cubic-bezier(.22,1,.36,1)]"
+          style={{ transform: `translateX(-${current * 100}%)` }}
+        >
+          {images.map((img, i) => (
+            <button
+              key={img.src}
+              type="button"
+              onClick={() => open(current)}
+              aria-label={`Apri a schermo intero: ${img.alt}`}
+              className="relative h-full w-full shrink-0"
+            >
+              <Image
+                src={img.src}
+                alt={img.alt}
+                fill
+                sizes="(max-width: 640px) 100vw, 900px"
+                priority={i === 0}
+                className="object-cover"
+              />
+            </button>
+          ))}
+        </div>
+
+        {images.length > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={prev}
+              aria-label="Foto precedente"
+              className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-ink/35 text-cream backdrop-blur-[2px] transition-colors hover:bg-ink/55 sm:left-5"
+            >
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true">
+                <path d="M15 5l-7 7 7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={next}
+              aria-label="Foto successiva"
+              className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-ink/35 text-cream backdrop-blur-[2px] transition-colors hover:bg-ink/55 sm:right-5"
+            >
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true">
+                <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+            <span className="absolute bottom-3 right-3 rounded-full bg-ink/45 px-2.5 py-1 text-[11px] font-medium tabular-nums text-cream backdrop-blur-[2px] sm:bottom-4 sm:right-4">
+              {pad(current)} / {pad(images.length - 1)}
+            </span>
+          </>
+        )}
       </div>
       <Lightbox />
-    </>
+    </div>
   );
 }
