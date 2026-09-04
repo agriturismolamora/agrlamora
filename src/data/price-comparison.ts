@@ -5,17 +5,22 @@
    l'unità con la stessa metratura/configurazione letti: 45 m², 1 letto
    matrimoniale + 1 letto a castello).
 
-   Prezzi rilevati manualmente il 3 settembre 2026 navigando le pagine
-   pubbliche di Booking.com ed Expedia con quelle esatte date — non un
-   confronto in tempo reale, NON va fatto scraping automatico e continuo
-   (violerebbe i termini di entrambe le piattaforme). Airbnb non è
-   verificabile: il link fornito è una pagina di gestione riservata
-   all'host, non un annuncio pubblico.
+   Prezzi OTA rilevati navigando le pagine pubbliche di Booking.com ed
+   Expedia con quelle esatte date, verificati due volte (3 e 4 settembre
+   2026, stesso risultato entrambe le volte) — non un confronto in tempo
+   reale, NON va fatto scraping automatico e continuo (violerebbe i termini
+   di entrambe le piattaforme). Airbnb non è verificabile: il link
+   disponibile è una pagina di gestione riservata all'host, non un annuncio
+   pubblico.
 
-   Per aggiornare: modifica SOLO questo file. DIRECT_PRICE_EUR è l'unico
-   valore mancante — appena il titolare conferma una tariffa diretta reale
-   per queste date, valorizzalo qui (in euro, per l'intero soggiorno di 3
-   notti) e la sezione mostra automaticamente il confronto completo. */
+   Prezzo diretto: confermato dal titolare (4 settembre 2026) per questo
+   stesso soggiorno — tariffa non rimborsabile, il tipo di prodotto più
+   comparabile al vantaggio "prenota diretto, risparmi di più" che la
+   sezione vuole comunicare. È anche disponibile una tariffa flessibile con
+   colazione inclusa e cancellazione gratuita, più cara: mostrata come nota
+   secondaria, non come cifra principale.
+
+   Per aggiornare: modifica SOLO questo file. */
 
 export const STAY = {
   checkinLabel: "12 ottobre 2026",
@@ -31,13 +36,20 @@ export const STAY = {
    verificata da nessuna fonte del progetto. */
 export const DISTANCE_LABEL = "2,2 km da Santa Maria degli Angeli";
 
-export const CHECKED_ON_LABEL = "3 settembre 2026";
+export const CHECKED_ON_LABEL = "4 settembre 2026";
 
 /* null = nessuna tariffa diretta ancora verificabile per queste date: la
-   sezione mostra uno stato "richiedi il preventivo" invece di un numero
-   inventato. Imposta un numero (es. 349) per attivare il confronto pieno
-   con il risparmio calcolato automaticamente. */
-export const DIRECT_PRICE_EUR: number | null = null;
+   sezione mostrerebbe uno stato "richiedi il preventivo" invece di un
+   numero inventato. Ora valorizzata (vedi commento sopra). */
+export const DIRECT_PRICE_EUR: number | null = 244;
+export const DIRECT_PRICE_PER_NIGHT = 81;
+export const DIRECT_PRICE_CONDITION = "Tariffa non rimborsabile";
+
+/* Tariffa alternativa più cara, con condizioni diverse — mostrata come
+   nota secondaria nel box "Sito ufficiale", non come cifra principale. */
+export const DIRECT_PRICE_FLEX_EUR = 444;
+export const DIRECT_PRICE_FLEX_PER_NIGHT = 148;
+export const DIRECT_PRICE_FLEX_CONDITION = "Colazione inclusa e cancellazione gratuita";
 
 export const OTA_PRICES = [
   {
@@ -54,3 +66,10 @@ export const OTA_PRICES = [
 
 export const AIRBNB_NOTE =
   "Non verificabile per queste date: il link disponibile è una pagina di gestione riservata all'host, non un annuncio pubblico.";
+
+/* Piattaforme aggiuntive mostrate nel dropdown "Altri prezzi": prezzo
+   ancora da verificare, mai un numero segnaposto spacciato per reale. */
+export const OTHER_PLATFORMS = [
+  { name: "TripAdvisor", note: "Prezzo da verificare — la prenotazione passa comunque da una delle OTA collegate." },
+  { name: "Airbnb", note: AIRBNB_NOTE },
+] as const;

@@ -3,7 +3,19 @@ import { getGoogleReviews } from "@/lib/google-reviews";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import { StarRow } from "@/components/review-icons";
-import { STAY, CHECKED_ON_LABEL, DISTANCE_LABEL, DIRECT_PRICE_EUR, OTA_PRICES, AIRBNB_NOTE } from "@/data/price-comparison";
+import { OtherPricesDropdown } from "@/components/other-prices-dropdown";
+import {
+  STAY,
+  CHECKED_ON_LABEL,
+  DISTANCE_LABEL,
+  DIRECT_PRICE_EUR,
+  DIRECT_PRICE_PER_NIGHT,
+  DIRECT_PRICE_CONDITION,
+  DIRECT_PRICE_FLEX_EUR,
+  DIRECT_PRICE_FLEX_PER_NIGHT,
+  DIRECT_PRICE_FLEX_CONDITION,
+  OTA_PRICES,
+} from "@/data/price-comparison";
 
 const WHATSAPP_URL = `https://wa.me/393934363917?text=${encodeURIComponent(
   `Ciao! Vorrei un preventivo per l'appartamento ${STAY.apartmentName} dal ${STAY.checkinLabel} al ${STAY.checkoutLabel} (${STAY.adults} adulti).`
@@ -21,17 +33,16 @@ const POINTS = [
   { value: "-10%", label: "Tariffa non rimborsabile", detail: "Rispetto alla tariffa flessibile, per chi ha già le idee chiare." },
 ] as const;
 
-/* Ricostruita come una vera scheda comparativa in stile "metasearch"
-   (richiesta esplicita, riferimento diretto a una card TripAdvisor):
-   foto → identità → punteggio/distanza → badge risparmio (solo se c'è un
-   prezzo diretto da cui calcolarlo) → box "Sito ufficiale" protagonista →
-   fascia OTA secondaria sotto. Punteggio e distanza sono dati REALI già
-   verificati altrove nel progetto (recensioni Google live, distanza dalla
-   pagina Booking consultata per i prezzi) — non i numeri riportati nello
-   screenshot di riferimento fornito: quello mostrava per Expedia 113€,
-   ma la verifica diretta fatta su Expedia per questo stesso soggiorno
-   (vedi src/data/price-comparison.ts) ha dato 372€, quindi i valori dello
-   screenshot non sono stati usati come dato per questo sito. */
+/* Scheda comparativa in stile "metasearch": foto → identità →
+   punteggio/distanza → badge risparmio → box "Sito ufficiale"
+   protagonista (con la tariffa alternativa flessibile+colazione come nota
+   secondaria) → fascia OTA + dropdown "Altri prezzi" sotto. Punteggio e
+   distanza sono dati reali già verificati altrove nel progetto. Prezzi
+   OTA: verificati due volte di persona (Booking/Expedia dal vivo, stesso
+   risultato entrambe le volte) — non le cifre indicate come riferimento
+   in una fase precedente, che a un doppio controllo diretto non
+   corrispondevano a quanto mostrato realmente dalle due piattaforme per
+   questo esatto soggiorno (dettagli in src/data/price-comparison.ts). */
 export async function PriceComparisonSection() {
   const reviews = await getGoogleReviews();
 
@@ -103,11 +114,18 @@ export async function PriceComparisonSection() {
 
                 {DIRECT_PRICE_EUR !== null ? (
                   <>
-                    <p className="mt-2 font-display text-[clamp(48px,7vw,64px)] font-medium leading-none text-gold">
-                      €{DIRECT_PRICE_EUR}
-                    </p>
+                    <div className="mt-2 flex items-baseline justify-center gap-2">
+                      <p className="font-display text-[clamp(48px,7vw,64px)] font-medium leading-none text-gold">
+                        €{DIRECT_PRICE_PER_NIGHT}
+                      </p>
+                      <span className="text-[13px] text-cream/50">/ notte</span>
+                    </div>
                     <p className="mt-2 text-[12px] text-cream/55">
-                      {STAY.nights} notti a €{DIRECT_PRICE_EUR}
+                      {STAY.nights} notti a €{DIRECT_PRICE_EUR} · {DIRECT_PRICE_CONDITION}
+                    </p>
+                    <p className="mt-4 border-t border-cream/10 pt-4 text-[11px] leading-[1.6] text-cream/45">
+                      Preferisci più libertà? €{DIRECT_PRICE_FLEX_PER_NIGHT}/notte (€{DIRECT_PRICE_FLEX_EUR} per{" "}
+                      {STAY.nights} notti) con {DIRECT_PRICE_FLEX_CONDITION.toLowerCase()}.
                     </p>
                   </>
                 ) : (
@@ -137,7 +155,7 @@ export async function PriceComparisonSection() {
               </div>
 
               {/* Fascia OTA secondaria */}
-              <div className="mt-5 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-cream/10 pt-5">
+              <div className="mt-5 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-cream/10 pt-5">
                 <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
                   {OTA_PRICES.map((ota) => (
                     <span key={ota.name} className="text-[13px] text-cream/60">
@@ -145,11 +163,8 @@ export async function PriceComparisonSection() {
                     </span>
                   ))}
                 </div>
-                <span className="text-[11px] uppercase tracking-[0.04em] text-cream/35">Altri prezzi</span>
+                <OtherPricesDropdown />
               </div>
-              <p className="mt-2 text-[11px] leading-[1.5] text-cream/35">
-                Airbnb: {AIRBNB_NOTE}
-              </p>
             </div>
           </div>
         </Reveal>
