@@ -16,6 +16,9 @@ export type Apartment = {
   beds: number;
   bathrooms: number;
   sqm: number;
+  /* Confermato dal titolare: Pesci, Sagittario e Gemelli sono a piano
+     terra; Acquario e Bilancia al primo piano. */
+  floor: "Piano terra" | "Primo piano";
 };
 
 /* Stesse route già usate nel dropdown "Alloggi" dell'header (non
@@ -36,6 +39,7 @@ export const APARTMENTS: Apartment[] = [
     beds: 4,
     bathrooms: 1,
     sqm: 45,
+    floor: "Piano terra",
   },
   {
     slug: "bilancia",
@@ -48,6 +52,7 @@ export const APARTMENTS: Apartment[] = [
     beds: 8,
     bathrooms: 1,
     sqm: 75,
+    floor: "Primo piano",
   },
   {
     slug: "pesci",
@@ -60,6 +65,7 @@ export const APARTMENTS: Apartment[] = [
     beds: 4,
     bathrooms: 1,
     sqm: 45,
+    floor: "Piano terra",
   },
   {
     slug: "acquario",
@@ -72,6 +78,7 @@ export const APARTMENTS: Apartment[] = [
     beds: 4,
     bathrooms: 1,
     sqm: 45,
+    floor: "Primo piano",
   },
   {
     slug: "sagittario",
@@ -88,5 +95,6 @@ export const APARTMENTS: Apartment[] = [
     beds: 6,
     bathrooms: 1,
     sqm: 45,
+    floor: "Piano terra",
   },
 ];

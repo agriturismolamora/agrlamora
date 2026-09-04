@@ -31,7 +31,7 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "La piscina è adatta alle famiglie?",
     answer:
-      "Sì: è panoramica, con sedute all'ombra intorno, aperta dal 1° giugno al 28 settembre. Accanto ci sono il parco giochi e il campo da calcetto in erba naturale.",
+      "Sì: è panoramica, con sedute all'ombra intorno, aperta dal 1° maggio al 28 settembre dalle 9:00 alle 19:00. Accanto ci sono il parco giochi e il campo da calcetto in erba naturale.",
   },
   {
     question: "Ci sono attività per i bambini?",
@@ -172,13 +172,14 @@ export default function AttivitaPage() {
           <Reveal className="order-2 sm:order-1">
             <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">Piscina e relax</span>
             <h2 className="mt-4 font-display text-[clamp(26px,3.2vw,38px)] font-normal leading-[1.2] text-ink [text-wrap:balance]">
-              Il centro delle giornate, da giugno a settembre.
+              Il centro delle giornate, da maggio a settembre.
             </h2>
             <p className="mt-5 max-w-[440px] text-[15px] leading-[1.85] text-ink-soft">
               Panoramica, circondata dal verde, con sedute all&apos;ombra per chi preferisce restare a guardare. È lo
               spazio dove le famiglie si ritrovano nel pomeriggio e dove una giornata ad Assisi si chiude, prima di
               cena.
             </p>
+            <p className="mt-3 text-[13px] uppercase tracking-[0.06em] text-ink-soft">Orario apertura: 09:00 – 19:00</p>
             <Link
               href="/piscina/"
               className="group relative mt-8 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]"

@@ -11,7 +11,7 @@ import { CertificationsMarquee } from "@/components/certifications-marquee";
 export const metadata: Metadata = {
   title: "Colazione Bio",
   description:
-    "Colazione biologica dalle 7:00 alle 9:30 ad Assisi: marmellate fatte in casa, frutta di stagione, olio EVO. Dolce 5€/persona/giorno, supplemento salata +10€, inclusa per chi prenota diretto.",
+    "Colazione biologica dalle 8:00 alle 9:30 ad Assisi: dolci tipici umbri di alta pasticceria, frutta di stagione, olio EVO. Dolce 5€/persona/giorno, supplemento salata +10€, inclusa per chi prenota diretto.",
   alternates: { canonical: "/agriturismo-con-colazione-inclusa-assisi/" },
 };
 
@@ -19,7 +19,7 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "A che ora si serve la colazione?",
     answer:
-      "Ogni mattina dalle 7:00 alle 9:30, nella sala comune della struttura — comoda anche per chi deve partire presto verso Assisi o l'aeroporto di Perugia.",
+      "Ogni mattina dalle 8:00 alle 9:30, nella sala comune della struttura — comoda anche per chi deve partire presto verso Assisi o l'aeroporto di Perugia.",
   },
   {
     question: "La colazione è inclusa nel prezzo della camera?",
@@ -29,7 +29,7 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Cosa include la colazione dolce?",
     answer:
-      "Marmellate e dolci fatti in casa, frutta di stagione, olio EVO della struttura. Caffè, cappuccino, tè o ginseng vengono preparati al momento, su richiesta.",
+      "Dolci tipici umbri di alta pasticceria, frutta di stagione, olio EVO della struttura. Caffè, cappuccino, tè o ginseng vengono preparati al momento, su richiesta.",
   },
   {
     question: "Il menu cambia durante l'anno?",
@@ -62,7 +62,7 @@ export default function ColazioneBioPage() {
               Colazione bio · Agriturismo La Mora
             </span>
             <h1 className="mt-5 font-display text-[clamp(34px,6vw,60px)] font-normal leading-[1.1] text-cream [text-wrap:balance]">
-              Marmellate fatte in casa, non un buffet da hotel.
+              Dolci tipici umbri, non un buffet standardizzato.
             </h1>
           </Reveal>
         </div>
@@ -84,8 +84,9 @@ export default function ColazioneBioPage() {
           </Reveal>
           <Reveal delay={120}>
             <p className="mt-12 font-display text-[clamp(22px,3.2vw,32px)] font-normal italic leading-[1.5] text-[#f1f1f1] [text-wrap:balance]">
-              È biologica e preparata in casa: marmellate fatte da noi, frutta di stagione, olio extravergine della
-              struttura. Cambia con quello che offre la stagione, non con un listino fisso.
+              È biologica: frutta di stagione, olio extravergine della struttura, e i dolci della migliore
+              pasticceria umbra al posto di un buffet standardizzato. Cambia con quello che offre la stagione, non
+              con un listino fisso.
             </p>
           </Reveal>
         </div>
@@ -99,7 +100,7 @@ export default function ColazioneBioPage() {
               <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-[3px] sm:aspect-[16/11]">
                 <Image
                   src="/images/colazione/colazione bio agriturismo la mora.webp"
-                  alt="Marmellate fatte in casa e prodotti della colazione bio di Agriturismo La Mora"
+                  alt="Colazione biologica servita ad Agriturismo La Mora"
                   fill
                   sizes="(max-width: 640px) 100vw, 540px"
                   className="object-cover"
@@ -110,12 +111,12 @@ export default function ColazioneBioPage() {
                   Cosa portiamo in tavola
                 </span>
                 <h2 className="mt-4 font-display text-[clamp(26px,3.2vw,38px)] font-normal leading-[1.2] text-ink [text-wrap:balance]">
-                  Quello che raccogliamo e produciamo noi, prima di tutto.
+                  Il meglio della pasticceria umbra, in tavola ogni mattina.
                 </h2>
                 <p className="mt-5 max-w-[440px] text-[15px] leading-[1.85] text-ink-soft">
-                  Marmellate e dolci fatti in casa, frutta di stagione, olio extravergine di oliva della struttura.
-                  Non è un buffet standardizzato uguale ogni giorno dell&apos;anno — cambia con quello che c&apos;è
-                  davvero in azienda in quel momento.
+                  Dolci tipici umbri di alta pasticceria, frutta di stagione, olio extravergine di oliva della
+                  struttura. Non è un buffet uguale ogni giorno dell&apos;anno — cambia con quello che c&apos;è
+                  davvero in azienda in quel momento, restando sempre biologica.
                 </p>
                 <p className="mt-5 max-w-[440px] text-[15px] leading-[1.85] text-ink-soft">
                   A richiesta, caffè, cappuccino, tè o ginseng vengono preparati al momento. Chi vuole un pasto più
@@ -135,8 +136,8 @@ export default function ColazioneBioPage() {
                   Nella sala comune, con calma, prima di uscire.
                 </h2>
                 <p className="mt-5 max-w-[440px] text-[15px] leading-[1.85] text-ink-soft">
-                  Si serve ogni mattina dalle 7:00 alle 9:30 nella sala comune della struttura — comoda anche per chi
-                  deve partire presto verso Assisi, l&apos;aeroporto di Perugia o la giornata in campagna.
+                  Si serve ogni mattina dalle 8:00 alle 9:30 nella sala comune della struttura — comoda anche per chi
+                  deve partire verso Assisi, l&apos;aeroporto di Perugia o la giornata in campagna.
                 </p>
               </div>
               <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-[3px] sm:order-2 sm:aspect-[16/11]">
@@ -159,7 +160,7 @@ export default function ColazioneBioPage() {
           <Reveal>
             <dl className="grid grid-cols-1 gap-10 border-t border-ink/10 pt-10 text-center sm:grid-cols-3">
               {[
-                { value: "07:00–09:30", label: "Orario", detail: "Ogni mattina, nella sala comune della struttura." },
+                { value: "08:00–09:30", label: "Orario", detail: "Ogni mattina, nella sala comune della struttura." },
                 { value: "5€", label: "Colazione dolce", detail: "A persona, al giorno — dove non è già inclusa nella tariffa." },
                 { value: "+10€", label: "Supplemento salata", detail: "A persona, per chi vuole un pasto più sostanzioso." },
               ].map((point) => (

@@ -8,7 +8,7 @@ import { Reveal } from "@/components/scroll-reveal";
    corpo oversize — non uno split foto/testo affiancato. Foto reali, mai
    usate altrove in homepage. */
 const FACTS = [
-  { label: "Piscina panoramica", detail: "6×12 metri, aperta dal 1° giugno al 28 settembre" },
+  { label: "Piscina panoramica", detail: "6×12 metri, aperta dal 1° maggio al 28 settembre, 9:00–19:00" },
   { label: "Giardino recintato", detail: "negli appartamenti Gemelli e Sagittario" },
   { label: "Parco giochi e sport", detail: "altalene, scivoli, campo da calcetto in erba naturale, ping-pong; culla e seggiolone su richiesta" },
 ] as const;

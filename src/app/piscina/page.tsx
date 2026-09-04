@@ -7,13 +7,14 @@ import { HoverFill } from "@/components/hover-fill";
 export const metadata: Metadata = {
   title: "Piscina Panoramica",
   description:
-    "Piscina panoramica 6×12 metri di Agriturismo La Mora ad Assisi, aperta dal 1° giugno al 28 settembre, con area giochi e campo da calcetto in erba naturale.",
+    "Piscina panoramica 6×12 metri di Agriturismo La Mora ad Assisi, aperta dal 1° maggio al 28 settembre, orario 09:00–19:00, con area giochi e campo da calcetto in erba naturale.",
   alternates: { canonical: "/piscina/" },
 };
 
 const FACTS = [
   { label: "Dimensioni", value: "6 × 12 metri" },
-  { label: "Apertura", value: "1 giugno – 28 settembre" },
+  { label: "Apertura", value: "1 maggio – 28 settembre" },
+  { label: "Orario", value: "09:00 – 19:00" },
   { label: "Accesso", value: "Riservato agli ospiti" },
 ];
 
@@ -46,8 +47,9 @@ export default function PiscinaPage() {
         <div className="mx-auto max-w-[720px] px-6 sm:px-10">
           <Reveal>
             <p className="text-[15px] leading-[1.85] text-ink-soft">
-              6×12 metri, aperta dal 1° giugno al 28 settembre: la piscina è il centro delle giornate a La Mora,
-              circondata da sedie all&apos;ombra per chi preferisce guardare invece di nuotare. Accanto, un&apos;area
+              6×12 metri, aperta dal 1° maggio al 28 settembre dalle 9:00 alle 19:00: la piscina è il centro delle
+              giornate a La Mora, circondata da sedie all&apos;ombra per chi preferisce guardare invece di nuotare.
+              Accanto, un&apos;area
               giochi per i più piccoli e un campo da calcetto in erba naturale — trovi tutte le altre attività della
               struttura nella pagina{" "}
               <Link href="/agriturismo-famiglie-ad-assisi-e-dintorni/" className="text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry">
@@ -58,7 +60,7 @@ export default function PiscinaPage() {
           </Reveal>
 
           <Reveal delay={80}>
-            <dl className="mt-10 grid grid-cols-1 gap-6 border-t border-ink/10 pt-8 sm:grid-cols-3">
+            <dl className="mt-10 grid grid-cols-2 gap-6 border-t border-ink/10 pt-8 sm:grid-cols-4">
               {FACTS.map((f) => (
                 <div key={f.label} className="text-center sm:text-left">
                   <dt className="text-[11px] uppercase tracking-[0.08em] text-ink-soft">{f.label}</dt>

@@ -29,19 +29,19 @@ const RULES: { keywords: string[]; reply: string; cta?: Cta }[] = [
   {
     keywords: ["piscina", "nuoto"],
     reply:
-      "La piscina panoramica è di 6×12 metri, aperta dal 1° giugno al 28 settembre, con area giochi e campo da calcetto in erba naturale.",
+      "La piscina panoramica è di 6×12 metri, aperta dal 1° maggio al 28 settembre dalle 9:00 alle 19:00, con area giochi e campo da calcetto in erba naturale.",
     cta: { label: "Scopri la piscina", href: "/piscina/" },
   },
   {
     keywords: ["colazione", "breakfast"],
     reply:
-      "La colazione biologica è servita ogni mattina dalle 7:00 alle 9:30: marmellate fatte in casa, frutta di stagione, dolce incluso e salato su richiesta.",
+      "La colazione biologica è servita ogni mattina dalle 8:00 alle 9:30: dolci tipici umbri di alta pasticceria, frutta di stagione, dolce incluso in alcune tariffe e salato su richiesta.",
     cta: { label: "Scopri la colazione bio", href: "/agriturismo-con-colazione-inclusa-assisi/" },
   },
   {
     keywords: ["cane", "cani", "gatt", "animal", "pet"],
     reply:
-      "Sì, siamo pet friendly: gli appartamenti Gemelli e Sagittario hanno giardino recintato e una doccia esterna dedicata ai cani.",
+      "Sì, siamo pet friendly: gli appartamenti Gemelli e Sagittario hanno giardino recintato (25€/soggiorno). Negli altri appartamenti sono ammessi solo animali di piccola taglia abituati a vivere in appartamento.",
   },
   {
     keywords: ["elettric", "ricaric", "kw", "colonnina"],

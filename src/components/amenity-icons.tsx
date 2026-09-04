@@ -120,6 +120,15 @@ export function GazeboIcon() {
   );
 }
 
+export function FloorIcon() {
+  return (
+    <Base>
+      <path d="M4 20V9.5L12 4l8 5.5V20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M4 14.5h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </Base>
+  );
+}
+
 export const AMENITY_ICON_BY_LABEL: Record<string, () => React.JSX.Element> = {
   "TV con canali satellitari": TvIcon,
   "Cucina attrezzata": KitchenIcon,
@@ -129,6 +138,10 @@ export const AMENITY_ICON_BY_LABEL: Record<string, () => React.JSX.Element> = {
   "Biancheria da letto e da bagno": LinensIcon,
   "Specchi e porta valigie": MirrorIcon,
   "Giardino privato recintato": GardenIcon,
+  "Giardino privato": GardenIcon,
   "Pet friendly (25€/soggiorno)": PawIcon,
   "Gazebo esterno": GazeboIcon,
+  "Gazebo privato": GazeboIcon,
+  "Piano terra": FloorIcon,
+  "Primo piano": FloorIcon,
 };

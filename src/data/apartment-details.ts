@@ -31,11 +31,11 @@ export const APARTMENT_DETAILS: Record<string, ApartmentDetail> = {
   gemelli: {
     tagline: "Un giardino tutto suo, anche per chi viaggia a quattro zampe.",
     description: [
-      "Gemelli è il più raccolto dei cinque, pensato per due persone (o due più un cane): una camera con letto matrimoniale, un piccolo soggiorno con cucina attrezzata, un bagno. Fuori, un giardino recintato che è suo e di nessun altro — non condiviso col resto della struttura.",
+      "Gemelli è il più raccolto dei cinque, pensato per due persone (o due più un cane): una camera con letto matrimoniale, un piccolo soggiorno con cucina attrezzata con lavastoviglie e divano letto matrimoniale con tv, un bagno. Fuori, un giardino recintato che è suo e di nessun altro — non condiviso col resto della struttura.",
       "È l'appartamento che consigliamo a chi arriva con un cane: il recinto significa che può stare libero senza guinzaglio nel proprio spazio, e la vicinanza alla direzione rende comodo qualsiasi bisogno nei primi giorni di ambientamento.",
     ],
     distinctiveFeature: "Giardino privato recintato, ideale per chi viaggia con animali",
-    specificAmenities: ["Giardino privato recintato", "Pet friendly (25€/soggiorno)"],
+    specificAmenities: ["Piano terra", "Giardino privato recintato", "Pet friendly (25€/soggiorno)"],
     gallery: [
       { src: "/images/alloggi/appartamento gemelli/stanza letto app gemelli.jpeg", alt: "Camera da letto dell'appartamento Gemelli" },
       { src: "/images/alloggi/appartamento gemelli/camera da letto app gemelli.jpeg", alt: "Vista della camera da letto di Gemelli" },
@@ -50,9 +50,10 @@ export const APARTMENT_DETAILS: Record<string, ApartmentDetail> = {
     tagline: "Tre camere, una cucina grande, spazio vero per un gruppo.",
     description: [
       "Bilancia è il più grande dei cinque appartamenti: 75 metri quadri su tre camere da letto, un soggiorno con cucina e un bagno, pensato per famiglie numerose o due famiglie che viaggiano insieme. Non è una camera d'hotel allargata — è una casa, con gli spazi distinti che servono quando si è in tanti sotto lo stesso tetto.",
-      "La cucina è il cuore dell'appartamento: abbastanza grande da cucinare per tutti, con vista sul soggiorno per non perdere la conversazione mentre si prepara la cena.",
+      "La cucina è il cuore dell'appartamento: abbastanza grande da cucinare per tutti, con vista sul soggiorno per non perdere la conversazione mentre si prepara la cena. Dispone di un divano letto matrimoniale.",
     ],
     distinctiveFeature: "75 m² su tre camere da letto, il più grande dei cinque appartamenti",
+    specificAmenities: ["Primo piano", "Giardino privato", "Gazebo privato"],
     gallery: [
       { src: "/images/alloggi/appartamento bilancia/foto letto matrimoniale verticale bilancia.jpeg", alt: "Camera matrimoniale dell'appartamento Bilancia" },
       { src: "/images/alloggi/appartamento bilancia/foto verticale camera vista scrivania bilancia.jpeg", alt: "Camera da letto con scrivania di Bilancia" },
@@ -73,6 +74,7 @@ export const APARTMENT_DETAILS: Record<string, ApartmentDetail> = {
       "Il piccolo soggiorno con angolo cottura è il punto in cui la giornata si chiude: una colazione fatta con calma prima di uscire verso Assisi, o una cena semplice dopo una giornata in piscina.",
     ],
     distinctiveFeature: "Letto matrimoniale e letto a castello nella stessa camera, comoda per famiglie con bambini",
+    specificAmenities: ["Piano terra"],
     gallery: [
       { src: "/images/alloggi/appartamento pesci/vista da davanti letto matrimoniale stanza pesci.jpeg", alt: "Camera da letto dell'appartamento Pesci" },
       { src: "/images/alloggi/appartamento pesci/letto matrimoniale con davanti letto a castello due singoli pesci appartamento.webp", alt: "Letto matrimoniale e letto a castello dell'appartamento Pesci" },
@@ -88,6 +90,7 @@ export const APARTMENT_DETAILS: Record<string, ApartmentDetail> = {
       "La cucina attrezzata e il tavolo arredato lo rendono comodo per chi si ferma qualche giorno in più e preferisce cucinare con calma piuttosto che uscire ogni sera.",
     ],
     distinctiveFeature: "Tavolo da pranzo dedicato e doccia ampia, tra i più richiesti della struttura",
+    specificAmenities: ["Primo piano"],
     gallery: [
       { src: "/images/alloggi/appartamento acquario/orizzontale letto acquario.jpeg", alt: "Camera da letto dell'appartamento Acquario" },
       { src: "/images/alloggi/appartamento acquario/acquario verticale letto matrimoniale.jpeg", alt: "Letto matrimoniale dell'appartamento Acquario" },
@@ -102,11 +105,11 @@ export const APARTMENT_DETAILS: Record<string, ApartmentDetail> = {
   sagittario: {
     tagline: "Un gazebo tutto suo, per le cene che durano fino a tardi.",
     description: [
-      "Sagittario è il più capiente tra gli appartamenti a piano terra: fino a sei persone, camera con letto matrimoniale e letto a castello, giardino privato recintato e un gazebo esterno che è lo spazio informale dove si mangia quando fa caldo, si beve un caffè la mattina, o semplicemente ci si siede a guardare i bambini giocare.",
+      "Sagittario è il più capiente tra gli appartamenti a piano terra: fino a sei persone, camera con letto matrimoniale e letto a castello, soggiorno con cucina e divano letto matrimoniale, giardino privato recintato e un gazebo esterno che è lo spazio informale dove si mangia quando fa caldo, si beve un caffè la mattina, o semplicemente ci si siede a guardare i bambini giocare.",
       "Come Gemelli, accetta animali: il recinto privato lascia i cani liberi di muoversi senza pensieri, e la vicinanza al parco giochi lo rende comodo per chi viaggia con figli piccoli.",
     ],
     distinctiveFeature: "Gazebo esterno privato e giardino recintato, fino a 6 ospiti",
-    specificAmenities: ["Giardino privato recintato", "Gazebo esterno", "Pet friendly (25€/soggiorno)"],
+    specificAmenities: ["Piano terra", "Giardino privato recintato", "Gazebo esterno", "Pet friendly (25€/soggiorno)"],
     gallery: [
       { src: "/images/alloggi/appartamento sagittario/IMG_8781.jpeg", alt: "Gazebo e giardino privato dell'appartamento Sagittario" },
       { src: "/images/alloggi/appartamento sagittario/gazebo sagittario 1.jpeg", alt: "Gazebo privato dell'appartamento Sagittario" },

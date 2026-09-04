@@ -32,7 +32,7 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Sono ammessi animali?",
     answer:
-      "In due appartamenti su cinque — Gemelli e Sagittario — entrambi con giardino privato recintato. Il costo è di 25€ a soggiorno, guinzaglio obbligatorio negli spazi comuni.",
+      "In due appartamenti su cinque — Gemelli e Sagittario — entrambi con giardino privato recintato. Il costo è di 25€ a soggiorno, guinzaglio obbligatorio negli spazi comuni. Negli altri appartamenti sono ammessi solo animali di piccola taglia abituati a vivere in appartamento.",
   },
   {
     question: "È possibile prenotare direttamente?",
@@ -196,7 +196,7 @@ export default async function ChiSiamoPage() {
               },
               {
                 title: "Colazione bio",
-                text: "Marmellate fatte in casa, frutta di stagione, preparata ogni mattina.",
+                text: "Biologica, con dolci tipici umbri e frutta di stagione, ogni mattina.",
                 img: "/images/colazione/colazione bio agriturismo la mora.webp",
                 alt: "Colazione biologica di Agriturismo La Mora",
               },
