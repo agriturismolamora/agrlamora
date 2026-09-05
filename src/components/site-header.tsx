@@ -34,6 +34,11 @@ const NAV_LEFT: NavItem[] = [
     ],
   },
   {
+    label: "Villa Relax",
+    href: "/villa-relax-assisi/",
+    children: [{ label: "Villa indipendente", href: "/villa-relax-assisi/" }],
+  },
+  {
     label: "La Mora",
     href: "/chi-siamo/",
     children: [
@@ -68,7 +73,7 @@ const NAV_LEFT: NavItem[] = [
 
 /* Voci mostrate in nav inline solo da 1100px in su; sotto restano comunque
    raggiungibili dal pannello MENU, che elenca sempre tutto. */
-const NAV_LEFT_TABLET = new Set(["Alloggi", "La Mora", "Territorio", "Offerte"]);
+const NAV_LEFT_TABLET = new Set(["Alloggi", "Villa Relax", "Territorio", "Offerte"]);
 
 const NAV_RIGHT: NavChild[] = [
   { label: "Recensioni", href: "/#section-reviews" },

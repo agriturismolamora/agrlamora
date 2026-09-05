@@ -1,5 +1,10 @@
 import type { ZodiacKey } from "@/components/zodiac-mark";
 
+/* Brochure di benvenuto in PDF, creata dal titolare (Paolo) e condivisa via
+   Google Drive: id estratto dal link di condivisione, formato "uc" per
+   forzare il download diretto invece di aprire l'anteprima Drive. */
+export const BROCHURE_PDF_URL = "https://drive.google.com/uc?export=download&id=1_sqDWQk6uWS4k8QzcS2mdxbTxhO7SOFM";
+
 export type Apartment = {
   slug: string;
   name: string;

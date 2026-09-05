@@ -36,6 +36,11 @@ const FAQ_ITEMS: FaqItem[] = [
     answer:
       "Sì: l'offerta varia in base alla stagionalità e ai prodotti disponibili in azienda, non è un buffet standardizzato uguale tutto l'anno.",
   },
+  {
+    question: "È disponibile un'opzione senza glutine?",
+    answer:
+      "Sì, su richiesta, con un supplemento di 5€ a persona: la colazione dolce senza glutine ha quindi un costo di 10€ a persona al giorno.",
+  },
 ];
 
 export default function ColazioneBioPage() {
@@ -158,11 +163,12 @@ export default function ColazioneBioPage() {
       <section className="bg-cream-dim py-16 sm:py-20">
         <div className="mx-auto max-w-[900px] px-6 sm:px-10">
           <Reveal>
-            <dl className="grid grid-cols-1 gap-10 border-t border-ink/10 pt-10 text-center sm:grid-cols-3">
+            <dl className="grid grid-cols-2 gap-10 border-t border-ink/10 pt-10 text-center sm:grid-cols-4">
               {[
                 { value: "08:00–09:30", label: "Orario", detail: "Ogni mattina, nella sala comune della struttura." },
                 { value: "5€", label: "Colazione dolce", detail: "A persona, al giorno — dove non è già inclusa nella tariffa." },
                 { value: "+10€", label: "Supplemento salata", detail: "A persona, per chi vuole un pasto più sostanzioso." },
+                { value: "+5€", label: "Senza glutine", detail: "Supplemento a persona — colazione dolce senza glutine: 10€ totali." },
               ].map((point) => (
                 <div key={point.label}>
                   <dt className="font-display text-4xl text-raspberry">{point.value}</dt>

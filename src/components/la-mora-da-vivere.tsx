@@ -124,7 +124,7 @@ const HIGHLIGHTS: Highlight[] = [
     Icon: CupIcon,
     label: "Colazione",
     title: "Colazione biologica",
-    description: "Fatta in casa ogni mattina da Giuseppina, con prodotti del territorio.",
+    description: "Biologica ogni mattina, con dolci tipici umbri e prodotti del territorio.",
   },
   {
     Icon: FamilyIcon,
@@ -160,7 +160,7 @@ const HIGHLIGHTS: Highlight[] = [
     Icon: HeartIcon,
     label: "Gestione familiare",
     title: "Gestione familiare",
-    description: "Paolo e Giuseppina seguono personalmente ogni ospite, da sempre.",
+    description: "Paolo segue personalmente ogni ospite, da sempre.",
   },
 ];
 

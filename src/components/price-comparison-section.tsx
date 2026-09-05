@@ -47,14 +47,19 @@ export async function PriceComparisonSection() {
   const reviews = await getGoogleReviews();
 
   return (
-    <section id="section-price-comparison" aria-labelledby="price-comparison-heading" className="bg-[#1f180e] py-24 sm:py-28">
+    <section
+      id="section-price-comparison"
+      aria-labelledby="price-comparison-heading"
+      data-snap-exempt="true"
+      className="bg-cream py-24 sm:py-28"
+    >
       <div className="mx-auto max-w-[1100px] px-6 sm:px-10">
         <Reveal>
           <div className="text-center">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">Prenotazione diretta</span>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-olive-950">Prenotazione diretta</span>
             <h2
               id="price-comparison-heading"
-              className="mx-auto mt-5 max-w-[560px] font-display text-[clamp(26px,3vw,38px)] font-normal leading-[1.2] text-cream [text-wrap:balance]"
+              className="mx-auto mt-5 max-w-[560px] font-display text-[clamp(26px,3vw,38px)] font-normal leading-[1.2] text-ink [text-wrap:balance]"
             >
               Stesso appartamento, stesse date: confronta tu stesso.
             </h2>
@@ -63,7 +68,7 @@ export async function PriceComparisonSection() {
 
         {/* Card comparativa */}
         <Reveal delay={100}>
-          <div className="mt-12 overflow-hidden rounded-[8px] border border-cream/10 bg-[#251c10] lg:grid lg:grid-cols-[0.85fr_1fr] lg:items-stretch">
+          <div className="mt-12 overflow-hidden rounded-[8px] border border-ink/10 bg-white shadow-[0_30px_70px_-40px_rgba(28,33,23,0.35)] lg:grid lg:grid-cols-[0.85fr_1fr] lg:items-stretch">
             {/* Foto */}
             <div className="relative aspect-[16/10] lg:aspect-auto">
               <Image
@@ -77,8 +82,8 @@ export async function PriceComparisonSection() {
 
             <div className="px-6 py-7 sm:px-9 sm:py-9">
               {/* Identità + punteggio */}
-              <h3 className="font-display text-[24px] font-normal leading-tight text-cream">Agriturismo La Mora</h3>
-              <p className="mt-1 text-[13px] text-cream/55">Agriturismo · Assisi, Umbria</p>
+              <h3 className="font-display text-[24px] font-normal leading-tight text-ink">Agriturismo La Mora</h3>
+              <p className="mt-1 text-[13px] text-ink-soft">Agriturismo · Assisi, Umbria</p>
 
               <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
                 {reviews.configured && reviews.rating ? (
@@ -89,9 +94,9 @@ export async function PriceComparisonSection() {
                     <StarRow rating={reviews.rating} size={13} />
                   </div>
                 ) : (
-                  <span className="text-[12px] text-cream/50">Recensioni Google verificate in arrivo</span>
+                  <span className="text-[12px] text-ink-soft">Recensioni Google verificate in arrivo</span>
                 )}
-                <span className="text-[12px] text-cream/50">{DISTANCE_LABEL}</span>
+                <span className="text-[12px] text-ink-soft">{DISTANCE_LABEL}</span>
               </div>
 
               {/* Badge risparmio: solo se c'è un prezzo diretto reale da cui calcolarlo */}
@@ -155,11 +160,11 @@ export async function PriceComparisonSection() {
               </div>
 
               {/* Fascia OTA secondaria */}
-              <div className="mt-5 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-cream/10 pt-5">
+              <div className="mt-5 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-ink/10 pt-5">
                 <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
                   {OTA_PRICES.map((ota) => (
-                    <span key={ota.name} className="text-[13px] text-cream/60">
-                      <span className="font-display text-[18px] text-cream/80">€{ota.priceEur}</span> {ota.name}
+                    <span key={ota.name} className="text-[13px] text-ink-soft">
+                      <span className="font-display text-[18px] text-ink">€{ota.priceEur}</span> {ota.name}
                     </span>
                   ))}
                 </div>
@@ -170,7 +175,7 @@ export async function PriceComparisonSection() {
         </Reveal>
 
         <Reveal delay={220}>
-          <p className="mx-auto mt-6 max-w-[560px] text-center text-[12px] leading-[1.7] text-cream/45">
+          <p className="mx-auto mt-6 max-w-[560px] text-center text-[12px] leading-[1.7] text-ink-soft/80">
             Tariffe rilevate per il soggiorno {STAY.checkinLabel} → {STAY.checkoutLabel} ({STAY.nights} notti,{" "}
             {STAY.adults} ospiti, appartamento {STAY.apartmentName}) il {CHECKED_ON_LABEL}. Le tariffe possono
             variare in base a disponibilità e condizioni selezionate — non è un confronto in tempo reale.
@@ -178,15 +183,15 @@ export async function PriceComparisonSection() {
         </Reveal>
 
         <Reveal delay={300}>
-          <dl className="mx-auto mt-16 grid max-w-[780px] grid-cols-1 gap-10 border-t border-cream/10 pt-12 sm:grid-cols-3">
+          <dl className="mx-auto mt-16 grid max-w-[780px] grid-cols-1 gap-10 border-t border-ink/10 pt-12 sm:grid-cols-3">
             {POINTS.map((point) => (
               <div key={point.label} className="text-center sm:text-left">
-                <dt className="font-display text-4xl text-gold">{point.value}</dt>
+                <dt className="font-display text-4xl text-raspberry">{point.value}</dt>
                 <dd className="mt-3">
-                  <span className="block font-sans text-[11px] font-semibold uppercase tracking-[0.05em] text-cream">
+                  <span className="block font-sans text-[11px] font-semibold uppercase tracking-[0.05em] text-ink">
                     {point.label}
                   </span>
-                  <span className="mt-2 block text-[13px] leading-[1.6] text-cream/55">{point.detail}</span>
+                  <span className="mt-2 block text-[13px] leading-[1.6] text-ink-soft">{point.detail}</span>
                 </dd>
               </div>
             ))}

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { APARTMENTS } from "@/data/apartments";
+import { APARTMENTS, BROCHURE_PDF_URL } from "@/data/apartments";
 import { APARTMENT_DETAILS, SHARED_AMENITIES } from "@/data/apartment-details";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
@@ -226,6 +226,14 @@ export default async function ApartmentPage({ params }: { params: Promise<Params
                 Torna a tutti gli appartamenti
               </Link>
             </div>
+            <a
+              href={BROCHURE_PDF_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-block text-[11px] font-semibold uppercase tracking-[0.06em] text-gold underline decoration-gold/40 underline-offset-4 transition-colors hover:text-cream"
+            >
+              Scarica la brochure di benvenuto (PDF)
+            </a>
           </Reveal>
         </div>
       </section>

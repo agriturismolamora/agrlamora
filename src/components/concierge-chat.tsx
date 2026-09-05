@@ -1,7 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useApartmentsSectionActive } from "@/hooks/use-apartments-active";
+
+const HOST_NAME = "Paolo";
+const HOST_PHOTO = "/images/villa/paologestoreagriturismolamora.webp";
 
 const PHONE_DISPLAY = "075 8041164";
 const WHATSAPP_URL = "https://wa.me/393934363917";
@@ -273,11 +277,31 @@ export function ConciergeChat() {
         </div>
       )}
 
+      {/* Foto dell'host sopra il pulsante: richiesta esplicita del titolare
+          per far capire subito che dietro il concierge virtuale risponde
+          davvero lui, non un bot anonimo — pallino verde "online" a
+          rinforzare la fiducia. Nascosta a pannello aperto, dove occuperebbe
+          lo stesso spazio del pannello chat. */}
+      {!open && (
+        <div className="mb-2.5 flex justify-end">
+          <div
+            className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-cream shadow-[0_10px_24px_-10px_rgba(28,33,23,0.6)]"
+            title={`${HOST_NAME}, host di Agriturismo La Mora — online ora`}
+          >
+            <Image src={HOST_PHOTO} alt={`${HOST_NAME}, host di Agriturismo La Mora`} fill sizes="48px" className="object-cover" />
+            <span
+              aria-hidden="true"
+              className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-cream bg-[#4caf50]"
+            />
+          </div>
+        </div>
+      )}
+
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        aria-label={open ? "Chiudi il concierge virtuale" : "Apri il concierge virtuale"}
+        aria-label={open ? "Chiudi il concierge virtuale" : `Apri il concierge virtuale — rispondiamo noi, in prima persona`}
         className={`flex h-14 w-14 items-center justify-center rounded-full text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors duration-500 ${
           inApartments && !open ? "bg-[#141a30] hover:bg-[#1c2440]" : "bg-raspberry hover:bg-[#8a3844]"
         }`}

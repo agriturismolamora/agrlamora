@@ -17,7 +17,7 @@ export function OtherPricesDropdown() {
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="flex items-center gap-1.5 text-[11px] uppercase tracking-[0.04em] text-cream/50 transition-colors hover:text-cream/80"
+        className="flex items-center gap-1.5 text-[11px] uppercase tracking-[0.04em] text-ink-soft transition-colors hover:text-ink"
       >
         Altri prezzi
         <svg
@@ -38,11 +38,11 @@ export function OtherPricesDropdown() {
         style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
       >
         <div className="overflow-hidden">
-          <div className="mt-3 space-y-2.5 rounded-[4px] border border-cream/10 bg-ink/20 px-4 py-3.5">
+          <div className="mt-3 space-y-2.5 rounded-[4px] border border-ink/10 bg-cream-dim px-4 py-3.5">
             {OTHER_PLATFORMS.map((p) => (
               <div key={p.name} className="flex items-start justify-between gap-4">
-                <span className="text-[12px] font-semibold text-cream/70">{p.name}</span>
-                <span className="max-w-[220px] text-right text-[11px] leading-[1.5] text-cream/40">{p.note}</span>
+                <span className="text-[12px] font-semibold text-ink">{p.name}</span>
+                <span className="max-w-[220px] text-right text-[11px] leading-[1.5] text-ink-soft">{p.note}</span>
               </div>
             ))}
           </div>

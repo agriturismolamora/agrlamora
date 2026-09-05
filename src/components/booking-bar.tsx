@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useApartmentsSectionActive } from "@/hooks/use-apartments-active";
 
@@ -293,6 +294,7 @@ function useBookingState() {
    posto al trigger mobile (VERIFICA DISPONIBILITÀ) + bottom sheet, più
    leggibile su schermi piccoli di quattro campi minuscoli affiancati. */
 export function BookingBar() {
+  const pathname = usePathname();
   const [open, setOpen] = useState<PopoverKey>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [nearFooter, setNearFooter] = useState(false);
@@ -352,6 +354,11 @@ export function BookingBar() {
     window.addEventListener("la-mora:open-booking", onOpenRequest);
     return () => window.removeEventListener("la-mora:open-booking", onOpenRequest);
   }, []);
+
+  // Villa Relax ha una propria booking bar dedicata (villa-booking-bar.tsx):
+  // richiesta esplicita del titolare di non mischiare mai disponibilità o
+  // prenotazioni tra Villa Relax e gli appartamenti di Agriturismo La Mora.
+  if (pathname?.startsWith("/villa-relax-assisi")) return null;
 
   return (
     // Fixed rispetto al viewport: stessa posizione tra Hero e sezioni

@@ -10,7 +10,7 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from "react";
-import { APARTMENTS, type Apartment } from "@/data/apartments";
+import { APARTMENTS, BROCHURE_PDF_URL, type Apartment } from "@/data/apartments";
 import { ZodiacMark } from "@/components/zodiac-mark";
 import { HoverFill } from "@/components/hover-fill";
 
@@ -675,18 +675,28 @@ function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
         </div>
 
         <div ref={ctaRef} className="relative z-[2] flex justify-center pb-16 pt-8 sm:pb-20 sm:pt-10" style={{ opacity: 0, pointerEvents: "none" }}>
-          <Link
-            href="/alloggi/"
-            className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-[#0b0f1e]"
-          >
-            <HoverFill color="#8f7330" />
-            <span className="relative z-10 inline-flex items-center gap-2.5">
-              Tutti gli appartamenti
-              <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-                →
+          <div className="flex flex-col items-center gap-3">
+            <Link
+              href="/alloggi/"
+              className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-[#0b0f1e]"
+            >
+              <HoverFill color="#8f7330" />
+              <span className="relative z-10 inline-flex items-center gap-2.5">
+                Tutti gli appartamenti
+                <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+                  →
+                </span>
               </span>
-            </span>
-          </Link>
+            </Link>
+            <a
+              href={BROCHURE_PDF_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[10px] font-semibold uppercase tracking-[0.05em] text-cream/70 underline decoration-cream/30 underline-offset-4 transition-colors hover:text-cream"
+            >
+              Scarica la brochure (PDF)
+            </a>
+          </div>
         </div>
       </div>
     </div>

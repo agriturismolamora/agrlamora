@@ -9,6 +9,7 @@ import { Reveal } from "@/components/scroll-reveal";
    usate altrove in homepage. */
 const FACTS = [
   { label: "Piscina panoramica", detail: "6×12 metri, aperta dal 1° maggio al 28 settembre, 9:00–19:00" },
+  { label: "Fontana idromassaggio", detail: "azionata nelle ore più calde, per rinfrescarsi" },
   { label: "Giardino recintato", detail: "negli appartamenti Gemelli e Sagittario" },
   { label: "Parco giochi e sport", detail: "altalene, scivoli, campo da calcetto in erba naturale, ping-pong; culla e seggiolone su richiesta" },
 ] as const;
@@ -45,7 +46,7 @@ export function OutdoorLife() {
         </Reveal>
 
         <Reveal delay={120}>
-          <dl className="mx-auto mt-12 grid max-w-[820px] grid-cols-1 gap-8 border-t border-ink/10 pt-10 text-left sm:grid-cols-3 sm:text-center">
+          <dl className="mx-auto mt-12 grid max-w-[900px] grid-cols-2 gap-8 border-t border-ink/10 pt-10 text-left sm:grid-cols-4 sm:text-center">
             {FACTS.map((fact) => (
               <div key={fact.label}>
                 <dt className="font-display text-xl text-ink">{fact.label}</dt>
