@@ -39,13 +39,13 @@ const RULES: { keywords: string[]; reply: string; cta?: Cta }[] = [
   {
     keywords: ["colazione", "breakfast"],
     reply:
-      "La colazione biologica è servita ogni mattina dalle 8:00 alle 9:30: dolci tipici umbri di alta pasticceria, frutta di stagione, dolce incluso in alcune tariffe e salato su richiesta.",
+      "La colazione biologica è servita ogni mattina dalle 8:00 alle 9:30: dolci tipici umbri di alta pasticceria, frutta di stagione, dolce incluso in alcune tariffe (altrimenti 5€/persona/giorno) e salato su richiesta (+10€). Opzione senza glutine: +5€ a persona.",
     cta: { label: "Scopri la colazione bio", href: "/agriturismo-con-colazione-inclusa-assisi/" },
   },
   {
     keywords: ["cane", "cani", "gatt", "animal", "pet"],
     reply:
-      "Sì, siamo pet friendly: gli appartamenti Gemelli e Sagittario hanno giardino recintato (25€/soggiorno). Negli altri appartamenti sono ammessi solo animali di piccola taglia abituati a vivere in appartamento.",
+      "Sì, siamo pet friendly: gli appartamenti Gemelli e Sagittario hanno giardino recintato (25€/soggiorno). Negli altri tre — Pesci, Acquario e Bilancia — sono ammessi solo animali di piccola taglia, previo accordo con il proprietario, sempre a 25€/soggiorno.",
   },
   {
     keywords: ["elettric", "ricaric", "kw", "colonnina"],

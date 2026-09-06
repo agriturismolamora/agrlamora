@@ -32,7 +32,7 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Sono ammessi animali?",
     answer:
-      "In due appartamenti su cinque — Gemelli e Sagittario — entrambi con giardino privato recintato. Il costo è di 25€ a soggiorno, guinzaglio obbligatorio negli spazi comuni. Negli altri appartamenti sono ammessi solo animali di piccola taglia abituati a vivere in appartamento.",
+      "In due appartamenti su cinque — Gemelli e Sagittario — entrambi con giardino privato recintato, al costo di 25€ a soggiorno, guinzaglio obbligatorio negli spazi comuni. Negli altri tre — Pesci, Acquario e Bilancia — sono ammessi solo animali di piccola taglia, previo accordo con il proprietario, sempre a 25€ a soggiorno.",
   },
   {
     question: "È possibile prenotare direttamente?",
@@ -43,6 +43,11 @@ const FAQ_ITEMS: FaqItem[] = [
     question: "Quali servizi sono inclusi negli appartamenti?",
     answer:
       "Cucina attrezzata, aria condizionata, Wi-Fi gratuito, TV con canali satellitari, cassaforte, biancheria da letto e da bagno — in ogni appartamento, senza distinzioni.",
+  },
+  {
+    question: "Qual è la politica di cancellazione?",
+    answer:
+      "Dipende dalla stagione: bassa stagione, preavviso di 7 giorni; media stagione, 14 giorni; alta stagione (luglio-agosto), 21 giorni. In caso di mancato arrivo senza preavviso (no-show), in bassa stagione si perde la sola caparra, in media e alta stagione è dovuto l'intero importo del soggiorno.",
   },
 ];
 

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { APARTMENTS, BROCHURE_PDF_URL } from "@/data/apartments";
+import { APARTMENTS, BROCHURE_WHATSAPP_URL } from "@/data/apartments";
 import { APARTMENT_DETAILS, SHARED_AMENITIES } from "@/data/apartment-details";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
@@ -10,6 +10,14 @@ import { ZodiacMark } from "@/components/zodiac-mark";
 import { AvailabilityBox } from "@/components/availability-box";
 import { ApartmentGallery } from "@/components/apartment-gallery";
 import { AMENITY_ICON_BY_LABEL, MirrorIcon } from "@/components/amenity-icons";
+
+function WhatsAppIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.81L2 22l5.4-1.42a9.86 9.86 0 0 0 4.64 1.18h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.03c-.24.68-1.4 1.3-1.93 1.37-.5.07-1.02.1-3.31-.75-2.79-1.04-4.59-3.9-4.73-4.08-.14-.19-1.13-1.5-1.13-2.86 0-1.36.71-2.03.97-2.3.24-.26.55-.33.73-.33h.53c.17 0 .4-.03.62.48.24.55.8 1.91.87 2.05.07.14.11.3.02.49-.09.19-.14.3-.28.46-.14.16-.29.36-.42.48-.14.14-.28.29-.12.57.16.28.71 1.18 1.53 1.91 1.05.94 1.94 1.24 2.22 1.38.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.63.77 1.9.91.28.14.46.21.53.33.07.12.07.68-.17 1.36Z" />
+    </svg>
+  );
+}
 
 type Params = { slug: string };
 
@@ -68,12 +76,23 @@ export default async function ApartmentPage({ params }: { params: Promise<Params
           style={{ background: "linear-gradient(180deg, rgba(20,14,7,.05) 0%, rgba(20,14,7,.75) 100%)" }}
         />
         <div className="relative z-[1] mx-auto w-full max-w-[1200px] px-6 pb-12 sm:px-10 sm:pb-16">
-          <Link
-            href="/alloggi/"
-            className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-cream/75 transition-colors hover:text-cream"
-          >
-            <span aria-hidden="true">←</span> Torna agli appartamenti
-          </Link>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <Link
+              href="/alloggi/"
+              className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-cream/75 transition-colors hover:text-cream"
+            >
+              <span aria-hidden="true">←</span> Torna agli appartamenti
+            </Link>
+            <a
+              href={BROCHURE_WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-cream/40 bg-ink/20 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.05em] text-cream backdrop-blur-sm transition-colors hover:border-cream hover:bg-ink/35"
+            >
+              <WhatsAppIcon />
+              Richiedi la guida su WhatsApp
+            </a>
+          </div>
           <div className="mt-6 flex items-center gap-3">
             <ZodiacMark sign={apt.zodiac} className="h-8 w-8 text-cream" />
             <h1 className="font-display text-[clamp(40px,7vw,72px)] font-normal leading-none text-cream">{apt.name}</h1>
@@ -226,14 +245,6 @@ export default async function ApartmentPage({ params }: { params: Promise<Params
                 Torna a tutti gli appartamenti
               </Link>
             </div>
-            <a
-              href={BROCHURE_PDF_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-block text-[11px] font-semibold uppercase tracking-[0.06em] text-gold underline decoration-gold/40 underline-offset-4 transition-colors hover:text-cream"
-            >
-              Scarica la brochure di benvenuto (PDF)
-            </a>
           </Reveal>
         </div>
       </section>

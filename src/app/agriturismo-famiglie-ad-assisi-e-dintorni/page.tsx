@@ -35,7 +35,7 @@ const FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: "Ci sono attività per i bambini?",
-    answer: "Il parco giochi con altalene e scivoli è sempre disponibile per gli ospiti, e il babysitting è organizzabile su richiesta.",
+    answer: "Il parco giochi con altalene e scivoli è sempre disponibile per gli ospiti, il babysitting è organizzabile su richiesta e la culla si aggiunge a 10€ a soggiorno.",
   },
   {
     question: "È possibile andare a cavallo?",

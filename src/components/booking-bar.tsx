@@ -358,7 +358,10 @@ export function BookingBar() {
   // Villa Relax ha una propria booking bar dedicata (villa-booking-bar.tsx):
   // richiesta esplicita del titolare di non mischiare mai disponibilità o
   // prenotazioni tra Villa Relax e gli appartamenti di Agriturismo La Mora.
-  if (pathname?.startsWith("/villa-relax-assisi")) return null;
+  // Cofanetti regalo e Smartbox restano esclusi anche loro: non si prenota
+  // un soggiorno diretto in quelle pagine (voucher regalo / redirect esterno).
+  const HIDDEN_ON = ["/villa-relax-assisi", "/offerte/cofanetti-regalo", "/offerte/smartbox"];
+  if (HIDDEN_ON.some((p) => pathname?.startsWith(p))) return null;
 
   return (
     // Fixed rispetto al viewport: stessa posizione tra Hero e sezioni

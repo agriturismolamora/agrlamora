@@ -32,7 +32,7 @@ export function AvailabilityBox({ apt }: { apt: Apartment }) {
           </div>
           <div>
             <dt className="text-ink-soft">Animali</dt>
-            <dd className="mt-0.5 font-semibold text-ink">{apt.petFriendly ? "Ammessi" : "Non ammessi"}</dd>
+            <dd className="mt-0.5 font-semibold text-ink">{apt.petFriendly ? "Ammessi" : "Piccola taglia, previo accordo"}</dd>
           </div>
         </dl>
 

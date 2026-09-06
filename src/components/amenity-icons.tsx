@@ -140,6 +140,7 @@ export const AMENITY_ICON_BY_LABEL: Record<string, () => React.JSX.Element> = {
   "Giardino privato recintato": GardenIcon,
   "Giardino privato": GardenIcon,
   "Pet friendly (25€/soggiorno)": PawIcon,
+  "Animali piccola taglia, previo accordo (25€)": PawIcon,
   "Gazebo esterno": GazeboIcon,
   "Gazebo privato": GazeboIcon,
   "Piano terra": FloorIcon,

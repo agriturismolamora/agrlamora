@@ -10,7 +10,7 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from "react";
-import { APARTMENTS, BROCHURE_PDF_URL, type Apartment } from "@/data/apartments";
+import { APARTMENTS, BROCHURE_WHATSAPP_URL, type Apartment } from "@/data/apartments";
 import { ZodiacMark } from "@/components/zodiac-mark";
 import { HoverFill } from "@/components/hover-fill";
 
@@ -689,12 +689,12 @@ function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
               </span>
             </Link>
             <a
-              href={BROCHURE_PDF_URL}
+              href={BROCHURE_WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="text-[10px] font-semibold uppercase tracking-[0.05em] text-cream/70 underline decoration-cream/30 underline-offset-4 transition-colors hover:text-cream"
             >
-              Scarica la brochure (PDF)
+              Richiedi la guida su WhatsApp
             </a>
           </div>
         </div>

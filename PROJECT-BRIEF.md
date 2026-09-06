@@ -16,7 +16,7 @@ Sintesi operativa del kick-off, organizzata per sviluppo. Brand identity invaria
 - **Piscina** — pagina dedicata: aperta dal 1° maggio al 28 settembre, orario giornaliero 09:00–19:00; nelle ore più calde viene azionata anche una fontana idromassaggio
 - **Colazione** — pagina dedicata: bio, dalle 08:00 alle 09:30, dolce inclusa/opzionale 5€ p/giorno, supplemento salata +10€ a persona, supplemento senza glutine +5€ (quindi 10€ se richiesta anche la dolce), offerta variabile in base a stagionalità/prodotti locali (dolci tipici umbri di alta pasticceria — non più fatti in casa —, frutta di stagione, caffè/cappuccino/tea/ginseng su richiesta)
 - **Villa Relax** — pagina dedicata: villa indipendente, stessa proprietà/P.IVA di Agriturismo La Mora ma immobile e indirizzo distinti (Via Di Bassano, 19 — Assisi PG), gestita dallo stesso host (Paolo). NON è uno dei 5 appartamenti. Fino a 16 ospiti su 6 camere da letto (bagno/doccia privati ciascuna), prenotabile per intero o in due porzioni (6 e 10 persone). Piscina privata, giardino, gazebo, barbecue, campo da calcetto in erba, ping pong. Booking bar dedicata, separata da quella degli appartamenti. Dati verificati navigando il sito reale https://www.villaassisi.it/it/ il 5 settembre 2026 (dettagli completi in src/data/villa.ts) — non un confronto in tempo reale, non va fatto scraping automatico e continuo.
-- **Brochure di benvenuto (PDF)** — creata dal titolare, condivisa via Google Drive, scaricabile da ogni pagina appartamento e dalla sezione "Gli appartamenti" della home (link in src/data/apartments.ts, BROCHURE_PDF_URL)
+- **Guida di benvenuto** — creata dal titolare (PDF). NON un link Drive scaricabile dal sito (rimosso su richiesta): il pulsante "Richiedi la guida su WhatsApp", ben visibile in alto su ogni pagina appartamento e nella sezione "Gli appartamenti" della home, apre la chat WhatsApp dell'agriturismo, dove la guida è già pronta (link in src/data/apartments.ts, BROCHURE_WHATSAPP_URL)
 - **Attività & Servizi** — e-bike, equitazione, parco giochi + babysitting, cucina bio (dettaglio sezione 3)
 - **Promozioni & Cofanetti regalo** — vedi sezione 4
 - **Territorio** — Assisi (Basilica di San Francesco, Piazza del Comune, Rocca Maggiore/Minore), dintorni, Perugia — sostituisce/aggiorna [/territorio/](https://www.agriturismoinassisi.it/territorio/)
@@ -67,7 +67,7 @@ Cartelle immagini per tutti i 5 appartamenti già pronte in `public/images/siste
 - 25€/soggiorno, in Gemelli e Sagittario (gli unici due con giardino privato recintato)
 - Dropdown taglia + razza, con blacklist per razze considerate pericolose (sistema segnala "non accettato")
 - Nota obbligatoria: guinzaglio all'interno della struttura
-- Negli altri tre appartamenti (Pesci, Acquario, Bilancia): ammessi solo animali di piccola taglia abituati a vivere in appartamento
+- Negli altri tre appartamenti (Pesci, Acquario, Bilancia): ammessi solo animali di piccola taglia, previo accordo diretto col proprietario, sempre a 25€/soggiorno (confermato dal titolare)
 
 **Tassa di soggiorno:** **3€/persona/giorno** (confermato, valore corretto), primi 3 giorni, esenti under 12 — calcolata automaticamente nel riepilogo prenotazione. Il vecchio sito riportava 2€ nei cofanetti regalo: sul nuovo sito va unificato ovunque a 3€.
 

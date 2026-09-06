@@ -104,8 +104,8 @@ export function ImmersiveStory() {
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
         {/* Livello 0: fotografia. */}
         <Image
-          src="/images/piscina/foto piscina di giorno.webp"
-          alt="Piscina di Agriturismo La Mora immersa nel verde della campagna umbra"
+          src="/images/territorio/assisi/assisi con tramonto.jpg"
+          alt="Assisi al tramonto, vista dalla campagna umbra intorno ad Agriturismo La Mora"
           fill
           sizes="100vw"
           className="object-cover"

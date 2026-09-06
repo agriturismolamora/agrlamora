@@ -53,7 +53,7 @@ export const APARTMENT_DETAILS: Record<string, ApartmentDetail> = {
       "La cucina è il cuore dell'appartamento: abbastanza grande da cucinare per tutti, con vista sul soggiorno per non perdere la conversazione mentre si prepara la cena. Dispone di un divano letto matrimoniale.",
     ],
     distinctiveFeature: "75 m² su tre camere da letto, il più grande dei cinque appartamenti",
-    specificAmenities: ["Primo piano", "Giardino privato", "Gazebo privato"],
+    specificAmenities: ["Primo piano", "Giardino privato", "Gazebo privato", "Animali piccola taglia, previo accordo (25€)"],
     gallery: [
       { src: "/images/alloggi/appartamento bilancia/foto letto matrimoniale verticale bilancia.jpeg", alt: "Camera matrimoniale dell'appartamento Bilancia" },
       { src: "/images/alloggi/appartamento bilancia/foto verticale camera vista scrivania bilancia.jpeg", alt: "Camera da letto con scrivania di Bilancia" },
@@ -74,7 +74,7 @@ export const APARTMENT_DETAILS: Record<string, ApartmentDetail> = {
       "Il piccolo soggiorno con angolo cottura è il punto in cui la giornata si chiude: una colazione fatta con calma prima di uscire verso Assisi, o una cena semplice dopo una giornata in piscina.",
     ],
     distinctiveFeature: "Letto matrimoniale e letto a castello nella stessa camera, comoda per famiglie con bambini",
-    specificAmenities: ["Piano terra"],
+    specificAmenities: ["Piano terra", "Animali piccola taglia, previo accordo (25€)"],
     gallery: [
       { src: "/images/alloggi/appartamento pesci/vista da davanti letto matrimoniale stanza pesci.jpeg", alt: "Camera da letto dell'appartamento Pesci" },
       { src: "/images/alloggi/appartamento pesci/letto matrimoniale con davanti letto a castello due singoli pesci appartamento.webp", alt: "Letto matrimoniale e letto a castello dell'appartamento Pesci" },
@@ -90,7 +90,7 @@ export const APARTMENT_DETAILS: Record<string, ApartmentDetail> = {
       "La cucina attrezzata e il tavolo arredato lo rendono comodo per chi si ferma qualche giorno in più e preferisce cucinare con calma piuttosto che uscire ogni sera.",
     ],
     distinctiveFeature: "Tavolo da pranzo dedicato e doccia ampia, tra i più richiesti della struttura",
-    specificAmenities: ["Primo piano"],
+    specificAmenities: ["Primo piano", "Animali piccola taglia, previo accordo (25€)"],
     gallery: [
       { src: "/images/alloggi/appartamento acquario/orizzontale letto acquario.jpeg", alt: "Camera da letto dell'appartamento Acquario" },
       { src: "/images/alloggi/appartamento acquario/acquario verticale letto matrimoniale.jpeg", alt: "Letto matrimoniale dell'appartamento Acquario" },
