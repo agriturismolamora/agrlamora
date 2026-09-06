@@ -4,6 +4,7 @@ import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import { StarRow } from "@/components/review-icons";
 import { OtherPricesDropdown } from "@/components/other-prices-dropdown";
+import type { Locale } from "@/lib/i18n";
 import {
   STAY,
   CHECKED_ON_LABEL,
@@ -17,21 +18,162 @@ import {
   OTA_PRICES,
 } from "@/data/price-comparison";
 
-const WHATSAPP_URL = `https://wa.me/393934363917?text=${encodeURIComponent(
-  `Ciao! Vorrei un preventivo per l'appartamento ${STAY.apartmentName} dal ${STAY.checkinLabel} al ${STAY.checkoutLabel} (${STAY.adults} adulti).`
-)}`;
-
 const cheapestOta = Math.min(...OTA_PRICES.map((o) => o.priceEur));
 const savingsEur = DIRECT_PRICE_EUR !== null ? cheapestOta - DIRECT_PRICE_EUR : null;
 const savingsPct = savingsEur !== null && savingsEur > 0 ? Math.round((savingsEur / cheapestOta) * 100) : null;
 
-/* Sconti reali di prenotazione diretta (PROJECT-BRIEF.md sezione 2),
-   mostrati sotto la card come motivazione aggiuntiva. */
-const POINTS = [
-  { value: "-10%", label: "Da 7 notti", detail: "Soggiorni di una settimana o più hanno uno sconto diretto del 10%." },
-  { value: "-10%", label: "Clienti di ritorno", detail: "Dalla seconda prenotazione in poi, un altro 10% di sconto." },
-  { value: "-10%", label: "Tariffa non rimborsabile", detail: "Rispetto alla tariffa flessibile, per chi ha già le idee chiare." },
-] as const;
+/* Le due condizioni tariffarie sono stringhe italiane fisse in
+   price-comparison.ts (dato di business, non contenuto editoriale): qui
+   una piccola mappa di traduzione stabile, non l'intera ristrutturazione
+   del data file. */
+const CONDITION_TR: Record<Locale, Record<string, string>> = {
+  it: {},
+  en: { "Tariffa non rimborsabile": "Non-refundable rate", "Colazione inclusa e cancellazione gratuita": "breakfast included and free cancellation" },
+  fr: { "Tariffa non rimborsabile": "Tarif non remboursable", "Colazione inclusa e cancellazione gratuita": "petit-déjeuner inclus et annulation gratuite" },
+  de: { "Tariffa non rimborsabile": "Nicht erstattbarer Tarif", "Colazione inclusa e cancellazione gratuita": "Frühstück inklusive und kostenlose Stornierung" },
+};
+function tr(locale: Locale, s: string) {
+  return CONDITION_TR[locale][s] ?? s;
+}
+
+/* Stessa logica per la distanza reale e le due date verificate: dati
+   fissi in price-comparison.ts, tradotti qui senza duplicare il data file. */
+const DISTANCE_TR: Record<Locale, string> = {
+  it: DISTANCE_LABEL,
+  en: "2.2 km from Santa Maria degli Angeli",
+  fr: "2,2 km de Sainte-Marie-des-Anges",
+  de: "2,2 km von Santa Maria degli Angeli",
+};
+const IT_MONTHS: Record<string, Record<Locale, string>> = {
+  ottobre: { it: "ottobre", en: "October", fr: "octobre", de: "Oktober" },
+  settembre: { it: "settembre", en: "September", fr: "septembre", de: "September" },
+};
+function trDate(locale: Locale, label: string): string {
+  if (locale === "it") return label;
+  const [day, month, year] = label.split(" ");
+  const tm = IT_MONTHS[month];
+  return tm ? `${day} ${tm[locale]} ${year}` : label;
+}
+
+const TEXT: Record<
+  Locale,
+  {
+    label: string;
+    heading: string;
+    identity: string;
+    reviewsSoon: string;
+    savings: (pct: number) => string;
+    sitoUfficiale: string;
+    prenotaConNoi: string;
+    perNotte: string;
+    nights: string;
+    richiediPrezzo: string;
+    ospiti: string;
+    apartment: string;
+    prenotaDirettamente: string;
+    preferisciLiberta: (pn: number, tot: number, nights: number, cond: string) => string;
+    disclaimer: (checkin: string, checkout: string, nights: number, adults: number, apt: string, checkedOn: string) => string;
+    points: { value: string; label: string; detail: string }[];
+    whatsappTemplate: (apt: string, checkin: string, checkout: string, adults: number) => string;
+  }
+> = {
+  it: {
+    label: "Prenotazione diretta",
+    heading: "Stesso appartamento, stesse date: confronta tu stesso.",
+    identity: "Agriturismo · Assisi, Umbria",
+    reviewsSoon: "Recensioni Google verificate in arrivo",
+    savings: (pct) => `-${pct}% rispetto alle altre piattaforme`,
+    sitoUfficiale: "Sito ufficiale",
+    prenotaConNoi: "Prenota direttamente con l'agriturismo",
+    perNotte: "/ notte",
+    nights: "notti",
+    richiediPrezzo: "Richiedi il miglior prezzo",
+    ospiti: "ospiti",
+    apartment: "Appartamento",
+    prenotaDirettamente: "Prenota direttamente",
+    preferisciLiberta: (pn, tot, nights, cond) => `Preferisci più libertà? €${pn}/notte (€${tot} per ${nights} notti) con ${cond.toLowerCase()}.`,
+    disclaimer: (ci, co, n, a, apt, d) =>
+      `Tariffe rilevate per il soggiorno ${ci} → ${co} (${n} notti, ${a} ospiti, appartamento ${apt}) il ${d}. Le tariffe possono variare in base a disponibilità e condizioni selezionate — non è un confronto in tempo reale.`,
+    points: [
+      { value: "-10%", label: "Da 7 notti", detail: "Soggiorni di una settimana o più hanno uno sconto diretto del 10%." },
+      { value: "-10%", label: "Clienti di ritorno", detail: "Dalla seconda prenotazione in poi, un altro 10% di sconto." },
+      { value: "-10%", label: "Tariffa non rimborsabile", detail: "Rispetto alla tariffa flessibile, per chi ha già le idee chiare." },
+    ],
+    whatsappTemplate: (apt, ci, co, a) => `Ciao! Vorrei un preventivo per l'appartamento ${apt} dal ${ci} al ${co} (${a} adulti).`,
+  },
+  en: {
+    label: "Direct booking",
+    heading: "Same apartment, same dates: compare for yourself.",
+    identity: "Agriturismo · Assisi, Umbria",
+    reviewsSoon: "Verified Google reviews coming soon",
+    savings: (pct) => `-${pct}% compared to other platforms`,
+    sitoUfficiale: "Official website",
+    prenotaConNoi: "Book directly with the agriturismo",
+    perNotte: "/ night",
+    nights: "nights",
+    richiediPrezzo: "Request the best price",
+    ospiti: "guests",
+    apartment: "Apartment",
+    prenotaDirettamente: "Book directly",
+    preferisciLiberta: (pn, tot, nights, cond) => `Prefer more flexibility? €${pn}/night (€${tot} for ${nights} nights) with ${cond.toLowerCase()}.`,
+    disclaimer: (ci, co, n, a, apt, d) =>
+      `Rates checked for the stay ${ci} → ${co} (${n} nights, ${a} guests, apartment ${apt}) on ${d}. Rates may vary depending on availability and selected conditions — this is not a real-time comparison.`,
+    points: [
+      { value: "-10%", label: "From 7 nights", detail: "Stays of a week or more get a 10% direct discount." },
+      { value: "-10%", label: "Returning guests", detail: "From your second booking onward, another 10% off." },
+      { value: "-10%", label: "Non-refundable rate", detail: "Compared to the flexible rate, for those who already know their plans." },
+    ],
+    whatsappTemplate: (apt, ci, co, a) => `Hi! I'd like a quote for the ${apt} apartment from ${ci} to ${co} (${a} adults).`,
+  },
+  fr: {
+    label: "Réservation directe",
+    heading: "Même appartement, mêmes dates : comparez vous-même.",
+    identity: "Agriturismo · Assise, Ombrie",
+    reviewsSoon: "Avis Google vérifiés bientôt disponibles",
+    savings: (pct) => `-${pct}% par rapport aux autres plateformes`,
+    sitoUfficiale: "Site officiel",
+    prenotaConNoi: "Réservez directement avec l'agriturismo",
+    perNotte: "/ nuit",
+    nights: "nuits",
+    richiediPrezzo: "Demandez le meilleur prix",
+    ospiti: "voyageurs",
+    apartment: "Appartement",
+    prenotaDirettamente: "Réserver directement",
+    preferisciLiberta: (pn, tot, nights, cond) => `Vous préférez plus de flexibilité ? €${pn}/nuit (€${tot} pour ${nights} nuits) avec ${cond.toLowerCase()}.`,
+    disclaimer: (ci, co, n, a, apt, d) =>
+      `Tarifs relevés pour le séjour ${ci} → ${co} (${n} nuits, ${a} voyageurs, appartement ${apt}) le ${d}. Les tarifs peuvent varier selon la disponibilité et les conditions sélectionnées — ce n'est pas une comparaison en temps réel.`,
+    points: [
+      { value: "-10%", label: "Dès 7 nuits", detail: "Les séjours d'une semaine ou plus bénéficient de 10% de réduction directe." },
+      { value: "-10%", label: "Clients fidèles", detail: "Dès la deuxième réservation, encore 10% de réduction." },
+      { value: "-10%", label: "Tarif non remboursable", detail: "Par rapport au tarif flexible, pour ceux qui ont déjà décidé." },
+    ],
+    whatsappTemplate: (apt, ci, co, a) => `Bonjour ! Je voudrais un devis pour l'appartement ${apt} du ${ci} au ${co} (${a} adultes).`,
+  },
+  de: {
+    label: "Direktbuchung",
+    heading: "Gleiches Apartment, gleiche Daten: vergleichen Sie selbst.",
+    identity: "Agriturismo · Assisi, Umbrien",
+    reviewsSoon: "Verifizierte Google-Bewertungen folgen in Kürze",
+    savings: (pct) => `-${pct}% im Vergleich zu anderen Plattformen`,
+    sitoUfficiale: "Offizielle Website",
+    prenotaConNoi: "Direkt beim Agriturismo buchen",
+    perNotte: "/ Nacht",
+    nights: "Nächte",
+    richiediPrezzo: "Besten Preis anfragen",
+    ospiti: "Gäste",
+    apartment: "Apartment",
+    prenotaDirettamente: "Direkt buchen",
+    preferisciLiberta: (pn, tot, nights, cond) => `Mehr Flexibilität gewünscht? €${pn}/Nacht (€${tot} für ${nights} Nächte) mit ${cond.toLowerCase()}.`,
+    disclaimer: (ci, co, n, a, apt, d) =>
+      `Preise ermittelt für den Aufenthalt ${ci} → ${co} (${n} Nächte, ${a} Gäste, Apartment ${apt}) am ${d}. Die Preise können je nach Verfügbarkeit und gewählten Bedingungen variieren — kein Echtzeitvergleich.`,
+    points: [
+      { value: "-10%", label: "Ab 7 Nächten", detail: "Aufenthalte ab einer Woche erhalten 10% Direktrabatt." },
+      { value: "-10%", label: "Wiederkehrende Gäste", detail: "Ab der zweiten Buchung weitere 10% Rabatt." },
+      { value: "-10%", label: "Nicht erstattbarer Tarif", detail: "Im Vergleich zum flexiblen Tarif, für alle, die schon entschieden haben." },
+    ],
+    whatsappTemplate: (apt, ci, co, a) => `Hallo! Ich hätte gerne ein Angebot für das Apartment ${apt} vom ${ci} bis ${co} (${a} Erwachsene).`,
+  },
+};
 
 /* Scheda comparativa in stile "metasearch": foto → identità →
    punteggio/distanza → badge risparmio → box "Sito ufficiale"
@@ -43,8 +185,12 @@ const POINTS = [
    in una fase precedente, che a un doppio controllo diretto non
    corrispondevano a quanto mostrato realmente dalle due piattaforme per
    questo esatto soggiorno (dettagli in src/data/price-comparison.ts). */
-export async function PriceComparisonSection() {
+export async function PriceComparisonSection({ locale }: { locale: Locale }) {
   const reviews = await getGoogleReviews();
+  const text = TEXT[locale];
+  const WHATSAPP_URL = `https://wa.me/393934363917?text=${encodeURIComponent(
+    text.whatsappTemplate(STAY.apartmentName, STAY.checkinLabel, STAY.checkoutLabel, STAY.adults)
+  )}`;
 
   return (
     <section
@@ -56,12 +202,12 @@ export async function PriceComparisonSection() {
       <div className="mx-auto max-w-[1100px] px-6 sm:px-10">
         <Reveal>
           <div className="text-center">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-olive-950">Prenotazione diretta</span>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-olive-950">{text.label}</span>
             <h2
               id="price-comparison-heading"
               className="mx-auto mt-5 max-w-[560px] font-display text-[clamp(26px,3vw,38px)] font-normal leading-[1.2] text-ink [text-wrap:balance]"
             >
-              Stesso appartamento, stesse date: confronta tu stesso.
+              {text.heading}
             </h2>
           </div>
         </Reveal>
@@ -83,7 +229,7 @@ export async function PriceComparisonSection() {
             <div className="px-6 py-7 sm:px-9 sm:py-9">
               {/* Identità + punteggio */}
               <h3 className="font-display text-[24px] font-normal leading-tight text-ink">Agriturismo La Mora</h3>
-              <p className="mt-1 text-[13px] text-ink-soft">Agriturismo · Assisi, Umbria</p>
+              <p className="mt-1 text-[13px] text-ink-soft">{text.identity}</p>
 
               <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
                 {reviews.configured && reviews.rating ? (
@@ -94,16 +240,16 @@ export async function PriceComparisonSection() {
                     <StarRow rating={reviews.rating} size={13} />
                   </div>
                 ) : (
-                  <span className="text-[12px] text-ink-soft">Recensioni Google verificate in arrivo</span>
+                  <span className="text-[12px] text-ink-soft">{text.reviewsSoon}</span>
                 )}
-                <span className="text-[12px] text-ink-soft">{DISTANCE_LABEL}</span>
+                <span className="text-[12px] text-ink-soft">{DISTANCE_TR[locale]}</span>
               </div>
 
               {/* Badge risparmio: solo se c'è un prezzo diretto reale da cui calcolarlo */}
               {savingsPct !== null && (
                 <Reveal delay={160}>
                   <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-raspberry px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.06em] text-cream">
-                    -{savingsPct}% rispetto alle altre piattaforme
+                    {text.savings(savingsPct)}
                   </span>
                 </Reveal>
               )}
@@ -111,10 +257,10 @@ export async function PriceComparisonSection() {
               {/* Box "Sito ufficiale" — protagonista */}
               <div className="relative mt-6 overflow-hidden rounded-[6px] border-2 border-gold bg-[#1f180e] px-6 py-7 text-center">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3.5 py-1.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-[#1f180e]">
-                  Sito ufficiale
+                  {text.sitoUfficiale}
                 </span>
                 <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-cream/60">
-                  Prenota direttamente con l&apos;agriturismo
+                  {text.prenotaConNoi}
                 </p>
 
                 {DIRECT_PRICE_EUR !== null ? (
@@ -123,24 +269,23 @@ export async function PriceComparisonSection() {
                       <p className="font-display text-[clamp(48px,7vw,64px)] font-medium leading-none text-gold">
                         €{DIRECT_PRICE_PER_NIGHT}
                       </p>
-                      <span className="text-[13px] text-cream/50">/ notte</span>
+                      <span className="text-[13px] text-cream/50">{text.perNotte}</span>
                     </div>
                     <p className="mt-2 text-[12px] text-cream/55">
-                      {STAY.nights} notti a €{DIRECT_PRICE_EUR} · {DIRECT_PRICE_CONDITION}
+                      {STAY.nights} {text.nights} a €{DIRECT_PRICE_EUR} · {tr(locale, DIRECT_PRICE_CONDITION)}
                     </p>
                     <p className="mt-4 border-t border-cream/10 pt-4 text-[11px] leading-[1.6] text-cream/45">
-                      Preferisci più libertà? €{DIRECT_PRICE_FLEX_PER_NIGHT}/notte (€{DIRECT_PRICE_FLEX_EUR} per{" "}
-                      {STAY.nights} notti) con {DIRECT_PRICE_FLEX_CONDITION.toLowerCase()}.
+                      {text.preferisciLiberta(DIRECT_PRICE_FLEX_PER_NIGHT, DIRECT_PRICE_FLEX_EUR, STAY.nights, tr(locale, DIRECT_PRICE_FLEX_CONDITION))}
                     </p>
                   </>
                 ) : (
                   <p className="mx-auto mt-3 max-w-[300px] font-display text-[clamp(20px,3vw,26px)] font-normal leading-[1.3] text-gold">
-                    Richiedi il miglior prezzo
+                    {text.richiediPrezzo}
                   </p>
                 )}
 
                 <p className="mt-4 text-[12px] text-cream/50">
-                  {STAY.nights} notti · {STAY.adults} ospiti · Appartamento {STAY.apartmentName}
+                  {STAY.nights} {text.nights} · {STAY.adults} {text.ospiti} · {text.apartment} {STAY.apartmentName}
                 </p>
 
                 <a
@@ -151,7 +296,7 @@ export async function PriceComparisonSection() {
                 >
                   <HoverFill color="#8f7330" />
                   <span className="relative z-10 inline-flex items-center gap-2.5">
-                    Prenota direttamente
+                    {text.prenotaDirettamente}
                     <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                       →
                     </span>
@@ -168,7 +313,7 @@ export async function PriceComparisonSection() {
                     </span>
                   ))}
                 </div>
-                <OtherPricesDropdown />
+                <OtherPricesDropdown locale={locale} />
               </div>
             </div>
           </div>
@@ -176,15 +321,13 @@ export async function PriceComparisonSection() {
 
         <Reveal delay={220}>
           <p className="mx-auto mt-6 max-w-[560px] text-center text-[12px] leading-[1.7] text-ink-soft/80">
-            Tariffe rilevate per il soggiorno {STAY.checkinLabel} → {STAY.checkoutLabel} ({STAY.nights} notti,{" "}
-            {STAY.adults} ospiti, appartamento {STAY.apartmentName}) il {CHECKED_ON_LABEL}. Le tariffe possono
-            variare in base a disponibilità e condizioni selezionate — non è un confronto in tempo reale.
+            {text.disclaimer(trDate(locale, STAY.checkinLabel), trDate(locale, STAY.checkoutLabel), STAY.nights, STAY.adults, STAY.apartmentName, trDate(locale, CHECKED_ON_LABEL))}
           </p>
         </Reveal>
 
         <Reveal delay={300}>
           <dl className="mx-auto mt-16 grid max-w-[780px] grid-cols-1 gap-10 border-t border-ink/10 pt-12 sm:grid-cols-3">
-            {POINTS.map((point) => (
+            {text.points.map((point) => (
               <div key={point.label} className="text-center sm:text-left">
                 <dt className="font-display text-4xl text-raspberry">{point.value}</dt>
                 <dd className="mt-3">

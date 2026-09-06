@@ -4,6 +4,7 @@ import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import { CountUp } from "@/components/count-up";
 import { StarRow } from "@/components/review-icons";
+import type { Locale } from "@/lib/i18n";
 
 /* Impaginazione confermata dal titolare, sfondo passato da scuro a chiaro
    (l'inchiostro scuro del badge non si leggeva su sfondo scuro) e la
@@ -12,14 +13,57 @@ import { StarRow } from "@/components/review-icons";
    TripAdvisor in una grafica auto-prodotta ("Miglior Prezzo" non è una
    categoria di premio che TripAdvisor rilascia davvero) — rischio di
    marchio già segnalato esplicitamente al titolare; usato qui su sua
-   richiesta ripetuta ed esplicita, non una scelta presa di iniziativa. */
+   richiesta ripetuta ed esplicita, non una scelta presa di iniziativa.
+   Il badge PNG ha il testo Italiano incorporato nell'immagine stessa: resta
+   invariato in ogni lingua (nessuna versione tradotta fornita dal cliente),
+   solo l'alt text e il copy intorno cambiano lingua. */
 const TRIPADVISOR_URL = "https://www.tripadvisor.it/ShowUserReviews-g187905-d1021888-r1068110253";
 
-export function RankingHero() {
+const TEXT: Record<Locale, { srHeading: string; label: string; badgeAlt: string; outOf: string; accordingTo: string; body: string; cta: string }> = {
+  it: {
+    srHeading: "Agriturismo La Mora è il numero 1 su TripAdvisor tra 38 agriturismi ad Assisi",
+    label: "Riconoscimenti",
+    badgeAlt: "Agriturismo La Mora — N.1 Agriturismo ad Assisi, miglior prezzo secondo TripAdvisor",
+    outOf: "agriturismi ad Assisi",
+    accordingTo: "Secondo le recensioni TripAdvisor",
+    body: "Non lo diciamo noi: sono le recensioni degli ospiti a metterci al primo posto — e a dirti che, prenotando diretto, hai anche il prezzo migliore.",
+    cta: "Leggi le recensioni",
+  },
+  en: {
+    srHeading: "Agriturismo La Mora is ranked #1 on TripAdvisor among 38 agriturismi in Assisi",
+    label: "Recognition",
+    badgeAlt: "Agriturismo La Mora — #1 Agriturismo in Assisi, best price according to TripAdvisor",
+    outOf: "agriturismi in Assisi",
+    accordingTo: "According to TripAdvisor reviews",
+    body: "We're not the ones saying it: it's our guests' reviews that put us in first place — and tell you that booking directly also gets you the best price.",
+    cta: "Read the reviews",
+  },
+  fr: {
+    srHeading: "Agriturismo La Mora est classé numéro 1 sur TripAdvisor parmi 38 agriturismi à Assise",
+    label: "Reconnaissances",
+    badgeAlt: "Agriturismo La Mora — N°1 Agriturismo à Assise, meilleur prix selon TripAdvisor",
+    outOf: "agriturismi à Assise",
+    accordingTo: "Selon les avis TripAdvisor",
+    body: "Ce n'est pas nous qui le disons : ce sont les avis de nos hôtes qui nous placent en première position — et qui vous disent qu'en réservant directement, vous avez aussi le meilleur prix.",
+    cta: "Lire les avis",
+  },
+  de: {
+    srHeading: "Agriturismo La Mora ist auf TripAdvisor die Nummer 1 unter 38 Agriturismi in Assisi",
+    label: "Auszeichnungen",
+    badgeAlt: "Agriturismo La Mora — Nr. 1 Agriturismo in Assisi, bester Preis laut TripAdvisor",
+    outOf: "Agriturismi in Assisi",
+    accordingTo: "Laut TripAdvisor-Bewertungen",
+    body: "Das sagen nicht wir: Es sind die Bewertungen unserer Gäste, die uns auf Platz eins bringen — und Ihnen zeigen, dass Sie bei Direktbuchung auch den besten Preis bekommen.",
+    cta: "Bewertungen lesen",
+  },
+};
+
+export function RankingHero({ locale }: { locale: Locale }) {
+  const text = TEXT[locale];
   return (
     <section id="section-ranking" aria-labelledby="ranking-heading" className="relative overflow-hidden bg-cream-dim py-24 sm:py-28">
       <h2 id="ranking-heading" className="sr-only">
-        Agriturismo La Mora è il numero 1 su TripAdvisor tra 38 agriturismi ad Assisi
+        {text.srHeading}
       </h2>
 
       <div
@@ -30,14 +74,14 @@ export function RankingHero() {
 
       <div className="relative z-[1] mx-auto flex max-w-[560px] flex-col items-center px-6 text-center sm:px-10">
         <Reveal>
-          <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-olive-950">Riconoscimenti</span>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-olive-950">{text.label}</span>
         </Reveal>
 
         <Reveal delay={100}>
           <div className="mt-8 w-full max-w-[240px]">
             <Image
               src="/certificazioni/agriturismo numero 1 ad assisi agriturismo la mora.png"
-              alt="Agriturismo La Mora — N.1 Agriturismo ad Assisi, miglior prezzo secondo TripAdvisor"
+              alt={text.badgeAlt}
               width={1536}
               height={1024}
               className="h-auto w-full"
@@ -47,21 +91,21 @@ export function RankingHero() {
 
         <Reveal delay={200}>
           <p className="mt-2 font-display text-[19px] font-normal leading-[1.3] text-ink [text-wrap:balance]">
-            Su <CountUp to={38} className="tabular-nums" /> agriturismi ad Assisi
+            {locale === "it" ? "Su " : ""}
+            <CountUp to={38} className="tabular-nums" /> {text.outOf}
           </p>
         </Reveal>
 
         <Reveal delay={280}>
           <div className="mt-5 flex flex-col items-center gap-2">
             <StarRow rating={5} size={15} />
-            <span className="text-[10px] uppercase tracking-[0.12em] text-ink-soft">Secondo le recensioni TripAdvisor</span>
+            <span className="text-[10px] uppercase tracking-[0.12em] text-ink-soft">{text.accordingTo}</span>
           </div>
         </Reveal>
 
         <Reveal delay={360}>
           <p className="mt-6 max-w-[380px] text-[14px] leading-[1.7] text-ink-soft">
-            Non lo diciamo noi: sono le recensioni degli ospiti a metterci al primo posto — e a dirti che, prenotando
-            diretto, hai anche il prezzo migliore.
+            {text.body}
           </p>
         </Reveal>
 
@@ -74,7 +118,7 @@ export function RankingHero() {
           >
             <HoverFill color="#8f7330" />
             <span className="relative z-10 inline-flex items-center gap-2.5">
-              Leggi le recensioni
+              {text.cta}
               <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                 →
               </span>

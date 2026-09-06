@@ -1,35 +1,66 @@
 "use client";
 
 import Image from "next/image";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import type { Locale } from "@/lib/i18n";
 
 /* Copy originale, invariato in questo passaggio di visual polish — solo la
    granularità del reveal cambia (da frase a parola). Fatti verificati (5
    appartamenti indipendenti, campagna umbra, piscina, gestione familiare
    desumibile dalla ragione sociale "Mazzoli Giuseppina e Paolo" in
    PLAN.md). */
-const SENTENCES = [
-  "A pochi minuti da Assisi, La Mora vive al proprio ritmo.",
-  "Cinque appartamenti indipendenti, una piscina tra il verde e tanto spazio libero intorno.",
-  "I bambini corrono, i cani restano con voi, i giorni si allungano.",
-  "È una casa di famiglia, prima ancora che un agriturismo.",
-  "Si arriva per Assisi. Si resta per come ci si sente, qui.",
-];
+const SENTENCES_BY_LOCALE: Record<Locale, string[]> = {
+  it: [
+    "A pochi minuti da Assisi, La Mora vive al proprio ritmo.",
+    "Cinque appartamenti indipendenti, una piscina tra il verde e tanto spazio libero intorno.",
+    "I bambini corrono, i cani restano con voi, i giorni si allungano.",
+    "È una casa di famiglia, prima ancora che un agriturismo.",
+    "Si arriva per Assisi. Si resta per come ci si sente, qui.",
+  ],
+  en: [
+    "A few minutes from Assisi, La Mora moves at its own pace.",
+    "Five independent apartments, a pool surrounded by greenery, and plenty of open space around.",
+    "Children run free, dogs stay by your side, the days grow longer.",
+    "It's a family home, before it's an agriturismo.",
+    "You come for Assisi. You stay for how it feels here.",
+  ],
+  fr: [
+    "À quelques minutes d'Assise, La Mora vit à son propre rythme.",
+    "Cinq appartements indépendants, une piscine entourée de verdure et beaucoup d'espace tout autour.",
+    "Les enfants courent, les chiens restent avec vous, les journées s'allongent.",
+    "C'est une maison de famille, avant d'être un agriturismo.",
+    "On vient pour Assise. On reste pour ce que l'on ressent ici.",
+  ],
+  de: [
+    "Nur wenige Minuten von Assisi entfernt, lebt La Mora in seinem eigenen Rhythmus.",
+    "Fünf unabhängige Apartments, ein Pool inmitten von Grün und viel freier Raum ringsum.",
+    "Kinder laufen frei herum, Hunde bleiben bei Ihnen, die Tage werden länger.",
+    "Es ist ein Familienhaus, noch bevor es ein Agriturismo ist.",
+    "Man kommt wegen Assisi. Man bleibt, weil man sich hier so fühlt.",
+  ],
+};
 
-const WORDS_BY_SENTENCE = SENTENCES.map((s) => s.split(" "));
-const TOTAL_WORDS = WORDS_BY_SENTENCE.reduce((n, words) => n + words.length, 0);
+const LABEL: Record<Locale, string> = {
+  it: "Agriturismo ad Assisi",
+  en: "Agriturismo in Assisi",
+  fr: "Agriturismo à Assise",
+  de: "Agriturismo in Assisi",
+};
 
 const DIM_ALPHA = 0.2;
-// Finestra di reveal più larga di 1/TOTAL_WORDS: le parole vicine si
-// sovrappongono leggermente, producendo un avanzamento morbido ("inchiostro
-// che avanza") invece di uno scatto netto parola per parola.
-const WORD_RANGE = 1.6 / TOTAL_WORDS;
 
 function clamp01(v: number) {
   return Math.min(1, Math.max(0, v));
 }
 
-export function ImmersiveStory() {
+export function ImmersiveStory({ locale }: { locale: Locale }) {
+  const SENTENCES = SENTENCES_BY_LOCALE[locale];
+  const WORDS_BY_SENTENCE = useMemo(() => SENTENCES.map((s) => s.split(" ")), [SENTENCES]);
+  const TOTAL_WORDS = useMemo(() => WORDS_BY_SENTENCE.reduce((n, words) => n + words.length, 0), [WORDS_BY_SENTENCE]);
+  // Finestra di reveal più larga di 1/TOTAL_WORDS: le parole vicine si
+  // sovrappongono leggermente, producendo un avanzamento morbido
+  // ("inchiostro che avanza") invece di uno scatto netto parola per parola.
+  const WORD_RANGE = 1.6 / TOTAL_WORDS;
   const wrapperRef = useRef<HTMLElement>(null);
   const wordRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const [reducedMotion, setReducedMotion] = useState(
@@ -90,7 +121,7 @@ export function ImmersiveStory() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [reducedMotion]);
+  }, [reducedMotion, TOTAL_WORDS, WORD_RANGE]);
 
   let wordIndex = 0;
 
@@ -129,7 +160,7 @@ export function ImmersiveStory() {
         >
           <div className="mx-auto flex max-w-[980px] flex-col items-center">
             <span className="text-[11px] font-medium uppercase leading-none tracking-[0.32em] text-[#f1f1f1]">
-              Agriturismo ad Assisi
+              {LABEL[locale]}
             </span>
             <div className="mt-10 font-display text-[clamp(34px,2.4vw,46px)] leading-[1.08] [text-wrap:balance]">
               {WORDS_BY_SENTENCE.map((words, si) => (

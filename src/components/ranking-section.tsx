@@ -1,5 +1,6 @@
 import { getGoogleReviews } from "@/lib/google-reviews";
 import { RankingHero } from "@/components/ranking-hero";
+import type { Locale } from "@/lib/i18n";
 
 type Quote = { name: string; text: string };
 
@@ -38,7 +39,7 @@ function ReviewMarquee({ quotes }: { quotes: Quote[] }) {
   );
 }
 
-export async function RankingSection() {
+export async function RankingSection({ locale }: { locale: Locale }) {
   const data = await getGoogleReviews();
   const quotes: Quote[] = data.reviews
     .filter((r) => r.text && r.text.trim().length > 0)
@@ -47,7 +48,10 @@ export async function RankingSection() {
 
   return (
     <>
-      <RankingHero />
+      <RankingHero locale={locale} />
+      {/* Le citazioni sono recensioni Google reali, sempre nella lingua in
+          cui sono state scritte: non tradotte, per non alterare mai un
+          testo scritto davvero da un ospite. */}
       {quotes.length > 0 && <ReviewMarquee quotes={quotes} />}
     </>
   );

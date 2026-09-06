@@ -2,22 +2,37 @@
 
 import { useEffect, useRef, useState } from "react";
 import { VILLA_MAX_GUESTS, VILLA_WHATSAPP_NUMBER } from "@/data/villa";
+import type { Locale } from "@/lib/i18n";
+import { t } from "@/lib/dictionary";
 
 const PHONE_TEL = "tel:+390758041164";
+const INTL_TAG: Record<Locale, string> = { it: "it-IT", en: "en-GB", fr: "fr-FR", de: "de-DE" };
 
-const DATE_FORMATTER = new Intl.DateTimeFormat("it-IT", { day: "2-digit", month: "short" });
+const GUEST_REQUEST_MSG: Record<Locale, (guests: number, guestWord: string) => string> = {
+  it: (g, w) => `Ciao! Vorrei verificare la disponibilità di Villa Relax per ${g} ${w}`,
+  en: (g, w) => `Hi! I'd like to check the availability of Villa Relax for ${g} ${w}`,
+  fr: (g, w) => `Bonjour ! Je voudrais vérifier la disponibilité de Villa Relax pour ${g} ${w}`,
+  de: (g, w) => `Hallo! Ich möchte die Verfügbarkeit von Villa Relax für ${g} ${w} prüfen`,
+};
+const FROM_WORD: Record<Locale, string> = { it: "dal", en: "from", fr: "du", de: "vom" };
+const TO_WORD: Record<Locale, string> = { it: "al", en: "to", fr: "au", de: "bis" };
 
-function formatDateInput(value: string) {
-  if (!value) return "Aggiungi data";
+function formatDateInput(value: string, locale: Locale) {
+  const fallback = t("booking", "aggiungiData", locale);
+  if (!value) return fallback;
   const d = new Date(`${value}T00:00:00`);
-  if (Number.isNaN(d.getTime())) return "Aggiungi data";
-  return DATE_FORMATTER.format(d);
+  if (Number.isNaN(d.getTime())) return fallback;
+  return new Intl.DateTimeFormat(INTL_TAG[locale], { day: "2-digit", month: "short" }).format(d);
 }
 
-function buildWhatsappUrl(checkIn: string, checkOut: string, guests: number) {
-  const parts = [`Ciao! Vorrei verificare la disponibilità di Villa Relax per ${guests} ${guests === 1 ? "ospite" : "ospiti"}`];
-  if (checkIn) parts.push(`dal ${formatDateInput(checkIn)}`);
-  if (checkOut) parts.push(`al ${formatDateInput(checkOut)}`);
+function guestWord(locale: Locale, guests: number) {
+  return t("booking", guests === 1 ? "ospitiSuffix" : "ospitiSuffixPlural", locale);
+}
+
+function buildWhatsappUrl(locale: Locale, checkIn: string, checkOut: string, guests: number) {
+  const parts = [GUEST_REQUEST_MSG[locale](guests, guestWord(locale, guests))];
+  if (checkIn) parts.push(`${FROM_WORD[locale]} ${formatDateInput(checkIn, locale)}`);
+  if (checkOut) parts.push(`${TO_WORD[locale]} ${formatDateInput(checkOut, locale)}`);
   return `https://wa.me/${VILLA_WHATSAPP_NUMBER}?text=${encodeURIComponent(parts.join(" ") + ".")}`;
 }
 
@@ -53,19 +68,21 @@ function GuestsStepper({
   guests,
   onChange,
   onClose,
+  locale,
 }: {
   guests: number;
   onChange: (v: number) => void;
   onClose: () => void;
+  locale: Locale;
 }) {
   return (
     <div className="w-60 rounded-[3px] border border-ink/10 bg-cream p-4 shadow-2xl">
       <div className="flex items-center justify-between">
-        <span className="text-sm text-ink">Ospiti</span>
+        <span className="text-sm text-ink">{t("booking", "ospiti", locale)}</span>
         <div className="flex items-center gap-3">
           <button
             type="button"
-            aria-label="Diminuisci ospiti"
+            aria-label={`- ${t("booking", "ospiti", locale)}`}
             disabled={guests <= 1}
             onClick={() => onChange(Math.max(1, guests - 1))}
             className="flex h-8 w-8 items-center justify-center rounded-full border border-ink/20 text-ink transition-colors hover:border-raspberry hover:text-raspberry disabled:cursor-not-allowed disabled:opacity-30"
@@ -75,7 +92,7 @@ function GuestsStepper({
           <span className="w-4 text-center text-sm text-ink">{guests}</span>
           <button
             type="button"
-            aria-label="Aumenta ospiti"
+            aria-label={`+ ${t("booking", "ospiti", locale)}`}
             disabled={guests >= VILLA_MAX_GUESTS}
             onClick={() => onChange(Math.min(VILLA_MAX_GUESTS, guests + 1))}
             className="flex h-8 w-8 items-center justify-center rounded-full border border-ink/20 text-ink transition-colors hover:border-raspberry hover:text-raspberry disabled:cursor-not-allowed disabled:opacity-30"
@@ -84,13 +101,18 @@ function GuestsStepper({
           </button>
         </div>
       </div>
-      <p className="mt-2 text-[11px] leading-[1.5] text-ink-soft">Fino a {VILLA_MAX_GUESTS} ospiti, l&apos;intera villa.</p>
+      <p className="mt-2 text-[11px] leading-[1.5] text-ink-soft">
+        {locale === "it" && `Fino a ${VILLA_MAX_GUESTS} ospiti, l'intera villa.`}
+        {locale === "en" && `Up to ${VILLA_MAX_GUESTS} guests, the whole villa.`}
+        {locale === "fr" && `Jusqu'à ${VILLA_MAX_GUESTS} personnes, toute la villa.`}
+        {locale === "de" && `Bis zu ${VILLA_MAX_GUESTS} Gästen, die ganze Villa.`}
+      </p>
       <button
         type="button"
         onClick={onClose}
         className="mt-3 w-full rounded-[3px] bg-olive-900 py-2 text-sm font-medium text-cream transition-colors hover:bg-olive-700"
       >
-        Fatto
+        {t("booking", "fatto", locale)}
       </button>
     </div>
   );
@@ -104,7 +126,7 @@ function GuestsStepper({
    completamente separati. Nessun motore di prenotazione reale esiste
    ancora (come per gli appartamenti): il CTA apre WhatsApp con date/ospiti
    già scritti nel messaggio. */
-export function VillaBookingBar() {
+export function VillaBookingBar({ locale }: { locale: Locale }) {
   const [guestsOpen, setGuestsOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const booking = useVillaBookingState();
@@ -135,7 +157,7 @@ export function VillaBookingBar() {
     };
   }, [sheetOpen]);
 
-  const whatsappUrl = buildWhatsappUrl(booking.checkIn, booking.checkOut, booking.guests);
+  const whatsappUrl = buildWhatsappUrl(locale, booking.checkIn, booking.checkOut, booking.guests);
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-5 z-[70] flex justify-center px-4 sm:px-6">
@@ -148,13 +170,13 @@ export function VillaBookingBar() {
         >
           <div className="flex items-center border-r border-ink/10 bg-olive-950 px-5 text-cream">
             <div className="flex flex-col leading-tight">
-              <span className="text-[8px] font-semibold uppercase tracking-[0.14em] text-cream/60">Villa indipendente</span>
+              <span className="text-[8px] font-semibold uppercase tracking-[0.14em] text-cream/60">{t("nav", "villaIndipendente", locale)}</span>
               <span className="font-display text-[15px]">Villa Relax</span>
             </div>
           </div>
 
           <label className="relative flex min-w-0 flex-col items-start justify-center gap-1 border-r border-ink/10 px-[22px] py-5 text-left">
-            <span className="text-[8px] font-semibold uppercase tracking-[0.05em] text-ink-soft">Arrivo</span>
+            <span className="text-[8px] font-semibold uppercase tracking-[0.05em] text-ink-soft">{t("booking", "arrivo", locale)}</span>
             <input
               type="date"
               value={booking.checkIn}
@@ -164,7 +186,7 @@ export function VillaBookingBar() {
           </label>
 
           <label className="relative flex min-w-0 flex-col items-start justify-center gap-1 border-r border-ink/10 px-[22px] py-5 text-left">
-            <span className="text-[8px] font-semibold uppercase tracking-[0.05em] text-ink-soft">Partenza</span>
+            <span className="text-[8px] font-semibold uppercase tracking-[0.05em] text-ink-soft">{t("booking", "partenza", locale)}</span>
             <input
               type="date"
               value={booking.checkOut}
@@ -183,14 +205,14 @@ export function VillaBookingBar() {
                 guestsOpen ? "bg-ink/[0.035]" : "hover:bg-ink/[0.02]"
               }`}
             >
-              <span className="text-[8px] font-semibold uppercase tracking-[0.05em] text-ink-soft">Ospiti</span>
+              <span className="text-[8px] font-semibold uppercase tracking-[0.05em] text-ink-soft">{t("booking", "ospiti", locale)}</span>
               <span className="truncate font-display text-[16px] font-medium leading-none text-ink">
-                {booking.guests} {booking.guests === 1 ? "ospite" : "ospiti"}
+                {booking.guests} {guestWord(locale, booking.guests)}
               </span>
             </button>
             {guestsOpen && (
               <div className="absolute bottom-full left-0 z-[80] mb-2">
-                <GuestsStepper guests={booking.guests} onChange={booking.setGuests} onClose={() => setGuestsOpen(false)} />
+                <GuestsStepper guests={booking.guests} onChange={booking.setGuests} onClose={() => setGuestsOpen(false)} locale={locale} />
               </div>
             )}
           </div>
@@ -201,7 +223,7 @@ export function VillaBookingBar() {
             rel="noopener noreferrer"
             className="flex h-full w-full items-center justify-center whitespace-nowrap bg-raspberry px-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
           >
-            Prenota Villa
+            {t("booking", "prenotaVilla", locale)}
           </a>
           <a
             href={PHONE_TEL}
@@ -219,7 +241,7 @@ export function VillaBookingBar() {
             onClick={() => setSheetOpen(true)}
             className="rounded-[3px] bg-raspberry px-7 py-4 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors hover:bg-[#8a3844]"
           >
-            Verifica disponibilità — Villa Relax
+            {t("booking", "verificaDisponibilitaVilla", locale)}
           </button>
         </div>
 
@@ -227,7 +249,7 @@ export function VillaBookingBar() {
           className={`fixed inset-0 z-[300] md:hidden ${sheetOpen ? "visible" : "invisible"}`}
           role="dialog"
           aria-modal="true"
-          aria-label="Verifica disponibilità Villa Relax"
+          aria-label={t("booking", "verificaDisponibilitaVilla", locale)}
         >
           <div
             onClick={() => setSheetOpen(false)}
@@ -244,7 +266,7 @@ export function VillaBookingBar() {
               <button
                 type="button"
                 onClick={() => setSheetOpen(false)}
-                aria-label="Chiudi"
+                aria-label={t("nav", "chiudi", locale)}
                 className="flex h-9 w-9 items-center justify-center rounded-full text-ink transition-colors hover:bg-ink/5"
               >
                 <CloseIcon />
@@ -253,7 +275,7 @@ export function VillaBookingBar() {
 
             <div className="space-y-3">
               <label className="flex flex-col gap-1 rounded-[3px] border border-ink/10 px-5 py-3">
-                <span className="text-[9px] font-semibold uppercase tracking-[0.06em] text-ink-soft">Arrivo</span>
+                <span className="text-[9px] font-semibold uppercase tracking-[0.06em] text-ink-soft">{t("booking", "arrivo", locale)}</span>
                 <input
                   type="date"
                   value={booking.checkIn}
@@ -262,7 +284,7 @@ export function VillaBookingBar() {
                 />
               </label>
               <label className="flex flex-col gap-1 rounded-[3px] border border-ink/10 px-5 py-3">
-                <span className="text-[9px] font-semibold uppercase tracking-[0.06em] text-ink-soft">Partenza</span>
+                <span className="text-[9px] font-semibold uppercase tracking-[0.06em] text-ink-soft">{t("booking", "partenza", locale)}</span>
                 <input
                   type="date"
                   value={booking.checkOut}
@@ -272,15 +294,15 @@ export function VillaBookingBar() {
                 />
               </label>
               <div className="rounded-[3px] border border-ink/10 px-5 py-3">
-                <span className="text-[9px] font-semibold uppercase tracking-[0.06em] text-ink-soft">Ospiti</span>
+                <span className="text-[9px] font-semibold uppercase tracking-[0.06em] text-ink-soft">{t("booking", "ospiti", locale)}</span>
                 <div className="mt-1 flex items-center justify-between">
                   <span className="font-display text-[17px] font-medium text-ink">
-                    {booking.guests} {booking.guests === 1 ? "ospite" : "ospiti"}
+                    {booking.guests} {guestWord(locale, booking.guests)}
                   </span>
                   <div className="flex items-center gap-3">
                     <button
                       type="button"
-                      aria-label="Diminuisci ospiti"
+                      aria-label={`- ${t("booking", "ospiti", locale)}`}
                       disabled={booking.guests <= 1}
                       onClick={() => booking.setGuests(Math.max(1, booking.guests - 1))}
                       className="flex h-8 w-8 items-center justify-center rounded-full border border-ink/20 text-ink disabled:opacity-30"
@@ -289,7 +311,7 @@ export function VillaBookingBar() {
                     </button>
                     <button
                       type="button"
-                      aria-label="Aumenta ospiti"
+                      aria-label={`+ ${t("booking", "ospiti", locale)}`}
                       disabled={booking.guests >= VILLA_MAX_GUESTS}
                       onClick={() => booking.setGuests(Math.min(VILLA_MAX_GUESTS, booking.guests + 1))}
                       className="flex h-8 w-8 items-center justify-center rounded-full border border-ink/20 text-ink disabled:opacity-30"
@@ -307,14 +329,14 @@ export function VillaBookingBar() {
               rel="noopener noreferrer"
               className="mt-5 flex w-full items-center justify-center rounded-[3px] bg-raspberry py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
             >
-              Prenota Villa Relax
+              {t("booking", "prenotaVilla", locale)} Relax
             </a>
             <a
               href={PHONE_TEL}
               className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-[3px] border border-ink/15 py-3.5 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-ink transition-colors hover:border-raspberry hover:text-raspberry"
             >
               <PhoneIcon />
-              Chiama invece di prenotare online
+              {t("booking", "chiamaInvece", locale)}
             </a>
           </div>
         </div>

@@ -1,11 +1,20 @@
 import type { ZodiacKey } from "@/components/zodiac-mark";
+import type { Locale } from "@/lib/i18n";
 
 /* Guida di benvenuto: NON più un link Drive scaricabile (rimosso su
    richiesta del titolare) — il pulsante apre la chat WhatsApp
    dell'agriturismo, dove la guida è già pronta da scaricare. */
-export const BROCHURE_WHATSAPP_URL = `https://wa.me/393934363917?text=${encodeURIComponent(
-  "Ciao! Vorrei ricevere la guida di benvenuto di Agriturismo La Mora."
-)}`;
+const BROCHURE_MSG: Record<Locale, string> = {
+  it: "Ciao! Vorrei ricevere la guida di benvenuto di Agriturismo La Mora.",
+  en: "Hi! I'd like to receive the Agriturismo La Mora welcome guide.",
+  fr: "Bonjour ! Je voudrais recevoir le guide de bienvenue d'Agriturismo La Mora.",
+  de: "Hallo! Ich hätte gerne den Willkommensguide von Agriturismo La Mora.",
+};
+export function getBrochureWhatsappUrl(locale: Locale): string {
+  return `https://wa.me/393934363917?text=${encodeURIComponent(BROCHURE_MSG[locale])}`;
+}
+/* Retro-compatibilità per import esistenti (pagine italiane). */
+export const BROCHURE_WHATSAPP_URL = getBrochureWhatsappUrl("it");
 
 export type Apartment = {
   slug: string;

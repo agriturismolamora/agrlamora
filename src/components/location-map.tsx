@@ -2,6 +2,8 @@ import Image from "next/image";
 import { Reveal } from "@/components/scroll-reveal";
 import { PinnedHold } from "@/components/pinned-hold";
 import { HoverFill } from "@/components/hover-fill";
+import type { Locale } from "@/lib/i18n";
+import { t } from "@/lib/dictionary";
 
 const ADDRESS = "Via Fonte Citerna, 7 — 06081 Assisi PG";
 const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(
@@ -12,6 +14,33 @@ const PHONE_DISPLAY = "075 804 1164";
 const WHATSAPP_URL = "https://wa.me/393934363917";
 const EMAIL = "agriturismolamora@gmail.com";
 
+const TEXT: Record<Locale, { label: string; heading: string; body: string; maps: string }> = {
+  it: {
+    label: "Dove siamo",
+    heading: "Assisi fuori dalla finestra. L'Umbria tutt'intorno.",
+    body: "La Mora è in aperta campagna, a 5 km da Assisi e a circa 7 km dall'aeroporto di Perugia Sant'Egidio: un punto d'appoggio comodo per muoversi in tutta l'Umbria e tornare ogni sera nel silenzio della campagna.",
+    maps: "Apri in Google Maps",
+  },
+  en: {
+    label: "Where we are",
+    heading: "Assisi right outside the window. Umbria all around.",
+    body: "La Mora is in open countryside, 5 km from Assisi and about 7 km from Perugia Sant'Egidio airport: a convenient base for getting around Umbria and returning every evening to the quiet of the countryside.",
+    maps: "Open in Google Maps",
+  },
+  fr: {
+    label: "Où nous sommes",
+    heading: "Assise juste devant la fenêtre. L'Ombrie tout autour.",
+    body: "La Mora est en pleine campagne, à 5 km d'Assise et à environ 7 km de l'aéroport de Pérouse Sant'Egidio : une base pratique pour parcourir toute l'Ombrie et retrouver chaque soir le calme de la campagne.",
+    maps: "Ouvrir dans Google Maps",
+  },
+  de: {
+    label: "Wo wir sind",
+    heading: "Assisi direkt vor dem Fenster. Umbrien ringsum.",
+    body: "La Mora liegt in offener Landschaft, 5 km von Assisi und etwa 7 km vom Flughafen Perugia Sant'Egidio entfernt: eine praktische Basis, um ganz Umbrien zu erkunden und jeden Abend in die Stille der Landschaft zurückzukehren.",
+    maps: "In Google Maps öffnen",
+  },
+};
+
 /* Sezione finale prima del footer: mappa reale (asset obbligatorio del
    cliente) + pannello contatti. object-cover, a riempire il riquadro senza
    bordi su nessuno dei 4 lati (richiesta esplicita): la mappa è quadrata
@@ -19,7 +48,8 @@ const EMAIL = "agriturismolamora@gmail.com";
    sui lati eccedenti, senza mai deformare le proporzioni né inclinare il
    contenuto. Nessuna coordinata inventata: il link Maps usa l'indirizzo
    reale via ricerca. */
-export function LocationMap() {
+export function LocationMap({ locale }: { locale: Locale }) {
+  const text = TEXT[locale];
   return (
     <section id="section-map" aria-labelledby="location-heading" className="bg-cream lg:min-h-[140vh]">
       <PinnedHold>
@@ -36,17 +66,15 @@ export function LocationMap() {
 
         <div className="flex w-full items-center bg-olive-950 px-6 py-16 text-cream sm:px-10 sm:py-20 lg:w-[42%] lg:px-16">
           <Reveal className="mx-auto max-w-[420px] lg:mx-0">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cream/70">Dove siamo</span>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cream/70">{text.label}</span>
             <h2
               id="location-heading"
               className="mt-5 font-display text-[clamp(28px,3vw,40px)] font-normal leading-[1.2] text-cream [text-wrap:balance]"
             >
-              Assisi fuori dalla finestra. L&apos;Umbria tutt&apos;intorno.
+              {text.heading}
             </h2>
             <p className="mt-6 text-[14px] leading-[1.75] text-cream/75">
-              La Mora è in aperta campagna, a 5 km da Assisi e a circa 7 km dall&apos;aeroporto di Perugia
-              Sant&apos;Egidio: un punto d&apos;appoggio comodo per muoversi in tutta l&apos;Umbria e tornare ogni
-              sera nel silenzio della campagna.
+              {text.body}
             </p>
 
             <address className="mt-8 space-y-3 text-[14px] not-italic leading-[1.6] text-cream/90">
@@ -75,7 +103,7 @@ export function LocationMap() {
               >
                 <HoverFill color="#8a3844" />
                 <span className="relative z-10 inline-flex items-center gap-2.5">
-                  Apri in Google Maps
+                  {text.maps}
                   <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                     →
                   </span>
@@ -87,7 +115,7 @@ export function LocationMap() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2.5 rounded-[3px] border border-cream/25 px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:border-cream"
               >
-                Scrivici su WhatsApp
+                {t("common", "scriviciWhatsapp", locale)}
               </a>
             </div>
           </Reveal>

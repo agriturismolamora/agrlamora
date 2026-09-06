@@ -3,6 +3,8 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
+import type { Locale } from "@/lib/i18n";
+import { t } from "@/lib/dictionary";
 
 declare global {
   interface Window {
@@ -23,7 +25,7 @@ const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
    L'invio vero dell'email resta comunque non collegato (serve un
    provider tipo Mailchimp/Brevo — lavoro futuro): il messaggio finale
    lo dice in modo onesto. */
-export function NewsletterSection() {
+export function NewsletterSection({ locale }: { locale: Locale }) {
   const [email, setEmail] = useState("");
   const [accepted, setAccepted] = useState(false);
   const [status, setStatus] = useState<"idle" | "checking" | "error" | "recaptcha-error" | "sent">("idle");
@@ -75,12 +77,12 @@ export function NewsletterSection() {
           id="newsletter-heading"
           className="font-display text-[clamp(26px,3vw,36px)] font-normal leading-[1.2] text-ink"
         >
-          Iscriviti alla newsletter
+          {t("newsletter", "heading", locale)}
         </h2>
 
         {status === "sent" ? (
           <p className="mx-auto mt-8 max-w-[440px] text-[14px] leading-[1.7] text-ink-soft">
-            Grazie! Il modulo non è ancora collegato al nostro sistema di invio email — lo attiveremo a breve.
+            {t("newsletter", "grazie", locale)}
           </p>
         ) : (
           <form onSubmit={handleSubmit} noValidate className="mt-8">
@@ -90,8 +92,8 @@ export function NewsletterSection() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="La tua email"
-                aria-label="La tua email"
+                placeholder={t("newsletter", "emailPlaceholder", locale)}
+                aria-label={t("newsletter", "emailPlaceholder", locale)}
                 className="min-w-0 flex-1 rounded-[3px] border border-ink/20 bg-cream px-5 py-4 text-[16px] text-ink outline-none placeholder:text-ink-soft/60 focus:border-raspberry sm:text-[14px]"
               />
               <button
@@ -101,7 +103,7 @@ export function NewsletterSection() {
               >
                 <HoverFill color="#8a3844" />
                 <span className="relative z-10 inline-flex items-center gap-2.5">
-                  {status === "checking" ? "Verifica…" : "Iscriviti"}
+                  {status === "checking" ? t("newsletter", "verifica", locale) : t("newsletter", "iscriviti", locale)}
                   <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                     →
                   </span>
@@ -120,48 +122,52 @@ export function NewsletterSection() {
                 className="mt-0.5 h-4 w-4 shrink-0 accent-raspberry"
               />
               <span>
-                Accetto i{" "}
+                {t("newsletter", "accetto", locale)}
+                {" "}
                 <a href="#" className="underline underline-offset-2 hover:text-raspberry">
-                  termini e le condizioni d&apos;uso
+                  {{ it: "termini e le condizioni d'uso", en: "terms and conditions", fr: "conditions d'utilisation", de: "Nutzungsbedingungen" }[locale]}
                 </a>
                 *
               </span>
             </label>
             {status === "error" && (
               <p role="alert" className="mt-2 text-[12px] text-raspberry">
-                Devi accettare i termini e le condizioni d&apos;uso per iscriverti.
+                {t("newsletter", "erroreTermini", locale)}
               </p>
             )}
             {status === "recaptcha-error" && (
               <p role="alert" className="mt-2 text-[12px] text-raspberry">
-                Verifica antispam non superata. Riprova tra qualche secondo.
+                {t("newsletter", "erroreRecaptcha", locale)}
               </p>
             )}
 
             {RECAPTCHA_SITE_KEY ? (
               <p className="mt-4 text-[11px] leading-[1.6] text-ink-soft/70">
-                Questo sito è protetto da reCAPTCHA e si applicano le{" "}
-                <a
-                  href="https://policies.google.com/privacy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline underline-offset-2"
-                >
-                  Norme sulla privacy
-                </a>{" "}
-                e i{" "}
-                <a
-                  href="https://policies.google.com/terms"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline underline-offset-2"
-                >
-                  Termini di servizio
-                </a>{" "}
-                di Google.
+                {{
+                  it: <>Questo sito è protetto da reCAPTCHA e si applicano le{" "}
+                    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">Norme sulla privacy</a>{" "}
+                    e i{" "}
+                    <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">Termini di servizio</a>{" "}
+                    di Google.</>,
+                  en: <>This site is protected by reCAPTCHA and the Google{" "}
+                    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">Privacy Policy</a>{" "}
+                    and{" "}
+                    <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">Terms of Service</a>{" "}
+                    apply.</>,
+                  fr: <>Ce site est protégé par reCAPTCHA, et les{" "}
+                    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">règles de confidentialité</a>{" "}
+                    et{" "}
+                    <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">conditions d&apos;utilisation</a>{" "}
+                    de Google s&apos;appliquent.</>,
+                  de: <>Diese Seite ist durch reCAPTCHA geschützt, es gelten die{" "}
+                    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">Datenschutzbestimmungen</a>{" "}
+                    und{" "}
+                    <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">Nutzungsbedingungen</a>{" "}
+                    von Google.</>,
+                }[locale]}
               </p>
             ) : (
-              <p className="mt-4 text-[11px] text-ink-soft/70">Puoi annullare l&apos;iscrizione in qualsiasi momento.</p>
+              <p className="mt-4 text-[11px] text-ink-soft/70">{t("newsletter", "disclaimer", locale)}</p>
             )}
           </form>
         )}

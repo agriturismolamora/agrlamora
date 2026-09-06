@@ -1,4 +1,12 @@
 import Image from "next/image";
+import type { Locale } from "@/lib/i18n";
+
+const ARIA_LABEL: Record<Locale, string> = {
+  it: "Certificazioni e riconoscimenti",
+  en: "Certifications and recognition",
+  fr: "Certifications et distinctions",
+  de: "Zertifizierungen und Auszeichnungen",
+};
 
 /* Striscia certificazioni: stesso meccanismo di scorrimento infinito del
    BenefitMarquee (.animate-marquee, definito in globals.css), ma sfondo
@@ -25,9 +33,9 @@ function CertLogo({ src, alt }: (typeof CERTIFICATIONS)[number]) {
   );
 }
 
-export function CertificationsMarquee() {
+export function CertificationsMarquee({ locale }: { locale: Locale }) {
   return (
-    <section aria-label="Certificazioni e riconoscimenti" className="overflow-hidden bg-cream-dim py-8 md:py-10">
+    <section aria-label={ARIA_LABEL[locale]} className="overflow-hidden bg-cream-dim py-8 md:py-10">
       <div className="flex w-max animate-marquee">
         {[...CERTIFICATIONS, ...CERTIFICATIONS].map((cert, i) => (
           <CertLogo key={`${cert.alt}-${i}`} {...cert} />

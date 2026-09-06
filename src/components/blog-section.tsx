@@ -6,16 +6,40 @@ import { useState } from "react";
 import { Reveal } from "@/components/scroll-reveal";
 import { PinnedHold } from "@/components/pinned-hold";
 import { HoverFill } from "@/components/hover-fill";
-import { BLOG_POSTS } from "@/data/blog-posts";
+import { getBlogPosts } from "@/data/blog-posts";
+import type { Locale } from "@/lib/i18n";
+import { withLocale } from "@/lib/i18n";
 
-/* Blog/editoriale (PLAN.md Blocco 6): 5 articoli veri, non più segnaposto —
-   stessi dati di src/data/blog-posts.ts, che alimenta anche /blog/ e le
-   singole pagine articolo. Le foto stock Unsplash che erano l'unica
-   eccezione documentata nel progetto alla regola "solo foto reali" sono
-   state sostituite con foto reali del territorio (public/images/territorio/). */
-const POSTS = BLOG_POSTS;
+const TEXT: Record<Locale, { label: string; heading: string; cta: string; scopriDiPiu: string }> = {
+  it: {
+    label: "Dal blog de La Mora",
+    heading: "Storie, luoghi e consigli per vivere Assisi e l'Umbria con calma.",
+    cta: "Tutti gli articoli",
+    scopriDiPiu: "Scopri di più",
+  },
+  en: {
+    label: "From the La Mora blog",
+    heading: "Stories, places and tips for taking your time in Assisi and Umbria.",
+    cta: "All articles",
+    scopriDiPiu: "Learn more",
+  },
+  fr: {
+    label: "Le blog de La Mora",
+    heading: "Histoires, lieux et conseils pour vivre Assise et l'Ombrie sans se presser.",
+    cta: "Tous les articles",
+    scopriDiPiu: "En savoir plus",
+  },
+  de: {
+    label: "Vom La-Mora-Blog",
+    heading: "Geschichten, Orte und Tipps, um Assisi und Umbrien in Ruhe zu erleben.",
+    cta: "Alle Artikel",
+    scopriDiPiu: "Mehr erfahren",
+  },
+};
 
-export function BlogSection() {
+export function BlogSection({ locale }: { locale: Locale }) {
+  const POSTS = getBlogPosts(locale);
+  const text = TEXT[locale];
   /* z-index dell'hover deve vivere in state React: uno style inline con
      zIndex fisso (necessario per l'ordine base a ventaglio, i+1) batte
      sempre una classe hover: di Tailwind a parità di elemento, quindi
@@ -30,22 +54,22 @@ export function BlogSection() {
         <Reveal className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div className="max-w-[640px]">
             <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">
-              Dal blog de La Mora
+              {text.label}
             </span>
             <h2
               id="blog-heading"
               className="mt-5 font-display text-[clamp(26px,2.8vw,38px)] font-normal leading-[1.25] text-ink [text-wrap:balance]"
             >
-              Storie, luoghi e consigli per vivere Assisi e l&apos;Umbria con calma.
+              {text.heading}
             </h2>
           </div>
           <Link
-            href="/blog/"
+            href={withLocale(locale, "/blog/")}
             className="group relative inline-flex shrink-0 items-center gap-2.5 overflow-hidden rounded-lg bg-olive-950 px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
           >
             <HoverFill color="#141810" />
             <span className="relative z-10 inline-flex items-center gap-2.5">
-              Tutti gli articoli
+              {text.cta}
               <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                 →
               </span>
@@ -63,7 +87,7 @@ export function BlogSection() {
           {POSTS.map((post, i) => (
             <Link
               key={post.slug}
-              href={`/blog/${post.slug}/`}
+              href={withLocale(locale, `/blog/${post.slug}/`)}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
               onFocus={() => setHovered(i)}
@@ -94,7 +118,7 @@ export function BlogSection() {
                   {post.title}
                 </span>
                 <span className="mt-3 inline-flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-cream/85">
-                  Scopri di più
+                  {text.scopriDiPiu}
                   <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover/card:translate-x-1">
                     →
                   </span>
@@ -108,7 +132,7 @@ export function BlogSection() {
           {POSTS.map((post) => (
             <Link
               key={post.slug}
-              href={`/blog/${post.slug}/`}
+              href={withLocale(locale, `/blog/${post.slug}/`)}
               className="group/card relative aspect-[3/4] w-[220px] shrink-0 snap-start overflow-hidden"
             >
               <Image src={post.image} alt={post.alt} fill quality={90} sizes="220px" className="object-cover" />
@@ -125,7 +149,7 @@ export function BlogSection() {
                   {post.title}
                 </span>
                 <span className="mt-3 inline-flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-cream/85">
-                  Scopri di più
+                  {text.scopriDiPiu}
                   <span aria-hidden="true">→</span>
                 </span>
               </div>

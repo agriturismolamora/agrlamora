@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { PinnedHold } from "@/components/pinned-hold";
 import { HoverFill } from "@/components/hover-fill";
+import type { Locale } from "@/lib/i18n";
+import { withLocale } from "@/lib/i18n";
 
 /* Indice editoriale: foto fissa a piena altezza a sinistra (tocca il bordo
    del browser, nessun container che la isoli), lista a destra con 3 righe
@@ -16,13 +18,27 @@ import { HoverFill } from "@/components/hover-fill";
 const HERO_IMAGE = "/images/struttura/foto vista alto agriturismo la mora assisi.webp";
 const HERO_ALT = "Vista dall'alto di Agriturismo La Mora, Assisi";
 
-const SIGNATURES = [
-  { tag: "01", title: "Colazione biologica", href: "/agriturismo-con-colazione-inclusa-assisi/" },
-  { tag: "02", title: "Piscina panoramica", href: "/piscina/" },
-  { tag: "03", title: "Il territorio di Assisi", href: "/territorio/" },
-] as const;
+function getSignatures(locale: Locale) {
+  const titles: Record<Locale, string[]> = {
+    it: ["Colazione biologica", "Piscina panoramica", "Il territorio di Assisi"],
+    en: ["Organic breakfast", "Panoramic pool", "The Assisi area"],
+    fr: ["Petit-déjeuner biologique", "Piscine panoramique", "Le territoire d'Assise"],
+    de: ["Bio-Frühstück", "Panorama-Pool", "Die Umgebung von Assisi"],
+  };
+  const hrefs = ["/agriturismo-con-colazione-inclusa-assisi/", "/piscina/", "/territorio/"];
+  return titles[locale].map((title, i) => ({ tag: `0${i + 1}`, title, href: withLocale(locale, hrefs[i]) }));
+}
 
-export function StructureHighlights() {
+const TEXT: Record<Locale, { label: string; heading: string; cta: string }> = {
+  it: { label: "Perché La Mora", heading: "Non il solito agriturismo.", cta: "Scopri chi siamo" },
+  en: { label: "Why La Mora", heading: "Not your average agriturismo.", cta: "Discover who we are" },
+  fr: { label: "Pourquoi La Mora", heading: "Pas un agriturismo comme les autres.", cta: "Découvrez qui nous sommes" },
+  de: { label: "Warum La Mora", heading: "Kein gewöhnliches Agriturismo.", cta: "Entdecken Sie, wer wir sind" },
+};
+
+export function StructureHighlights({ locale }: { locale: Locale }) {
+  const signatures = getSignatures(locale);
+  const text = TEXT[locale];
   return (
     <section id="section-highlights" className="relative bg-cream lg:min-h-[140vh]">
       <PinnedHold>
@@ -44,14 +60,14 @@ export function StructureHighlights() {
           {/* Colonna editoriale. */}
           <div className="order-2 flex flex-col justify-center px-6 py-14 sm:px-10 sm:py-16 lg:order-2 lg:px-16 lg:py-20 xl:px-20">
             <Reveal>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">Perché La Mora</span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">{text.label}</span>
               <h2 className="mt-5 max-w-[440px] font-display text-[clamp(28px,3vw,42px)] font-normal leading-[1.15] text-ink [text-wrap:balance]">
-                Non il solito agriturismo.
+                {text.heading}
               </h2>
             </Reveal>
 
             <ul className="mt-8 flex flex-col divide-y divide-ink/10 border-t border-ink/10">
-              {SIGNATURES.map((s, i) => (
+              {signatures.map((s, i) => (
                 <Reveal key={s.title} as="li" delay={i * 100}>
                   <Link href={s.href} className="group flex items-baseline gap-5 py-5">
                     <span className="shrink-0 font-display text-sm text-ink-soft/50">{s.tag}</span>
@@ -71,12 +87,12 @@ export function StructureHighlights() {
 
             <Reveal delay={300}>
               <Link
-                href="/chi-siamo/"
+                href={withLocale(locale, "/chi-siamo/")}
                 className="group relative mt-8 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
               >
                 <HoverFill color="#8a3844" />
                 <span className="relative z-10 inline-flex items-center gap-2.5">
-                  Scopri chi siamo
+                  {text.cta}
                   <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                     →
                   </span>

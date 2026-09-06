@@ -10,9 +10,74 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from "react";
-import { APARTMENTS, BROCHURE_WHATSAPP_URL, type Apartment } from "@/data/apartments";
+import { APARTMENTS, getBrochureWhatsappUrl, type Apartment } from "@/data/apartments";
 import { ZodiacMark } from "@/components/zodiac-mark";
 import { HoverFill } from "@/components/hover-fill";
+import type { Locale } from "@/lib/i18n";
+import { withLocale } from "@/lib/i18n";
+
+const TXT: Record<Locale, {
+  sectionLabel: string; sectionHeading: string; petFriendly: string;
+  guests: string; beds: string; bathroom: string; bathrooms: string; sqm: string;
+  prenotaOra: string; scopriDiPiu: string; tuttiGliAppartamenti: string; richiediGuida: string;
+}> = {
+  it: {
+    sectionLabel: "Gli appartamenti",
+    sectionHeading: "Cinque appartamenti, cinque costellazioni",
+    petFriendly: "Pet friendly",
+    guests: "ospiti",
+    beds: "letti",
+    bathroom: "bagno",
+    bathrooms: "bagni",
+    sqm: "metri quadrati",
+    prenotaOra: "Prenota ora",
+    scopriDiPiu: "Scopri di più",
+    tuttiGliAppartamenti: "Tutti gli appartamenti",
+    richiediGuida: "Richiedi la guida su WhatsApp",
+  },
+  en: {
+    sectionLabel: "The apartments",
+    sectionHeading: "Five apartments, five constellations",
+    petFriendly: "Pet friendly",
+    guests: "guests",
+    beds: "beds",
+    bathroom: "bathroom",
+    bathrooms: "bathrooms",
+    sqm: "square metres",
+    prenotaOra: "Book now",
+    scopriDiPiu: "Learn more",
+    tuttiGliAppartamenti: "All apartments",
+    richiediGuida: "Request the guide on WhatsApp",
+  },
+  fr: {
+    sectionLabel: "Les appartements",
+    sectionHeading: "Cinq appartements, cinq constellations",
+    petFriendly: "Animaux acceptés",
+    guests: "voyageurs",
+    beds: "lits",
+    bathroom: "salle de bain",
+    bathrooms: "salles de bain",
+    sqm: "mètres carrés",
+    prenotaOra: "Réserver",
+    scopriDiPiu: "En savoir plus",
+    tuttiGliAppartamenti: "Tous les appartements",
+    richiediGuida: "Demander le guide sur WhatsApp",
+  },
+  de: {
+    sectionLabel: "Die Apartments",
+    sectionHeading: "Fünf Apartments, fünf Sternbilder",
+    petFriendly: "Haustierfreundlich",
+    guests: "Gäste",
+    beds: "Betten",
+    bathroom: "Bad",
+    bathrooms: "Bäder",
+    sqm: "Quadratmeter",
+    prenotaOra: "Jetzt buchen",
+    scopriDiPiu: "Mehr erfahren",
+    tuttiGliAppartamenti: "Alle Apartments",
+    richiediGuida: "Anleitung auf WhatsApp anfordern",
+  },
+};
 
 const N = APARTMENTS.length;
 const MAX_POS = N - 1;
@@ -300,10 +365,10 @@ function BedIcon() {
 /* Badge testuale "pet friendly": sempre visibile (non lega al hover come
    la riga statistiche), ancorato in alto a destra sulla card intera così
    ruota/scala insieme ad essa senza calcoli aggiuntivi. */
-function PetBadge() {
+function PetBadge({ locale }: { locale: Locale }) {
   return (
     <span className="absolute right-3 top-3 z-10 rounded-full bg-cream px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.06em] text-olive-950 shadow-[0_6px_16px_rgba(0,0,0,0.3)]">
-      Pet friendly
+      {TXT[locale].petFriendly}
     </span>
   );
 }
@@ -337,12 +402,13 @@ function FloorplanIcon() {
    icone (non "4 ospiti", "4 letti"...): più compatti su card che arrivano a
    scalare fino a ~0.87×, restano comunque leggibili grazie all'icona che
    dà il contesto — l'etichetta completa resta disponibile via aria-label. */
-function StatsRow({ apt }: { apt: Apartment }) {
+function StatsRow({ apt, locale }: { apt: Apartment; locale: Locale }) {
+  const x = TXT[locale];
   const items = [
-    { Icon: GuestsIcon, value: String(apt.maxGuests), label: `${apt.maxGuests} ospiti` },
-    { Icon: BedIcon, value: String(apt.beds), label: `${apt.beds} letti` },
-    { Icon: ShowerIcon, value: String(apt.bathrooms), label: `${apt.bathrooms} bagno${apt.bathrooms > 1 ? "i" : ""}` },
-    { Icon: FloorplanIcon, value: `${apt.sqm} m²`, label: `${apt.sqm} metri quadrati` },
+    { Icon: GuestsIcon, value: String(apt.maxGuests), label: `${apt.maxGuests} ${x.guests}` },
+    { Icon: BedIcon, value: String(apt.beds), label: `${apt.beds} ${x.beds}` },
+    { Icon: ShowerIcon, value: String(apt.bathrooms), label: `${apt.bathrooms} ${apt.bathrooms > 1 ? x.bathrooms : x.bathroom}` },
+    { Icon: FloorplanIcon, value: `${apt.sqm} m²`, label: `${apt.sqm} ${x.sqm}` },
   ];
   return (
     <div className="mt-3 flex items-center justify-center gap-3 rounded-full bg-ink/35 px-3.5 py-1.5 text-cream backdrop-blur-[2px]">
@@ -365,6 +431,7 @@ function CardFace({
   onMouseEnter,
   onMouseLeave,
   onClick,
+  locale,
 }: {
   apt: Apartment;
   showPanel: boolean;
@@ -372,6 +439,7 @@ function CardFace({
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   onClick?: () => void;
+  locale: Locale;
 }) {
   return (
     <div
@@ -382,7 +450,7 @@ function CardFace({
     >
       <Image src={apt.image} alt={apt.alt} fill quality={92} sizes={sizes} className="object-cover" />
 
-      {apt.petFriendly && <PetBadge />}
+      {apt.petFriendly && <PetBadge locale={locale} />}
 
       {/* Scrim di leggibilità per nome + riga statistiche: indipendente dal
           filtro brightness/saturate già applicato all'intero elemento (che
@@ -411,7 +479,7 @@ function CardFace({
         <span className="font-display text-[30px] text-cream drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">
           {apt.name}
         </span>
-        <StatsRow apt={apt} />
+        <StatsRow apt={apt} locale={locale} />
       </div>
 
       <div
@@ -430,16 +498,16 @@ function CardFace({
             tutta la larghezza della card per sé, mai spezzata. */}
         <div className="mt-3 flex flex-col items-center gap-2.5">
           <Link
-            href={`${apt.href}#prenota`}
+            href={`${withLocale(locale, apt.href)}#prenota`}
             className="whitespace-nowrap rounded-[2px] border border-raspberry px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.06em] text-raspberry transition-colors duration-200 hover:bg-raspberry hover:text-cream"
           >
-            Prenota ora
+            {TXT[locale].prenotaOra}
           </Link>
           <Link
-            href={apt.href}
+            href={withLocale(locale, apt.href)}
             className="group/link whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.06em] text-ink-soft underline decoration-ink-soft/40 underline-offset-4 transition-colors hover:text-raspberry"
           >
-            Scopri di più
+            {TXT[locale].scopriDiPiu}
           </Link>
         </div>
       </div>
@@ -447,12 +515,12 @@ function CardFace({
   );
 }
 
-function SectionHeading() {
+function SectionHeading({ locale }: { locale: Locale }) {
   return (
     <div className="relative z-[2] mx-auto flex max-w-[720px] flex-col items-center px-6 pt-6 text-center sm:pt-8">
-      <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cream/70">Gli appartamenti</span>
+      <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cream/70">{TXT[locale].sectionLabel}</span>
       <h2 className="mt-5 font-display text-[clamp(32px,3vw,54px)] font-normal leading-[1.05] text-cream">
-        Cinque appartamenti, cinque costellazioni
+        {TXT[locale].sectionHeading}
       </h2>
     </div>
   );
@@ -463,7 +531,7 @@ function SectionHeading() {
    sticky mentre lo scroll-progress dell'utente avanza un valore continuo
    `position` 0..N-1 tra i 5 slot. Nessun preventDefault: lo scroll nativo
    della pagina resta intatto, guida solo il progress. */
-function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
+function DesktopCarousel({ reducedMotion, locale }: { reducedMotion: boolean; locale: Locale }) {
   const outerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const ctaRef = useRef<HTMLDivElement>(null);
@@ -638,7 +706,7 @@ function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
     <div ref={outerRef} className="relative" style={{ height: `${OUTER_VH}vh` }}>
       <div className="sticky top-0 flex h-[100svh] flex-col overflow-hidden">
         <StarField reducedMotion={reducedMotion} />
-        <SectionHeading />
+        <SectionHeading locale={locale} />
 
         <div
           role="region"
@@ -668,6 +736,7 @@ function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
                   onClick={() => {
                     if (cardRefs.current[i]?.dataset.center !== "1") goTo(i);
                   }}
+                  locale={locale}
                 />
               </div>
             );
@@ -677,24 +746,24 @@ function DesktopCarousel({ reducedMotion }: { reducedMotion: boolean }) {
         <div ref={ctaRef} className="relative z-[2] flex justify-center pb-16 pt-8 sm:pb-20 sm:pt-10" style={{ opacity: 0, pointerEvents: "none" }}>
           <div className="flex flex-col items-center gap-3">
             <Link
-              href="/alloggi/"
+              href={withLocale(locale, "/alloggi/")}
               className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-[#0b0f1e]"
             >
               <HoverFill color="#8f7330" />
               <span className="relative z-10 inline-flex items-center gap-2.5">
-                Tutti gli appartamenti
+                {TXT[locale].tuttiGliAppartamenti}
                 <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                   →
                 </span>
               </span>
             </Link>
             <a
-              href={BROCHURE_WHATSAPP_URL}
+              href={getBrochureWhatsappUrl(locale)}
               target="_blank"
               rel="noopener noreferrer"
               className="text-[10px] font-semibold uppercase tracking-[0.05em] text-cream/70 underline decoration-cream/30 underline-offset-4 transition-colors hover:text-cream"
             >
-              Richiedi la guida su WhatsApp
+              {TXT[locale].richiediGuida}
             </a>
           </div>
         </div>
@@ -717,7 +786,7 @@ function mobileCardWidth(vw: number) {
   return clamp(vw * 0.8, 260, 360);
 }
 
-function MobileCarousel({ reducedMotion }: { reducedMotion: boolean }) {
+function MobileCarousel({ reducedMotion, locale }: { reducedMotion: boolean; locale: Locale }) {
   const [active, setActive] = useState(START_INDEX);
   const [locked, setLocked] = useState(false);
   const [revealed, setRevealed] = useState<number | null>(null);
@@ -778,7 +847,7 @@ function MobileCarousel({ reducedMotion }: { reducedMotion: boolean }) {
   return (
     <div className="relative overflow-hidden pb-16 pt-4">
       <StarField reducedMotion={reducedMotion} />
-      <SectionHeading />
+      <SectionHeading locale={locale} />
 
       <div
         role="region"
@@ -833,25 +902,34 @@ function MobileCarousel({ reducedMotion }: { reducedMotion: boolean }) {
                     setRevealed((r) => (r === i ? null : i));
                   }
                 }}
+                locale={locale}
               />
             </div>
           );
         })}
       </div>
 
-      <div className="relative z-[2] mt-12 flex justify-center">
+      <div className="relative z-[2] mt-12 flex flex-col items-center gap-3">
         <Link
-          href="/alloggi/"
+          href={withLocale(locale, "/alloggi/")}
           className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-[#0b0f1e]"
         >
           <HoverFill color="#8f7330" />
           <span className="relative z-10 inline-flex items-center gap-2.5">
-            Tutti gli appartamenti
+            {TXT[locale].tuttiGliAppartamenti}
             <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
               →
             </span>
           </span>
         </Link>
+        <a
+          href={getBrochureWhatsappUrl(locale)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[10px] font-semibold uppercase tracking-[0.05em] text-ink-soft underline decoration-ink-soft/30 underline-offset-4 transition-colors hover:text-ink"
+        >
+          {TXT[locale].richiediGuida}
+        </a>
       </div>
     </div>
   );
@@ -864,13 +942,13 @@ function MobileCarousel({ reducedMotion }: { reducedMotion: boolean }) {
    qui non basta rallentare l'animazione, la sezione non deve trattenere lo
    scroll: tutti e 5 gli appartamenti sono sempre visibili, in linea, senza
    dipendenza dalla posizione di scroll. */
-function StaticGrid() {
+function StaticGrid({ locale }: { locale: Locale }) {
   const [hovered, setHovered] = useState<string | null>(null);
 
   return (
     <div className="relative overflow-hidden pb-16 pt-4 sm:pb-20">
       <StarField reducedMotion={true} />
-      <SectionHeading />
+      <SectionHeading locale={locale} />
       <div className="relative z-[2] mt-10 flex flex-wrap items-start justify-center gap-6 px-6 sm:mt-12">
         {APARTMENTS.map((apt) => (
           <div key={apt.slug} style={{ width: "min(300px, 42vw)" }}>
@@ -880,29 +958,38 @@ function StaticGrid() {
               sizes="(max-width: 640px) 42vw, 300px"
               onMouseEnter={() => setHovered(apt.slug)}
               onMouseLeave={() => setHovered(null)}
+              locale={locale}
             />
           </div>
         ))}
       </div>
-      <div className="relative z-[2] mt-12 flex justify-center">
+      <div className="relative z-[2] mt-12 flex flex-col items-center gap-3">
         <Link
-          href="/alloggi/"
+          href={withLocale(locale, "/alloggi/")}
           className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-[#0b0f1e]"
         >
           <HoverFill color="#8f7330" />
           <span className="relative z-10 inline-flex items-center gap-2.5">
-            Tutti gli appartamenti
+            {TXT[locale].tuttiGliAppartamenti}
             <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
               →
             </span>
           </span>
         </Link>
+        <a
+          href={getBrochureWhatsappUrl(locale)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[10px] font-semibold uppercase tracking-[0.05em] text-ink-soft underline decoration-ink-soft/30 underline-offset-4 transition-colors hover:text-ink"
+        >
+          {TXT[locale].richiediGuida}
+        </a>
       </div>
     </div>
   );
 }
 
-export function ApartmentsCarousel() {
+export function ApartmentsCarousel({ locale }: { locale: Locale }) {
   const tier = useViewportTier();
   const reducedMotion = useReducedMotion();
 
@@ -917,11 +1004,11 @@ export function ApartmentsCarousel() {
   return (
     <section id="section-apartments" data-snap-exempt="true" className="relative bg-midnight">
       {reducedMotion ? (
-        <StaticGrid />
+        <StaticGrid locale={locale} />
       ) : tier === "mobile" ? (
-        <MobileCarousel reducedMotion={reducedMotion} />
+        <MobileCarousel reducedMotion={reducedMotion} locale={locale} />
       ) : (
-        <DesktopCarousel reducedMotion={reducedMotion} />
+        <DesktopCarousel reducedMotion={reducedMotion} locale={locale} />
       )}
     </section>
   );

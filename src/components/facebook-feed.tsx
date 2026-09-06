@@ -2,9 +2,17 @@ import Image from "next/image";
 import { getFacebookPhotos } from "@/lib/facebook-photos";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
+import type { Locale } from "@/lib/i18n";
 
 /* URL reale della pagina Facebook della struttura, fornito dal titolare. */
 const FACEBOOK_URL = "https://www.facebook.com/p/Agriturismo-la-Mora-di-Assisi-100066662774182/";
+
+const TEXT: Record<Locale, { heading: string; subLive: string; subFallback: string; cta: string }> = {
+  it: { heading: "Seguici su Facebook", subLive: "Le ultime foto dalla pagina", subFallback: "La vita di tutti i giorni a La Mora", cta: "Vai alla pagina" },
+  en: { heading: "Follow us on Facebook", subLive: "The latest photos from the page", subFallback: "Everyday life at La Mora", cta: "Visit the page" },
+  fr: { heading: "Suivez-nous sur Facebook", subLive: "Les dernières photos de la page", subFallback: "La vie quotidienne à La Mora", cta: "Aller sur la page" },
+  de: { heading: "Folgen Sie uns auf Facebook", subLive: "Die neuesten Fotos von der Seite", subFallback: "Der Alltag bei La Mora", cta: "Zur Seite" },
+};
 
 /* Foto reali della struttura (non ancora usate altrove in home) mostrate
    finché FACEBOOK_PAGE_ACCESS_TOKEN non è configurato: mai un placeholder
@@ -41,9 +49,10 @@ function FacebookMark({ size = 22 }: { size?: number }) {
   );
 }
 
-export async function FacebookFeed() {
+export async function FacebookFeed({ locale }: { locale: Locale }) {
   const fb = await getFacebookPhotos();
   const photos = fb.configured && fb.photos.length > 0 ? fb.photos : FALLBACK_PHOTOS;
+  const text = TEXT[locale];
 
   return (
     <section id="section-facebook" aria-labelledby="facebook-heading" className="bg-cream py-14 sm:py-16">
@@ -54,11 +63,11 @@ export async function FacebookFeed() {
               <FacebookMark size={40} />
               <div>
                 <h2 id="facebook-heading" className="font-display text-[19px] font-normal leading-tight text-ink">
-                  Seguici su Facebook
+                  {text.heading}
                 </h2>
                 <p className="mt-0.5 flex items-center gap-1.5 text-[12px] text-ink-soft">
                   <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-gold" />
-                  {fb.configured ? "Le ultime foto dalla pagina" : "La vita di tutti i giorni a La Mora"}
+                  {fb.configured ? text.subLive : text.subFallback}
                 </p>
               </div>
             </div>
@@ -72,7 +81,7 @@ export async function FacebookFeed() {
               <HoverFill color="#8f7330" />
               <span className="relative z-10 inline-flex items-center gap-2">
                 <FacebookMark size={16} />
-                Vai alla pagina
+                {text.cta}
                 <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                   →
                 </span>

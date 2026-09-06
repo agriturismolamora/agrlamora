@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type ComponentType } from "react";
 import { Reveal } from "@/components/scroll-reveal";
+import type { Locale } from "@/lib/i18n";
 
 /* Sezione interattiva "un highlight alla volta": icone monocromatiche
    lineari (stesso linguaggio delle altre icone del progetto), nessun dot
@@ -107,66 +108,70 @@ function HeartIcon() {
 
 type Highlight = { Icon: ComponentType; label: string; title: string; description: string };
 
-const HIGHLIGHTS: Highlight[] = [
-  {
-    Icon: LandscapeIcon,
-    label: "Territorio",
-    title: "Vista su Assisi",
-    description: "La campagna intorno, la Basilica di San Francesco a pochi minuti di auto.",
-  },
-  {
-    Icon: WaveIcon,
-    label: "Piscina",
-    title: "Piscina panoramica",
-    description: "Aperta nella bella stagione, immersa nel verde della campagna umbra.",
-  },
-  {
-    Icon: CupIcon,
-    label: "Colazione",
-    title: "Colazione biologica",
-    description: "Biologica ogni mattina, con dolci tipici umbri e prodotti del territorio.",
-  },
-  {
-    Icon: FamilyIcon,
-    label: "Famiglie",
-    title: "Pensato per le famiglie",
-    description: "Parco giochi, spazi aperti e appartamenti adatti a chi viaggia con bambini.",
-  },
-  {
-    Icon: PawIcon,
-    label: "Pet friendly",
-    title: "Pet friendly",
-    description: "Giardini privati recintati per Gemelli e Sagittario, doccia esterna per i cani.",
-  },
-  {
-    Icon: BikeIcon,
-    label: "E-bike",
-    title: "Noleggio e-bike",
-    description: "Per scoprire il territorio in sella, anche in salita, direttamente dalla struttura.",
-  },
-  {
-    Icon: BoltIcon,
-    label: "Ricarica EV",
-    title: "Ricarica auto elettriche",
-    description: "Colonnina da 22 kW nel parcheggio privato della struttura.",
-  },
-  {
-    Icon: HomeKeyIcon,
-    label: "Appartamenti",
-    title: "5 appartamenti indipendenti",
-    description: "Ognuno con ingresso autonomo, cucina attrezzata e i propri spazi.",
-  },
-  {
-    Icon: HeartIcon,
-    label: "Gestione familiare",
-    title: "Gestione familiare",
-    description: "Paolo segue personalmente ogni ospite, da sempre.",
-  },
-];
+const ICONS = [LandscapeIcon, WaveIcon, CupIcon, FamilyIcon, PawIcon, BikeIcon, BoltIcon, HomeKeyIcon, HeartIcon];
 
-export function LaMoraDaVivere() {
+function getHighlights(locale: Locale): Highlight[] {
+  const data: Record<Locale, { label: string; title: string; description: string }[]> = {
+    it: [
+      { label: "Territorio", title: "Vista su Assisi", description: "La campagna intorno, la Basilica di San Francesco a pochi minuti di auto." },
+      { label: "Piscina", title: "Piscina panoramica", description: "Aperta nella bella stagione, immersa nel verde della campagna umbra." },
+      { label: "Colazione", title: "Colazione biologica", description: "Biologica ogni mattina, con dolci tipici umbri e prodotti del territorio." },
+      { label: "Famiglie", title: "Pensato per le famiglie", description: "Parco giochi, spazi aperti e appartamenti adatti a chi viaggia con bambini." },
+      { label: "Pet friendly", title: "Pet friendly", description: "Giardini privati recintati per Gemelli e Sagittario, doccia esterna per i cani." },
+      { label: "E-bike", title: "Noleggio e-bike", description: "Per scoprire il territorio in sella, anche in salita, direttamente dalla struttura." },
+      { label: "Ricarica EV", title: "Ricarica auto elettriche", description: "Colonnina da 22 kW nel parcheggio privato della struttura." },
+      { label: "Appartamenti", title: "5 appartamenti indipendenti", description: "Ognuno con ingresso autonomo, cucina attrezzata e i propri spazi." },
+      { label: "Gestione familiare", title: "Gestione familiare", description: "Paolo segue personalmente ogni ospite, da sempre." },
+    ],
+    en: [
+      { label: "Area", title: "A view of Assisi", description: "The countryside all around, the Basilica of St. Francis a few minutes' drive away." },
+      { label: "Pool", title: "Panoramic pool", description: "Open during the warm season, surrounded by the green Umbrian countryside." },
+      { label: "Breakfast", title: "Organic breakfast", description: "Organic every morning, with fine Umbrian pastries and local produce." },
+      { label: "Families", title: "Made for families", description: "Playground, open spaces and apartments suited to travelling with children." },
+      { label: "Pet friendly", title: "Pet friendly", description: "Fenced private gardens for Gemelli and Sagittario, outdoor shower for dogs." },
+      { label: "E-bike", title: "E-bike rental", description: "Explore the area in the saddle, even uphill, right from the property." },
+      { label: "EV charging", title: "Electric car charging", description: "22 kW charging station in the property's private car park." },
+      { label: "Apartments", title: "5 independent apartments", description: "Each with its own entrance, equipped kitchen and private spaces." },
+      { label: "Family-run", title: "Family-run", description: "Paolo personally looks after every guest, as he always has." },
+    ],
+    fr: [
+      { label: "Territoire", title: "Vue sur Assise", description: "La campagne tout autour, la Basilique Saint-François à quelques minutes en voiture." },
+      { label: "Piscine", title: "Piscine panoramique", description: "Ouverte pendant la belle saison, au cœur de la campagne ombrienne." },
+      { label: "Petit-déjeuner", title: "Petit-déjeuner biologique", description: "Biologique chaque matin, avec des pâtisseries typiques d'Ombrie et des produits locaux." },
+      { label: "Familles", title: "Pensé pour les familles", description: "Aire de jeux, espaces ouverts et appartements adaptés aux voyages avec enfants." },
+      { label: "Animaux acceptés", title: "Animaux acceptés", description: "Jardins privés clôturés pour Gemelli et Sagittario, douche extérieure pour les chiens." },
+      { label: "E-bike", title: "Location d'e-bikes", description: "Pour explorer le territoire en selle, même en montée, directement depuis la structure." },
+      { label: "Recharge électrique", title: "Recharge de voitures électriques", description: "Borne de 22 kW dans le parking privé de la structure." },
+      { label: "Appartements", title: "5 appartements indépendants", description: "Chacun avec entrée autonome, cuisine équipée et ses propres espaces." },
+      { label: "Gestion familiale", title: "Gestion familiale", description: "Paolo s'occupe personnellement de chaque hôte, depuis toujours." },
+    ],
+    de: [
+      { label: "Umgebung", title: "Blick auf Assisi", description: "Die Landschaft ringsum, die Basilika des Heiligen Franziskus wenige Autominuten entfernt." },
+      { label: "Pool", title: "Panorama-Pool", description: "In der warmen Jahreszeit geöffnet, umgeben vom Grün der umbrischen Landschaft." },
+      { label: "Frühstück", title: "Bio-Frühstück", description: "Jeden Morgen biologisch, mit feinem umbrischem Gebäck und lokalen Produkten." },
+      { label: "Familien", title: "Für Familien gemacht", description: "Spielplatz, offene Flächen und Apartments, die für Reisen mit Kindern geeignet sind." },
+      { label: "Haustierfreundlich", title: "Haustierfreundlich", description: "Eingezäunte private Gärten für Gemelli und Sagittario, Außendusche für Hunde." },
+      { label: "E-Bike", title: "E-Bike-Verleih", description: "Um die Gegend im Sattel zu erkunden, auch bergauf, direkt ab der Unterkunft." },
+      { label: "E-Ladestation", title: "Ladestation für Elektroautos", description: "22-kW-Ladestation auf dem privaten Parkplatz der Unterkunft." },
+      { label: "Apartments", title: "5 unabhängige Apartments", description: "Jedes mit eigenem Eingang, ausgestatteter Küche und eigenen Räumen." },
+      { label: "Familienbetrieb", title: "Familienbetrieb", description: "Paolo kümmert sich seit jeher persönlich um jeden Gast." },
+    ],
+  };
+  return data[locale].map((d, i) => ({ ...d, Icon: ICONS[i] }));
+}
+
+const SECTION_TEXT: Record<Locale, { label: string; heading1: string; heading2: string; ariaSection: string; ariaTabs: string }> = {
+  it: { label: "La Mora da vivere", heading1: "Il piacere è", heading2: "nei dettagli.", ariaSection: "La Mora da vivere", ariaTabs: "Highlight di Agriturismo La Mora" },
+  en: { label: "Living La Mora", heading1: "The pleasure is", heading2: "in the details.", ariaSection: "Living La Mora", ariaTabs: "Highlights of Agriturismo La Mora" },
+  fr: { label: "Vivre La Mora", heading1: "Le plaisir est", heading2: "dans les détails.", ariaSection: "Vivre La Mora", ariaTabs: "Points forts d'Agriturismo La Mora" },
+  de: { label: "La Mora erleben", heading1: "Der Genuss liegt", heading2: "im Detail.", ariaSection: "La Mora erleben", ariaTabs: "Highlights von Agriturismo La Mora" },
+};
+
+export function LaMoraDaVivere({ locale }: { locale: Locale }) {
   const [active, setActive] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const HIGHLIGHTS = getHighlights(locale);
+  const sectionText = SECTION_TEXT[locale];
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -183,20 +188,20 @@ export function LaMoraDaVivere() {
   return (
     <section
       id="section-vivere"
-      aria-label="La Mora da vivere"
+      aria-label={sectionText.ariaSection}
       className="relative bg-olive-950 text-cream lg:min-h-[140vh]"
     >
       <div className="flex min-h-[100svh] flex-col items-center justify-center py-20 sm:py-24 lg:sticky lg:top-0">
         <Reveal className="relative z-[2] mx-auto max-w-[820px] px-6 text-center sm:px-10">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-cream/55">La Mora da vivere</span>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-cream/55">{sectionText.label}</span>
           <h2 className="mt-6 font-display text-[clamp(30px,4.4vw,58px)] font-normal leading-[1.1] [text-wrap:balance]">
-            <span className="text-cream">Il piacere è</span> <span className="italic text-cream/40">nei dettagli.</span>
+            <span className="text-cream">{sectionText.heading1}</span> <span className="italic text-cream/40">{sectionText.heading2}</span>
           </h2>
         </Reveal>
 
         <div
           role="tablist"
-          aria-label="Highlight di Agriturismo La Mora"
+          aria-label={sectionText.ariaTabs}
           className="relative z-[2] mt-12 flex max-w-[720px] flex-wrap items-center justify-center gap-2.5 px-6 sm:mt-14 sm:gap-3"
         >
           {HIGHLIGHTS.map((item, i) => {

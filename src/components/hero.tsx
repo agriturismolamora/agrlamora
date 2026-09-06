@@ -3,8 +3,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import type { Locale } from "@/lib/i18n";
+import { withLocale } from "@/lib/i18n";
+import { t } from "@/lib/dictionary";
 
-export function Hero() {
+const HERO_H1: Record<Locale, string> = {
+  it: "Agriturismo La Mora — Appartamenti indipendenti ad Assisi, Umbria",
+  en: "Agriturismo La Mora — Independent apartments in Assisi, Umbria",
+  fr: "Agriturismo La Mora — Appartements indépendants à Assise, Ombrie",
+  de: "Agriturismo La Mora — Unabhängige Apartments in Assisi, Umbrien",
+};
+
+export function Hero({ locale }: { locale: Locale }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -51,13 +61,11 @@ export function Hero() {
       <div
         className="absolute left-1/2 top-1/2 z-[2] flex -translate-x-1/2 -translate-y-1/2 flex-col items-center px-6 text-center text-cream"
       >
-        <h1 className="sr-only">
-          Agriturismo La Mora — Appartamenti indipendenti ad Assisi, Umbria
-        </h1>
+        <h1 className="sr-only">{HERO_H1[locale]}</h1>
         <span className="text-[13px] font-medium uppercase tracking-[0.4em] text-cream/90">
           Assisi · Umbria
         </span>
-        <Link href="/" aria-label="Agriturismo La Mora — torna alla home" className="mt-8 sm:mt-9">
+        <Link href={withLocale(locale, "/")} aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`} className="mt-8 sm:mt-9">
           <Image
             src="/images/logo/logo-bianco-agriturismo-la-mora.png"
             alt="Agriturismo La Mora, Assisi - Perugia (Umbria)"

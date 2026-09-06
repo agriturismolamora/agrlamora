@@ -2,7 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import type { Locale } from "@/lib/i18n";
+import { withLocale, splitLocaleFromPath } from "@/lib/i18n";
+import { t } from "@/lib/dictionary";
 
 type NavChild = {
   label: string;
@@ -11,76 +15,97 @@ type NavChild = {
 };
 
 type NavItem = {
+  id: string;
   label: string;
   href: string;
   children: NavChild[];
 };
 
+const APARTMENT_WORD: Record<Locale, string> = { it: "Appartamento", en: "Apartment", fr: "Appartement", de: "Wohnung" };
+
 /* Architettura a 5 voci ispirata a Lasala Plaza: ogni voce è un contenitore
    di dropdown, così nuove pagine (es. future esperienze) si aggiungono come
    children senza toccare la struttura dell'header. "Home" non compare più in
    nav: si torna alla home cliccando il grande logo della Hero, o il logo
-   piccolo dello sticky header (unico punto in cui compare, vedi sotto). */
-const NAV_LEFT: NavItem[] = [
-  {
-    label: "Alloggi",
-    href: "/alloggi/",
-    children: [
-      { label: "Appartamento Pesci", href: "/alloggi/pesci/" },
-      { label: "Appartamento Acquario", href: "/alloggi/acquario/" },
-      { label: "Appartamento Sagittario", href: "/alloggi/sagittario/" },
-      { label: "Appartamento Gemelli", href: "/alloggi/gemelli/" },
-      { label: "Appartamento Bilancia", href: "/alloggi/bilancia/" },
-    ],
-  },
-  {
-    label: "Villa Relax",
-    href: "/villa-relax-assisi/",
-    children: [{ label: "Villa indipendente", href: "/villa-relax-assisi/" }],
-  },
-  {
-    label: "La Mora",
-    href: "/chi-siamo/",
-    children: [
-      { label: "Chi Siamo", href: "/chi-siamo/" },
-      { label: "Colazione Bio", href: "/agriturismo-con-colazione-inclusa-assisi/" },
-    ],
-  },
-  {
-    label: "Territorio",
-    href: "/territorio/",
-    children: [
-      { label: "Territorio", href: "/territorio/" },
-      { label: "Ottavo Centenario San Francesco", href: "/ottavo-centenario-san-francesco/" },
-    ],
-  },
-  {
-    label: "Esperienze",
-    href: "/agriturismo-famiglie-ad-assisi-e-dintorni/",
-    children: [
-      { label: "Attività", href: "/agriturismo-famiglie-ad-assisi-e-dintorni/" },
-    ],
-  },
-  {
-    label: "Offerte",
-    href: "/offerte/",
-    children: [
-      { label: "Cofanetti regalo", href: "/offerte/cofanetti-regalo/" },
-      { label: "Smartbox", href: "/offerte/smartbox/" },
-    ],
-  },
-];
+   piccolo dello sticky header (unico punto in cui compare, vedi sotto).
+   Costruita da una funzione (non un array statico) perché label/href
+   dipendono dalla lingua corrente — `id` resta stabile tra le lingue per
+   poter identificare le voci (es. NAV_LEFT_TABLET) senza dipendere dal
+   testo visibile. */
+function getNavLeft(locale: Locale): NavItem[] {
+  const apt = APARTMENT_WORD[locale];
+  return [
+    {
+      id: "alloggi",
+      label: t("nav", "alloggi", locale),
+      href: withLocale(locale, "/alloggi/"),
+      children: [
+        { label: `${apt} Pesci`, href: withLocale(locale, "/alloggi/pesci/") },
+        { label: `${apt} Acquario`, href: withLocale(locale, "/alloggi/acquario/") },
+        { label: `${apt} Sagittario`, href: withLocale(locale, "/alloggi/sagittario/") },
+        { label: `${apt} Gemelli`, href: withLocale(locale, "/alloggi/gemelli/") },
+        { label: `${apt} Bilancia`, href: withLocale(locale, "/alloggi/bilancia/") },
+      ],
+    },
+    {
+      id: "villa-relax",
+      label: t("nav", "villaRelax", locale),
+      href: withLocale(locale, "/villa-relax-assisi/"),
+      children: [{ label: t("nav", "villaIndipendente", locale), href: withLocale(locale, "/villa-relax-assisi/") }],
+    },
+    {
+      id: "la-mora",
+      label: t("nav", "laMora", locale),
+      href: withLocale(locale, "/chi-siamo/"),
+      children: [
+        { label: t("nav", "chiSiamo", locale), href: withLocale(locale, "/chi-siamo/") },
+        { label: t("nav", "colazioneBio", locale), href: withLocale(locale, "/agriturismo-con-colazione-inclusa-assisi/") },
+      ],
+    },
+    {
+      id: "territorio",
+      label: t("nav", "territorio", locale),
+      href: withLocale(locale, "/territorio/"),
+      children: [
+        { label: t("nav", "territorio", locale), href: withLocale(locale, "/territorio/") },
+        { label: t("nav", "ottavoCentenario", locale), href: withLocale(locale, "/ottavo-centenario-san-francesco/") },
+      ],
+    },
+    {
+      id: "esperienze",
+      label: t("nav", "esperienze", locale),
+      href: withLocale(locale, "/agriturismo-famiglie-ad-assisi-e-dintorni/"),
+      children: [{ label: t("nav", "attivita", locale), href: withLocale(locale, "/agriturismo-famiglie-ad-assisi-e-dintorni/") }],
+    },
+    {
+      id: "offerte",
+      label: t("nav", "offerte", locale),
+      href: withLocale(locale, "/offerte/"),
+      children: [
+        { label: t("nav", "cofanettiRegalo", locale), href: withLocale(locale, "/offerte/cofanetti-regalo/") },
+        { label: t("nav", "smartbox", locale), href: withLocale(locale, "/offerte/smartbox/") },
+      ],
+    },
+  ];
+}
 
 /* Voci mostrate in nav inline solo da 1100px in su; sotto restano comunque
    raggiungibili dal pannello MENU, che elenca sempre tutto. */
-const NAV_LEFT_TABLET = new Set(["Alloggi", "Villa Relax", "Territorio", "Offerte"]);
+const NAV_LEFT_TABLET = new Set(["alloggi", "villa-relax", "territorio", "offerte"]);
 
-const NAV_RIGHT: NavChild[] = [
-  { label: "Recensioni", href: "/#section-reviews" },
-  { label: "Contatti", href: "/#section-map" },
+function getNavRight(locale: Locale): NavChild[] {
+  return [
+    { label: t("nav", "recensioni", locale), href: withLocale(locale, "/#section-reviews") },
+    { label: t("nav", "contatti", locale), href: withLocale(locale, "/#section-map") },
+  ];
+}
+
+const LANGUAGES: { code: Locale; label: string }[] = [
+  { code: "it", label: "IT" },
+  { code: "en", label: "EN" },
+  { code: "fr", label: "FR" },
+  { code: "de", label: "DE" },
 ];
-
-const LANGUAGES = ["IT", "EN", "FR", "DE"] as const;
 
 const PHONE_DISPLAY = "075 8041164";
 const PHONE_TEL = "tel:+390758041164";
@@ -250,11 +275,15 @@ function DesktopDropdown({ item, align }: { item: NavItem; align: DropdownAlign 
   );
 }
 
-export function SiteHeader() {
+export function SiteHeader({ locale }: { locale: Locale }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
   const mode = useHeaderScrollMode(menuOpen);
+  const navLeft = getNavLeft(locale);
+  const navRight = getNavRight(locale);
+  const pathname = usePathname();
+  const { path: bareItalianPath } = splitLocaleFromPath(pathname ?? "/");
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -317,10 +346,10 @@ export function SiteHeader() {
             </a>
           </div>
           <div className="flex w-full items-center justify-end gap-4 font-medium uppercase tracking-[0.04em] sm:w-auto">
-            <span className="hidden text-cream/60 md:inline">Domande?</span>
+            <span className="hidden text-cream/60 md:inline">{t("nav", "domande", locale)}</span>
             <a href={PHONE_TEL} className="flex items-center gap-1.5 transition-colors hover:text-gold">
               <PhoneIcon />
-              <span>Chiama {PHONE_DISPLAY}</span>
+              <span>{t("nav", "chiama", locale)} {PHONE_DISPLAY}</span>
             </a>
             <a
               href={WHATSAPP_HREF}
@@ -329,7 +358,7 @@ export function SiteHeader() {
               className="flex items-center gap-1.5 transition-colors hover:text-gold"
             >
               <WhatsAppIcon />
-              <span className="hidden sm:inline">Scrivi WhatsApp</span>
+              <span className="hidden sm:inline">{t("nav", "scriviWhatsapp", locale)}</span>
               <span className="sm:hidden">WhatsApp</span>
             </a>
           </div>
@@ -360,8 +389,8 @@ export function SiteHeader() {
             {sticky && (
               <>
                 <Link
-                  href="/"
-                  aria-label="Agriturismo La Mora — torna alla home"
+                  href={withLocale(locale, "/")}
+                  aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`}
                   className="flex shrink-0 items-center"
                 >
                   <Image
@@ -381,8 +410,8 @@ export function SiteHeader() {
 
             <nav aria-label="Navigazione principale" className="hidden min-[1100px]:block">
               <ul className="flex items-center gap-8">
-                {NAV_LEFT.map((item, i) => (
-                  <DesktopDropdown key={item.label} item={item} align={getDropdownAlign(i, NAV_LEFT.length)} />
+                {navLeft.map((item, i) => (
+                  <DesktopDropdown key={item.id} item={item} align={getDropdownAlign(i, navLeft.length)} />
                 ))}
               </ul>
             </nav>
@@ -392,8 +421,8 @@ export function SiteHeader() {
                 Tailwind emette i blocchi @media di min-[1100px] e md: nel foglio di stile. */}
             <nav aria-label="Navigazione principale" className="hidden md:max-[1099px]:block">
               <ul className="flex items-center gap-6">
-                {NAV_LEFT.filter((item) => NAV_LEFT_TABLET.has(item.label)).map((item, i, arr) => (
-                  <DesktopDropdown key={item.label} item={item} align={getDropdownAlign(i, arr.length)} />
+                {navLeft.filter((item) => NAV_LEFT_TABLET.has(item.id)).map((item, i, arr) => (
+                  <DesktopDropdown key={item.id} item={item} align={getDropdownAlign(i, arr.length)} />
                 ))}
               </ul>
             </nav>
@@ -401,7 +430,7 @@ export function SiteHeader() {
 
           <div className="flex items-center gap-5 text-[11px] font-semibold uppercase tracking-[0.04em]">
             <ul className="hidden items-center gap-5 min-[1100px]:flex">
-              {NAV_RIGHT.map((item) => (
+              {navRight.map((item) => (
                 <li key={item.label}>
                   <Link href={item.href} className="transition-colors hover:text-gold">
                     {item.label}
@@ -418,7 +447,7 @@ export function SiteHeader() {
                 aria-expanded={langOpen}
                 className="flex items-center gap-1 transition-colors hover:text-gold"
               >
-                IT
+                {locale.toUpperCase()}
                 <ChevronIcon open={langOpen} />
               </button>
               {langOpen && (
@@ -427,14 +456,17 @@ export function SiteHeader() {
                   className="absolute right-0 top-full z-[200] mt-3 w-24 overflow-hidden rounded-[3px] border border-cream/10 bg-olive-950/95 shadow-[0_18px_40px_-18px_rgba(0,0,0,0.55)] backdrop-blur-md"
                 >
                   {LANGUAGES.map((lang) => (
-                    <li key={lang}>
-                      <button
-                        type="button"
-                        className="block w-full px-3 py-2 text-left font-normal normal-case tracking-normal text-cream/90 transition-colors hover:bg-cream/5 hover:text-gold"
+                    <li key={lang.code}>
+                      <Link
+                        href={withLocale(lang.code, bareItalianPath)}
                         onClick={() => setLangOpen(false)}
+                        aria-current={lang.code === locale ? "true" : undefined}
+                        className={`block w-full px-3 py-2 text-left font-normal normal-case tracking-normal transition-colors hover:bg-cream/5 hover:text-gold ${
+                          lang.code === locale ? "text-gold" : "text-cream/90"
+                        }`}
                       >
-                        {lang}
-                      </button>
+                        {lang.label}
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -448,7 +480,7 @@ export function SiteHeader() {
               aria-controls="site-menu-panel"
               className="-my-3 flex items-center gap-2 py-3 transition-colors hover:text-gold"
             >
-              Menu
+              {t("nav", "menu", locale)}
               <MenuGlyph open={menuOpen} />
             </button>
           </div>
@@ -470,9 +502,9 @@ export function SiteHeader() {
         <div className="mx-auto flex min-h-full w-full max-w-[1600px] flex-col px-6 pb-10 pt-6 sm:px-10">
           <div className="flex items-center justify-between pb-6">
             <Link
-              href="/"
+              href={withLocale(locale, "/")}
               onClick={() => setMenuOpen(false)}
-              aria-label="Agriturismo La Mora — torna alla home"
+              aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`}
               className="flex items-center"
             >
               <Image
@@ -486,10 +518,10 @@ export function SiteHeader() {
             <button
               type="button"
               onClick={() => setMenuOpen(false)}
-              aria-label="Chiudi il menu"
+              aria-label={t("nav", "chiudi", locale)}
               className="-my-3 flex items-center gap-2 py-3 text-[11px] font-semibold uppercase tracking-[0.04em] transition-colors hover:text-gold"
             >
-              Chiudi
+              {t("nav", "chiudi", locale)}
               <MenuGlyph open={true} />
             </button>
           </div>
@@ -499,7 +531,7 @@ export function SiteHeader() {
             className="flex flex-1 flex-col items-center justify-center py-8 text-center"
           >
             <ul className="flex flex-col items-center gap-1 sm:gap-2">
-              {[...NAV_LEFT, ...NAV_RIGHT].map((item) => (
+              {[...navLeft, ...navRight].map((item) => (
                 <li key={item.label}>
                   <Link
                     href={item.href}
@@ -514,13 +546,17 @@ export function SiteHeader() {
 
             <div className="mt-9 flex items-center gap-2 sm:mt-11">
               {LANGUAGES.map((lang) => (
-                <button
-                  key={lang}
-                  type="button"
-                  className="rounded-[3px] border border-cream/20 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.04em] transition-colors hover:border-gold hover:text-gold"
+                <Link
+                  key={lang.code}
+                  href={withLocale(lang.code, bareItalianPath)}
+                  onClick={() => setMenuOpen(false)}
+                  aria-current={lang.code === locale ? "true" : undefined}
+                  className={`rounded-[3px] border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.04em] transition-colors hover:border-gold hover:text-gold ${
+                    lang.code === locale ? "border-gold text-gold" : "border-cream/20"
+                  }`}
                 >
-                  {lang}
-                </button>
+                  {lang.label}
+                </Link>
               ))}
             </div>
 
@@ -549,7 +585,7 @@ export function SiteHeader() {
               </address>
 
               <div className="flex flex-col items-center gap-3">
-                <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cream/50">Seguici</span>
+                <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cream/50">{t("nav", "seguici", locale)}</span>
                 <div className="flex items-center gap-3">
                   {/* TODO: collegare ai profili social reali quando confermati dal titolare */}
                   <a
