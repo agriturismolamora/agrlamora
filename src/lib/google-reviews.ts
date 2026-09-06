@@ -18,6 +18,19 @@ export type GoogleReviewsResult = {
 
 const MAPS_SHARE_URL = "https://share.google/TEqoqARZRfiv0if2z";
 
+/* URL reale "scrivi una recensione": Google non permette di pubblicare una
+   recensione sul profilo Business tramite form/API di terze parti (policy
+   anti-fake-review) — l'unico modo legittimo è aprire il compositore di
+   recensione reale di Google, precompilato con il place_id della struttura
+   (stesso GOOGLE_PLACE_ID già usato per leggere le recensioni). Se non
+   configurato, il fallback è lo stesso link Maps reale usato altrove — mai
+   un finto "invio recensione" gestito da noi. */
+export function getWriteReviewUrl(): string {
+  const placeId = process.env.GOOGLE_PLACE_ID;
+  if (!placeId) return MAPS_SHARE_URL;
+  return `https://search.google.com/local/writereview?placeid=${placeId}`;
+}
+
 type PlacesApiReview = {
   author_name: string;
   profile_photo_url?: string;

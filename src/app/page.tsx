@@ -8,6 +8,8 @@ import { RankingSection } from "@/components/ranking-section";
 import { OutdoorLife } from "@/components/outdoor-life";
 import { TerritorySection } from "@/components/territory-section";
 import { ReviewsSection } from "@/components/reviews-section";
+import { ReviewGate } from "@/components/review-gate";
+import { getWriteReviewUrl } from "@/lib/google-reviews";
 import { PriceComparisonSection } from "@/components/price-comparison-section";
 import { BlogSection } from "@/components/blog-section";
 import { FacebookFeed } from "@/components/facebook-feed";
@@ -40,6 +42,7 @@ export default function Home() {
       <OutdoorLife />
       <TerritorySection />
       <ReviewsSection />
+      <ReviewGate writeReviewUrl={getWriteReviewUrl()} />
       <LaMoraDaVivere />
       <LocationMap />
       <FacebookFeed />

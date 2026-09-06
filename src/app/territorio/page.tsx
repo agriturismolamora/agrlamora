@@ -11,7 +11,13 @@ export const metadata: Metadata = {
   alternates: { canonical: "/territorio/" },
 };
 
-type Place = { name: string; src: string; alt: string; note: string };
+/* `credit` compare solo sulle foto NON scattate dalla struttura: Piazza del
+   Comune, Rocca Maggiore e Rocca Minore vengono da Wikimedia Commons
+   (nessuna foto reale della struttura disponibile per questi 3 luoghi),
+   con licenza verificata singolarmente — mai foto stock generiche, sempre
+   fotografie reali e specifiche dei luoghi con licenza libera che ne
+   permette l'uso, attribuite come richiesto dalla licenza. */
+type Place = { name: string; src: string; alt: string; note: string; credit?: string };
 
 const ASSISI_PLACES: Place[] = [
   {
@@ -43,6 +49,27 @@ const ASSISI_PLACES: Place[] = [
     src: "/images/territorio/assisi/santuario san-damiano-assisi.jpg",
     alt: "Santuario di San Damiano nei dintorni di Assisi",
     note: "Dove Francesco udì il celebre invito a 'riparare la mia chiesa' e dove Chiara d'Assisi visse gran parte della sua vita.",
+  },
+  {
+    name: "Piazza del Comune",
+    src: "/images/territorio/assisi/piazza del comune assisi.jpg",
+    alt: "Piazza del Comune ad Assisi, con il Tempio di Minerva",
+    note: "Il centro laico della città medievale, con il Tempio di Minerva e la Torre del Popolo: da qui si irradiano le vie del centro storico.",
+    credit: "Berthold Werner, Wikimedia Commons (pubblico dominio)",
+  },
+  {
+    name: "Rocca Maggiore",
+    src: "/images/territorio/assisi/rocca maggiore assisi.jpg",
+    alt: "Rocca Maggiore, la fortezza medievale che domina Assisi",
+    note: "La fortezza che domina Assisi dall'alto da otto secoli, con una vista che arriva fino alla Valle Umbra.",
+    credit: "Superchilum, Wikimedia Commons (CC BY-SA 3.0)",
+  },
+  {
+    name: "Rocca Minore",
+    src: "/images/territorio/assisi/rocca minore assisi.jpg",
+    alt: "Rocca Minore, la fortificazione minore di Assisi verso nord-est",
+    note: "La più piccola delle due rocche cittadine, verso nord-est: meno visitata, ma con la stessa vista sulla città.",
+    credit: "LigaDue, Wikimedia Commons (CC BY 3.0)",
   },
 ];
 
@@ -109,6 +136,7 @@ export default function TerritorioPage() {
                   <div>
                     <h3 className="font-display text-[22px] font-normal text-ink">{place.name}</h3>
                     <p className="mt-3 text-[14px] leading-[1.75] text-ink-soft">{place.note}</p>
+                    {place.credit && <p className="mt-3 text-[11px] text-ink-soft/60">Foto: {place.credit}</p>}
                   </div>
                 </div>
               </Reveal>
