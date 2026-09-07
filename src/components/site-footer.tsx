@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
+import { CONSENT_TEXT } from "@/data/consent-text";
+import { openCookiePreferences } from "@/lib/consent";
 
 const PHONE_TEL = "tel:+390758041164";
 const PHONE_DISPLAY = "075 8041164";
@@ -21,13 +25,17 @@ function getNav(locale: Locale) {
 }
 
 /* Footer minimale e scuro (continua l'olive-950 del pannello mappa sopra,
-   nessuna cucitura visiva). Privacy/Cookie/Sitemap in href="#": pagine non
-   ancora esistenti, stessa convenzione già usata per i social nell'header
-   (mai un link reale finto). Nessun credito d'agenzia: il vecchio "Sito
+   nessuna cucitura visiva). Nessun credito d'agenzia: il vecchio "Sito
    web realizzato da PRISMI S.p.a." va rimosso, sostituto da decidere col
-   titolare (vedi PLAN.md). */
+   titolare (vedi PLAN.md).
+   "Preferenze cookie": presente in TUTTE le pagine come richiesto, apre lo
+   stesso pannello di personalizzazione del banner (vedi
+   cookie-consent-manager.tsx) tramite un evento globale — il footer non ha
+   bisogno di sapere nulla sullo stato del consenso, solo di segnalare
+   "aprimi". */
 export function SiteFooter({ locale }: { locale: Locale }) {
   const nav = getNav(locale);
+  const consentText = CONSENT_TEXT[locale];
   return (
     <footer id="site-footer" className="bg-olive-950 pb-8 pt-16 text-cream sm:pb-10 sm:pt-20">
       <div className="mx-auto max-w-[1300px] px-6 sm:px-10">
@@ -79,12 +87,15 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             IT054001B501006846
           </p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <a href="#" className="hover:text-cream/80">
+            <Link href={withLocale(locale, "/privacy/")} className="hover:text-cream/80">
               {t("footer", "privacy", locale)}
-            </a>
-            <a href="#" className="hover:text-cream/80">
+            </Link>
+            <Link href={withLocale(locale, "/cookie-policy/")} className="hover:text-cream/80">
               {t("footer", "cookie", locale)}
-            </a>
+            </Link>
+            <button type="button" onClick={openCookiePreferences} className="underline decoration-cream/30 underline-offset-4 hover:text-cream/80">
+              {consentText.footerLink}
+            </button>
             <span>© {new Date().getFullYear()} Agriturismo La Mora</span>
           </div>
         </div>

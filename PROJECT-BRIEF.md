@@ -139,9 +139,27 @@ Cartelle immagini per tutti i 5 appartamenti già pronte in `public/images/siste
 
 ---
 
-## 7. Prossimi passi suggeriti
+## 7. Privacy, cookie e consenso (implementato 7 settembre 2026)
+
+Sistema di consenso proprietario (nessuna CMP esterna a pagamento), costruito dopo un audit tecnico reale del progetto — non un banner grafico che non blocca nulla. Fonte di verità: `src/data/privacy-services.ts`.
+
+| Elemento | Stato | Note |
+|---|---|---|
+| Servizi di terze parti realmente presenti | ✅ Verificato nel codice | Solo Google reCAPTCHA v3 (client, categoria Funzionali) e Google Places API/Facebook Graph API (solo server-to-server, nessun cookie). Zero Google Analytics/GTM/Meta Pixel in tutto il progetto |
+| Banner cookie a 3 pulsanti di pari peso | ✅ Implementato | `src/components/cookie-banner.tsx` — Accetta tutti / Rifiuta non essenziali / Personalizza, stesso stile per tutti e tre |
+| Blocco reale pre-consenso | ✅ Implementato | Lo script reCAPTCHA non viene iniettato nel DOM finché non c'è consenso "Funzionali" (`newsletter-section.tsx`); prima non parte nessuna richiesta a Google |
+| Cookie di consenso first-party | ✅ Implementato | `lamora_consent`, 6 mesi, versionato (`CONSENT_VERSION` in `src/lib/consent.ts`) — bump manuale ad ogni modifica reale di policy/servizi |
+| Global Privacy Control (GPC) | ✅ Implementato | Se il browser lo invia, si applica in automatico la scelta restrittiva, per tutti i visitatori indipendentemente dal Paese |
+| "Preferenze cookie" nel footer | ✅ Implementato | Presente su ogni pagina (footer globale in `root-shell.tsx`), riapre il pannello di personalizzazione in qualsiasi momento |
+| Privacy Policy / Cookie Policy / Termini e Condizioni | ✅ Create ex novo | Prima erano link `href="#"` non funzionanti (vedi PLAN.md sezione footer) — pagine reali su `/privacy/`, `/cookie-policy/`, `/termini-e-condizioni/`, in tutte e 4 le lingue |
+| **P.IVA 03900200548** | ⚠️ **Da riconfermare col titolare** | Riportata identica a quella già presente nel footer del sito (mai stata modificata), ma PLAN.md la segnalava già come "da verificare" prima di questo lavoro — non risolto qui, solo ereditato |
+| Durata di conservazione fiscale/contabile dei dati di prenotazione | ⚠️ **Da confermare col commercialista** | La Privacy Policy usa una formula generica ("per il tempo previsto dagli obblighi di legge") invece di un numero di anni non verificabile da codice |
+| Validazione legale complessiva | ⚠️ **Mai dichiarata "100% conforme"** | Le pagine legali sono tecnicamente accurate rispetto al codice reale, ma restano un documento operativo: revisione di un legale/commercialista raccomandata prima di considerarle definitive |
+
+## 8. Prossimi passi suggeriti
 
 1. **Validare con il titolare** i 3 flag 🔴🟡 rimasti aperti in sezione 6 (channel manager bed-and-breakfast.it, check-in Polizia, meccanismo review-gate Google) prima di includerli nel piano di sviluppo definitivo
 2. Definire lo stack per il booking engine (custom da zero → probabile necessità di DB per calendario/tariffe/regole stagionali)
 3. Sitemap + wireframe pagine principali
 4. Struttura dati tariffe/stagioni/sconti come base per popup di confronto OTA e calcolo automatico prezzo
+5. **Far rivedere le pagine Privacy/Cookie/Termini (sezione 7) a un legale o commercialista** prima di considerarle definitive — soprattutto i punti segnalati ⚠️

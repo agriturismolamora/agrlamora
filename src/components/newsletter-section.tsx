@@ -4,7 +4,9 @@ import { useEffect, useState, type FormEvent } from "react";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import type { Locale } from "@/lib/i18n";
+import { withLocale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
+import { useConsent, openCookiePreferences } from "@/lib/consent";
 
 declare global {
   interface Window {
@@ -24,25 +26,46 @@ const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
    Senza la chiave, nessun claim falso: si vede solo la nota generica.
    L'invio vero dell'email resta comunque non collegato (serve un
    provider tipo Mailchimp/Brevo — lavoro futuro): il messaggio finale
-   lo dice in modo onesto. */
+   lo dice in modo onesto.
+
+   Privacy: lo script di reCAPTCHA (terze parti, categoria "Funzionali" —
+   vedi src/data/privacy-services.ts) viene iniettato SOLO se l'utente ha
+   già dato consenso a quella categoria. Senza consenso, il modulo resta
+   utilizzabile ma l'invio è bloccato con un invito esplicito ad aprire le
+   preferenze cookie: mai un caricamento "silenzioso" prima della scelta,
+   mai un obbligo di accettare marketing per usare il modulo (sono due
+   consensi distinti: questo è quello per la sicurezza del form, il
+   checkbox sotto è quello, separato e facoltativo, per la newsletter). */
 export function NewsletterSection({ locale }: { locale: Locale }) {
   const [email, setEmail] = useState("");
   const [accepted, setAccepted] = useState(false);
-  const [status, setStatus] = useState<"idle" | "checking" | "error" | "recaptcha-error" | "sent">("idle");
+  const [status, setStatus] = useState<"idle" | "checking" | "error" | "recaptcha-error" | "sent" | "consent-required">("idle");
+  const consent = useConsent();
+  const functionalAllowed = consent?.categories.functional === true;
 
   useEffect(() => {
-    if (!RECAPTCHA_SITE_KEY || document.querySelector("script[data-recaptcha]")) return;
+    if (!RECAPTCHA_SITE_KEY || !functionalAllowed || document.querySelector("script[data-recaptcha]")) return;
     const script = document.createElement("script");
     script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
     script.async = true;
     script.dataset.recaptcha = "true";
     document.head.appendChild(script);
-  }, []);
+  }, [functionalAllowed]);
+
+  // Derivato invece di sincronizzato via effetto: appena il consenso
+  // Funzionale viene dato, il messaggio "serve il consenso" smette di
+  // essere vero senza bisogno di un setState reattivo separato.
+  const displayStatus = status === "consent-required" && functionalAllowed ? "idle" : status;
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!accepted) {
       setStatus("error");
+      return;
+    }
+
+    if (RECAPTCHA_SITE_KEY && !functionalAllowed) {
+      setStatus("consent-required");
       return;
     }
 
@@ -80,7 +103,7 @@ export function NewsletterSection({ locale }: { locale: Locale }) {
           {t("newsletter", "heading", locale)}
         </h2>
 
-        {status === "sent" ? (
+        {displayStatus === "sent" ? (
           <p className="mx-auto mt-8 max-w-[440px] text-[14px] leading-[1.7] text-ink-soft">
             {t("newsletter", "grazie", locale)}
           </p>
@@ -98,12 +121,12 @@ export function NewsletterSection({ locale }: { locale: Locale }) {
               />
               <button
                 type="submit"
-                disabled={status === "checking"}
+                disabled={displayStatus === "checking"}
                 className="group relative inline-flex shrink-0 items-center justify-center gap-2.5 overflow-hidden whitespace-nowrap rounded-lg bg-raspberry px-7 py-4 font-sans text-[11px] font-semibold uppercase tracking-[0.05em] text-cream disabled:opacity-60"
               >
                 <HoverFill color="#8a3844" />
                 <span className="relative z-10 inline-flex items-center gap-2.5">
-                  {status === "checking" ? t("newsletter", "verifica", locale) : t("newsletter", "iscriviti", locale)}
+                  {displayStatus === "checking" ? t("newsletter", "verifica", locale) : t("newsletter", "iscriviti", locale)}
                   <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                     →
                   </span>
@@ -124,20 +147,28 @@ export function NewsletterSection({ locale }: { locale: Locale }) {
               <span>
                 {t("newsletter", "accetto", locale)}
                 {" "}
-                <a href="#" className="underline underline-offset-2 hover:text-raspberry">
+                <a href={withLocale(locale, "/termini-e-condizioni/")} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-raspberry">
                   {{ it: "termini e le condizioni d'uso", en: "terms and conditions", fr: "conditions d'utilisation", de: "Nutzungsbedingungen" }[locale]}
                 </a>
                 *
               </span>
             </label>
-            {status === "error" && (
+            {displayStatus === "error" && (
               <p role="alert" className="mt-2 text-[12px] text-raspberry">
                 {t("newsletter", "erroreTermini", locale)}
               </p>
             )}
-            {status === "recaptcha-error" && (
+            {displayStatus === "recaptcha-error" && (
               <p role="alert" className="mt-2 text-[12px] text-raspberry">
                 {t("newsletter", "erroreRecaptcha", locale)}
+              </p>
+            )}
+            {displayStatus === "consent-required" && (
+              <p role="alert" className="mt-2 text-[12px] text-raspberry">
+                {t("newsletter", "consentRequired", locale)}{" "}
+                <button type="button" onClick={openCookiePreferences} className="underline underline-offset-2">
+                  {t("newsletter", "openCookiePreferences", locale)}
+                </button>
               </p>
             )}
 

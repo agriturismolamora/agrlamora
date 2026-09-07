@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { MarqueeTrack } from "@/components/marquee-track";
 import type { Locale } from "@/lib/i18n";
 
 const ARIA_LABEL: Record<Locale, string> = {
@@ -8,13 +9,13 @@ const ARIA_LABEL: Record<Locale, string> = {
   de: "Zertifizierungen und Auszeichnungen",
 };
 
-/* Striscia certificazioni: stesso meccanismo di scorrimento infinito del
-   BenefitMarquee (.animate-marquee, definito in globals.css), ma sfondo
-   diverso (cream-dim invece di cream) per marcare visivamente il cambio
-   di sezione, come richiesto. Tutti i loghi in public/certificazioni/,
-   in un riquadro di dimensioni identiche (object-contain, mai ritagliati)
-   così restano allineati alla stessa altezza nonostante le proporzioni
-   diverse dei singoli file. */
+/* Striscia certificazioni: scorrimento infinito via MarqueeTrack (rAF, non
+   CSS @keyframes — su alcuni mobile la versione CSS restava ferma, vedi
+   marquee-track.tsx), sfondo cream-dim per marcare visivamente il cambio
+   di sezione. Tutti i loghi in public/certificazioni/, in un riquadro di
+   dimensioni identiche (object-contain, mai ritagliati) così restano
+   allineati alla stessa altezza nonostante le proporzioni diverse dei
+   singoli file. */
 const CERTIFICATIONS = [
   { src: "/certificazioni/ICEA%20certification.png", alt: "Certificazione ICEA" },
   { src: "/certificazioni/agriturismo%20italia%20certifiazione.png", alt: "Certificazione Agriturismo Italia" },
@@ -36,11 +37,11 @@ function CertLogo({ src, alt }: (typeof CERTIFICATIONS)[number]) {
 export function CertificationsMarquee({ locale }: { locale: Locale }) {
   return (
     <section aria-label={ARIA_LABEL[locale]} className="overflow-hidden bg-cream-dim py-8 md:py-10">
-      <div className="flex w-max animate-marquee">
+      <MarqueeTrack className="flex w-max">
         {[...CERTIFICATIONS, ...CERTIFICATIONS].map((cert, i) => (
           <CertLogo key={`${cert.alt}-${i}`} {...cert} />
         ))}
-      </div>
+      </MarqueeTrack>
     </section>
   );
 }

@@ -60,30 +60,6 @@ body {
   top: 1rem;
 }
 
-/* Benefit marquee (Sezione 2): scorrimento orizzontale continuo e senza
-   scatti. Il contenuto è duplicato nel markup così -50% coincide esattamente
-   con una copia intera della sequenza. Definito qui (non come utility
-   arbitraria Tailwind) per evitare i problemi di ordine tra blocchi @media
-   già riscontrati con le varianti min-[]/max-[] altrove nel progetto. */
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee {
-  animation: marquee 32s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
-    animation: none;
-  }
-}
-
 /* Fade+translate condiviso per contenuto che cambia via click/scroll (non
    scroll-reveal one-shot come .Reveal): usato dal banner Esperienze e dalla
    sezione "La Mora da vivere" quando l'utente passa a un altro elemento.

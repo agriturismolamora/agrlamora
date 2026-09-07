@@ -1,11 +1,11 @@
 import { HomeIntro } from "@/components/home-intro";
 import { Hero } from "@/components/hero";
-import { BenefitMarquee } from "@/components/benefit-marquee";
 import { ImmersiveStory } from "@/components/immersive-story";
 import { ApartmentsCarousel } from "@/components/apartments-carousel";
 import { StructureHighlights } from "@/components/structure-highlights";
 import { RankingSection } from "@/components/ranking-section";
 import { OutdoorLife } from "@/components/outdoor-life";
+import { EvChargingSection } from "@/components/ev-charging-section";
 import { TerritorySection } from "@/components/territory-section";
 import { ReviewsSection } from "@/components/reviews-section";
 import { ReviewGate } from "@/components/review-gate";
@@ -26,20 +26,25 @@ import { SectionSnapScroll } from "@/components/section-snap-scroll";
    Restano qui solo gli elementi esclusivi della home: il sipario d'apertura
    (HomeIntro), il popup promozionale, e i due controlli di navigazione
    scroll-driven (dots laterali, snap a sezioni) che dipendono dagli id
-   delle sezioni di QUESTA pagina. */
+   delle sezioni di QUESTA pagina.
+
+   BenefitMarquee (striscia di testo che scorreva con sconti/servizi) è
+   stata rimossa su richiesta esplicita: i due sconti diretti (7+ notti,
+   clienti di ritorno) vivono ora nel PromoPopup, mostrato appena si apre
+   il sito, invece che in una striscia sempre in scorrimento. */
 export default function Home() {
   return (
     <>
       <HomeIntro />
       <Hero locale="en" />
-      <BenefitMarquee locale="en" />
-      <ImmersiveStory locale="en" />
+      <ImmersiveStory />
       <ApartmentsCarousel locale="en" />
       <StructureHighlights locale="en" />
       <PriceComparisonSection locale="en" />
       <RankingSection locale="en" />
       <BlogSection locale="en" />
       <OutdoorLife locale="en" />
+      <EvChargingSection locale="en" />
       <TerritorySection locale="en" />
       <ReviewsSection locale="en" />
       <ReviewGate writeReviewUrl={getWriteReviewUrl()} locale="en" />

@@ -6,6 +6,7 @@ import { HoverFill } from "@/components/hover-fill";
 import { StarRow } from "@/components/review-icons";
 import type { Locale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
+import { useConsent } from "@/lib/consent";
 
 const STORAGE_KEY = "lamora_promo_last_shown";
 const COOLDOWN_MS = 2 * 24 * 60 * 60 * 1000; // 2 giorni: non ripresentarlo ad ogni visita
@@ -13,41 +14,56 @@ const SHOW_DELAY_MS = 3000;
 
 const TEXT: Record<
   Locale,
-  { badge: string; label: string; heading: string; condition: string; body: string; tripadvisor: string; cta: string }
+  {
+    badge: string;
+    label: string;
+    heading: string;
+    perks: { stat: string; title: string; detail: string }[];
+    tripadvisor: string;
+    cta: string;
+  }
 > = {
   it: {
     badge: "Sito ufficiale",
     label: "Prenotazione diretta",
-    heading: "Resta una settimana, risparmia il 10%.",
-    condition: "Per soggiorni di 7 notti o più, prenotando diretto",
-    body: "Chi resta più a lungo scopre La Mora con più calma: la piscina, la colazione lenta, le passeggiate verso Assisi. Scrivendoci direttamente, senza intermediari, hai il 10% di sconto sui soggiorni da 7 notti in su — oltre al vantaggio di parlare con chi la struttura la gestisce ogni giorno.",
+    heading: "Due modi per risparmiare, prenotando diretto.",
+    perks: [
+      { stat: "-10%", title: "Da 7 notti", detail: "Per soggiorni di una settimana o più, senza bisogno di codici." },
+      { stat: "-10%", title: "Per chi torna", detail: "Dalla seconda prenotazione diretta in poi." },
+    ],
     tripadvisor: "N.1 su 38 agriturismi ad Assisi, secondo TripAdvisor",
     cta: "Scopri la prenotazione diretta",
   },
   en: {
     badge: "Official website",
     label: "Direct booking",
-    heading: "Stay a week, save 10%.",
-    condition: "For stays of 7 nights or more, booking directly",
-    body: "Guests who stay longer get to enjoy La Mora at a slower pace: the pool, a leisurely breakfast, walks towards Assisi. By writing to us directly, with no middlemen, you get 10% off stays of 7 nights or more — plus the advantage of speaking with the people who run the property every day.",
+    heading: "Two ways to save, booking direct.",
+    perks: [
+      { stat: "-10%", title: "From 7 nights", detail: "For stays of a week or more, no code needed." },
+      { stat: "-10%", title: "For returning guests", detail: "From your second direct booking onwards." },
+    ],
     tripadvisor: "#1 out of 38 agriturismi in Assisi, according to TripAdvisor",
     cta: "Discover direct booking",
   },
   fr: {
     badge: "Site officiel",
     label: "Réservation directe",
-    heading: "Restez une semaine, économisez 10%.",
-    condition: "Pour les séjours de 7 nuits ou plus, en réservant directement",
-    body: "Ceux qui restent plus longtemps découvrent La Mora avec plus de calme : la piscine, un petit-déjeuner sans se presser, les balades vers Assise. En nous écrivant directement, sans intermédiaire, vous avez 10% de réduction sur les séjours de 7 nuits ou plus — en plus de l'avantage de parler avec ceux qui gèrent la structure au quotidien.",
+    heading: "Deux façons d'économiser, en réservant directement.",
+    perks: [
+      { stat: "-10%", title: "Dès 7 nuits", detail: "Pour les séjours d'une semaine ou plus, sans code." },
+      { stat: "-10%", title: "Pour les hôtes qui reviennent", detail: "Dès la deuxième réservation directe." },
+    ],
     tripadvisor: "N°1 sur 38 agriturismi à Assise, selon TripAdvisor",
     cta: "Découvrir la réservation directe",
   },
   de: {
     badge: "Offizielle Website",
     label: "Direktbuchung",
-    heading: "Bleiben Sie eine Woche, sparen Sie 10%.",
-    condition: "Für Aufenthalte ab 7 Nächten bei Direktbuchung",
-    body: "Wer länger bleibt, erlebt La Mora in aller Ruhe: den Pool, ein gemütliches Frühstück, Spaziergänge Richtung Assisi. Wenn Sie uns direkt schreiben, ohne Vermittler, erhalten Sie 10% Rabatt auf Aufenthalte ab 7 Nächten — und sprechen zudem mit den Menschen, die die Unterkunft jeden Tag führen.",
+    heading: "Zwei Wege zu sparen, bei Direktbuchung.",
+    perks: [
+      { stat: "-10%", title: "Ab 7 Nächten", detail: "Für Aufenthalte ab einer Woche, ohne Code." },
+      { stat: "-10%", title: "Für wiederkehrende Gäste", detail: "Ab der zweiten Direktbuchung." },
+    ],
     tripadvisor: "Nr. 1 von 38 Agriturismi in Assisi, laut TripAdvisor",
     cta: "Direktbuchung entdecken",
   },
@@ -64,32 +80,44 @@ function CloseIcon() {
 /* Popup promo alla prima visita (o dopo 2 giorni di assenza): usa SOLO lo
    sconto diretto reale già confermato altrove nel sito (10% da 7 notti),
    mai un finto codice promo o una scadenza inventata. Il timestamp in
-   localStorage funge da "memoria" per non ripresentarlo ad ogni rientro. */
+   localStorage funge da "memoria" per non ripresentarlo ad ogni rientro —
+   ma quel salvataggio è tecnologia "Funzionale" (vedi
+   src/data/privacy-services.ts), quindi legge/scrive lamora_promo_last_shown
+   SOLO se l'utente ha già dato quel consenso. Senza consenso il popup può
+   ancora comparire (mostrarlo non richiede storage), ma non viene
+   ricordato tra una visita e l'altra: nessun dato persiste prima della
+   scelta dell'utente. */
 export function PromoPopup({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
   const text = TEXT[locale];
+  const consent = useConsent();
+  const functionalAllowed = consent?.categories.functional === true;
 
   useEffect(() => {
     let lastShown = 0;
-    try {
-      lastShown = Number(window.localStorage.getItem(STORAGE_KEY)) || 0;
-    } catch {
-      lastShown = 0;
+    if (functionalAllowed) {
+      try {
+        lastShown = Number(window.localStorage.getItem(STORAGE_KEY)) || 0;
+      } catch {
+        lastShown = 0;
+      }
     }
     if (Date.now() - lastShown < COOLDOWN_MS) return;
 
     const timer = window.setTimeout(() => {
       setOpen(true);
-      try {
-        window.localStorage.setItem(STORAGE_KEY, String(Date.now()));
-      } catch {
-        // storage non disponibile (es. navigazione privata): il popup
-        // ricomparirà ad ogni visita in quel caso, nessun errore bloccante.
+      if (functionalAllowed) {
+        try {
+          window.localStorage.setItem(STORAGE_KEY, String(Date.now()));
+        } catch {
+          // storage non disponibile (es. navigazione privata): il popup
+          // ricomparirà ad ogni visita in quel caso, nessun errore bloccante.
+        }
       }
     }, SHOW_DELAY_MS);
 
     return () => window.clearTimeout(timer);
-  }, []);
+  }, [functionalAllowed]);
 
   useEffect(() => {
     if (!open) return;
@@ -161,12 +189,17 @@ export function PromoPopup({ locale }: { locale: Locale }) {
           >
             {text.heading}
           </h2>
-          <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.05em] text-olive-950">
-            {text.condition}
-          </p>
-          <p className="mt-4 text-[14px] leading-[1.75] text-ink-soft">
-            {text.body}
-          </p>
+          <dl className="mt-5 grid grid-cols-2 gap-4">
+            {text.perks.map((perk) => (
+              <div key={perk.title}>
+                <dt className="font-display text-[26px] leading-none text-raspberry">{perk.stat}</dt>
+                <dd className="mt-1.5">
+                  <span className="block text-[11px] font-semibold uppercase tracking-[0.04em] text-ink">{perk.title}</span>
+                  <span className="mt-1 block text-[12px] leading-[1.5] text-ink-soft">{perk.detail}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
 
           <div className="mt-5 flex items-center gap-2 border-t border-ink/10 pt-5">
             <StarRow rating={5} size={13} />

@@ -19,9 +19,14 @@ export function GoogleMark({ size = 26 }: { size?: number }) {
    ufficiale mai rilasciato. Colore uguale al verde ufficiale del brand
    (#00AF87), forma semplificata ma riconoscibile. */
 export function TripadvisorMark({ size = 26 }: { size?: number }) {
-  const h = size * (34 / 130);
+  /* viewBox largo 195 (non 130): il testo "tripadvisor" a fontSize 16
+     inizia a x=64 ed è largo ~124 unità, quindi arriva fino a x≈188 — con
+     un viewBox di soli 130 restava tagliato a metà dall'overflow:hidden
+     di default degli <svg>, invisibile a dimensioni piccole ma evidente
+     alla dimensione usata in reviews-section.tsx (size=85). */
+  const h = size * (34 / 195);
   return (
-    <svg viewBox="0 0 130 34" width={size} height={h} aria-hidden="true">
+    <svg viewBox="0 0 195 34" width={size} height={h} aria-hidden="true">
       <circle cx="18" cy="19" r="13" fill="none" stroke="#00AF87" strokeWidth="2.4" />
       <circle cx="18" cy="19" r="4.2" fill="#00AF87" />
       <circle cx="47" cy="19" r="13" fill="none" stroke="#00AF87" strokeWidth="2.4" />
