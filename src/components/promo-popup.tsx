@@ -204,7 +204,7 @@ export function PromoPopup({ locale }: { locale: Locale }) {
           </dl>
 
           <div className="mt-5 flex items-center gap-2 border-t border-ink/10 pt-5">
-            <StarRow rating={5} size={13} />
+            <StarRow rating={5} size={13} locale={locale} />
             <span className="text-[11px] text-ink-soft">{text.tripadvisor}</span>
           </div>
 

@@ -408,7 +408,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
               </>
             )}
 
-            <nav aria-label="Navigazione principale" className="hidden min-[1100px]:block">
+            <nav aria-label={t("nav", "navigazionePrincipale", locale)} className="hidden min-[1100px]:block">
               <ul className="flex items-center gap-8">
                 {navLeft.map((item, i) => (
                   <DesktopDropdown key={item.id} item={item} align={getDropdownAlign(i, navLeft.length)} />
@@ -419,7 +419,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             {/* Nav compatta per tablet (768–1099px): solo le voci essenziali, il resto va in MENU.
                 Range auto-contenuto (md: + max-[1099px]:) per non dipendere dall'ordine con cui
                 Tailwind emette i blocchi @media di min-[1100px] e md: nel foglio di stile. */}
-            <nav aria-label="Navigazione principale" className="hidden md:max-[1099px]:block">
+            <nav aria-label={t("nav", "navigazionePrincipale", locale)} className="hidden md:max-[1099px]:block">
               <ul className="flex items-center gap-6">
                 {navLeft.filter((item) => NAV_LEFT_TABLET.has(item.id)).map((item, i, arr) => (
                   <DesktopDropdown key={item.id} item={item} align={getDropdownAlign(i, arr.length)} />
@@ -527,7 +527,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           </div>
 
           <nav
-            aria-label="Navigazione completa"
+            aria-label={t("nav", "navigazioneCompleta", locale)}
             className="flex flex-1 flex-col items-center justify-center py-8 text-center"
           >
             <ul className="flex flex-col items-center gap-1 sm:gap-2">

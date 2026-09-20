@@ -97,7 +97,7 @@ export async function ReviewsSection({ locale }: { locale: Locale }) {
                 <div>
                   <div className="flex items-baseline gap-2">
                     <span className="font-display text-3xl text-ink">{data.rating.toFixed(1)}</span>
-                    <StarRow rating={data.rating} size={15} />
+                    <StarRow rating={data.rating} size={15} locale={locale} />
                   </div>
                   {data.totalReviews !== null && (
                     <span className="text-[12px] text-ink-soft">{data.totalReviews} {text.reviewsWord}</span>

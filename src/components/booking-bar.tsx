@@ -505,7 +505,7 @@ export function BookingBar({ locale }: { locale: Locale }) {
         </button>
         <a
           href={PHONE_TEL}
-          aria-label="Chiama Agriturismo La Mora"
+          aria-label={t("booking", "chiamaAgriturismo", locale)}
           className={`flex h-full w-full items-center justify-center text-cream transition-colors duration-500 ${
             inApartments ? "bg-[#1f2742] hover:bg-[#28305a]" : "bg-raspberry-light hover:bg-[#ad5864]"
           }`}
@@ -536,7 +536,7 @@ export function BookingBar({ locale }: { locale: Locale }) {
         </button>
         <a
           href={PHONE_TEL}
-          aria-label="Chiama Agriturismo La Mora"
+          aria-label={t("booking", "chiamaAgriturismo", locale)}
           className="flex w-[52px] shrink-0 items-center justify-center rounded-[3px] bg-raspberry-light text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors hover:bg-[#ad5864]"
         >
           <PhoneIcon />

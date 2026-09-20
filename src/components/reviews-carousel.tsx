@@ -51,7 +51,7 @@ function ReviewCard({ review, locale }: { review: GoogleReview; locale: Locale }
       </div>
 
       <div className="mt-3">
-        <StarRow rating={review.rating} />
+        <StarRow rating={review.rating} locale={locale} />
       </div>
 
       <p className={`mt-3 text-[13.5px] leading-[1.65] text-ink-soft ${expanded ? "" : "line-clamp-4"}`}>{review.text}</p>

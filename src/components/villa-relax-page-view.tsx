@@ -575,7 +575,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
               <span className="mt-1 text-[12px] uppercase tracking-[0.08em] text-ink-soft">
                 {text.suWord} {rating.scale}
               </span>
-              <StarRow rating={rating.value / 2} size={16} />
+              <StarRow rating={rating.value / 2} size={16} locale={locale} />
               <p className="mt-4 font-display text-[18px] italic text-ink">{rating.label}</p>
               <p className="mt-2 text-[12px] uppercase tracking-[0.06em] text-ink-soft">
                 {text.fonteWord}: {rating.source} · CIN {VILLA_CIN}

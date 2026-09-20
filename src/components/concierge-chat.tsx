@@ -427,7 +427,7 @@ export function ConciergeChat({ locale }: { locale: Locale }) {
       {open && (
         <div
           role="complementary"
-          aria-label="Concierge virtuale Agriturismo La Mora"
+          aria-label={t("concierge", "panelLabel", locale)}
           className="absolute bottom-[68px] right-0 flex h-[min(480px,70dvh)] w-[min(92vw,360px)] flex-col overflow-hidden rounded-[6px] bg-cream shadow-[0_30px_70px_-20px_rgba(28,33,23,0.5)]"
         >
           {/* Header con la foto e il nome di Paolo, non un titolo anonimo:

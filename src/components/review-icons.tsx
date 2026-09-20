@@ -1,6 +1,8 @@
 /* Icone condivise tra la sezione recensioni (server) e il carousel
    (client): componenti puramente presentazionali, nessuna interattività,
    nessun bisogno di "use client". */
+import type { Locale } from "@/lib/i18n";
+
 export function GoogleMark({ size = 26 }: { size?: number }) {
   return (
     <svg viewBox="0 0 48 48" width={size} height={size} aria-hidden="true">
@@ -41,9 +43,21 @@ export function TripadvisorMark({ size = 26 }: { size?: number }) {
   );
 }
 
-export function StarRow({ rating, size = 14 }: { rating: number; size?: number }) {
+/* Era hardcoded in italiano ("Valutazione X su 5 stelle") anche quando
+   chiamato da reviews-section.tsx/price-comparison-section.tsx sulle
+   pagine EN/FR/DE — bug trovato durante la verifica multilingua. locale
+   opzionale (default "it") per non rompere chiamate esistenti non
+   ancora aggiornate. */
+const RATING_LABEL: Record<Locale, (rating: number) => string> = {
+  it: (r) => `Valutazione ${r} su 5 stelle`,
+  en: (r) => `Rating ${r} out of 5 stars`,
+  fr: (r) => `Note ${r} sur 5 étoiles`,
+  de: (r) => `Bewertung ${r} von 5 Sternen`,
+};
+
+export function StarRow({ rating, size = 14, locale = "it" }: { rating: number; size?: number; locale?: Locale }) {
   return (
-    <div className="flex items-center gap-0.5" role="img" aria-label={`Valutazione ${rating} su 5 stelle`}>
+    <div className="flex items-center gap-0.5" role="img" aria-label={RATING_LABEL[locale](rating)}>
       {[1, 2, 3, 4, 5].map((i) => (
         <svg key={i} width={size} height={size} viewBox="0 0 20 20" aria-hidden="true">
           <path

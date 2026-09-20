@@ -243,7 +243,7 @@ export async function PriceComparisonSection({ locale }: { locale: Locale }) {
                     <span className="flex h-6 min-w-6 items-center justify-center rounded-[4px] bg-gold px-1.5 font-sans text-[12px] font-bold text-[#1f180e]">
                       {reviews.rating.toFixed(1)}
                     </span>
-                    <StarRow rating={reviews.rating} size={13} />
+                    <StarRow rating={reviews.rating} size={13} locale={locale} />
                   </div>
                 ) : (
                   <span className="text-[12px] text-ink-soft">{text.reviewsSoon}</span>

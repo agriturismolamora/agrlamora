@@ -98,7 +98,7 @@ export function RankingHero({ locale }: { locale: Locale }) {
 
         <Reveal delay={280}>
           <div className="mt-5 flex flex-col items-center gap-2">
-            <StarRow rating={5} size={15} />
+            <StarRow rating={5} size={15} locale={locale} />
             <span className="text-[10px] uppercase tracking-[0.12em] text-ink-soft">{text.accordingTo}</span>
           </div>
         </Reveal>

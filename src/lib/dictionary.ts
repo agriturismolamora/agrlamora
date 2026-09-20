@@ -33,6 +33,8 @@ export const dict = {
     chiama: { it: "Chiama", en: "Call", fr: "Appeler", de: "Anrufen" },
     scriviWhatsapp: { it: "Scrivi WhatsApp", en: "Message WhatsApp", fr: "Écrire sur WhatsApp", de: "WhatsApp schreiben" },
     torna: { it: "Torna alla home", en: "Back to home", fr: "Retour à l'accueil", de: "Zurück zur Startseite" },
+    navigazionePrincipale: { it: "Navigazione principale", en: "Main navigation", fr: "Navigation principale", de: "Hauptnavigation" },
+    navigazioneCompleta: { it: "Navigazione completa", en: "Full navigation", fr: "Navigation complète", de: "Vollständige Navigation" },
   },
   footer: {
     linkUtili: { it: "Link utili", en: "Useful links", fr: "Liens utiles", de: "Nützliche Links" },
@@ -56,6 +58,8 @@ export const dict = {
     mesePrecedente: { it: "Mese precedente", en: "Previous month", fr: "Mois précédent", de: "Vorheriger Monat" },
     meseSuccessivo: { it: "Mese successivo", en: "Next month", fr: "Mois suivant", de: "Nächster Monat" },
     chiamaInvece: { it: "Chiama invece di prenotare online", en: "Call instead of booking online", fr: "Appelez plutôt que de réserver en ligne", de: "Rufen Sie an, statt online zu buchen" },
+    chiamaAgriturismo: { it: "Chiama Agriturismo La Mora", en: "Call Agriturismo La Mora", fr: "Appeler Agriturismo La Mora", de: "Agriturismo La Mora anrufen" },
+    chiamaVilla: { it: "Chiama per Villa Relax", en: "Call about Villa Relax", fr: "Appeler pour Villa Relax", de: "Für Villa Relax anrufen" },
     ospitiSuffix: { it: "ospite", en: "guest", fr: "voyageur", de: "Gast" },
     ospitiSuffixPlural: { it: "ospiti", en: "guests", fr: "voyageurs", de: "Gäste" },
   },
@@ -63,6 +67,7 @@ export const dict = {
     title: { it: "Host di Agriturismo La Mora", en: "Host of Agriturismo La Mora", fr: "Hôte d'Agriturismo La Mora", de: "Gastgeber von Agriturismo La Mora" },
     inputPlaceholder: { it: "Scrivi una domanda...", en: "Ask a question...", fr: "Posez une question...", de: "Stellen Sie eine Frage..." },
     invia: { it: "Invia", en: "Send", fr: "Envoyer", de: "Senden" },
+    panelLabel: { it: "Concierge virtuale Agriturismo La Mora", en: "Virtual concierge, Agriturismo La Mora", fr: "Concierge virtuel, Agriturismo La Mora", de: "Virtueller Concierge, Agriturismo La Mora" },
   },
   newsletter: {
     heading: { it: "Iscriviti alla newsletter", en: "Subscribe to our newsletter", fr: "Abonnez-vous à la newsletter", de: "Newsletter abonnieren" },

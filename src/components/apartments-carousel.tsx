@@ -20,6 +20,7 @@ const TXT: Record<Locale, {
   sectionLabel: string; sectionHeading: string; petFriendly: string;
   guests: string; beds: string; bathroom: string; bathrooms: string; sqm: string;
   prenotaOra: string; scopriDiPiu: string; tuttiGliAppartamenti: string; richiediGuida: string;
+  carouselRegion: string;
 }> = {
   it: {
     sectionLabel: "Gli appartamenti",
@@ -34,6 +35,7 @@ const TXT: Record<Locale, {
     scopriDiPiu: "Scopri di più",
     tuttiGliAppartamenti: "Tutti gli appartamenti",
     richiediGuida: "Richiedi la guida su WhatsApp",
+    carouselRegion: "Appartamenti di Agriturismo La Mora",
   },
   en: {
     sectionLabel: "The apartments",
@@ -48,6 +50,7 @@ const TXT: Record<Locale, {
     scopriDiPiu: "Learn more",
     tuttiGliAppartamenti: "All apartments",
     richiediGuida: "Request the guide on WhatsApp",
+    carouselRegion: "Apartments of Agriturismo La Mora",
   },
   fr: {
     sectionLabel: "Les appartements",
@@ -62,6 +65,7 @@ const TXT: Record<Locale, {
     scopriDiPiu: "En savoir plus",
     tuttiGliAppartamenti: "Tous les appartements",
     richiediGuida: "Demander le guide sur WhatsApp",
+    carouselRegion: "Appartements d'Agriturismo La Mora",
   },
   de: {
     sectionLabel: "Die Apartments",
@@ -76,6 +80,7 @@ const TXT: Record<Locale, {
     scopriDiPiu: "Mehr erfahren",
     tuttiGliAppartamenti: "Alle Apartments",
     richiediGuida: "Anleitung auf WhatsApp anfordern",
+    carouselRegion: "Apartments von Agriturismo La Mora",
   },
 };
 
@@ -711,7 +716,7 @@ function DesktopCarousel({ reducedMotion, locale }: { reducedMotion: boolean; lo
         <div
           role="region"
           aria-roledescription="carousel"
-          aria-label="Appartamenti di Agriturismo La Mora"
+          aria-label={TXT[locale].carouselRegion}
           className="relative z-[2] mt-8 min-h-0 flex-1 sm:mt-10"
         >
           {APARTMENTS.map((apt, i) => {
@@ -871,7 +876,7 @@ function MobileCarousel({ reducedMotion, locale }: { reducedMotion: boolean; loc
       <div
         role="region"
         aria-roledescription="carousel"
-        aria-label="Appartamenti di Agriturismo La Mora"
+        aria-label={TXT[locale].carouselRegion}
         tabIndex={0}
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}

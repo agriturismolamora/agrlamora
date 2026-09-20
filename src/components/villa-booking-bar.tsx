@@ -251,7 +251,7 @@ export function VillaBookingBar({ locale }: { locale: Locale }) {
           </a>
           <a
             href={PHONE_TEL}
-            aria-label="Chiama per Villa Relax"
+            aria-label={t("booking", "chiamaVilla", locale)}
             className="flex h-full w-full items-center justify-center bg-raspberry-light text-cream transition-colors hover:bg-[#ad5864]"
           >
             <PhoneIcon />

@@ -442,7 +442,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
             </p>
             {paoloQuote && (
               <div className="mt-8 border-l-2 border-gold pl-5">
-                <StarRow rating={paoloQuote.rating} size={13} />
+                <StarRow rating={paoloQuote.rating} size={13} locale={locale} />
                 <p className="mt-2 text-[13px] leading-[1.7] text-ink-soft">&ldquo;{paoloQuote.text}&rdquo;</p>
                 <p className="mt-2 text-[11px] uppercase tracking-[0.08em] text-ink-soft/70">
                   {paoloQuote.authorName} {text.googleSuffix}

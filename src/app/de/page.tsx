@@ -56,7 +56,7 @@ export default function Home() {
       <NewsletterSection locale="de" />
       <CertificationsMarquee locale="de" />
       <PromoPopup locale="de" />
-      <SectionProgressDots />
+      <SectionProgressDots locale="de" />
       <SectionSnapScroll />
     </>
   );
