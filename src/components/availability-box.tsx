@@ -12,7 +12,7 @@ const WHATSAPP_URL = (name: string) =>
    racconto a fianco, così è sempre facilmente raggiungibile. */
 export function AvailabilityBox({ apt }: { apt: Apartment }) {
   return (
-    <aside className="lg:sticky lg:top-28 lg:self-start">
+    <aside id="prenota" className="scroll-mt-24 lg:sticky lg:top-28 lg:self-start">
       <div className="rounded-[3px] border border-ink/10 bg-cream-dim px-6 py-7 sm:px-7">
         <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-olive-950">Disponibilità</span>
         <p className="mt-2 font-display text-[22px] leading-tight text-ink">Appartamento {apt.name}</p>
@@ -38,7 +38,7 @@ export function AvailabilityBox({ apt }: { apt: Apartment }) {
 
         <button
           type="button"
-          className="mt-6 w-full rounded-[3px] bg-raspberry py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
+          className="rrp-widget-open-modal mt-6 w-full rounded-[3px] bg-raspberry py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
         >
           Prenota ora
         </button>

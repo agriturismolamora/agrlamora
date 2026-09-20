@@ -486,7 +486,7 @@ export function BookingBar({ locale }: { locale: Locale }) {
 
         <button
           type="button"
-          className={`h-full w-full whitespace-nowrap px-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-500 ${
+          className={`rrp-widget-open-modal h-full w-full whitespace-nowrap px-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-500 ${
             inApartments ? "bg-[#141a30] hover:bg-[#1c2440]" : "bg-raspberry hover:bg-[#8a3844]"
           }`}
         >
@@ -658,7 +658,7 @@ function MobileBookingSheet({
 
         <button
           type="button"
-          className="mt-5 w-full rounded-[3px] bg-raspberry py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
+          className="rrp-widget-open-modal mt-5 w-full rounded-[3px] bg-raspberry py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
         >
           {t("booking", "prenotaOra", locale)}
         </button>

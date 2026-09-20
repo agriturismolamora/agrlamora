@@ -5,7 +5,7 @@ import { ApartmentsCarousel } from "@/components/apartments-carousel";
 import { StructureHighlights } from "@/components/structure-highlights";
 import { RankingSection } from "@/components/ranking-section";
 import { OutdoorLife } from "@/components/outdoor-life";
-import { EvChargingSection } from "@/components/ev-charging-section";
+import { SustainabilitySection } from "@/components/sustainability-section";
 import { TerritorySection } from "@/components/territory-section";
 import { ReviewsSection } from "@/components/reviews-section";
 import { ReviewGate } from "@/components/review-gate";
@@ -37,14 +37,14 @@ export default function Home() {
     <>
       <HomeIntro />
       <Hero locale="de" />
-      <ImmersiveStory />
+      <ImmersiveStory locale="de" />
       <ApartmentsCarousel locale="de" />
       <StructureHighlights locale="de" />
       <PriceComparisonSection locale="de" />
       <RankingSection locale="de" />
       <BlogSection locale="de" />
       <OutdoorLife locale="de" />
-      <EvChargingSection locale="de" />
+      <SustainabilitySection locale="de" />
       <TerritorySection locale="de" />
       <ReviewsSection locale="de" />
       <ReviewGate writeReviewUrl={getWriteReviewUrl()} locale="de" />
