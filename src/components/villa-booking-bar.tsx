@@ -129,6 +129,7 @@ function GuestsStepper({
 export function VillaBookingBar({ locale }: { locale: Locale }) {
   const [guestsOpen, setGuestsOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [nearFooter, setNearFooter] = useState(false);
   const booking = useVillaBookingState();
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -149,6 +150,21 @@ export function VillaBookingBar({ locale }: { locale: Locale }) {
     };
   }, []);
 
+  // Stessa dissolvenza della BookingBar globale (vedi booking-bar.tsx): senza
+  // questa, la barra fixed restava sempre opaca e copriva permanentemente
+  // P.IVA/copyright nell'ultimo tratto del footer — bug reale osservato in
+  // fondo a questa pagina, mai portato qui quando fu creata la barra dedicata.
+  useEffect(() => {
+    const footer = document.getElementById("site-footer");
+    if (!footer || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      ([entry]) => setNearFooter(entry.isIntersecting),
+      { rootMargin: "0px 0px -15% 0px" }
+    );
+    io.observe(footer);
+    return () => io.disconnect();
+  }, []);
+
   useEffect(() => {
     if (!sheetOpen) return;
     document.body.style.overflow = "hidden";
@@ -160,8 +176,15 @@ export function VillaBookingBar({ locale }: { locale: Locale }) {
   const whatsappUrl = buildWhatsappUrl(locale, booking.checkIn, booking.checkOut, booking.guests);
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-5 z-[70] flex justify-center px-4 sm:px-6">
-      <div className="pointer-events-auto w-max max-w-full">
+    <div
+      className="pointer-events-none fixed inset-x-0 bottom-5 z-[70] flex justify-center px-4 transition-all duration-500 ease-out sm:px-6"
+      style={
+        nearFooter
+          ? { opacity: 0, transform: "translateY(16px)" }
+          : { opacity: 1, transform: "translateY(0)" }
+      }
+    >
+      <div className={`w-max max-w-full ${nearFooter ? "pointer-events-none" : "pointer-events-auto"}`}>
         {/* Desktop / tablet */}
         <div
           ref={rootRef}
