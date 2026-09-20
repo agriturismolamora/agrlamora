@@ -18,11 +18,18 @@ type Cta = { label: string; href?: string; action?: "open-booking" };
 type ChatMessage = { role: "user" | "bot"; text: string; cta?: Cta };
 type Rule = { keywords: string[]; reply: string; cta?: Cta };
 
+/* Il saluto NON dice più "sono il concierge digitale": con la foto e il
+   nome di Paolo già in testata alla chat, quella frase da assistente
+   automatico rompeva subito l'effetto richiesto ("una volta aperto,
+   l'utente deve pensare di star parlando con Paolo stesso"). Il tono resta
+   comunque onesto — non dichiara mai di essere umano, risponde solo nel
+   merito, in prima persona, come farebbe chi risponde davvero ai messaggi
+   della struttura. */
 const GREETING: Record<Locale, string> = {
-  it: "Ciao! Sono il concierge digitale di Agriturismo La Mora. Rispondo solo a domande sulla struttura: appartamenti, piscina, colazione, animali, ricarica elettrica, territorio e prenotazioni. Come posso aiutarti?",
-  en: "Hi! I'm Agriturismo La Mora's digital concierge. I only answer questions about the property: apartments, pool, breakfast, pets, EV charging, the area and bookings. How can I help?",
-  fr: "Bonjour ! Je suis le concierge numérique d'Agriturismo La Mora. Je réponds uniquement aux questions sur la structure : appartements, piscine, petit-déjeuner, animaux, recharge électrique, territoire et réservations. Comment puis-je vous aider ?",
-  de: "Hallo! Ich bin der digitale Concierge von Agriturismo La Mora. Ich beantworte nur Fragen zur Unterkunft: Apartments, Pool, Frühstück, Haustiere, E-Ladestation, Umgebung und Buchungen. Wie kann ich helfen?",
+  it: "Ciao! Sono qui per aiutarti con qualsiasi domanda su La Mora: appartamenti, piscina, colazione, animali, ricarica elettrica, territorio e prenotazioni. Come posso aiutarti?",
+  en: "Hi! I'm here to help with any question about La Mora: apartments, pool, breakfast, pets, EV charging, the area and bookings. How can I help?",
+  fr: "Bonjour ! Je suis là pour répondre à toutes vos questions sur La Mora : appartements, piscine, petit-déjeuner, animaux, recharge électrique, territoire et réservations. Comment puis-je vous aider ?",
+  de: "Hallo! Ich bin hier, um Ihnen bei allen Fragen zu La Mora zu helfen: Apartments, Pool, Frühstück, Haustiere, E-Ladestation, Umgebung und Buchungen. Wie kann ich helfen?",
 };
 
 function getQuickReplies(locale: Locale): string[] {
@@ -288,23 +295,31 @@ function matchRule(text: string, rules: Rule[]) {
   return rules.find((r) => r.keywords.some((k) => lower.includes(k)));
 }
 
-function ChatBubbleIcon() {
+function CloseIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+      <path d="M5 5l14 14M19 5 5 19" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function ChatBubbleIconSmall() {
+  return (
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true">
       <path
         d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8A2.5 2.5 0 0 1 17.5 16H10l-4.5 4v-4H6.5A2.5 2.5 0 0 1 4 13.5v-8Z"
         stroke="currentColor"
-        strokeWidth="1.6"
+        strokeWidth="1.8"
         strokeLinejoin="round"
       />
     </svg>
   );
 }
 
-function CloseIcon() {
+function CloseIconSmall() {
   return (
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
-      <path d="M5 5l14 14M19 5 5 19" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" aria-hidden="true">
+      <path d="M5 5l14 14M19 5 5 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
@@ -415,16 +430,29 @@ export function ConciergeChat({ locale }: { locale: Locale }) {
           aria-label="Concierge virtuale Agriturismo La Mora"
           className="absolute bottom-[68px] right-0 flex h-[min(480px,70dvh)] w-[min(92vw,360px)] flex-col overflow-hidden rounded-[6px] bg-cream shadow-[0_30px_70px_-20px_rgba(28,33,23,0.5)]"
         >
-          <div className="flex items-center justify-between bg-olive-950 px-5 py-4 text-cream">
-            <div className="flex items-center gap-2.5">
-              <span className="h-2 w-2 rounded-full bg-[#7cb87c]" aria-hidden="true" />
-              <span className="font-display text-[17px]">{t("concierge", "title", locale)}</span>
+          {/* Header con la foto e il nome di Paolo, non un titolo anonimo:
+              richiesta esplicita del titolare — una volta aperta la chat,
+              l'ospite deve avere la sensazione di scrivere direttamente a
+              lui, stessa persona dell'avatar sul pulsante flottante. */}
+          <div className="flex items-center justify-between gap-3 bg-olive-950 px-4 py-3.5 text-cream">
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-cream/20">
+                <Image src={HOST_PHOTO} alt={HOST_ALT[locale]} fill sizes="40px" className="object-cover" />
+                <span
+                  aria-hidden="true"
+                  className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-olive-950 bg-[#4caf50]"
+                />
+              </div>
+              <div className="min-w-0">
+                <span className="block truncate font-display text-[16px] leading-tight">{HOST_NAME}</span>
+                <span className="block truncate text-[10.5px] leading-tight text-cream/60">{t("concierge", "title", locale)}</span>
+              </div>
             </div>
             <button
               type="button"
               onClick={() => setOpen(false)}
               aria-label={CLOSE_LABEL[locale]}
-              className="flex h-7 w-7 items-center justify-center rounded-full transition-colors hover:bg-cream/10"
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-colors hover:bg-cream/10"
             >
               <CloseIcon />
             </button>
@@ -500,36 +528,38 @@ export function ConciergeChat({ locale }: { locale: Locale }) {
         </div>
       )}
 
-      {/* Foto dell'host sopra il pulsante: richiesta esplicita del titolare
-          per far capire subito che dietro il concierge virtuale risponde
-          davvero lui, non un bot anonimo — pallino verde "online" a
-          rinforzare la fiducia. Nascosta a pannello aperto, dove occuperebbe
-          lo stesso spazio del pannello chat. */}
-      {!open && (
-        <div className="mb-2.5 flex justify-end">
-          <div
-            className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-cream shadow-[0_10px_24px_-10px_rgba(28,33,23,0.6)]"
-            title={ONLINE_TITLE[locale]}
-          >
-            <Image src={HOST_PHOTO} alt={HOST_ALT[locale]} fill sizes="48px" className="object-cover" />
-            <span
-              aria-hidden="true"
-              className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-cream bg-[#4caf50]"
-            />
-          </div>
-        </div>
-      )}
-
+      {/* Un solo pulsante circolare = la foto di Paolo, non due cerchi
+          separati (foto decorativa sopra + pulsante anonimo sotto): così
+          la connessione "questa persona ↔ apri la chat" è diretta e
+          cliccabile ovunque sul cerchio, non solo sull'icona. Il badge in
+          basso a destra mostra un'icona chat quando chiuso e una X quando
+          aperto, sullo stesso pallino colorato — pallino verde "online"
+          separato, sempre visibile, a rinforzare la fiducia. */}
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-label={open ? CLOSE_LABEL[locale] : OPEN_LABEL[locale]}
-        className={`flex h-14 w-14 items-center justify-center rounded-full text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors duration-500 ${
-          inApartments && !open ? "bg-[#141a30] hover:bg-[#1c2440]" : "bg-raspberry hover:bg-[#8a3844]"
-        }`}
+        title={!open ? ONLINE_TITLE[locale] : undefined}
+        className="relative flex h-14 w-14 items-center justify-center rounded-full shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-transform duration-200 hover:scale-105"
       >
-        {open ? <CloseIcon /> : <ChatBubbleIcon />}
+        <span className="relative block h-full w-full overflow-hidden rounded-full border-2 border-cream">
+          <Image src={HOST_PHOTO} alt={HOST_ALT[locale]} fill sizes="56px" className="object-cover" />
+        </span>
+        {!open && (
+          <span
+            aria-hidden="true"
+            className="absolute right-0 top-0 h-3 w-3 rounded-full border-2 border-cream bg-[#4caf50]"
+          />
+        )}
+        <span
+          aria-hidden="true"
+          className={`absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full border-2 border-cream text-cream transition-colors duration-500 ${
+            inApartments && !open ? "bg-[#141a30]" : "bg-raspberry"
+          }`}
+        >
+          {open ? <CloseIconSmall /> : <ChatBubbleIconSmall />}
+        </span>
       </button>
     </div>
   );

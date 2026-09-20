@@ -60,7 +60,7 @@ export const dict = {
     ospitiSuffixPlural: { it: "ospiti", en: "guests", fr: "voyageurs", de: "Gäste" },
   },
   concierge: {
-    title: { it: "Concierge La Mora", en: "La Mora Concierge", fr: "Concierge La Mora", de: "La Mora Concierge" },
+    title: { it: "Host di Agriturismo La Mora", en: "Host of Agriturismo La Mora", fr: "Hôte d'Agriturismo La Mora", de: "Gastgeber von Agriturismo La Mora" },
     inputPlaceholder: { it: "Scrivi una domanda...", en: "Ask a question...", fr: "Posez une question...", de: "Stellen Sie eine Frage..." },
     invia: { it: "Invia", en: "Send", fr: "Envoyer", de: "Senden" },
   },

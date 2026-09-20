@@ -12,28 +12,30 @@ export function GoogleMark({ size = 26 }: { size?: number }) {
   );
 }
 
-/* Marchio Tripadvisor (i due "occhi" a cerchio + testo), stesso principio
-   di GoogleMark: usato SOLO come attribuzione della piattaforma accanto a
-   un link reale verso la vera pagina TripAdvisor della struttura — mai come
-   sigillo/certificazione auto-costruita che implichi un riconoscimento
-   ufficiale mai rilasciato. Colore uguale al verde ufficiale del brand
-   (#00AF87), forma semplificata ma riconoscibile. */
+/* Marchio Tripadvisor: usato SOLO come attribuzione della piattaforma
+   accanto a un link reale verso la vera pagina TripAdvisor della
+   struttura — mai come sigillo/certificazione auto-costruita che implichi
+   un riconoscimento ufficiale mai rilasciato. La silhouette del gufetto
+   (il path sotto) è la riproduzione fedele del logo ufficiale TripAdvisor,
+   non una ricostruzione approssimativa a occhio — path e colore ufficiale
+   (#34E0A1) presi da tripadvisor.mediaroom.com/logo-guidelines. */
 export function TripadvisorMark({ size = 26 }: { size?: number }) {
-  /* viewBox largo 195 (non 130): il testo "tripadvisor" a fontSize 16
-     inizia a x=64 ed è largo ~124 unità, quindi arriva fino a x≈188 — con
-     un viewBox di soli 130 restava tagliato a metà dall'overflow:hidden
+  /* viewBox largo 172 (non 130): il testo "Tripadvisor" a fontSize 16
+     inizia a x=36 ed è largo ~124 unità, quindi arriva fino a x≈160 — con
+     un viewBox più stretto restava tagliato a metà dall'overflow:hidden
      di default degli <svg>, invisibile a dimensioni piccole ma evidente
      alla dimensione usata in reviews-section.tsx (size=85). */
-  const h = size * (34 / 195);
+  const h = size * (34 / 172);
   return (
-    <svg viewBox="0 0 195 34" width={size} height={h} aria-hidden="true">
-      <circle cx="18" cy="19" r="13" fill="none" stroke="#00AF87" strokeWidth="2.4" />
-      <circle cx="18" cy="19" r="4.2" fill="#00AF87" />
-      <circle cx="47" cy="19" r="13" fill="none" stroke="#00AF87" strokeWidth="2.4" />
-      <circle cx="47" cy="19" r="4.2" fill="#00AF87" />
-      <path d="M14 6.5C19 3 27 3 32 6.5" fill="none" stroke="#00AF87" strokeWidth="2.4" strokeLinecap="round" />
-      <text x="64" y="25" fontFamily="Arial, Helvetica, sans-serif" fontWeight="700" fontSize="16" fill="#00AF87">
-        tripadvisor
+    <svg viewBox="0 0 172 34" width={size} height={h} aria-hidden="true">
+      <g transform="translate(3, 5)">
+        <path
+          fill="#34E0A1"
+          d="M12.006 4.295c-2.67 0-5.338.784-7.645 2.353H0l1.963 2.135a5.997 5.997 0 0 0 4.04 10.43 5.976 5.976 0 0 0 4.075-1.6L12 19.705l1.922-2.09a5.972 5.972 0 0 0 4.072 1.598 6 6 0 0 0 6-5.998 5.982 5.982 0 0 0-1.957-4.432L24 6.648h-4.35a13.573 13.573 0 0 0-7.644-2.353zM12 6.255c1.531 0 3.063.303 4.504.903C13.943 8.138 12 10.43 12 13.1c0-2.671-1.942-4.962-4.504-5.942A11.72 11.72 0 0 1 12 6.256zM6.002 9.157a4.059 4.059 0 1 1 0 8.118 4.059 4.059 0 0 1 0-8.118zm11.992.002a4.057 4.057 0 1 1 .003 8.115 4.057 4.057 0 0 1-.003-8.115zm-11.992 1.93a2.128 2.128 0 0 0 0 4.256 2.128 2.128 0 0 0 0-4.256zm11.992 0a2.128 2.128 0 0 0 0 4.256 2.128 2.128 0 0 0 0-4.256z"
+        />
+      </g>
+      <text x="36" y="25" fontFamily="Arial, Helvetica, sans-serif" fontWeight="700" fontSize="16" fill="#34E0A1">
+        Tripadvisor
       </text>
     </svg>
   );

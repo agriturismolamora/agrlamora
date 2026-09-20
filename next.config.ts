@@ -14,6 +14,12 @@ const nextConfig: NextConfig = {
     root: path.resolve(__dirname),
   },
   images: {
+    // Next 16 limita di default la qualità a [75]: i quality={90}/{92} già
+    // usati nel codice (blog-section.tsx, apartments-carousel.tsx) senza
+    // questa dichiarazione non venivano onorati — causa reale delle
+    // immagini "sfocate" segnalate nel blog, non solo un problema di
+    // sorgente. Elenco chiuso, non un range: solo i valori realmente usati.
+    qualities: [75, 90, 92],
     remotePatterns: [
       // Foto profilo reali dei recensori, servite da Google (Places API).
       { protocol: "https", hostname: "lh3.googleusercontent.com" },

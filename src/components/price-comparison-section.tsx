@@ -216,14 +216,19 @@ export async function PriceComparisonSection({ locale }: { locale: Locale }) {
         {/* Card comparativa */}
         <Reveal delay={100}>
           <div className="mt-12 overflow-hidden rounded-[8px] border border-ink/10 bg-white shadow-[0_30px_70px_-40px_rgba(28,33,23,0.35)] lg:grid lg:grid-cols-[0.85fr_1fr] lg:items-stretch">
-            {/* Foto */}
+            {/* Foto: gazebo esterno di Sagittario, su richiesta del titolare
+                (era la piscina). object-position leggermente spostato in
+                alto rispetto al centro: il source è 4:3, qui va a riempire
+                un riquadro più largo (16:10 su mobile, altezza piena su
+                desktop) — senza aggiustare la resa di default il crop
+                centrale tagliava via troppa struttura del gazebo in alto. */}
             <div className="relative aspect-[16/10] lg:aspect-auto">
               <Image
-                src="/images/piscina/piscina agriturismo la mora.webp"
-                alt="Piscina panoramica di Agriturismo La Mora"
+                src="/images/alloggi/appartamento sagittario/gazebo sagittario 2.jpeg"
+                alt="Gazebo esterno privato dell'appartamento Sagittario, Agriturismo La Mora"
                 fill
                 sizes="(max-width: 1024px) 100vw, 45vw"
-                className="object-cover"
+                className="object-cover object-[50%_35%]"
               />
             </div>
 

@@ -20,38 +20,66 @@ export async function blogArticleMetadata(locale: Locale, params: Promise<Params
   if (!post) return {};
   return {
     title: post.title,
-    description: post.excerpt,
+    description: post.metaDescription,
     alternates: { canonical: withLocale(locale, `/blog/${post.slug}/`) },
-    openGraph: { title: post.title, description: post.excerpt, images: [post.image] },
+    openGraph: { title: post.title, description: post.metaDescription, images: [post.image] },
   };
 }
 
-const TEXT: Record<Locale, { allArticles: string; nearby: string; discoverApartments: string; otherArticles: string }> = {
-  it: {
-    allArticles: "Tutti gli articoli",
-    nearby: "A pochi minuti da qui, in campagna.",
-    discoverApartments: "Scopri gli appartamenti",
-    otherArticles: "Altri articoli",
-  },
-  en: {
-    allArticles: "All articles",
-    nearby: "Minutes from here, in the countryside.",
-    discoverApartments: "Discover the apartments",
-    otherArticles: "More articles",
-  },
-  fr: {
-    allArticles: "Tous les articles",
-    nearby: "À quelques minutes d'ici, à la campagne.",
-    discoverApartments: "Découvrir les appartements",
-    otherArticles: "Autres articles",
-  },
-  de: {
-    allArticles: "Alle Artikel",
-    nearby: "Wenige Minuten von hier entfernt, auf dem Land.",
-    discoverApartments: "Die Apartments entdecken",
-    otherArticles: "Weitere Artikel",
-  },
+const TEXT: Record<Locale, { allArticles: string; otherArticles: string }> = {
+  it: { allArticles: "Tutti gli articoli", otherArticles: "Altri articoli" },
+  en: { allArticles: "All articles", otherArticles: "More articles" },
+  fr: { allArticles: "Tous les articles", otherArticles: "Autres articles" },
+  de: { allArticles: "Alle Artikel", otherArticles: "Weitere Artikel" },
 };
+
+/* Blocco CTA riusato per iniziale/centrale/finale: stesso componente,
+   varianti solo di colore (oro per iniziale/centrale, raspberry per la
+   finale, coerente con il resto del sito — es. price-comparison-section)
+   così l'occhio la riconosce sempre come "momento commerciale" senza
+   sembrare tre banner diversi incollati nell'articolo. */
+function ArticleCta({
+  heading,
+  body,
+  label,
+  href,
+  locale,
+  variant = "gold",
+}: {
+  heading: string;
+  body?: string;
+  label: string;
+  href: string;
+  locale: Locale;
+  variant?: "gold" | "raspberry";
+}) {
+  const isExternal = href.startsWith("http") || href.startsWith("tel:") || href.startsWith("https://wa.me");
+  const resolvedHref = isExternal ? href : withLocale(locale, href);
+  const linkProps = isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {};
+  return (
+    <div className="my-10 rounded-[6px] bg-cream-dim px-6 py-7 text-center sm:px-8 sm:py-8">
+      <p className="font-display text-[19px] font-normal leading-[1.4] text-ink [text-wrap:balance] sm:text-[21px]">
+        {heading}
+      </p>
+      {body && <p className="mx-auto mt-2.5 max-w-[440px] text-[13.5px] leading-[1.7] text-ink-soft">{body}</p>}
+      <Link
+        href={resolvedHref}
+        {...linkProps}
+        className={`group relative mt-5 inline-flex items-center gap-2.5 overflow-hidden rounded-lg px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] ${
+          variant === "raspberry" ? "bg-raspberry text-cream" : "bg-gold text-[#1f180e]"
+        }`}
+      >
+        <HoverFill color={variant === "raspberry" ? "#8a3844" : "#8f7330"} />
+        <span className="relative z-10 inline-flex items-center gap-2.5">
+          {label}
+          <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+            →
+          </span>
+        </span>
+      </Link>
+    </div>
+  );
+}
 
 export async function BlogArticlePageView({ locale, params }: { locale: Locale; params: Promise<Params> }) {
   const text = TEXT[locale];
@@ -66,7 +94,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
-    description: post.excerpt,
+    description: post.metaDescription,
     image: post.image,
   };
 
@@ -98,26 +126,118 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
       <section className="bg-cream py-14 sm:py-16">
         <div className="mx-auto max-w-[680px] px-6 sm:px-10">
           <Reveal>
-            <div className="space-y-5">
-              {post.body.map((p, i) => (
-                <p key={i} className="text-[15px] leading-[1.85] text-ink-soft">
-                  {p}
-                </p>
-              ))}
-            </div>
+            <p className="font-display text-[20px] font-normal leading-[1.55] text-ink [text-wrap:balance] sm:text-[22px]">
+              {post.intro}
+            </p>
           </Reveal>
 
-          <Reveal delay={100}>
-            <div className="mt-12 rounded-[3px] bg-cream-dim px-7 py-7 text-center">
-              <p className="font-display text-[19px] font-normal leading-[1.4] text-ink [text-wrap:balance]">{text.nearby}</p>
-              <Link
-                href={withLocale(locale, "/alloggi/")}
-                className="group relative mt-5 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
-              >
-                <HoverFill color="#8a3844" />
-                <span className="relative z-10">{text.discoverApartments}</span>
-              </Link>
-            </div>
+          <Reveal delay={80}>
+            <ArticleCta
+              heading={post.introCtaHeading}
+              label={post.introCtaLabel}
+              href={post.introCtaHref}
+              locale={locale}
+              variant="gold"
+            />
+          </Reveal>
+
+          <div className="mt-2 space-y-6">
+            {post.content.map((block, i) => {
+              switch (block.type) {
+                case "h2":
+                  return (
+                    <Reveal key={i}>
+                      <h2 className="pt-4 font-display text-[24px] font-normal leading-[1.25] text-ink [text-wrap:balance] sm:text-[27px]">
+                        {block.text}
+                      </h2>
+                    </Reveal>
+                  );
+                case "h3":
+                  return (
+                    <Reveal key={i}>
+                      <h3 className="pt-2 font-display text-[18px] font-normal leading-[1.3] text-ink [text-wrap:balance]">
+                        {block.text}
+                      </h3>
+                    </Reveal>
+                  );
+                case "p":
+                  return (
+                    <Reveal key={i}>
+                      <p className="text-[15px] leading-[1.85] text-ink-soft">{block.text}</p>
+                    </Reveal>
+                  );
+                case "list":
+                  return (
+                    <Reveal key={i}>
+                      <ul className="space-y-2.5">
+                        {block.items.map((item, j) => (
+                          <li key={j} className="flex items-start gap-2.5 text-[15px] leading-[1.7] text-ink-soft">
+                            <span aria-hidden="true" className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-raspberry" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </Reveal>
+                  );
+                case "facts":
+                  return (
+                    <Reveal key={i}>
+                      <dl className="grid grid-cols-2 gap-x-6 gap-y-5 rounded-[6px] border border-ink/10 bg-cream-dim px-6 py-6 sm:grid-cols-3">
+                        {block.items.map((f) => (
+                          <div key={f.label}>
+                            <dt className="text-[10px] font-semibold uppercase tracking-[0.08em] text-ink-soft">{f.label}</dt>
+                            <dd className="mt-1 font-display text-[17px] leading-tight text-ink">{f.value}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </Reveal>
+                  );
+                case "image":
+                  return (
+                    <Reveal key={i} className="!mt-8">
+                      <div className="relative aspect-[3/2] overflow-hidden rounded-[4px]">
+                        <Image
+                          src={block.src}
+                          alt={block.alt}
+                          fill
+                          loading="lazy"
+                          sizes="(max-width: 640px) 100vw, 680px"
+                          className="object-cover"
+                        />
+                      </div>
+                      {block.caption && (
+                        <span className="mt-2 block text-[11.5px] leading-[1.5] text-ink-soft/70">{block.caption}</span>
+                      )}
+                    </Reveal>
+                  );
+                case "cta":
+                  return (
+                    <Reveal key={i}>
+                      <ArticleCta
+                        heading={block.heading}
+                        body={block.body}
+                        label={block.label}
+                        href={block.href}
+                        locale={locale}
+                        variant="gold"
+                      />
+                    </Reveal>
+                  );
+                default:
+                  return null;
+              }
+            })}
+          </div>
+
+          <Reveal delay={80}>
+            <ArticleCta
+              heading={post.finalCtaHeading}
+              body={post.finalCtaBody}
+              label={post.finalCtaLabel}
+              href={post.finalCtaHref}
+              locale={locale}
+              variant="raspberry"
+            />
           </Reveal>
         </div>
       </section>
