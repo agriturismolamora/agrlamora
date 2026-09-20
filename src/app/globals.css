@@ -38,10 +38,29 @@
   --font-sans: var(--font-montserrat);
 }
 
+/* Rete di sicurezza contro overflow orizzontali residui: qualunque elemento
+   che sfori la larghezza del viewport (un margine negativo, una card ruotata
+   del carousel, un calcolo di troppo su schermi molto stretti) resta
+   nascosto invece di aprire uno scroll orizzontale di pagina — su iOS
+   Safari il rubber-band overscroll rende questi bug particolarmente
+   evidenti e fastidiosi al tocco. `clip`, non `hidden`: `overflow-x: hidden`
+   su html/body forza per spec `overflow-y` a calcolare `auto` (quando è
+   `visible`), trasformando body in un vero scroll container — esattamente
+   il bug già trovato e documentato in apartments-carousel.tsx ("rompeva
+   completamente lo sticky, che si limitava a scorrere insieme alla pagina
+   invece di restare fissato"). `clip` impedisce lo scroll orizzontale senza
+   mai istituire un contenitore di scroll, quindi non tocca `position:
+   sticky` in nessun punto del sito (ImmersiveStory, il carousel pinned,
+   PinnedHold). Supportato da Safari 16+ (settembre 2022 in su). */
+html {
+  overflow-x: clip;
+}
+
 body {
   background: var(--color-cream);
   color: var(--color-ink);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  overflow-x: clip;
 }
 
 .skip-link {

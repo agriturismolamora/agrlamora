@@ -421,7 +421,7 @@ export function ConciergeChat({ locale }: { locale: Locale }) {
 
   return (
     <div
-      className="fixed bottom-24 right-5 z-[75] transition-opacity duration-300 sm:bottom-6 sm:right-6"
+      className="fixed bottom-[calc(6rem+env(safe-area-inset-bottom))] right-5 z-[75] transition-opacity duration-300 sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom))] sm:right-6"
       style={nearFooter ? { opacity: 0, pointerEvents: "none" } : undefined}
     >
       {open && (

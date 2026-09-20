@@ -4,8 +4,19 @@ import Image from "next/image";
 import { useCallback, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { useLightbox } from "@/components/gallery-lightbox";
 import type { GalleryImage } from "@/data/apartment-details";
+import type { Locale } from "@/lib/i18n";
 
 const SWIPE_THRESHOLD = 46;
+
+/* Erano hardcoded in italiano (bug trovato durante la verifica multilingua):
+   utenti di screen reader su /en/, /fr/, /de/ sentivano comunque "Galleria
+   fotografica", "Foto precedente/successiva", "Apri a schermo intero". */
+const TEXT: Record<Locale, { region: string; prev: string; next: string; openFullscreen: (alt: string) => string }> = {
+  it: { region: "Galleria fotografica", prev: "Foto precedente", next: "Foto successiva", openFullscreen: (alt) => `Apri a schermo intero: ${alt}` },
+  en: { region: "Photo gallery", prev: "Previous photo", next: "Next photo", openFullscreen: (alt) => `Open full screen: ${alt}` },
+  fr: { region: "Galerie photo", prev: "Photo précédente", next: "Photo suivante", openFullscreen: (alt) => `Ouvrir en plein écran : ${alt}` },
+  de: { region: "Fotogalerie", prev: "Vorheriges Foto", next: "Nächstes Foto", openFullscreen: (alt) => `Vollbild öffnen: ${alt}` },
+};
 
 /* Galleria come slider/carousel (richiesta esplicita del titolare — le
    foto "sparse" in griglia editoriale non gli piacevano): una foto grande
@@ -20,9 +31,10 @@ function pad(n: number) {
   return String(n + 1).padStart(2, "0");
 }
 
-export function ApartmentGallery({ images }: { images: GalleryImage[] }) {
+export function ApartmentGallery({ images, locale }: { images: GalleryImage[]; locale: Locale }) {
+  const text = TEXT[locale];
   const [current, setCurrent] = useState(0);
-  const { open, Lightbox } = useLightbox(images);
+  const { open, Lightbox } = useLightbox(images, locale);
   const dragStartX = useRef<number | null>(null);
 
   const goTo = useCallback(
@@ -60,7 +72,7 @@ export function ApartmentGallery({ images }: { images: GalleryImage[] }) {
       <div
         role="region"
         aria-roledescription="carousel"
-        aria-label="Galleria fotografica"
+        aria-label={text.region}
         tabIndex={0}
         onKeyDown={onKeyDown}
         onPointerDown={onPointerDown}
@@ -76,7 +88,7 @@ export function ApartmentGallery({ images }: { images: GalleryImage[] }) {
               key={img.src}
               type="button"
               onClick={() => open(current)}
-              aria-label={`Apri a schermo intero: ${img.alt}`}
+              aria-label={text.openFullscreen(img.alt)}
               className="relative h-full w-full shrink-0"
             >
               <Image
@@ -96,7 +108,7 @@ export function ApartmentGallery({ images }: { images: GalleryImage[] }) {
             <button
               type="button"
               onClick={prev}
-              aria-label="Foto precedente"
+              aria-label={text.prev}
               className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-ink/35 text-cream backdrop-blur-[2px] transition-colors hover:bg-ink/55 sm:left-5"
             >
               <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true">
@@ -106,7 +118,7 @@ export function ApartmentGallery({ images }: { images: GalleryImage[] }) {
             <button
               type="button"
               onClick={next}
-              aria-label="Foto successiva"
+              aria-label={text.next}
               className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-ink/35 text-cream backdrop-blur-[2px] transition-colors hover:bg-ink/55 sm:right-5"
             >
               <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true">

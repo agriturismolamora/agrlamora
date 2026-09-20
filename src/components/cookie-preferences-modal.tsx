@@ -104,7 +104,9 @@ export function CookiePreferencesModal({
       aria-modal="true"
       aria-labelledby="cookie-prefs-heading"
     >
-      <div onClick={onClose} aria-hidden="true" className="absolute inset-0 bg-ink/60" />
+      {/* rgba() letterale invece di bg-ink/60: vedi nota in
+          gallery-lightbox.tsx sullo stesso overlay a piena pagina. */}
+      <div onClick={onClose} aria-hidden="true" className="absolute inset-0 bg-[rgba(36,31,23,0.6)]" />
       <div className="relative my-auto flex w-full max-w-[640px] flex-col overflow-hidden rounded-[8px] bg-cream shadow-[0_40px_90px_-30px_rgba(0,0,0,0.6)]">
         <div className="flex items-center justify-between border-b border-ink/10 px-6 py-5 sm:px-8">
           <h2 id="cookie-prefs-heading" className="font-display text-[22px] font-normal text-ink">

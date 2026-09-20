@@ -467,7 +467,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
             </h2>
           </Reveal>
           <div className="mt-8">
-            <ApartmentGallery images={VILLA_GALLERY} />
+            <ApartmentGallery images={VILLA_GALLERY} locale={locale} />
           </div>
         </div>
       </section>

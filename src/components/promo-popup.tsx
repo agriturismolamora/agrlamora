@@ -146,10 +146,12 @@ export function PromoPopup({ locale }: { locale: Locale }) {
       aria-modal="true"
       aria-labelledby="promo-popup-heading"
     >
+      {/* rgba() letterale invece di bg-ink/60: vedi nota in
+          gallery-lightbox.tsx sullo stesso overlay a piena pagina. */}
       <div
         onClick={() => setOpen(false)}
         aria-hidden="true"
-        className="absolute inset-0 bg-ink/60"
+        className="absolute inset-0 bg-[rgba(36,31,23,0.6)]"
       />
       <div className="relative my-auto flex w-full max-w-[920px] flex-col overflow-hidden rounded-[6px] bg-cream shadow-[0_40px_90px_-30px_rgba(0,0,0,0.6)] sm:flex-row">
         <button

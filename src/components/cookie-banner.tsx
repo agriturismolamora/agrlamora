@@ -31,7 +31,7 @@ export function CookieBanner({
       role="dialog"
       aria-modal="false"
       aria-labelledby="cookie-banner-heading"
-      className="fixed inset-x-0 bottom-0 z-[280] flex justify-center px-4 pb-4 sm:px-6 sm:pb-6"
+      className="fixed inset-x-0 bottom-0 z-[280] flex justify-center px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] sm:px-6 sm:pb-6"
     >
       <div className="w-full max-w-[860px] rounded-[8px] border border-ink/10 bg-cream px-6 py-6 shadow-[0_-10px_50px_-15px_rgba(0,0,0,0.35)] sm:px-8">
         <h2 id="cookie-banner-heading" className="font-display text-[19px] font-normal text-ink">

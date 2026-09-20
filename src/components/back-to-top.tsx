@@ -57,7 +57,7 @@ export function BackToTop({ locale }: { locale: Locale }) {
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" })}
       aria-label={t("common", "backToTop", locale)}
-      className={`group fixed bottom-24 left-5 z-[65] flex h-11 w-11 items-center justify-center rounded-full border border-cream/25 bg-olive-950/90 text-cream shadow-[0_10px_25px_-10px_rgba(0,0,0,0.5)] transition-all duration-300 hover:border-raspberry-light hover:text-raspberry-light sm:bottom-6 sm:left-6 ${
+      className={`group fixed bottom-[calc(6rem+env(safe-area-inset-bottom))] left-5 z-[65] flex h-11 w-11 items-center justify-center rounded-full border border-cream/25 bg-olive-950/90 text-cream shadow-[0_10px_25px_-10px_rgba(0,0,0,0.5)] transition-all duration-300 hover:border-raspberry-light hover:text-raspberry-light sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom))] sm:left-6 ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
       }`}
     >

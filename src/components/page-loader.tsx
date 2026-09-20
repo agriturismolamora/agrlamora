@@ -31,7 +31,7 @@ export function PageLoader() {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 z-[500] flex items-center justify-center bg-olive-950/40 backdrop-blur-sm"
+      className="fixed inset-0 z-[500] flex items-center justify-center bg-[rgba(28,33,23,0.4)] backdrop-blur-sm"
     >
       <Image
         src="/images/favicon/favicon%20icona%20agriturismo%20la%20mora.png"

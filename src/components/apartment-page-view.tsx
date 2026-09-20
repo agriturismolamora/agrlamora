@@ -313,7 +313,7 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
             </h2>
           </Reveal>
           <div className="mt-8">
-            <ApartmentGallery images={detail.gallery} />
+            <ApartmentGallery images={detail.gallery} locale={locale} />
           </div>
         </div>
       </section>

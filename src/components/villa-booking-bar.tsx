@@ -177,12 +177,13 @@ export function VillaBookingBar({ locale }: { locale: Locale }) {
 
   return (
     <div
-      className="pointer-events-none fixed inset-x-0 bottom-5 z-[70] flex justify-center px-4 transition-all duration-500 ease-out sm:px-6"
-      style={
-        nearFooter
+      className="pointer-events-none fixed inset-x-0 z-[70] flex justify-center px-4 transition-all duration-500 ease-out sm:px-6"
+      style={{
+        bottom: "calc(1.25rem + env(safe-area-inset-bottom))",
+        ...(nearFooter
           ? { opacity: 0, transform: "translateY(16px)" }
-          : { opacity: 1, transform: "translateY(0)" }
-      }
+          : { opacity: 1, transform: "translateY(0)" }),
+      }}
     >
       <div className={`w-max max-w-full ${nearFooter ? "pointer-events-none" : "pointer-events-auto"}`}>
         {/* Desktop / tablet */}
@@ -277,10 +278,10 @@ export function VillaBookingBar({ locale }: { locale: Locale }) {
           <div
             onClick={() => setSheetOpen(false)}
             aria-hidden="true"
-            className={`absolute inset-0 bg-ink/50 transition-opacity duration-250 ${sheetOpen ? "opacity-100" : "opacity-0"}`}
+            className={`absolute inset-0 bg-[rgba(36,31,23,0.5)] transition-opacity duration-250 ${sheetOpen ? "opacity-100" : "opacity-0"}`}
           />
           <div
-            className={`absolute inset-x-0 bottom-0 max-h-[85vh] overflow-y-auto rounded-t-[10px] bg-cream p-5 transition-transform duration-250 ease-out ${
+            className={`absolute inset-x-0 bottom-0 max-h-[85vh] overflow-y-auto rounded-t-[10px] bg-cream p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] transition-transform duration-250 ease-out ${
               sheetOpen ? "translate-y-0" : "translate-y-full"
             }`}
           >

@@ -400,13 +400,18 @@ export function BookingBar({ locale }: { locale: Locale }) {
     // di pagina (0–2), sotto sticky header (100) e pannello MENU (150).
     // pointer-events-none sulla riga piena, riattivati solo sul contenuto
     // (w-max) per non intercettare click nello spazio vuoto ai lati.
+    // bottom = 20px + safe-area-inset-bottom: su iPhone con home indicator
+    // (safe-area ~34px) un fixed a bottom-5 secco finisce a ridosso della
+    // gesture area, sia visivamente che come bersaglio di tap. env() vale 0
+    // su device senza notch/home indicator, quindi qui non cambia nulla.
     <div
-      className="pointer-events-none fixed inset-x-0 bottom-5 z-[70] flex justify-center px-4 transition-all duration-500 ease-out sm:px-6"
-      style={
-        nearFooter
+      className="pointer-events-none fixed inset-x-0 z-[70] flex justify-center px-4 transition-all duration-500 ease-out sm:px-6"
+      style={{
+        bottom: "calc(1.25rem + env(safe-area-inset-bottom))",
+        ...(nearFooter
           ? { opacity: 0, transform: "translateY(16px)" }
-          : { opacity: 1, transform: "translateY(0)" }
-      }
+          : { opacity: 1, transform: "translateY(0)" }),
+      }}
     >
       <div className={`w-max max-w-full ${nearFooter ? "pointer-events-none" : "pointer-events-auto"}`}>
       {/* Desktop / tablet. Larghezza a due livelli: più generosa (78vw) alle
@@ -512,19 +517,27 @@ export function BookingBar({ locale }: { locale: Locale }) {
       {/* Mobile: CTA flottante che apre una bottom sheet con i campi in
           verticale, affiancata da un pulsante di chiamata diretta — prima
           "chiama invece" viveva solo dentro la sheet, un passaggio in più
-          per chi vuole solo telefonare al volo dalla barra sticky. */}
-      <div className="flex items-center gap-2 md:hidden">
+          per chi vuole solo telefonare al volo dalla barra sticky.
+          items-stretch (non items-center) + il pulsante telefono senza
+          altezza fissa: in tedesco "Verfügbarkeit prüfen" a 320px va su due
+          righe (verificato) — con un'altezza fissa sul pulsante telefono
+          quel wrap creava due pulsanti di altezza diversa, affiancati in
+          modo visibilmente scombinato. Ora l'altezza del telefono segue
+          sempre quella reale del pulsante di testo, qualunque sia la lingua.
+          px-5/text-[12.5px]/tracking ridotto: guadagnano lo spazio che basta
+          perché il tedesco resti su una riga fin dai 320px. */}
+      <div className="flex items-stretch gap-2 md:hidden">
         <button
           type="button"
           onClick={() => setSheetOpen(true)}
-          className="rounded-[3px] bg-raspberry px-6 py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors hover:bg-[#8a3844]"
+          className="rounded-[3px] bg-raspberry px-5 py-4 font-sans text-[12.5px] font-semibold uppercase tracking-[0.03em] text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors hover:bg-[#8a3844]"
         >
           {t("booking", "verificaDisponibilita", locale)}
         </button>
         <a
           href={PHONE_TEL}
           aria-label="Chiama Agriturismo La Mora"
-          className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-[3px] bg-raspberry-light text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors hover:bg-[#ad5864]"
+          className="flex w-[52px] shrink-0 items-center justify-center rounded-[3px] bg-raspberry-light text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors hover:bg-[#ad5864]"
         >
           <PhoneIcon />
         </a>
@@ -577,12 +590,12 @@ function MobileBookingSheet({
       <div
         onClick={onClose}
         aria-hidden="true"
-        className={`absolute inset-0 bg-ink/50 transition-opacity duration-250 ${
+        className={`absolute inset-0 bg-[rgba(36,31,23,0.5)] transition-opacity duration-250 ${
           open ? "opacity-100" : "opacity-0"
         }`}
       />
       <div
-        className={`absolute inset-x-0 bottom-0 max-h-[85vh] overflow-y-auto rounded-t-[10px] bg-cream p-5 transition-transform duration-250 ease-out ${
+        className={`absolute inset-x-0 bottom-0 max-h-[85vh] overflow-y-auto rounded-t-[10px] bg-cream p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] transition-transform duration-250 ease-out ${
           open ? "translate-y-0" : "translate-y-full"
         }`}
       >
