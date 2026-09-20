@@ -74,7 +74,13 @@ export async function ReviewsSection({ locale }: { locale: Locale }) {
       <PinnedHold>
       <div className="mx-auto max-w-[1300px] px-6 sm:px-10 lg:py-24">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-16">
+          {/* Su mobile centrato invece che allineato a sinistra come su
+              desktop (richiesta esplicita di più libertà creativa qui, non
+              solo "la stessa cosa ma stretta"): con una singola colonna
+              piena larghezza il testo a sinistra risultava sbilanciato,
+              centrato legge più come un momento editoriale a sé. */}
           <Reveal>
+            <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
             <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">
               {text.label}
             </span>
@@ -98,13 +104,13 @@ export async function ReviewsSection({ locale }: { locale: Locale }) {
                   )}
                 </div>
               ) : (
-                <span className="whitespace-pre-line text-[13px] leading-[1.5] text-ink-soft">
+                <span className="whitespace-pre-line text-left text-[13px] leading-[1.5] text-ink-soft">
                   {text.comingSoon}
                 </span>
               )}
             </div>
 
-            <div className="mt-7 flex flex-col gap-2.5">
+            <div className="mt-7 flex flex-col items-center gap-2.5 lg:items-start">
               <a
                 href={data.mapsUrl}
                 target="_blank"
@@ -127,6 +133,7 @@ export async function ReviewsSection({ locale }: { locale: Locale }) {
                   →
                 </span>
               </a>
+            </div>
             </div>
           </Reveal>
 

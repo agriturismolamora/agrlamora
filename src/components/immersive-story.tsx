@@ -167,9 +167,14 @@ export function ImmersiveStory({ locale }: { locale: Locale }) {
             <span className="text-[11px] font-medium uppercase leading-none tracking-[0.32em] text-[#f1f1f1]">
               {LABEL[locale]}
             </span>
-            <div className="mt-10 font-display text-[clamp(34px,2.4vw,46px)] leading-[1.08] [text-wrap:balance]">
+            {/* Su mobile il testo pinnato (5 frasi) doveva stare per intero
+                dentro i 100svh della sezione sticky: al valore minimo del
+                clamp desktop (34px) superava l'altezza del viewport e le
+                ultime frasi finivano spinte sotto la booking bar fissa.
+                Sotto sm: dimensione fissa più piccola invece del clamp. */}
+            <div className="mt-6 font-display text-[21px] leading-[1.22] [text-wrap:balance] sm:mt-10 sm:text-[clamp(34px,2.4vw,46px)] sm:leading-[1.08]">
               {WORDS_BY_SENTENCE.map((words, si) => (
-                <p key={si} className="my-[0.06em]">
+                <p key={si} className="my-[0.02em] sm:my-[0.06em]">
                   {words.map((word, wi) => {
                     const i = wordIndex++;
                     return (

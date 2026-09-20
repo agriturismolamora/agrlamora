@@ -780,17 +780,29 @@ function DesktopCarousel({ reducedMotion, locale }: { reducedMotion: boolean; lo
 const MOBILE_LOCK_MS = 480;
 const SWIPE_THRESHOLD = 46;
 const MOBILE_ROTATE = 3;
-const MOBILE_GAP = 20;
+/* Gap ridotto da 20 a 10: con la card attiva più stretta (vedi
+   mobileCardWidth sotto) un gap generoso lasciava le vicine quasi del
+   tutto fuori dal viewport — l'obiettivo esplicito ("card vicine
+   visibili parzialmente, con profondità, non schede impilate") richiede
+   che una porzione riconoscibile della foto successiva resti dentro i
+   bordi dello schermo. */
+const MOBILE_GAP = 10;
 
+/* Prima: clamp(vw*0.8, 260, 360) — a 375px la card attiva occupava 300px
+   su 375 di viewport, lasciando alle vicine solo pochi px di sbavatura ai
+   bordi (di fatto indistinguibile da una singola card impilata). Card più
+   stretta (~70% invece di 80%) libera lo spazio perché la card successiva
+   sporga per davvero (~40px, foto riconoscibile) invece di sparire dietro
+   il bordo del contenitore. */
 function mobileCardWidth(vw: number) {
-  return clamp(vw * 0.8, 260, 360);
+  return clamp(vw * 0.7, 220, 300);
 }
 
 function MobileCarousel({ reducedMotion, locale }: { reducedMotion: boolean; locale: Locale }) {
   const [active, setActive] = useState(START_INDEX);
   const [locked, setLocked] = useState(false);
   const [revealed, setRevealed] = useState<number | null>(null);
-  const [cardWidth, setCardWidth] = useState(320);
+  const [cardWidth, setCardWidth] = useState(280);
   const lockTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dragStartX = useRef<number | null>(null);
 
@@ -802,6 +814,13 @@ function MobileCarousel({ reducedMotion, locale }: { reducedMotion: boolean; loc
     window.addEventListener("resize", update, { passive: true });
     return () => window.removeEventListener("resize", update);
   }, []);
+
+  // Altezza della regione derivata dalla larghezza reale della card (aspect
+  // 3:4) invece di un h-[480px] fisso pensato per la card larga 360px di
+  // prima: con la card ora più stretta (vedi mobileCardWidth) un'altezza
+  // fissa lasciava una fascia vuota sotto/sopra la card. +24px di margine
+  // per la leggera rotazione (fino a 3°) delle card laterali.
+  const regionHeight = Math.round((cardWidth * 4) / 3) + 24;
 
   useEffect(() => () => {
     if (lockTimer.current) clearTimeout(lockTimer.current);
@@ -857,7 +876,8 @@ function MobileCarousel({ reducedMotion, locale }: { reducedMotion: boolean; loc
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
         onKeyDown={handleKeyDown}
-        className="relative z-[2] mt-10 h-[480px] w-full touch-pan-y select-none outline-none"
+        className="relative z-[2] mt-10 w-full touch-pan-y select-none outline-none"
+        style={{ height: `${regionHeight}px` }}
       >
         {APARTMENTS.map((apt, i) => {
           const offset = circularOffset(i, active, N);

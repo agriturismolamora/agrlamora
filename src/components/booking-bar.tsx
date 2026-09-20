@@ -509,15 +509,25 @@ export function BookingBar({ locale }: { locale: Locale }) {
         </a>
       </div>
 
-      {/* Mobile: CTA flottante che apre una bottom sheet con i campi in verticale. */}
-      <div className="flex justify-center md:hidden">
+      {/* Mobile: CTA flottante che apre una bottom sheet con i campi in
+          verticale, affiancata da un pulsante di chiamata diretta — prima
+          "chiama invece" viveva solo dentro la sheet, un passaggio in più
+          per chi vuole solo telefonare al volo dalla barra sticky. */}
+      <div className="flex items-center gap-2 md:hidden">
         <button
           type="button"
           onClick={() => setSheetOpen(true)}
-          className="rounded-[3px] bg-raspberry px-8 py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors hover:bg-[#8a3844]"
+          className="rounded-[3px] bg-raspberry px-6 py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors hover:bg-[#8a3844]"
         >
           {t("booking", "verificaDisponibilita", locale)}
         </button>
+        <a
+          href={PHONE_TEL}
+          aria-label="Chiama Agriturismo La Mora"
+          className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-[3px] bg-raspberry-light text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors hover:bg-[#ad5864]"
+        >
+          <PhoneIcon />
+        </a>
       </div>
 
       <MobileBookingSheet locale={locale} open={sheetOpen} onClose={() => setSheetOpen(false)} booking={booking} dateFormatter={dateFormatter} />

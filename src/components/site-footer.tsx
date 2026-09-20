@@ -41,7 +41,10 @@ export function SiteFooter({ locale }: { locale: Locale }) {
   return (
     <footer id="site-footer" className="bg-olive-950 pb-8 pt-16 text-cream sm:pb-10 sm:pt-20">
       <div className="mx-auto max-w-[1300px] px-6 sm:px-10">
-        <div className="flex flex-col gap-10 border-b border-cream/10 pb-10 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+        {/* Su mobile centrato e con la navigazione in griglia 2 colonne
+            invece del flex-wrap a righe irregolari di prima (richiesta
+            esplicita: ridisegnato, non semplicemente compresso in colonna). */}
+        <div className="flex flex-col items-center gap-10 border-b border-cream/10 pb-10 text-center sm:flex-row sm:items-start sm:justify-between sm:gap-6 sm:text-left">
           <Link href={withLocale(locale, "/")} aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`} className="shrink-0">
             <Image
               src="/images/logo/logo-bianco-agriturismo-la-mora.png"
@@ -52,7 +55,10 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             />
           </Link>
 
-          <nav aria-label={t("footer", "linkUtili", locale)} className="flex flex-wrap gap-x-7 gap-y-3">
+          <nav
+            aria-label={t("footer", "linkUtili", locale)}
+            className="grid grid-cols-2 gap-x-8 gap-y-3.5 sm:flex sm:flex-wrap sm:gap-x-7 sm:gap-y-3"
+          >
             {nav.map((item) => (
               <Link
                 key={item.href}
@@ -83,7 +89,13 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           </address>
         </div>
 
-        <div className="mt-8 flex flex-col gap-4 text-[11px] text-cream/50 sm:flex-row sm:items-center sm:justify-between">
+        {/* pl-[72px] su mobile: il pulsante "torna su" (back-to-top.tsx) è
+            fixed bottom-24 left-5, largo 44px — proprio nell'angolo dove
+            altrimenti finiva la prima riga del testo P.IVA, parzialmente
+            coperta. Da sm in su il pulsante è più in basso/più a sinistra
+            (bottom-6 left-6) e questa riga è un flex-row con testo più
+            corto relativo alla larghezza, nessun bisogno di margine. */}
+        <div className="mt-8 flex flex-col gap-4 pl-[72px] text-[11px] text-cream/50 sm:flex-row sm:items-center sm:justify-between sm:pl-0">
           <p className="leading-[1.6]">
             AZ. AGR. LA MORA DI MAZZOLI GIUSEPPINA E PAOLO SOC. SEMP. AGRICOLA — P.IVA 03900200548 — CIN
             IT054001B501006846

@@ -62,17 +62,24 @@ export function Hero({ locale }: { locale: Locale }) {
         className="absolute left-1/2 top-1/2 z-[2] flex -translate-x-1/2 -translate-y-1/2 flex-col items-center px-6 text-center text-cream"
       >
         <h1 className="sr-only">{HERO_H1[locale]}</h1>
-        <span className="text-[13px] font-medium uppercase tracking-[0.4em] text-cream/90">
+        {/* Tracking ridotto sotto sm: a 0.4em su viewport stretti "ASSISI ·
+            UMBRIA" andava a capo su due righe (15 caratteri + spaziatura
+            estrema non ci stavano in ~320px utili) — su mobile resta su
+            un'unica riga, leggibile come sulla versione desktop. */}
+        <span className="text-[11px] font-medium uppercase tracking-[0.26em] text-cream/90 sm:text-[13px] sm:tracking-[0.4em]">
           Assisi · Umbria
         </span>
-        <Link href={withLocale(locale, "/")} aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`} className="mt-8 sm:mt-9">
+        {/* Logo ingrandito su mobile (pavimento del clamp portato da 220 a
+            260px): a 220px risultava piccolo rispetto allo spazio libero
+            della hero su schermi stretti, richiesta esplicita del titolare. */}
+        <Link href={withLocale(locale, "/")} aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`} className="mt-7 sm:mt-9">
           <Image
             src="/images/logo/logo-bianco-agriturismo-la-mora.png"
             alt="Agriturismo La Mora, Assisi - Perugia (Umbria)"
             width={370}
             height={278}
             priority
-            className="h-auto w-[clamp(220px,26vw,370px)] drop-shadow-[0_2px_18px_rgba(0,0,0,0.35)]"
+            className="h-auto w-[clamp(260px,26vw,370px)] drop-shadow-[0_2px_18px_rgba(0,0,0,0.35)]"
           />
         </Link>
       </div>

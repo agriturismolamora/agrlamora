@@ -45,7 +45,12 @@ export function StructureHighlights({ locale }: { locale: Locale }) {
         <div className="grid grid-cols-1 lg:h-[100svh] lg:grid-cols-2 lg:items-stretch">
           {/* Colonna fotografica: full-bleed, nessun container/padding a
               sinistra così tocca davvero il bordo del browser su desktop. */}
-          <div className="relative order-1 aspect-[4/5] overflow-hidden sm:aspect-[16/10] lg:order-1 lg:aspect-auto lg:min-h-[560px]">
+          {/* Su mobile era aspect-[4/5] (ritratto, ~470px di altezza a
+              375px di larghezza): dominava lo schermo subito dopo un
+              carousel già alto. Stesso rapporto orizzontale 16/10 usato
+              da sm: in su, applicato fin da mobile — foto più bassa,
+              coerente con "diventare più orizzontale" richiesto. */}
+          <div className="relative order-1 aspect-[16/10] overflow-hidden lg:order-1 lg:aspect-auto lg:min-h-[560px]">
             <Reveal className="absolute inset-0" as="div">
               <Image
                 src={HERO_IMAGE}

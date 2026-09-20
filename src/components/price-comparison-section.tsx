@@ -259,8 +259,14 @@ export async function PriceComparisonSection({ locale }: { locale: Locale }) {
                   qualitativo, sempre vero indipendentemente da disponibilità
                   e date: nessuna commissione, sconti reali (elencati sotto)
                   riservati a chi prenota diretto. */}
+              {/* Su mobile il testo va spesso su 3 righe dentro un badge
+                  rounded-full pensato per una riga sola (su desktop c'è
+                  più larghezza): il risultato era una "pillola" enorme e
+                  sproporzionata. Sotto sm: forma più rettangolare (si
+                  adatta bene al testo multi-riga), font più piccolo e
+                  tracking ridotto — stessa informazione, meno peso visivo. */}
               <Reveal delay={160}>
-                <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-raspberry px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.06em] text-cream">
+                <span className="mt-4 inline-flex items-center gap-1.5 rounded-[6px] bg-raspberry px-3 py-2 text-[9px] font-semibold uppercase leading-[1.5] tracking-[0.02em] text-cream sm:rounded-full sm:px-3.5 sm:py-1.5 sm:text-[10px] sm:leading-normal sm:tracking-[0.06em]">
                   {text.noCommission}
                 </span>
               </Reveal>
