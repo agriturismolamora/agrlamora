@@ -7,6 +7,7 @@ import { BookingBar } from "@/components/booking-bar";
 import { ConciergeChat } from "@/components/concierge-chat";
 import { BackToTop } from "@/components/back-to-top";
 import { CookieConsentManager } from "@/components/cookie-consent-manager";
+import { RoomsWidgetScript } from "@/components/rooms-widget-script";
 import type { Locale } from "@/lib/i18n";
 
 const JSON_LD_BASE = {
@@ -82,20 +83,15 @@ export function RootShell({ locale, children }: { locale: Locale; children: Reac
             stanze/richiesta disponibilità quando si clicca un elemento con
             classe "rrp-widget-open-modal" (vedi booking-bar.tsx,
             availability-box.tsx, apartments-carousel.tsx,
-            price-comparison-section.tsx, villa-booking-bar.tsx). Booking
-            engine proprietario è fuori scope in questa fase (PLAN.md):
-            questo widget è la prenotazione reale e funzionante nel
-            frattempo, mascherata dietro la grafica del sito. Tag <script>
-            nativo (non next/script) voluto: lo script del fornitore usa
-            document.write() per iniettare markup/CSS, che il browser blocca
-            sugli script caricati in modo asincrono (come fa next/script con
-            qualunque strategy) — deve restare un classico script sincrono,
-            posizionato esattamente dove le istruzioni del fornitore
-            richiedono: subito prima della chiusura di </body>. Presente una
-            sola volta qui (RootShell è condiviso da tutti e 4 i root
-            layout), non va duplicato nei singoli layout per lingua. */}
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script src="https://www.bed-and-breakfast.it/scripts/widget/widget_frm_camere.cfm?idstruttura=60754&idregione=18&l=it" />
+            price-comparison-section.tsx, villa-booking-bar.tsx). Deciso di
+            abbandonare l'idea di un booking engine proprietario: bed-and-
+            breakfast.it è ora il motore di prenotazione reale del sito,
+            mascherato dietro la grafica de La Mora (vedi gli override in
+            globals.css). RoomsWidgetScript sceglie lo script giusto — La
+            Mora o Villa Relax, i due account sono separati — in base alla
+            pagina corrente; leggi i commenti lì per il motivo per cui non
+            può essere un semplice script fisso. */}
+        <RoomsWidgetScript locale={locale} />
       </body>
     </html>
   );

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
+import { PuntiInteresseSection } from "@/components/punti-interesse-section";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 
@@ -325,6 +326,8 @@ export function TerritorioPageView({ locale }: { locale: Locale }) {
           </Reveal>
         </div>
       </section>
+
+      <PuntiInteresseSection struttura="lamora" locale={locale} />
 
       <section className="bg-[#1f180e] py-16 text-center sm:py-20">
         <div className="mx-auto max-w-[480px] px-6 sm:px-10">

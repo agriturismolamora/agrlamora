@@ -246,16 +246,26 @@ const DROPDOWN_ALIGN_CLASS: Record<DropdownAlign, string> = {
   right: "left-auto right-0 translate-x-0",
 };
 
-function DesktopDropdown({ item, align }: { item: NavItem; align: DropdownAlign }) {
+function DesktopDropdown({ item, align, onVillaPage }: { item: NavItem; align: DropdownAlign; onVillaPage: boolean }) {
+  // Confine La Mora <-> Villa Relax: due account bed-and-breakfast.it
+  // separati, due script del widget camere (rooms-widget-script.tsx) — un
+  // link che lo attraversa deve forzare una navigazione piena, vedi
+  // rooms-widget-script.tsx per il motivo (document.write dopo il load).
+  const crossesBoundary = item.href.includes("/villa-relax-assisi") !== onVillaPage;
+  const itemLinkClassName = "flex items-center gap-1.5 py-2 font-display text-[16px] tracking-[0.01em] transition-colors hover:text-gold";
   return (
     <li className="group relative">
-      <Link
-        href={item.href}
-        className="flex items-center gap-1.5 py-2 font-display text-[16px] tracking-[0.01em] transition-colors hover:text-gold"
-      >
-        {item.label}
-        <ChevronIcon open={false} />
-      </Link>
+      {crossesBoundary ? (
+        <a href={item.href} className={itemLinkClassName}>
+          {item.label}
+          <ChevronIcon open={false} />
+        </a>
+      ) : (
+        <Link href={item.href} className={itemLinkClassName}>
+          {item.label}
+          <ChevronIcon open={false} />
+        </Link>
+      )}
       <div
         className={`invisible absolute top-full z-[200] min-w-[250px] max-w-[calc(100vw-32px)] translate-y-1.5 rounded-[3px] border border-cream/10 bg-olive-950/95 p-2 opacity-0 shadow-[0_18px_40px_-18px_rgba(0,0,0,0.55)] backdrop-blur-md transition-all duration-200 ease-out group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 ${DROPDOWN_ALIGN_CLASS[align]}`}
       >
@@ -284,6 +294,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const navRight = getNavRight(locale);
   const pathname = usePathname();
   const { path: bareItalianPath } = splitLocaleFromPath(pathname ?? "/");
+  const onVillaPage = bareItalianPath.startsWith("/villa-relax-assisi");
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -388,19 +399,35 @@ export function SiteHeader({ locale }: { locale: Locale }) {
                 superare i 90px di altezza e sforare l'header. */}
             {sticky && (
               <>
-                <Link
-                  href={withLocale(locale, "/")}
-                  aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`}
-                  className="flex shrink-0 items-center"
-                >
-                  <Image
-                    src="/images/logo/logo-bianco-agriturismo-la-mora.png"
-                    alt="Agriturismo La Mora, Assisi - Perugia (Umbria)"
-                    width={140}
-                    height={105}
-                    className="h-12 w-auto sm:h-[52px]"
-                  />
-                </Link>
+                {onVillaPage ? (
+                  <a
+                    href={withLocale(locale, "/")}
+                    aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`}
+                    className="flex shrink-0 items-center"
+                  >
+                    <Image
+                      src="/images/logo/logo-bianco-agriturismo-la-mora.png"
+                      alt="Agriturismo La Mora, Assisi - Perugia (Umbria)"
+                      width={140}
+                      height={105}
+                      className="h-12 w-auto sm:h-[52px]"
+                    />
+                  </a>
+                ) : (
+                  <Link
+                    href={withLocale(locale, "/")}
+                    aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`}
+                    className="flex shrink-0 items-center"
+                  >
+                    <Image
+                      src="/images/logo/logo-bianco-agriturismo-la-mora.png"
+                      alt="Agriturismo La Mora, Assisi - Perugia (Umbria)"
+                      width={140}
+                      height={105}
+                      className="h-12 w-auto sm:h-[52px]"
+                    />
+                  </Link>
+                )}
                 <span
                   aria-hidden="true"
                   className="ml-5 mr-8 hidden h-11 w-px bg-[#f1f1f1]/35 min-[1100px]:block"
@@ -411,7 +438,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             <nav aria-label={t("nav", "navigazionePrincipale", locale)} className="hidden min-[1100px]:block">
               <ul className="flex items-center gap-8">
                 {navLeft.map((item, i) => (
-                  <DesktopDropdown key={item.id} item={item} align={getDropdownAlign(i, navLeft.length)} />
+                  <DesktopDropdown key={item.id} item={item} align={getDropdownAlign(i, navLeft.length)} onVillaPage={onVillaPage} />
                 ))}
               </ul>
             </nav>
@@ -422,7 +449,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             <nav aria-label={t("nav", "navigazionePrincipale", locale)} className="hidden md:max-[1099px]:block">
               <ul className="flex items-center gap-6">
                 {navLeft.filter((item) => NAV_LEFT_TABLET.has(item.id)).map((item, i, arr) => (
-                  <DesktopDropdown key={item.id} item={item} align={getDropdownAlign(i, arr.length)} />
+                  <DesktopDropdown key={item.id} item={item} align={getDropdownAlign(i, arr.length)} onVillaPage={onVillaPage} />
                 ))}
               </ul>
             </nav>
@@ -432,9 +459,15 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             <ul className="hidden items-center gap-5 min-[1100px]:flex">
               {navRight.map((item) => (
                 <li key={item.label}>
-                  <Link href={item.href} className="transition-colors hover:text-gold">
-                    {item.label}
-                  </Link>
+                  {onVillaPage ? (
+                    <a href={item.href} className="transition-colors hover:text-gold">
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link href={item.href} className="transition-colors hover:text-gold">
+                      {item.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -501,20 +534,37 @@ export function SiteHeader({ locale }: { locale: Locale }) {
       >
         <div className="mx-auto flex min-h-full w-full max-w-[1600px] flex-col px-6 pb-10 pt-6 sm:px-10">
           <div className="flex items-center justify-between pb-6">
-            <Link
-              href={withLocale(locale, "/")}
-              onClick={() => setMenuOpen(false)}
-              aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`}
-              className="flex items-center"
-            >
-              <Image
-                src="/images/logo/logo-bianco-agriturismo-la-mora.png"
-                alt="Agriturismo La Mora, Assisi - Perugia (Umbria)"
-                width={148}
-                height={111}
-                className="h-14 w-auto sm:h-16"
-              />
-            </Link>
+            {onVillaPage ? (
+              <a
+                href={withLocale(locale, "/")}
+                onClick={() => setMenuOpen(false)}
+                aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`}
+                className="flex items-center"
+              >
+                <Image
+                  src="/images/logo/logo-bianco-agriturismo-la-mora.png"
+                  alt="Agriturismo La Mora, Assisi - Perugia (Umbria)"
+                  width={148}
+                  height={111}
+                  className="h-14 w-auto sm:h-16"
+                />
+              </a>
+            ) : (
+              <Link
+                href={withLocale(locale, "/")}
+                onClick={() => setMenuOpen(false)}
+                aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`}
+                className="flex items-center"
+              >
+                <Image
+                  src="/images/logo/logo-bianco-agriturismo-la-mora.png"
+                  alt="Agriturismo La Mora, Assisi - Perugia (Umbria)"
+                  width={148}
+                  height={111}
+                  className="h-14 w-auto sm:h-16"
+                />
+              </Link>
+            )}
             <button
               type="button"
               onClick={() => setMenuOpen(false)}
@@ -531,17 +581,24 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             className="flex flex-1 flex-col items-center justify-center py-8 text-center"
           >
             <ul className="flex flex-col items-center gap-1 sm:gap-2">
-              {[...navLeft, ...navRight].map((item) => (
-                <li key={item.label}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="inline-block py-1.5 font-display text-[27px] font-normal leading-tight text-cream transition-colors duration-200 hover:text-gold sm:text-[34px]"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+              {[...navLeft, ...navRight].map((item) => {
+                const targetIsVilla = item.href.includes("/villa-relax-assisi");
+                const crossesBoundary = targetIsVilla !== onVillaPage;
+                const itemClassName = "inline-block py-1.5 font-display text-[27px] font-normal leading-tight text-cream transition-colors duration-200 hover:text-gold sm:text-[34px]";
+                return (
+                  <li key={item.label}>
+                    {crossesBoundary ? (
+                      <a href={item.href} onClick={() => setMenuOpen(false)} className={itemClassName}>
+                        {item.label}
+                      </a>
+                    ) : (
+                      <Link href={item.href} onClick={() => setMenuOpen(false)} className={itemClassName}>
+                        {item.label}
+                      </Link>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
 
             <div className="mt-9 flex items-center gap-2 sm:mt-11">

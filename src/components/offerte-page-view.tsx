@@ -5,8 +5,17 @@ import { HoverFill } from "@/components/hover-fill";
 import { LocationMap } from "@/components/location-map";
 import { NewsletterSection } from "@/components/newsletter-section";
 import { CertificationsMarquee } from "@/components/certifications-marquee";
+import { BbitWidgetCard } from "@/components/bbit-widget-card";
+import { bbitOfferteUrl } from "@/lib/bbit-widget-urls";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+
+const OFFERS_WIDGET_TEXT: Record<Locale, { label: string; heading: string }> = {
+  it: { label: "Offerte in corso", heading: "Le promozioni attive in questo momento" },
+  en: { label: "Current offers", heading: "Promotions active right now" },
+  fr: { label: "Offres en cours", heading: "Les promotions actives en ce moment" },
+  de: { label: "Aktuelle Angebote", heading: "Derzeit aktive Aktionen" },
+};
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -498,6 +507,18 @@ export function OffertePageView({ locale }: { locale: Locale }) {
               </Link>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      <section className="bg-cream-dim py-16 sm:py-20">
+        <div className="mx-auto max-w-[680px] px-6 sm:px-10">
+          <BbitWidgetCard
+            label={OFFERS_WIDGET_TEXT[locale].label}
+            heading={OFFERS_WIDGET_TEXT[locale].heading}
+            scriptSrc={bbitOfferteUrl("lamora")}
+            minHeight={120}
+            locale={locale}
+          />
         </div>
       </section>
 

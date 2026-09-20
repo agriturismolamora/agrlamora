@@ -9,6 +9,7 @@ import { HoverFill } from "@/components/hover-fill";
 import { ZodiacMark } from "@/components/zodiac-mark";
 import { AvailabilityBox } from "@/components/availability-box";
 import { ApartmentGallery } from "@/components/apartment-gallery";
+import { RecensioniBadge } from "@/components/recensioni-badge";
 import { AMENITY_ICON_BY_LABEL, MirrorIcon } from "@/components/amenity-icons";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
@@ -274,7 +275,7 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
           </Reveal>
 
           <Reveal delay={100}>
-            <AvailabilityBox apt={apt} />
+            <AvailabilityBox apt={apt} locale={locale} />
           </Reveal>
         </div>
       </section>
@@ -373,6 +374,16 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
               </Link>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* Richiesta esplicita: il badge recensioni bed-and-breakfast.it va
+          in fondo alle pagine appartamento, MAI in homepage (dove resta
+          l'attuale sezione "Ospiti e riconoscimenti", reviews-section.tsx —
+          questo badge non la sostituisce). */}
+      <section className="bg-cream py-12 sm:py-14">
+        <div className="mx-auto max-w-[1100px] px-6 sm:px-10">
+          <RecensioniBadge struttura="lamora" locale={locale} />
         </div>
       </section>
     </>

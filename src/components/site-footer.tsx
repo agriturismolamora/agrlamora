@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { Locale } from "@/lib/i18n";
-import { withLocale } from "@/lib/i18n";
+import { withLocale, splitLocaleFromPath } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
 import { CONSENT_TEXT } from "@/data/consent-text";
 import { openCookiePreferences } from "@/lib/consent";
@@ -38,6 +39,14 @@ function getNav(locale: Locale) {
 export function SiteFooter({ locale }: { locale: Locale }) {
   const nav = getNav(locale);
   const consentText = CONSENT_TEXT[locale];
+  // Confine La Mora <-> Villa Relax: due account bed-and-breakfast.it
+  // separati, due script del widget camere (rooms-widget-script.tsx). Un
+  // link che attraversa questo confine deve forzare una navigazione piena
+  // (<a>, non <Link>), altrimenti lo script si smonta/rimonta a pagina
+  // già caricata e document.write() cancella la pagina.
+  const pathname = usePathname();
+  const { path: barePath } = splitLocaleFromPath(pathname ?? "/");
+  const onVillaPage = barePath.startsWith("/villa-relax-assisi");
   return (
     <footer id="site-footer" className="bg-olive-950 pb-8 pt-16 text-cream sm:pb-10 sm:pt-20">
       <div className="mx-auto max-w-[1300px] px-6 sm:px-10">
@@ -45,29 +54,46 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             invece del flex-wrap a righe irregolari di prima (richiesta
             esplicita: ridisegnato, non semplicemente compresso in colonna). */}
         <div className="flex flex-col items-center gap-10 border-b border-cream/10 pb-10 text-center sm:flex-row sm:items-start sm:justify-between sm:gap-6 sm:text-left">
-          <Link href={withLocale(locale, "/")} aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`} className="shrink-0">
-            <Image
-              src="/images/logo/logo-bianco-agriturismo-la-mora.png"
-              alt="Agriturismo La Mora"
-              width={140}
-              height={105}
-              className="h-auto w-[110px]"
-            />
-          </Link>
+          {onVillaPage ? (
+            <a href={withLocale(locale, "/")} aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`} className="shrink-0">
+              <Image
+                src="/images/logo/logo-bianco-agriturismo-la-mora.png"
+                alt="Agriturismo La Mora"
+                width={140}
+                height={105}
+                className="h-auto w-[110px]"
+              />
+            </a>
+          ) : (
+            <Link href={withLocale(locale, "/")} aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`} className="shrink-0">
+              <Image
+                src="/images/logo/logo-bianco-agriturismo-la-mora.png"
+                alt="Agriturismo La Mora"
+                width={140}
+                height={105}
+                className="h-auto w-[110px]"
+              />
+            </Link>
+          )}
 
           <nav
             aria-label={t("footer", "linkUtili", locale)}
             className="grid grid-cols-2 gap-x-8 gap-y-3.5 sm:flex sm:flex-wrap sm:gap-x-7 sm:gap-y-3"
           >
-            {nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="font-sans text-[11px] font-semibold uppercase tracking-[0.05em] text-cream/75 transition-colors hover:text-cream"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {nav.map((item) => {
+              const targetIsVilla = item.href.includes("/villa-relax-assisi");
+              const crossesBoundary = targetIsVilla !== onVillaPage;
+              const linkClassName = "font-sans text-[11px] font-semibold uppercase tracking-[0.05em] text-cream/75 transition-colors hover:text-cream";
+              return crossesBoundary ? (
+                <a key={item.href} href={item.href} className={linkClassName}>
+                  {item.label}
+                </a>
+              ) : (
+                <Link key={item.href} href={item.href} className={linkClassName}>
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
 
           <address className="space-y-1.5 text-[13px] not-italic leading-[1.6] text-cream/75">

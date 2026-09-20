@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
@@ -66,7 +65,13 @@ export function VillaTeaser({ locale }: { locale: Locale }) {
             {text.heading}
           </h2>
           <p className="mt-5 max-w-[440px] text-[15px] leading-[1.85] text-ink-soft">{text.body}</p>
-          <Link
+          {/* <a> pieno, non <Link>: attraversa il confine La Mora -> Villa
+              Relax, due account bed-and-breakfast.it separati con due
+              script del widget camere distinti (vedi rooms-widget-script.tsx).
+              Una navigazione client-side qui smonterebbe/rimonterebbe lo
+              script a pagina già caricata, rischiando di cancellare la
+              pagina (document.write dopo il load). */}
+          <a
             href={withLocale(locale, "/villa-relax-assisi/")}
             className="group mt-8 inline-flex items-center gap-2.5 rounded-[3px] bg-raspberry px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-200 hover:bg-[#8a3844]"
           >
@@ -74,7 +79,7 @@ export function VillaTeaser({ locale }: { locale: Locale }) {
             <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
               →
             </span>
-          </Link>
+          </a>
         </Reveal>
       </div>
     </section>

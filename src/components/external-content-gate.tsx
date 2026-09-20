@@ -18,17 +18,28 @@ import type { Locale } from "@/lib/i18n";
    Finché la categoria richiesta non è stata autorizzata, il contenuto
    reale non viene mai montato nel DOM (non solo nascosto via CSS): al suo
    posto compare il placeholder col messaggio richiesto e un pulsante per
-   aprire le preferenze cookie. */
+   aprire le preferenze cookie.
+
+   Primo uso reale: i widget bed-and-breakfast.it che si caricano da soli
+   ad ogni visita della pagina (offerte, last minute, punti di interesse,
+   badge recensioni — vedi bbit-widget-card.tsx, last-minute-section.tsx,
+   recensioni-badge.tsx), categoria "functional". Il widget camere/
+   richieste resta invece "necessary" (si attiva solo al click su un
+   pulsante di prenotazione/richiesta, la stessa logica di questo file). */
 export function ExternalContentGate({
   locale,
   category,
   children,
   className,
+  minHeight,
 }: {
   locale: Locale;
   category: keyof ConsentCategories;
   children: React.ReactNode;
   className?: string;
+  /** Altezza minima del placeholder, per evitare salti di layout quando il
+      widget reale ha una dimensione nota (es. i widget bbit mascherati). */
+  minHeight?: number;
 }) {
   const consent = useConsent();
   const allowed = category === "necessary" || consent?.categories[category] === true;
@@ -37,7 +48,10 @@ export function ExternalContentGate({
   if (allowed) return <>{children}</>;
 
   return (
-    <div className={`flex flex-col items-center justify-center gap-4 bg-cream-dim px-6 py-14 text-center ${className ?? ""}`}>
+    <div
+      className={`flex flex-col items-center justify-center gap-4 bg-cream-dim px-6 py-14 text-center ${className ?? ""}`}
+      style={minHeight ? { minHeight } : undefined}
+    >
       <p className="max-w-[360px] text-[13px] leading-[1.6] text-ink-soft">{text.externalGate.message}</p>
       <button
         type="button"

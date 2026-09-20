@@ -489,15 +489,14 @@ export function BookingBar({ locale }: { locale: Locale }) {
           )}
         </FieldButton>
 
-        {/* Placeholder onesto (PLAN.md, fuori scope finché il booking engine
-            proprietario non esiste): NON deve aprire il widget
-            bed-and-breakfast.it — richiesta esplicita del titolare, la
-            sticky bar è l'ingresso al FUTURO motore di prenotazione diretta
-            del sito, il widget resta un'alternativa secondaria mostrata
-            solo nella sezione "Prenotazione diretta" (price-comparison-section.tsx). */}
+        {/* Deciso di abbandonare l'idea di un booking engine proprietario:
+            bed-and-breakfast.it è ora il motore di prenotazione reale del
+            sito. rrp-widget-open-modal apre la modale camere (vedi
+            root-shell.tsx / rooms-widget-script.tsx) mascherata dietro la
+            grafica del sito. */}
         <button
           type="button"
-          className={`h-full w-full whitespace-nowrap px-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-500 ${
+          className={`rrp-widget-open-modal h-full w-full whitespace-nowrap px-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-500 ${
             inApartments ? "bg-[#141a30] hover:bg-[#1c2440]" : "bg-raspberry hover:bg-[#8a3844]"
           }`}
         >
@@ -687,7 +686,7 @@ function MobileBookingSheet({
 
         <button
           type="button"
-          className="mt-5 w-full rounded-[3px] bg-raspberry py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
+          className="rrp-widget-open-modal mt-5 w-full rounded-[3px] bg-raspberry py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
         >
           {t("booking", "prenotaOra", locale)}
         </button>

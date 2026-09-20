@@ -17,7 +17,7 @@ import { useSyncExternalStore } from "react";
    o cambia la struttura delle categorie (vedi src/data/privacy-services.ts).
    Un cookie con versione diversa da questa viene trattato come assente:
    il banner ricompare, come richiesto. */
-export const CONSENT_VERSION = "1";
+export const CONSENT_VERSION = "2";
 const COOKIE_NAME = "lamora_consent";
 const MAX_AGE_DAYS = 180; // 6 mesi
 

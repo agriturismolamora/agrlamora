@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import { StarRow } from "@/components/review-icons";
@@ -7,6 +6,12 @@ import { ApartmentGallery } from "@/components/apartment-gallery";
 import { NewsletterSection } from "@/components/newsletter-section";
 import { CertificationsMarquee } from "@/components/certifications-marquee";
 import { VillaBookingBar } from "@/components/villa-booking-bar";
+import { RichiesteSection } from "@/components/richieste-section";
+import { RecensioniBadge } from "@/components/recensioni-badge";
+import { PuntiInteresseSection } from "@/components/punti-interesse-section";
+import { LastMinuteSection } from "@/components/last-minute-section";
+import { BbitWidgetCard } from "@/components/bbit-widget-card";
+import { bbitOfferteUrl } from "@/lib/bbit-widget-urls";
 import {
   VILLA_ADDRESS,
   VILLA_HOST_NAME,
@@ -23,6 +28,13 @@ import {
 } from "@/data/villa";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+
+const VILLA_OFFERS_WIDGET_TEXT: Record<Locale, { label: string; heading: string }> = {
+  it: { label: "Offerte in corso", heading: "Le promozioni attive per Villa Relax" },
+  en: { label: "Current offers", heading: "Promotions active for Villa Relax" },
+  fr: { label: "Offres en cours", heading: "Les promotions actives pour Villa Relax" },
+  de: { label: "Aktuelle Angebote", heading: "Derzeit aktive Aktionen für Villa Relax" },
+};
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -626,15 +638,44 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
                     </span>
                   </span>
                 </a>
-                <Link
+                {/* <a> pieno, non <Link>: da Villa Relax verso una pagina
+                    La Mora attraversa il confine tra i due account
+                    bed-and-breakfast.it (vedi rooms-widget-script.tsx). */}
+                <a
                   href={withLocale(locale, "/territorio/")}
                   className="inline-flex items-center gap-2.5 rounded-[3px] border border-ink/20 px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-ink transition-colors hover:border-raspberry hover:text-raspberry"
                 >
                   {text.territorioCta}
-                </Link>
+                </a>
               </div>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      <LastMinuteSection struttura="villa" locale={locale} />
+
+      <section className="bg-cream-dim py-16 sm:py-20">
+        <div className="mx-auto max-w-[680px] px-6 sm:px-10">
+          <BbitWidgetCard
+            label={VILLA_OFFERS_WIDGET_TEXT[locale].label}
+            heading={VILLA_OFFERS_WIDGET_TEXT[locale].heading}
+            scriptSrc={bbitOfferteUrl("villa")}
+            minHeight={120}
+            locale={locale}
+          />
+        </div>
+      </section>
+
+      <PuntiInteresseSection struttura="villa" locale={locale} />
+
+      <RichiesteSection struttura="villa" locale={locale} />
+
+      {/* Richiesta esplicita: il badge recensioni con l'account bed-and-
+          breakfast.it di Villa Relax, separato da quello di La Mora. */}
+      <section className="bg-cream py-12 sm:py-14">
+        <div className="mx-auto max-w-[1100px] px-6 sm:px-10">
+          <RecensioniBadge struttura="villa" locale={locale} />
         </div>
       </section>
 

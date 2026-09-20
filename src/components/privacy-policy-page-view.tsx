@@ -13,10 +13,10 @@ const PAGE_TITLE: Record<Locale, string> = {
 };
 
 const UPDATED_LABEL: Record<Locale, string> = {
-  it: "Ultimo aggiornamento: 7 settembre 2026",
-  en: "Last updated: 7 September 2026",
-  fr: "Dernière mise à jour : 7 septembre 2026",
-  de: "Zuletzt aktualisiert: 7. September 2026",
+  it: "Ultimo aggiornamento: 20 settembre 2026",
+  en: "Last updated: 20 September 2026",
+  fr: "Dernière mise à jour : 20 septembre 2026",
+  de: "Zuletzt aktualisiert: 20. September 2026",
 };
 
 const LABEL: Record<Locale, string> = { it: "Informativa privacy", en: "Privacy notice", fr: "Politique de confidentialité", de: "Datenschutzhinweis" };
@@ -46,6 +46,22 @@ function buildSections(locale: Locale): LegalSection[] {
               soggiorno e adempiere agli obblighi di legge legati all’ospitalità (es. comunicazioni alla Questura, tassa di soggiorno).
               Base giuridica: esecuzione di misure precontrattuali o contrattuali su tua richiesta (art. 6.1.b GDPR) e, per gli obblighi
               di legge, art. 6.1.c GDPR.
+            </p>
+            <p>
+              <strong>Prenotazione e richieste tramite Bed-and-breakfast.it.</strong> I pulsanti &quot;Prenota&quot; aprono un modulo di
+              prenotazione fornito da bed-and-breakfast.it (gestito da Studio Scivoletto S.r.l. Unipersonale); il modulo &quot;Invia una
+              richiesta al gestore&quot; apre invece il loro modulo di contatto, che offre anche il login &quot;Accedi con B&amp;B.it&quot; o
+              &quot;Accedi con Facebook&quot;. Questi moduli si caricano solo quando li apri cliccando il relativo pulsante, mai
+              automaticamente. Una volta aperti, sei all&apos;interno del modulo di bed-and-breakfast.it: i dati che inserisci lì (nome,
+              contatti, eventuale accesso con account terzi) sono trattati da loro secondo la propria informativa privacy, non dalla
+              nostra. Dettagli tecnici nella <a href={withLocale(locale, "/cookie-policy/")}>Cookie Policy</a>.
+            </p>
+            <p>
+              <strong>Offerte, last minute, punti di interesse e badge recensioni di Bed-and-breakfast.it.</strong> A differenza dei
+              moduli sopra, questi contenuti si caricano da soli ad ogni visita della pagina in cui compaiono (senza un click), e il tuo
+              browser contatta direttamente bed-and-breakfast.it per mostrarli: per questo restano disattivati finché non dai il consenso
+              alla categoria Funzionali nel banner cookie. Base giuridica: consenso (art. 6.1.a GDPR), revocabile in ogni momento.
+              Dettagli nella <a href={withLocale(locale, "/cookie-policy/")}>Cookie Policy</a>.
             </p>
             <p>
               <strong>Pagamenti.</strong> Il sito non gestisce pagamenti online: non è integrato alcun sistema di pagamento (carta di
@@ -106,6 +122,12 @@ function buildSections(locale: Locale): LegalSection[] {
               <li>
                 <strong>Meta Platforms Ireland Limited</strong> (WhatsApp), se scegli di scriverci tramite WhatsApp: il contenuto dei
                 messaggi che invii è soggetto anche all&apos;informativa privacy di WhatsApp stessa, che accetti utilizzando quell&apos;app;
+              </li>
+              <li>
+                <strong>Studio Scivoletto S.r.l. Unipersonale</strong> (bed-and-breakfast.it), se apri il modulo di prenotazione o di
+                richiesta, oppure se dai il consenso Funzionali che attiva i widget offerte/last minute/punti di interesse/recensioni: i
+                dati che inserisci in quei moduli, o la tua richiesta HTTP quando quei contenuti si caricano, sono trattati da loro
+                secondo la propria informativa privacy;
               </li>
               <li>autorità pubbliche, quando richiesto dalla legge (es. comunicazioni obbligatorie legate all&apos;ospitalità turistica).</li>
             </ul>
@@ -207,6 +229,23 @@ function buildSections(locale: Locale): LegalSection[] {
               measures at your request (Art. 6.1.b GDPR), and, for legal obligations, Art. 6.1.c GDPR.
             </p>
             <p>
+              <strong>Booking and requests via Bed-and-breakfast.it.</strong> The &quot;Book now&quot; buttons open a booking form
+              provided by bed-and-breakfast.it (operated by Studio Scivoletto S.r.l. Unipersonale); the &quot;Send a request to the
+              host&quot; form instead opens their own contact form, which also offers &quot;Sign in with B&amp;B.it&quot; or &quot;Sign
+              in with Facebook&quot;. These forms load only when you open them by clicking the relevant button, never automatically.
+              Once open, you&apos;re inside bed-and-breakfast.it&apos;s own form: the data you enter there (name, contact details, any
+              sign-in with a third-party account) is processed by them under their own privacy notice, not ours. Technical details in
+              our{" "}
+              <a href={withLocale(locale, "/cookie-policy/")}>Cookie Policy</a>.
+            </p>
+            <p>
+              <strong>Offers, last-minute deals, points of interest, and reviews badge from Bed-and-breakfast.it.</strong> Unlike the
+              forms above, this content loads on its own every time you visit the page it appears on (with no click), and your browser
+              contacts bed-and-breakfast.it directly to display it: because of this, it stays off until you give consent to the
+              Functional category in the cookie banner. Legal basis: consent (Art. 6.1.a GDPR), revocable at any time. Details in our{" "}
+              <a href={withLocale(locale, "/cookie-policy/")}>Cookie Policy</a>.
+            </p>
+            <p>
               <strong>Payments.</strong> The site does not process online payments: no payment system (credit card, PayPal or similar)
               is integrated. Payment/deposit arrangements are agreed directly with us, outside the website.
             </p>
@@ -263,6 +302,12 @@ function buildSections(locale: Locale): LegalSection[] {
               <li>
                 <strong>Meta Platforms Ireland Limited</strong> (WhatsApp), if you choose to write to us via WhatsApp: the content of
                 the messages you send is also subject to WhatsApp’s own privacy notice, which you accept by using that app;
+              </li>
+              <li>
+                <strong>Studio Scivoletto S.r.l. Unipersonale</strong> (bed-and-breakfast.it), if you open the booking or request form,
+                or if you give Functional consent that activates the offers/last-minute/points of interest/reviews widgets: the data
+                you enter in those forms, or your HTTP request when that content loads, is processed by them under their own privacy
+                notice;
               </li>
               <li>public authorities, when required by law (e.g. mandatory reporting related to tourist accommodation).</li>
             </ul>
@@ -365,6 +410,24 @@ function buildSections(locale: Locale): LegalSection[] {
               ou contractuelles à votre demande (art. 6.1.b RGPD), et, pour les obligations légales, art. 6.1.c RGPD.
             </p>
             <p>
+              <strong>Réservation et demandes via Bed-and-breakfast.it.</strong> Les boutons « Réserver » ouvrent un formulaire de
+              réservation fourni par bed-and-breakfast.it (géré par Studio Scivoletto S.r.l. Unipersonale) ; le formulaire « Envoyer une
+              demande au gestionnaire » ouvre quant à lui leur propre formulaire de contact, qui propose aussi la connexion « Se
+              connecter avec B&amp;B.it » ou « Se connecter avec Facebook ». Ces formulaires ne se chargent que lorsque vous les ouvrez
+              en cliquant sur le bouton correspondant, jamais automatiquement. Une fois ouvert, vous êtes dans le formulaire de
+              bed-and-breakfast.it : les données que vous y saisissez (nom, coordonnées, éventuelle connexion avec un compte tiers) sont
+              traitées par eux selon leur propre politique de confidentialité, pas la nôtre. Détails techniques dans notre{" "}
+              <a href={withLocale(locale, "/cookie-policy/")}>Politique de cookies</a>.
+            </p>
+            <p>
+              <strong>Offres, dernière minute, points d’intérêt et badge d’avis de Bed-and-breakfast.it.</strong> Contrairement aux
+              formulaires ci-dessus, ce contenu se charge de lui-même à chaque visite de la page où il apparaît (sans clic), et votre
+              navigateur contacte directement bed-and-breakfast.it pour l’afficher : il reste donc désactivé tant que vous n’avez pas
+              donné votre consentement à la catégorie Fonctionnels dans la bannière cookies. Base juridique : consentement (art. 6.1.a
+              RGPD), révocable à tout moment. Détails dans notre{" "}
+              <a href={withLocale(locale, "/cookie-policy/")}>Politique de cookies</a>.
+            </p>
+            <p>
               <strong>Paiements.</strong> Le site ne gère aucun paiement en ligne : aucun système de paiement (carte de crédit, PayPal
               ou similaire) n’est intégré. Les modalités de paiement/acompte sont convenues directement avec nous, en dehors du site.
             </p>
@@ -427,6 +490,12 @@ function buildSections(locale: Locale): LegalSection[] {
                 <strong>Meta Platforms Ireland Limited</strong> (WhatsApp), si vous choisissez de nous écrire via WhatsApp : le contenu
                 des messages que vous envoyez est également soumis à la propre politique de confidentialité de WhatsApp, que vous
                 acceptez en utilisant cette application ;
+              </li>
+              <li>
+                <strong>Studio Scivoletto S.r.l. Unipersonale</strong> (bed-and-breakfast.it), si vous ouvrez le formulaire de
+                réservation ou de demande, ou si vous donnez le consentement Fonctionnels qui active les widgets offres/dernière
+                minute/points d’intérêt/avis : les données que vous saisissez dans ces formulaires, ou votre requête HTTP lorsque ce
+                contenu se charge, sont traitées par eux selon leur propre politique de confidentialité ;
               </li>
               <li>les autorités publiques, lorsque la loi l’exige (par ex. déclarations obligatoires liées à l’hébergement touristique).</li>
             </ul>
@@ -530,6 +599,23 @@ function buildSections(locale: Locale): LegalSection[] {
               6.1.b DSGVO) und, für gesetzliche Pflichten, Art. 6.1.c DSGVO.
             </p>
             <p>
+              <strong>Buchung und Anfragen über Bed-and-breakfast.it.</strong> Die Schaltflächen „Jetzt buchen“ öffnen ein
+              Buchungsformular von bed-and-breakfast.it (betrieben von Studio Scivoletto S.r.l. Unipersonale); das Formular „Anfrage an
+              den Gastgeber senden“ öffnet dagegen deren eigenes Kontaktformular, das auch die Anmeldung „Mit B&amp;B.it anmelden“ oder
+              „Mit Facebook anmelden“ anbietet. Diese Formulare werden nur geladen, wenn Sie sie durch Klick auf die entsprechende
+              Schaltfläche öffnen, niemals automatisch. Einmal geöffnet, befinden Sie sich im Formular von bed-and-breakfast.it: die
+              dort eingegebenen Daten (Name, Kontaktdaten, etwaige Anmeldung mit einem Drittanbieter-Konto) werden von diesen gemäß
+              deren eigener Datenschutzerklärung verarbeitet, nicht von uns. Technische Details in unserer{" "}
+              <a href={withLocale(locale, "/cookie-policy/")}>Cookie-Richtlinie</a>.
+            </p>
+            <p>
+              <strong>Angebote, Last-Minute-Angebote, Sehenswürdigkeiten und Bewertungs-Badge von Bed-and-breakfast.it.</strong> Anders
+              als die oben genannten Formulare lädt sich dieser Inhalt bei jedem Besuch der Seite, auf der er erscheint, von selbst
+              (ohne Klick), und Ihr Browser kontaktiert bed-and-breakfast.it direkt, um ihn anzuzeigen: deshalb bleibt er deaktiviert,
+              bis Sie im Cookie-Banner der Kategorie Funktional zustimmen. Rechtsgrundlage: Einwilligung (Art. 6.1.a DSGVO), jederzeit
+              widerrufbar. Details in unserer <a href={withLocale(locale, "/cookie-policy/")}>Cookie-Richtlinie</a>.
+            </p>
+            <p>
               <strong>Zahlungen.</strong> Die Website wickelt keine Online-Zahlungen ab: es ist kein Zahlungssystem (Kreditkarte,
               PayPal o. Ä.) integriert. Zahlungs-/Anzahlungsmodalitäten werden direkt mit uns, außerhalb der Website, vereinbart.
             </p>
@@ -591,6 +677,12 @@ function buildSections(locale: Locale): LegalSection[] {
                 <strong>Meta Platforms Ireland Limited</strong> (WhatsApp), falls Sie sich für eine Kontaktaufnahme über WhatsApp
                 entscheiden: der Inhalt der von Ihnen gesendeten Nachrichten unterliegt auch der eigenen Datenschutzerklärung von
                 WhatsApp, der Sie durch die Nutzung dieser App zustimmen;
+              </li>
+              <li>
+                <strong>Studio Scivoletto S.r.l. Unipersonale</strong> (bed-and-breakfast.it), wenn Sie das Buchungs- oder
+                Anfrageformular öffnen, oder wenn Sie die Funktional-Zustimmung erteilen, die die Widgets Angebote/Last-Minute/
+                Sehenswürdigkeiten/Bewertungen aktiviert: die Daten, die Sie in diese Formulare eingeben, oder Ihre HTTP-Anfrage beim
+                Laden dieser Inhalte, werden von diesen gemäß ihrer eigenen Datenschutzerklärung verarbeitet;
               </li>
               <li>Behörden, sofern gesetzlich vorgeschrieben (z. B. Pflichtmeldungen im Zusammenhang mit touristischer Beherbergung).</li>
             </ul>

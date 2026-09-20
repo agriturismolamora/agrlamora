@@ -16,6 +16,8 @@ import { FacebookFeed } from "@/components/facebook-feed";
 import { LocationMap } from "@/components/location-map";
 import { LaMoraDaVivere } from "@/components/la-mora-da-vivere";
 import { VillaTeaser } from "@/components/villa-teaser";
+import { LastMinuteSection } from "@/components/last-minute-section";
+import { RichiesteSection } from "@/components/richieste-section";
 import { NewsletterSection } from "@/components/newsletter-section";
 import { CertificationsMarquee } from "@/components/certifications-marquee";
 import { PromoPopup } from "@/components/promo-popup";
@@ -42,6 +44,7 @@ export default function Home() {
       <ApartmentsCarousel locale="de" />
       <StructureHighlights locale="de" />
       <PriceComparisonSection locale="de" />
+      <LastMinuteSection struttura="lamora" locale="de" />
       <RankingSection locale="de" />
       <BlogSection locale="de" />
       <OutdoorLife locale="de" />
@@ -51,6 +54,7 @@ export default function Home() {
       <ReviewGate writeReviewUrl={getWriteReviewUrl()} locale="de" />
       <LaMoraDaVivere locale="de" />
       <VillaTeaser locale="de" />
+      <RichiesteSection struttura="lamora" locale="de" />
       <LocationMap locale="de" />
       <FacebookFeed locale="de" />
       <NewsletterSection locale="de" />

@@ -97,7 +97,7 @@ const TEXT: Record<
       { value: "-10%", label: "Tariffa non rimborsabile", detail: "Rispetto alla tariffa flessibile, per chi ha già le idee chiare." },
     ],
     whatsappTemplate: (apt, ci, co, a) => `Ciao! Vorrei un preventivo per l'appartamento ${apt} dal ${ci} al ${co} (${a} adulti).`,
-    bbAlternative: "Preferisci un altro modo di prenotare? Verifica su Bed & Breakfast.it",
+    bbAlternative: "Preferisci scriverci direttamente? Contattaci su WhatsApp",
   },
   en: {
     label: "Direct booking",
@@ -122,7 +122,7 @@ const TEXT: Record<
       { value: "-10%", label: "Non-refundable rate", detail: "Compared to the flexible rate, for those who already know their plans." },
     ],
     whatsappTemplate: (apt, ci, co, a) => `Hi! I'd like a quote for the ${apt} apartment from ${ci} to ${co} (${a} adults).`,
-    bbAlternative: "Prefer another way to book? Check availability on Bed & Breakfast.it",
+    bbAlternative: "Prefer to write to us directly? Contact us on WhatsApp",
   },
   fr: {
     label: "Réservation directe",
@@ -147,7 +147,7 @@ const TEXT: Record<
       { value: "-10%", label: "Tarif non remboursable", detail: "Par rapport au tarif flexible, pour ceux qui ont déjà décidé." },
     ],
     whatsappTemplate: (apt, ci, co, a) => `Bonjour ! Je voudrais un devis pour l'appartement ${apt} du ${ci} au ${co} (${a} adultes).`,
-    bbAlternative: "Vous préférez une autre façon de réserver ? Vérifiez sur Bed & Breakfast.it",
+    bbAlternative: "Vous préférez nous écrire directement ? Contactez-nous sur WhatsApp",
   },
   de: {
     label: "Direktbuchung",
@@ -172,7 +172,7 @@ const TEXT: Record<
       { value: "-10%", label: "Nicht erstattbarer Tarif", detail: "Im Vergleich zum flexiblen Tarif, für alle, die schon entschieden haben." },
     ],
     whatsappTemplate: (apt, ci, co, a) => `Hallo! Ich hätte gerne ein Angebot für das Apartment ${apt} vom ${ci} bis ${co} (${a} Erwachsene).`,
-    bbAlternative: "Lieber anders buchen? Verfügbarkeit auf Bed & Breakfast.it prüfen",
+    bbAlternative: "Lieber direkt schreiben? Kontaktieren Sie uns auf WhatsApp",
   },
 };
 
@@ -309,11 +309,15 @@ export async function PriceComparisonSection({ locale }: { locale: Locale }) {
                   {STAY.nights} {text.nights} · {STAY.adults} {text.ospiti} · {text.apartment} {STAY.apartmentName}
                 </p>
 
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-7 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
+                {/* Deciso di abbandonare l'idea di un booking engine
+                    proprietario: bed-and-breakfast.it è ora il sistema di
+                    prenotazione reale, quindi qui diventa il CTA
+                    principale (prima era WhatsApp, mascherato dietro la
+                    stessa grafica del bottone "PRENOTA DIRETTAMENTE").
+                    WhatsApp resta come contatto diretto secondario. */}
+                <button
+                  type="button"
+                  className="rrp-widget-open-modal group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-7 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
                 >
                   <HoverFill color="#8a3844" />
                   <span className="relative z-10 inline-flex items-center gap-2.5">
@@ -322,19 +326,16 @@ export async function PriceComparisonSection({ locale }: { locale: Locale }) {
                       →
                     </span>
                   </span>
-                </a>
+                </button>
 
-                {/* Alternativa secondaria: il widget bed-and-breakfast.it
-                    resta disponibile ma non è più il sistema principale —
-                    un semplice link testuale, non un altro pulsante, per
-                    non mettere l'utente davanti a più sistemi paritari
-                    (richiesta esplicita del titolare). */}
-                <button
-                  type="button"
-                  className="rrp-widget-open-modal mt-3 text-[10.5px] font-medium text-ink-soft underline decoration-ink-soft/40 underline-offset-4 transition-colors hover:text-raspberry"
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 block text-[10.5px] font-medium text-ink-soft underline decoration-ink-soft/40 underline-offset-4 transition-colors hover:text-raspberry"
                 >
                   {text.bbAlternative}
-                </button>
+                </a>
               </div>
 
               {/* Fascia OTA secondaria */}

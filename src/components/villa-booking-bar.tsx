@@ -1,39 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { VILLA_MAX_GUESTS, VILLA_WHATSAPP_NUMBER } from "@/data/villa";
+import { VILLA_MAX_GUESTS } from "@/data/villa";
 import type { Locale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
 
 const PHONE_TEL = "tel:+390758041164";
-const INTL_TAG: Record<Locale, string> = { it: "it-IT", en: "en-GB", fr: "fr-FR", de: "de-DE" };
-
-const GUEST_REQUEST_MSG: Record<Locale, (guests: number, guestWord: string) => string> = {
-  it: (g, w) => `Ciao! Vorrei verificare la disponibilità di Villa Relax per ${g} ${w}`,
-  en: (g, w) => `Hi! I'd like to check the availability of Villa Relax for ${g} ${w}`,
-  fr: (g, w) => `Bonjour ! Je voudrais vérifier la disponibilité de Villa Relax pour ${g} ${w}`,
-  de: (g, w) => `Hallo! Ich möchte die Verfügbarkeit von Villa Relax für ${g} ${w} prüfen`,
-};
-const FROM_WORD: Record<Locale, string> = { it: "dal", en: "from", fr: "du", de: "vom" };
-const TO_WORD: Record<Locale, string> = { it: "al", en: "to", fr: "au", de: "bis" };
-
-function formatDateInput(value: string, locale: Locale) {
-  const fallback = t("booking", "aggiungiData", locale);
-  if (!value) return fallback;
-  const d = new Date(`${value}T00:00:00`);
-  if (Number.isNaN(d.getTime())) return fallback;
-  return new Intl.DateTimeFormat(INTL_TAG[locale], { day: "2-digit", month: "short" }).format(d);
-}
 
 function guestWord(locale: Locale, guests: number) {
   return t("booking", guests === 1 ? "ospitiSuffix" : "ospitiSuffixPlural", locale);
-}
-
-function buildWhatsappUrl(locale: Locale, checkIn: string, checkOut: string, guests: number) {
-  const parts = [GUEST_REQUEST_MSG[locale](guests, guestWord(locale, guests))];
-  if (checkIn) parts.push(`${FROM_WORD[locale]} ${formatDateInput(checkIn, locale)}`);
-  if (checkOut) parts.push(`${TO_WORD[locale]} ${formatDateInput(checkOut, locale)}`);
-  return `https://wa.me/${VILLA_WHATSAPP_NUMBER}?text=${encodeURIComponent(parts.join(" ") + ".")}`;
 }
 
 function PhoneIcon() {
@@ -173,8 +148,6 @@ export function VillaBookingBar({ locale }: { locale: Locale }) {
     };
   }, [sheetOpen]);
 
-  const whatsappUrl = buildWhatsappUrl(locale, booking.checkIn, booking.checkOut, booking.guests);
-
   return (
     <div
       className="pointer-events-none fixed inset-x-0 z-[70] flex justify-center px-4 transition-all duration-500 ease-out sm:px-6"
@@ -241,14 +214,16 @@ export function VillaBookingBar({ locale }: { locale: Locale }) {
             )}
           </div>
 
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex h-full w-full items-center justify-center whitespace-nowrap bg-raspberry px-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
+          {/* rrp-widget-open-modal apre la modale camere di bed-and-
+              breakfast.it — qui lo script caricato è quello di Villa Relax
+              (account separato, vedi rooms-widget-script.tsx), non più un
+              semplice link WhatsApp. */}
+          <button
+            type="button"
+            className="rrp-widget-open-modal flex h-full w-full items-center justify-center whitespace-nowrap bg-raspberry px-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
           >
             {t("booking", "prenotaVilla", locale)}
-          </a>
+          </button>
           <a
             href={PHONE_TEL}
             aria-label={t("booking", "chiamaVilla", locale)}
@@ -347,14 +322,12 @@ export function VillaBookingBar({ locale }: { locale: Locale }) {
               </div>
             </div>
 
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 flex w-full items-center justify-center rounded-[3px] bg-raspberry py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
+            <button
+              type="button"
+              className="rrp-widget-open-modal mt-5 flex w-full items-center justify-center rounded-[3px] bg-raspberry py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
             >
               {t("booking", "prenotaVilla", locale)} Relax
-            </a>
+            </button>
             <a
               href={PHONE_TEL}
               className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-[3px] border border-ink/15 py-3.5 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-ink transition-colors hover:border-raspberry hover:text-raspberry"
