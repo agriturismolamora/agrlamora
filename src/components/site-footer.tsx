@@ -16,8 +16,10 @@ const EMAIL = "agriturismolamora@gmail.com";
 function getNav(locale: Locale) {
   return [
     { label: t("nav", "alloggi", locale), href: withLocale(locale, "/alloggi/") },
+    { label: t("nav", "villaRelax", locale), href: withLocale(locale, "/villa-relax-assisi/") },
     { label: t("nav", "chiSiamo", locale), href: withLocale(locale, "/chi-siamo/") },
     { label: t("nav", "territorio", locale), href: withLocale(locale, "/territorio/") },
+    { label: t("nav", "blog", locale), href: withLocale(locale, "/blog/") },
     { label: t("nav", "offerte", locale), href: withLocale(locale, "/offerte/") },
     { label: t("nav", "recensioni", locale), href: withLocale(locale, "/#section-reviews") },
     { label: t("nav", "contatti", locale), href: withLocale(locale, "/#section-map") },

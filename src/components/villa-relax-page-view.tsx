@@ -154,6 +154,7 @@ const TEXT: Record<
   Locale,
   {
     heroLabel: string;
+    heroBadge: string;
     heroTitle: string;
     heroBody: string;
     presLabel: string;
@@ -191,11 +192,12 @@ const TEXT: Record<
 > = {
   it: {
     heroLabel: "Villa Relax · Villa indipendente ad Assisi",
+    heroBadge: "Locazione esclusiva",
     heroTitle: "Una villa indipendente nella campagna di Assisi.",
-    heroBody: "Non uno degli appartamenti di Agriturismo La Mora: una proprietà a sé, con piscina privata e giardino, pensata per famiglie numerose e gruppi fino a 16 persone.",
+    heroBody: "Non uno degli appartamenti di Agriturismo La Mora: una proprietà a sé in locazione esclusiva — tutta per il vostro gruppo, nessun altro ospite — con piscina privata e giardino, pensata per famiglie numerose e gruppi fino a 16 persone.",
     presLabel: "Villa Relax",
     presHeading: "Spazio vero, in aperta campagna umbra.",
-    presBody: "Villa Relax è una villa indipendente, arredata con gusto in uno stile classico, a breve distanza da Assisi. Non è un appartamento tra altri: è una proprietà a sé, con un proprio giardino e una propria piscina privata, pensata per chi vuole vivere l'Umbria con tutto lo spazio di una casa vera.",
+    presBody: "Villa Relax è una villa indipendente, arredata con gusto in uno stile classico, a breve distanza da Assisi, affittabile in esclusiva: quando la prenotate, la villa è solo vostra. Non è un appartamento tra altri: è una proprietà a sé, con un proprio giardino e una propria piscina privata, pensata per chi vuole vivere l'Umbria con tutto lo spazio di una casa vera.",
     spaziLabel: "Grandi spazi",
     spaziHeading: "Fino a 16 persone, 6 camere da letto.",
     spaziBody: "Gli interni accoglienti e spaziosi possono ospitare fino a 16 persone, grazie a 6 camere da letto, ciascuna con bagno e doccia privati. Una casa vacanze perfetta per una famiglia numerosa o un grande gruppo di amici che vuole vivere gli spazi insieme, senza rinunciare alla privacy di ognuno.",
@@ -227,11 +229,12 @@ const TEXT: Record<
   },
   en: {
     heroLabel: "Villa Relax · Independent villa in Assisi",
+    heroBadge: "Exclusive rental",
     heroTitle: "An independent villa in the Assisi countryside.",
-    heroBody: "Not one of Agriturismo La Mora's apartments: a property of its own, with private pool and garden, designed for large families and groups of up to 16 people.",
+    heroBody: "Not one of Agriturismo La Mora's apartments: a property of its own on an exclusive rental basis — the whole villa for your group, no other guests — with private pool and garden, designed for large families and groups of up to 16 people.",
     presLabel: "Villa Relax",
     presHeading: "Real space, in the open Umbrian countryside.",
-    presBody: "Villa Relax is an independent villa, tastefully furnished in a classic style, a short distance from Assisi. It's not one apartment among others: it's a property of its own, with its own garden and its own private pool, designed for those who want to experience Umbria with all the space of a real house.",
+    presBody: "Villa Relax is an independent villa, tastefully furnished in a classic style, a short distance from Assisi, available as an exclusive rental: once you book it, the villa is yours alone. It's not one apartment among others: it's a property of its own, with its own garden and its own private pool, designed for those who want to experience Umbria with all the space of a real house.",
     spaziLabel: "Large spaces",
     spaziHeading: "Up to 16 people, 6 bedrooms.",
     spaziBody: "The cosy, spacious interiors can host up to 16 people, thanks to 6 bedrooms, each with private bathroom and shower. A holiday home perfect for a large family or a big group of friends who want to share the space together, without giving up anyone's privacy.",
@@ -263,11 +266,12 @@ const TEXT: Record<
   },
   fr: {
     heroLabel: "Villa Relax · Villa indépendante à Assise",
+    heroBadge: "Location exclusive",
     heroTitle: "Une villa indépendante dans la campagne d'Assise.",
-    heroBody: "Pas l'un des appartements d'Agriturismo La Mora : une propriété à part entière, avec piscine privée et jardin, pensée pour les grandes familles et les groupes jusqu'à 16 personnes.",
+    heroBody: "Pas l'un des appartements d'Agriturismo La Mora : une propriété à part entière en location exclusive — toute la villa pour votre groupe, aucun autre hôte — avec piscine privée et jardin, pensée pour les grandes familles et les groupes jusqu'à 16 personnes.",
     presLabel: "Villa Relax",
     presHeading: "Un véritable espace, en pleine campagne ombrienne.",
-    presBody: "Villa Relax est une villa indépendante, meublée avec goût dans un style classique, à courte distance d'Assise. Ce n'est pas un appartement parmi d'autres : c'est une propriété à part entière, avec son propre jardin et sa propre piscine privée, pensée pour ceux qui veulent vivre l'Ombrie avec tout l'espace d'une vraie maison.",
+    presBody: "Villa Relax est une villa indépendante, meublée avec goût dans un style classique, à courte distance d'Assise, louable en exclusivité : une fois réservée, la villa est entièrement à vous. Ce n'est pas un appartement parmi d'autres : c'est une propriété à part entière, avec son propre jardin et sa propre piscine privée, pensée pour ceux qui veulent vivre l'Ombrie avec tout l'espace d'une vraie maison.",
     spaziLabel: "De grands espaces",
     spaziHeading: "Jusqu'à 16 personnes, 6 chambres.",
     spaziBody: "Les intérieurs chaleureux et spacieux peuvent accueillir jusqu'à 16 personnes, grâce à 6 chambres, chacune avec salle de bain et douche privées. Une maison de vacances parfaite pour une grande famille ou un grand groupe d'amis qui veut partager les espaces ensemble, sans renoncer à l'intimité de chacun.",
@@ -299,11 +303,12 @@ const TEXT: Record<
   },
   de: {
     heroLabel: "Villa Relax · Unabhängige Villa in Assisi",
+    heroBadge: "Exklusive Vermietung",
     heroTitle: "Eine unabhängige Villa in der Landschaft von Assisi.",
-    heroBody: "Kein Apartment von Agriturismo La Mora: eine eigenständige Immobilie mit privatem Pool und Garten, gedacht für große Familien und Gruppen bis zu 16 Personen.",
+    heroBody: "Kein Apartment von Agriturismo La Mora: eine eigenständige Immobilie zur exklusiven Vermietung — die ganze Villa für Ihre Gruppe, keine anderen Gäste — mit privatem Pool und Garten, gedacht für große Familien und Gruppen bis zu 16 Personen.",
     presLabel: "Villa Relax",
     presHeading: "Echter Raum, mitten in der umbrischen Landschaft.",
-    presBody: "Villa Relax ist eine unabhängige Villa, geschmackvoll im klassischen Stil eingerichtet, in kurzer Entfernung von Assisi. Kein Apartment unter anderen: eine eigenständige Immobilie mit eigenem Garten und eigenem privatem Pool, gedacht für alle, die Umbrien mit dem ganzen Raum eines echten Hauses erleben möchten.",
+    presBody: "Villa Relax ist eine unabhängige Villa, geschmackvoll im klassischen Stil eingerichtet, in kurzer Entfernung von Assisi, exklusiv mietbar: sobald sie gebucht ist, gehört die Villa ganz Ihnen. Kein Apartment unter anderen: eine eigenständige Immobilie mit eigenem Garten und eigenem privatem Pool, gedacht für alle, die Umbrien mit dem ganzen Raum eines echten Hauses erleben möchten.",
     spaziLabel: "Große Räume",
     spaziHeading: "Bis zu 16 Personen, 6 Schlafzimmer.",
     spaziBody: "Die gemütlichen, geräumigen Innenräume bieten Platz für bis zu 16 Personen, dank 6 Schlafzimmer, jedes mit eigenem Bad und Dusche. Ein Ferienhaus, perfekt für eine große Familie oder eine große Gruppe von Freunden, die die Räume gemeinsam nutzen möchten, ohne auf die Privatsphäre jedes Einzelnen zu verzichten.",
@@ -365,7 +370,14 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
         />
         <div className="relative z-[1] mx-auto w-full max-w-[960px] px-6 pb-16 text-center sm:px-10 sm:pb-20">
           <Reveal>
-            <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-cream/80">{text.heroLabel}</span>
+            {/* Badge "Locazione esclusiva": richiesta esplicita del titolare
+                di rendere questo concetto immediatamente riconoscibile, non
+                solo implicito nel testo — stesso stile pillola oro già
+                usato altrove nel sito (es. "Sito ufficiale"). */}
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3.5 py-1.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-[#1f180e]">
+              {text.heroBadge}
+            </span>
+            <span className="mt-4 block text-[10px] font-semibold uppercase tracking-[0.32em] text-cream/80">{text.heroLabel}</span>
             <h1 className="mt-5 font-display text-[clamp(36px,6.5vw,64px)] font-normal leading-[1.08] text-cream [text-wrap:balance]">
               {text.heroTitle}
             </h1>

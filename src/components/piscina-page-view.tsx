@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
+import { HydromassageVideo } from "@/components/hydromassage-video";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 
@@ -37,6 +38,9 @@ const TEXT: Record<
     intro: string;
     attivitaLink: string;
     facts: { label: string; value: string }[];
+    fontanaLabel: string;
+    fontanaHeading: string;
+    fontanaBody: string;
     relaxLabel: string;
     relaxHeading: string;
     relaxBody1: string;
@@ -58,10 +62,13 @@ const TEXT: Record<
       { label: "Orario", value: "09:00 – 19:00" },
       { label: "Accesso", value: "Riservato agli ospiti" },
     ],
+    fontanaLabel: "Fontana idromassaggio",
+    fontanaHeading: "Un getto d'acqua per rinfrescarsi, nelle ore più calde.",
+    fontanaBody: "Oltre alla vasca, la piscina ha una fontana idromassaggio che viene azionata nelle ore più calde della giornata: un modo in più per rinfrescarsi, apprezzato soprattutto da chi si ferma in acqua nel primo pomeriggio.",
     relaxLabel: "Relax",
     relaxHeading: "Non solo per nuotare.",
     relaxBody1: "Le sedie all'ombra intorno alla vasca sono pensate per chi si ferma a leggere mentre i bambini giocano in acqua, o per un caffè lento guardando la campagna. La piscina è visibile da gran parte del giardino: anche chi non nuota resta comunque dentro l'atmosfera.",
-    relaxBody2: "È a pochi passi dagli appartamenti — si scende in costume, non serve organizzare nulla.",
+    relaxBody2: "È a pochi passi dagli appartamenti — si scende in costume, non serve organizzare nulla. Il momento ideale è dopo una giornata ad Assisi: si torna, ci si cambia, e si rilassa in acqua invece di restare seduti in macchina o in hotel.",
     quote: "Emplacement calme, piscine très bien entretenue.",
     quoteAttribution: "Ludivine, Francia — Google",
     closingHeading: "Ti aspettiamo in piscina.",
@@ -78,10 +85,13 @@ const TEXT: Record<
       { label: "Hours", value: "09:00 – 19:00" },
       { label: "Access", value: "Guests only" },
     ],
+    fontanaLabel: "Hydromassage fountain",
+    fontanaHeading: "A jet of water to cool off, during the hottest hours.",
+    fontanaBody: "Besides the pool itself, there's a hydromassage fountain that's turned on during the hottest hours of the day: an extra way to cool down, especially appreciated by those who stay in the water in the early afternoon.",
     relaxLabel: "Relax",
     relaxHeading: "Not just for swimming.",
     relaxBody1: "The shaded chairs around the pool are made for those who stop to read while children play in the water, or for a slow coffee looking out over the countryside. The pool is visible from much of the garden: even non-swimmers stay within the atmosphere.",
-    relaxBody2: "It's a few steps from the apartments — you head down in your swimsuit, no need to organise anything.",
+    relaxBody2: "It's a few steps from the apartments — you head down in your swimsuit, no need to organise anything. The ideal moment is after a day in Assisi: you come back, change, and relax in the water instead of staying seated in the car or at a hotel.",
     quote: "Emplacement calme, piscine très bien entretenue.",
     quoteAttribution: "Ludivine, France — Google",
     closingHeading: "We'll see you at the pool.",
@@ -98,10 +108,13 @@ const TEXT: Record<
       { label: "Horaires", value: "09h00 – 19h00" },
       { label: "Accès", value: "Réservé aux hôtes" },
     ],
+    fontanaLabel: "Fontaine hydromassante",
+    fontanaHeading: "Un jet d'eau pour se rafraîchir, aux heures les plus chaudes.",
+    fontanaBody: "En plus du bassin, la piscine dispose d'une fontaine hydromassante activée aux heures les plus chaudes de la journée : une façon supplémentaire de se rafraîchir, particulièrement appréciée par ceux qui restent dans l'eau en début d'après-midi.",
     relaxLabel: "Détente",
     relaxHeading: "Pas seulement pour nager.",
     relaxBody1: "Les chaises à l'ombre autour du bassin sont pensées pour ceux qui s'arrêtent pour lire pendant que les enfants jouent dans l'eau, ou pour un café tranquille en regardant la campagne. La piscine est visible depuis une grande partie du jardin : même sans nager, on reste dans l'ambiance.",
-    relaxBody2: "Elle est à quelques pas des appartements — on y descend en maillot, sans rien organiser.",
+    relaxBody2: "Elle est à quelques pas des appartements — on y descend en maillot, sans rien organiser. Le moment idéal est après une journée à Assise : on rentre, on se change, et on se détend dans l'eau plutôt que de rester assis en voiture ou à l'hôtel.",
     quote: "Emplacement calme, piscine très bien entretenue.",
     quoteAttribution: "Ludivine, France — Google",
     closingHeading: "On vous attend à la piscine.",
@@ -118,10 +131,13 @@ const TEXT: Record<
       { label: "Öffnungszeiten", value: "09:00 – 19:00" },
       { label: "Zugang", value: "Nur für Gäste" },
     ],
+    fontanaLabel: "Hydromassage-Brunnen",
+    fontanaHeading: "Ein Wasserstrahl zur Abkühlung, in den heißesten Stunden.",
+    fontanaBody: "Neben dem Becken gibt es einen Hydromassage-Brunnen, der in den heißesten Stunden des Tages eingeschaltet wird: eine zusätzliche Möglichkeit zur Abkühlung, besonders geschätzt von allen, die am frühen Nachmittag im Wasser bleiben.",
     relaxLabel: "Entspannung",
     relaxHeading: "Nicht nur zum Schwimmen.",
     relaxBody1: "Die schattigen Stühle rund um das Becken sind für alle gedacht, die lesen möchten, während die Kinder im Wasser spielen, oder für einen gemütlichen Kaffee mit Blick auf die Landschaft. Der Pool ist von einem Großteil des Gartens aus sichtbar: auch wer nicht schwimmt, bleibt Teil der Atmosphäre.",
-    relaxBody2: "Er liegt nur wenige Schritte von den Apartments entfernt — man geht im Badeanzug hinunter, ohne etwas organisieren zu müssen.",
+    relaxBody2: "Er liegt nur wenige Schritte von den Apartments entfernt — man geht im Badeanzug hinunter, ohne etwas organisieren zu müssen. Der ideale Moment ist nach einem Tag in Assisi: man kommt zurück, zieht sich um und entspannt im Wasser, statt im Auto oder im Hotel sitzen zu bleiben.",
     quote: "Emplacement calme, piscine très bien entretenue.",
     quoteAttribution: "Ludivine, Frankreich — Google",
     closingHeading: "Wir erwarten Sie am Pool.",
@@ -209,6 +225,23 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
 
       <section className="bg-cream py-16 sm:py-20">
         <div className="mx-auto grid max-w-[1100px] grid-cols-1 items-center gap-10 px-6 sm:grid-cols-2 sm:px-10 sm:gap-16">
+          <Reveal className="mx-auto w-full max-w-[320px] sm:max-w-none">
+            <HydromassageVideo />
+          </Reveal>
+          <Reveal delay={80}>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-olive-950">{text.fontanaLabel}</span>
+            <h2 className="mt-3 font-display text-[26px] font-normal leading-[1.2] text-ink">
+              {text.fontanaHeading}
+            </h2>
+            <p className="mt-4 text-[14px] leading-[1.75] text-ink-soft">
+              {text.fontanaBody}
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="bg-cream-dim py-16 sm:py-20">
+        <div className="mx-auto grid max-w-[1100px] grid-cols-1 items-center gap-10 px-6 sm:grid-cols-2 sm:px-10 sm:gap-16">
           <Reveal>
             <div className="relative aspect-[4/3] overflow-hidden rounded-[3px]">
               <Image
@@ -235,7 +268,7 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className="bg-cream-dim py-16 sm:py-20">
+      <section className="bg-cream py-16 sm:py-20">
         <div className="mx-auto max-w-[900px] px-6 text-center sm:px-10">
           <Reveal>
             <p className="font-display text-[22px] font-normal italic leading-[1.5] text-ink [text-wrap:balance]">

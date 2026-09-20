@@ -129,6 +129,19 @@ export function FloorIcon() {
   );
 }
 
+/* Guinzaglio: anello del collare + linea curva fino all'impugnatura, stesso
+   linguaggio lineare delle altre icone (nessun cane disegnato, per non
+   confondersi con PawIcon). */
+export function LeashIcon() {
+  return (
+    <Base>
+      <circle cx="6.5" cy="17.5" r="2" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M8.3 16.2c2-3 5-6.5 6.7-8.7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="16.5" cy="6" r="2.3" stroke="currentColor" strokeWidth="1.5" />
+    </Base>
+  );
+}
+
 export const AMENITY_ICON_BY_LABEL: Record<string, () => React.JSX.Element> = {
   // Italiano
   "TV con canali satellitari": TvIcon,
@@ -146,6 +159,7 @@ export const AMENITY_ICON_BY_LABEL: Record<string, () => React.JSX.Element> = {
   "Gazebo privato": GazeboIcon,
   "Piano terra": FloorIcon,
   "Primo piano": FloorIcon,
+  "Guinzaglio obbligatorio negli spazi comuni": LeashIcon,
   // English
   "Satellite TV": TvIcon,
   "Equipped kitchen": KitchenIcon,
@@ -162,6 +176,7 @@ export const AMENITY_ICON_BY_LABEL: Record<string, () => React.JSX.Element> = {
   "Private gazebo": GazeboIcon,
   "Ground floor": FloorIcon,
   "First floor": FloorIcon,
+  "Leash required in common areas": LeashIcon,
   // Français
   "TV satellite": TvIcon,
   "Cuisine équipée": KitchenIcon,
@@ -178,6 +193,7 @@ export const AMENITY_ICON_BY_LABEL: Record<string, () => React.JSX.Element> = {
   "Gazebo privé": GazeboIcon,
   "Rez-de-chaussée": FloorIcon,
   "Premier étage": FloorIcon,
+  "Laisse obligatoire dans les espaces communs": LeashIcon,
   // Deutsch
   "Sat-TV": TvIcon,
   "Ausgestattete Küche": KitchenIcon,
@@ -193,4 +209,5 @@ export const AMENITY_ICON_BY_LABEL: Record<string, () => React.JSX.Element> = {
   "Privater Pavillon": GazeboIcon,
   Erdgeschoss: FloorIcon,
   "Erster Stock": FloorIcon,
+  "Leinenpflicht in Gemeinschaftsbereichen": LeashIcon,
 };

@@ -15,6 +15,7 @@ import { BlogSection } from "@/components/blog-section";
 import { FacebookFeed } from "@/components/facebook-feed";
 import { LocationMap } from "@/components/location-map";
 import { LaMoraDaVivere } from "@/components/la-mora-da-vivere";
+import { VillaTeaser } from "@/components/villa-teaser";
 import { NewsletterSection } from "@/components/newsletter-section";
 import { CertificationsMarquee } from "@/components/certifications-marquee";
 import { PromoPopup } from "@/components/promo-popup";
@@ -49,6 +50,7 @@ export default function Home() {
       <ReviewsSection locale="fr" />
       <ReviewGate writeReviewUrl={getWriteReviewUrl()} locale="fr" />
       <LaMoraDaVivere locale="fr" />
+      <VillaTeaser locale="fr" />
       <LocationMap locale="fr" />
       <FacebookFeed locale="fr" />
       <NewsletterSection locale="fr" />

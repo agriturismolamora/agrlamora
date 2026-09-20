@@ -357,7 +357,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
                 <h3 className="mt-3 font-display text-[15px] font-normal leading-[1.2] text-ink sm:text-[17px]">
                   {moment.title}
                 </h3>
-                <p className="mt-1.5 hidden text-[12px] leading-[1.6] text-ink-soft sm:block">{moment.text}</p>
+                <p className="mt-1.5 text-[12px] leading-[1.6] text-ink-soft">{moment.text}</p>
               </Reveal>
             ))}
           </div>

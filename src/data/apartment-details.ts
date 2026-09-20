@@ -88,10 +88,10 @@ const TEXT_BY_LOCALE: Record<Locale, Record<string, TextOnly>> = {
       tagline: "Un giardino tutto suo, anche per chi viaggia a quattro zampe.",
       description: [
         "Gemelli è il più raccolto dei cinque, pensato per due persone (o due più un cane): una camera con letto matrimoniale, un piccolo soggiorno con cucina attrezzata con lavastoviglie e divano letto matrimoniale con tv, un bagno. Fuori, un giardino recintato che è suo e di nessun altro — non condiviso col resto della struttura.",
-        "È l'appartamento che consigliamo a chi arriva con un cane: il recinto significa che può stare libero senza guinzaglio nel proprio spazio, e la vicinanza alla direzione rende comodo qualsiasi bisogno nei primi giorni di ambientamento.",
+        "È l'appartamento che consigliamo a chi arriva con un cane: il recinto significa che può stare libero senza guinzaglio nel proprio spazio, e la vicinanza alla direzione rende comodo qualsiasi bisogno nei primi giorni di ambientamento. Negli spazi comuni della struttura, fuori dal giardino privato, il guinzaglio resta obbligatorio.",
       ],
       distinctiveFeature: "Giardino privato recintato, ideale per chi viaggia con animali",
-      specificAmenities: ["Piano terra", "Giardino privato recintato", "Pet friendly (25€/soggiorno)"],
+      specificAmenities: ["Piano terra", "Giardino privato recintato", "Pet friendly (25€/soggiorno)", "Guinzaglio obbligatorio negli spazi comuni"],
     },
     bilancia: {
       tagline: "Tre camere, una cucina grande, spazio vero per un gruppo.",
@@ -124,10 +124,10 @@ const TEXT_BY_LOCALE: Record<Locale, Record<string, TextOnly>> = {
       tagline: "Un gazebo tutto suo, per le cene che durano fino a tardi.",
       description: [
         "Sagittario è il più capiente tra gli appartamenti a piano terra: fino a sei persone, camera con letto matrimoniale e letto a castello, soggiorno con cucina e divano letto matrimoniale, giardino privato recintato e un gazebo esterno che è lo spazio informale dove si mangia quando fa caldo, si beve un caffè la mattina, o semplicemente ci si siede a guardare i bambini giocare.",
-        "Come Gemelli, accetta animali: il recinto privato lascia i cani liberi di muoversi senza pensieri, e la vicinanza al parco giochi lo rende comodo per chi viaggia con figli piccoli.",
+        "Come Gemelli, accetta animali: il recinto privato lascia i cani liberi di muoversi senza pensieri, e la vicinanza al parco giochi lo rende comodo per chi viaggia con figli piccoli. Negli spazi comuni della struttura, fuori dal giardino privato, il guinzaglio resta obbligatorio.",
       ],
       distinctiveFeature: "Gazebo esterno privato e giardino recintato, fino a 6 ospiti",
-      specificAmenities: ["Piano terra", "Giardino privato recintato", "Gazebo esterno", "Pet friendly (25€/soggiorno)"],
+      specificAmenities: ["Piano terra", "Giardino privato recintato", "Gazebo esterno", "Pet friendly (25€/soggiorno)", "Guinzaglio obbligatorio negli spazi comuni"],
     },
   },
   en: {
@@ -135,10 +135,10 @@ const TEXT_BY_LOCALE: Record<Locale, Record<string, TextOnly>> = {
       tagline: "A garden all its own, even for those travelling on four paws.",
       description: [
         "Gemelli is the coziest of the five, made for two people (or two plus a dog): a bedroom with a double bed, a small living room with an equipped kitchen with dishwasher and a double sofa bed with TV, one bathroom. Outside, a fenced garden that's entirely its own — not shared with the rest of the property.",
-        "It's the apartment we recommend for those arriving with a dog: the fence means they can roam free, off the leash, in their own space, and the closeness to the owners' house makes any need easy to handle in the first days of settling in.",
+        "It's the apartment we recommend for those arriving with a dog: the fence means they can roam free, off the leash, in their own space, and the closeness to the owners' house makes any need easy to handle in the first days of settling in. In the property's common areas, outside the private garden, dogs must stay on a leash.",
       ],
       distinctiveFeature: "Fenced private garden, ideal for travelling with pets",
-      specificAmenities: ["Ground floor", "Fenced private garden", "Pet friendly (€25/stay)"],
+      specificAmenities: ["Ground floor", "Fenced private garden", "Pet friendly (€25/stay)", "Leash required in common areas"],
     },
     bilancia: {
       tagline: "Three bedrooms, a large kitchen, real space for a group.",
@@ -171,10 +171,10 @@ const TEXT_BY_LOCALE: Record<Locale, Record<string, TextOnly>> = {
       tagline: "A gazebo all its own, for dinners that run late.",
       description: [
         "Sagittario is the largest of the ground-floor apartments: up to six people, a bedroom with a double bed and bunk bed, a living room with kitchen and double sofa bed, a fenced private garden and an outdoor gazebo that's the informal space for eating when it's hot, having a coffee in the morning, or simply sitting to watch the children play.",
-        "Like Gemelli, it accepts pets: the private fence lets dogs roam free without worry, and the closeness to the playground makes it convenient for those travelling with young children.",
+        "Like Gemelli, it accepts pets: the private fence lets dogs roam free without worry, and the closeness to the playground makes it convenient for those travelling with young children. In the property's common areas, outside the private garden, dogs must stay on a leash.",
       ],
       distinctiveFeature: "Private outdoor gazebo and fenced garden, up to 6 guests",
-      specificAmenities: ["Ground floor", "Fenced private garden", "Outdoor gazebo", "Pet friendly (€25/stay)"],
+      specificAmenities: ["Ground floor", "Fenced private garden", "Outdoor gazebo", "Pet friendly (€25/stay)", "Leash required in common areas"],
     },
   },
   fr: {
@@ -182,10 +182,10 @@ const TEXT_BY_LOCALE: Record<Locale, Record<string, TextOnly>> = {
       tagline: "Un jardin bien à lui, même pour ceux qui voyagent à quatre pattes.",
       description: [
         "Gemelli est le plus intime des cinq, pensé pour deux personnes (ou deux plus un chien) : une chambre avec lit double, un petit salon avec cuisine équipée avec lave-vaisselle et canapé-lit double avec télévision, une salle de bain. Dehors, un jardin clôturé qui n'appartient qu'à lui — non partagé avec le reste de la structure.",
-        "C'est l'appartement que nous recommandons à qui arrive avec un chien : la clôture signifie qu'il peut rester libre sans laisse dans son propre espace, et la proximité de la direction facilite tout besoin dans les premiers jours d'adaptation.",
+        "C'est l'appartement que nous recommandons à qui arrive avec un chien : la clôture signifie qu'il peut rester libre sans laisse dans son propre espace, et la proximité de la direction facilite tout besoin dans les premiers jours d'adaptation. Dans les espaces communs de la structure, en dehors du jardin privé, la laisse reste obligatoire.",
       ],
       distinctiveFeature: "Jardin privé clôturé, idéal pour voyager avec des animaux",
-      specificAmenities: ["Rez-de-chaussée", "Jardin privé clôturé", "Animaux acceptés (25€/séjour)"],
+      specificAmenities: ["Rez-de-chaussée", "Jardin privé clôturé", "Animaux acceptés (25€/séjour)", "Laisse obligatoire dans les espaces communs"],
     },
     bilancia: {
       tagline: "Trois chambres, une grande cuisine, un vrai espace pour un groupe.",
@@ -218,10 +218,10 @@ const TEXT_BY_LOCALE: Record<Locale, Record<string, TextOnly>> = {
       tagline: "Un gazebo bien à lui, pour les dîners qui se prolongent tard.",
       description: [
         "Sagittario est le plus grand des appartements au rez-de-chaussée : jusqu'à six personnes, une chambre avec lit double et lit superposé, un salon avec cuisine et canapé-lit double, un jardin privé clôturé et un gazebo extérieur, l'espace informel où l'on mange quand il fait chaud, où l'on prend un café le matin, ou où l'on s'assoit simplement pour regarder les enfants jouer.",
-        "Comme Gemelli, il accepte les animaux : la clôture privée laisse les chiens libres de circuler sans souci, et la proximité de l'aire de jeux le rend pratique pour ceux qui voyagent avec de jeunes enfants.",
+        "Comme Gemelli, il accepte les animaux : la clôture privée laisse les chiens libres de circuler sans souci, et la proximité de l'aire de jeux le rend pratique pour ceux qui voyagent avec de jeunes enfants. Dans les espaces communs de la structure, en dehors du jardin privé, la laisse reste obligatoire.",
       ],
       distinctiveFeature: "Gazebo extérieur privé et jardin clôturé, jusqu'à 6 personnes",
-      specificAmenities: ["Rez-de-chaussée", "Jardin privé clôturé", "Gazebo extérieur", "Animaux acceptés (25€/séjour)"],
+      specificAmenities: ["Rez-de-chaussée", "Jardin privé clôturé", "Gazebo extérieur", "Animaux acceptés (25€/séjour)", "Laisse obligatoire dans les espaces communs"],
     },
   },
   de: {
@@ -229,10 +229,10 @@ const TEXT_BY_LOCALE: Record<Locale, Record<string, TextOnly>> = {
       tagline: "Ein eigener Garten, auch für Reisende auf vier Pfoten.",
       description: [
         "Gemelli ist das gemütlichste der fünf Apartments, für zwei Personen gedacht (oder zwei plus einen Hund): ein Schlafzimmer mit Doppelbett, ein kleines Wohnzimmer mit ausgestatteter Küche mit Geschirrspüler und Doppelschlafsofa mit TV, ein Bad. Draußen ein eingezäunter Garten, der ganz für sich allein steht — nicht mit dem Rest der Unterkunft geteilt.",
-        "Es ist das Apartment, das wir für Gäste mit Hund empfehlen: der Zaun bedeutet, dass er sich in seinem eigenen Bereich frei ohne Leine bewegen kann, und die Nähe zur Leitung macht jedes Anliegen in den ersten Eingewöhnungstagen einfach.",
+        "Es ist das Apartment, das wir für Gäste mit Hund empfehlen: der Zaun bedeutet, dass er sich in seinem eigenen Bereich frei ohne Leine bewegen kann, und die Nähe zur Leitung macht jedes Anliegen in den ersten Eingewöhnungstagen einfach. In den Gemeinschaftsbereichen der Unterkunft, außerhalb des privaten Gartens, gilt weiterhin Leinenpflicht.",
       ],
       distinctiveFeature: "Eingezäunter privater Garten, ideal für Reisen mit Haustieren",
-      specificAmenities: ["Erdgeschoss", "Eingezäunter privater Garten", "Haustierfreundlich (25€/Aufenthalt)"],
+      specificAmenities: ["Erdgeschoss", "Eingezäunter privater Garten", "Haustierfreundlich (25€/Aufenthalt)", "Leinenpflicht in Gemeinschaftsbereichen"],
     },
     bilancia: {
       tagline: "Drei Schlafzimmer, eine große Küche, echter Raum für eine Gruppe.",
@@ -265,10 +265,10 @@ const TEXT_BY_LOCALE: Record<Locale, Record<string, TextOnly>> = {
       tagline: "Ein eigener Pavillon, für Abendessen, die sich hinziehen.",
       description: [
         "Sagittario ist das größte der Erdgeschoss-Apartments: bis zu sechs Personen, ein Schlafzimmer mit Doppelbett und Etagenbett, ein Wohnzimmer mit Küche und Doppelschlafsofa, ein eingezäunter privater Garten und ein Pavillon im Freien, der informelle Ort, an dem man bei Hitze isst, morgens einen Kaffee trinkt oder einfach sitzt und den Kindern beim Spielen zusieht.",
-        "Wie Gemelli akzeptiert es Haustiere: der private Zaun lässt Hunde sorgenfrei herumlaufen, und die Nähe zum Spielplatz macht es praktisch für Reisende mit kleinen Kindern.",
+        "Wie Gemelli akzeptiert es Haustiere: der private Zaun lässt Hunde sorgenfrei herumlaufen, und die Nähe zum Spielplatz macht es praktisch für Reisende mit kleinen Kindern. In den Gemeinschaftsbereichen der Unterkunft, außerhalb des privaten Gartens, gilt weiterhin Leinenpflicht.",
       ],
       distinctiveFeature: "Privater Pavillon im Freien und eingezäunter Garten, bis zu 6 Gäste",
-      specificAmenities: ["Erdgeschoss", "Eingezäunter privater Garten", "Pavillon im Freien", "Haustierfreundlich (25€/Aufenthalt)"],
+      specificAmenities: ["Erdgeschoss", "Eingezäunter privater Garten", "Pavillon im Freien", "Haustierfreundlich (25€/Aufenthalt)", "Leinenpflicht in Gemeinschaftsbereichen"],
     },
   },
 };

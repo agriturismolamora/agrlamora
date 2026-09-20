@@ -84,6 +84,47 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Per chi ama camminare o pedalare, i sentieri partono direttamente dall'Eremo delle Carceri (raggiungibile in auto da Assisi in pochi minuti) e offrono viste sulla valle umbra che il centro storico, per quanto bello, non può dare.",
       ],
     },
+    {
+      slug: "agriumbria-umbriafiere",
+      category: "Eventi",
+      title: "Agriumbria a Umbriafiere: la fiera dell'agricoltura a 3 km da La Mora",
+      excerpt: "Ogni anno, generalmente a fine marzo, la mostra nazionale di agricoltura, zootecnia e alimentazione più importante dell'Umbria si tiene a Bastia Umbra, a pochi minuti da La Mora.",
+      image: "/images/home/esterno agriturismo la mora carretto e agriturismo.webp",
+      alt: "Esterno di Agriturismo La Mora, base comoda per chi visita Umbriafiere",
+      /* Fatti verificati sul sito ufficiale agriumbria.eu (settembre 2026):
+         57ª edizione 2026 il 27-29 marzo, tre settori (agricoltura,
+         zootecnia, alimentazione), razze bovine nazionali in mostra
+         (Chianina, Limousine, Charolaise, Romagnola). Nessuna foto reale
+         della fiera disponibile in public/: usata una foto reale della
+         struttura, non un'immagine della fiera stessa (mai inventata). */
+      body: [
+        "Agriumbria è la Mostra Nazionale di Agricoltura, Zootecnia e Alimentazione: una delle fiere di settore più importanti del centro Italia, organizzata ogni anno a Umbriafiere, il quartiere fieristico di Bastia Umbra. L'edizione 2026 ha tagliato il traguardo della 57ª edizione, svolta dal 27 al 29 marzo — la fiera ricorre tipicamente in questo periodo, a fine marzo.",
+        "Il percorso copre l'intera filiera, dal campo alla tavola: macchinari e attrezzature agricole, mostre di razze bovine, ovine e avicole nazionali (tra cui Chianina, Limousine, Charolaise e Romagnola), tecnologie per olio, vino e caseifici, oltre a un'area prodotti tipici e degustazioni che attira anche chi non lavora nel settore.",
+        "Umbriafiere dista circa 3 km da Agriturismo La Mora: comodo sia per chi espone o lavora alla fiera e non vuole affrontare ogni giorno lunghi spostamenti, sia per chi la visita e preferisce soggiornare in campagna invece che in un hotel di città, con la possibilità di aggiungere una gita ad Assisi ai margini della trasferta.",
+        "Bastia Umbra e Umbriafiere ospitano manifestazioni per gran parte dell'anno, non solo Agriumbria: tra queste anche Caccia Village, dedicata al mondo della caccia (ne parliamo in un altro articolo). Per le date esatte di ogni edizione, il riferimento resta sempre il calendario ufficiale di Umbriafiere, che può variare di anno in anno.",
+      ],
+    },
+    {
+      slug: "caccia-village-umbriafiere",
+      category: "Eventi",
+      title: "Caccia Village a Umbriafiere: la fiera della caccia vicino ad Assisi",
+      excerpt: "Ogni anno, generalmente a metà maggio, centinaia di aziende del mondo venatorio si radunano a Bastia Umbra, tra Perugia e Assisi, a pochi minuti da La Mora.",
+      image: "/images/struttura/foto dell esterno della struttura.webp",
+      alt: "Esterno di Agriturismo La Mora, base comoda per chi visita Caccia Village",
+      /* Fatti verificati (settembre 2026) su fonti giornalistiche/di settore
+         (all4shooters.com) per l'edizione 2026: 16-18 maggio, oltre 250
+         espositori (la maggior affluenza di sempre), armi e munizioni
+         disattivate, abbigliamento tecnico, ottiche, cani da caccia con
+         area ENCI, gastronomia di selvaggina. Nessuna foto reale della
+         fiera disponibile in public/: usata una foto reale della
+         struttura. */
+      body: [
+        "Caccia Village è la fiera dedicata al mondo della caccia che si tiene ogni anno a Umbriafiere, il quartiere fieristico di Bastia Umbra, tra Perugia e Assisi. L'edizione 2026 si è svolta dal 16 al 18 maggio, con oltre 250 aziende espositrici — la partecipazione più alta nella storia della manifestazione: la fiera ricorre tipicamente in questo periodo, a metà maggio.",
+        "Il programma copre armi e munizioni (sempre esposte disattivate), abbigliamento e attrezzatura tecnica, ottiche e strumentazione, un'area dedicata ai cani da caccia con lo spazio ENCI per le prove cinofile, oltre a gastronomia di selvaggina e banchi di macelleria specializzata.",
+        "Anche per chi arriva da fuori regione solo per la fiera, Umbriafiere è a circa 3 km da Agriturismo La Mora: un punto d'appoggio comodo in campagna, con la possibilità — tra una giornata di fiera e l'altra — di dedicare qualche ora ad Assisi, a pochi minuti di distanza.",
+        "Caccia Village non è l'unico appuntamento importante ospitato da Umbriafiere: tra le altre manifestazioni del calendario c'è anche Agriumbria, la mostra nazionale di agricoltura e zootecnia (ne parliamo in un altro articolo). Le date di ogni edizione vanno sempre verificate sul calendario ufficiale di Umbriafiere, che può cambiare di anno in anno.",
+      ],
+    },
   ],
   en: [
     {
@@ -149,6 +190,34 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Monte Subasio is the massif that towers over Assisi, today a Regional Park: high pastures, holm oak and beech woods, and a network of trails linking the city to the Eremo delle Carceri and continuing on to the summit, at 1,290 metres.",
         "It's the place that gave its name to Subasio pecorino cheese, still produced today by the farms on the mountain, and the natural source of the famous pink stone that much of Assisi is built from.",
         "For those who love walking or cycling, the trails start right from the Eremo delle Carceri (reachable by car from Assisi in a few minutes) and offer views over the Umbrian valley that the historic centre, however beautiful, simply can't match.",
+      ],
+    },
+    {
+      slug: "agriumbria-umbriafiere",
+      category: "Events",
+      title: "Agriumbria at Umbriafiere: the agriculture fair 3 km from La Mora",
+      excerpt: "Every year, generally in late March, Umbria's most important national exhibition of agriculture, livestock and food is held in Bastia Umbra, minutes from La Mora.",
+      image: "/images/home/esterno agriturismo la mora carretto e agriturismo.webp",
+      alt: "Exterior of Agriturismo La Mora, a convenient base for visiting Umbriafiere",
+      body: [
+        "Agriumbria is the National Exhibition of Agriculture, Livestock and Food: one of central Italy's most important trade fairs, held every year at Umbriafiere, the exhibition centre in Bastia Umbra. The 2026 edition marked its 57th year, running March 27-29 — the fair typically falls in this period, at the end of March.",
+        "It covers the whole supply chain, from field to table: agricultural machinery and equipment, exhibitions of national cattle, sheep and poultry breeds (including Chianina, Limousine, Charolaise and Romagnola), technology for oil, wine and dairy production, plus a local-products and tasting area that draws visitors well beyond the industry itself.",
+        "Umbriafiere is about 3 km from Agriturismo La Mora: convenient both for exhibitors or workers at the fair who don't want a long commute every day, and for visitors who'd rather stay in the countryside than in a city hotel, with the option of fitting in a trip to Assisi around the fair days.",
+        "Bastia Umbra and Umbriafiere host events for much of the year, not just Agriumbria: among them is also Caccia Village, dedicated to hunting (we cover it in another article). For exact dates of each edition, always check Umbriafiere's official calendar, which can vary from year to year.",
+      ],
+    },
+    {
+      slug: "caccia-village-umbriafiere",
+      category: "Events",
+      title: "Caccia Village at Umbriafiere: the hunting fair near Assisi",
+      excerpt: "Every year, generally in mid-May, hundreds of companies from the hunting world gather in Bastia Umbra, between Perugia and Assisi, minutes from La Mora.",
+      image: "/images/struttura/foto dell esterno della struttura.webp",
+      alt: "Exterior of Agriturismo La Mora, a convenient base for visiting Caccia Village",
+      body: [
+        "Caccia Village is the fair dedicated to the world of hunting, held every year at Umbriafiere, the exhibition centre in Bastia Umbra, between Perugia and Assisi. The 2026 edition ran May 16-18, with over 250 exhibiting companies — the highest turnout in the event's history: the fair typically falls in this period, in mid-May.",
+        "The programme covers firearms and ammunition (always displayed deactivated), technical clothing and equipment, optics and instruments, an area dedicated to hunting dogs with an ENCI space for canine trials, plus game meat gastronomy and specialised butchery stalls.",
+        "Even for those arriving from outside the region just for the fair, Umbriafiere is about 3 km from Agriturismo La Mora: a convenient base in the countryside, with the option — between fair days — of spending a few hours in Assisi, minutes away.",
+        "Caccia Village isn't the only major event hosted by Umbriafiere: the calendar also includes Agriumbria, the national exhibition of agriculture and livestock (we cover it in another article). Dates for each edition should always be checked on Umbriafiere's official calendar, which can change from year to year.",
       ],
     },
   ],
@@ -218,6 +287,34 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Pour les amateurs de marche ou de vélo, les sentiers partent directement de l'Ermitage des Prisons (accessible en voiture depuis Assise en quelques minutes) et offrent sur la vallée ombrienne des vues que le centre historique, aussi beau soit-il, ne peut offrir.",
       ],
     },
+    {
+      slug: "agriumbria-umbriafiere",
+      category: "Événements",
+      title: "Agriumbria à Umbriafiere : la foire de l'agriculture à 3 km de La Mora",
+      excerpt: "Chaque année, généralement fin mars, la plus importante exposition nationale d'agriculture, d'élevage et d'alimentation d'Ombrie se tient à Bastia Umbra, à quelques minutes de La Mora.",
+      image: "/images/home/esterno agriturismo la mora carretto e agriturismo.webp",
+      alt: "Extérieur d'Agriturismo La Mora, une base pratique pour visiter Umbriafiere",
+      body: [
+        "Agriumbria est l'Exposition Nationale d'Agriculture, d'Élevage et d'Alimentation : l'une des foires professionnelles les plus importantes du centre de l'Italie, organisée chaque année à Umbriafiere, le parc des expositions de Bastia Umbra. L'édition 2026 a marqué sa 57e édition, du 27 au 29 mars — la foire tombe généralement à cette période, fin mars.",
+        "Le parcours couvre toute la filière, du champ à la table : machines et équipements agricoles, expositions de races bovines, ovines et avicoles nationales (dont Chianina, Limousine, Charolaise et Romagnola), technologies pour l'huile, le vin et les fromageries, ainsi qu'un espace produits typiques et dégustations qui attire aussi un public non professionnel.",
+        "Umbriafiere se trouve à environ 3 km d'Agriturismo La Mora : pratique aussi bien pour les exposants ou le personnel de la foire qui ne veulent pas de longs trajets chaque jour, que pour les visiteurs qui préfèrent séjourner à la campagne plutôt qu'à l'hôtel en ville, avec la possibilité d'ajouter une visite à Assise en marge du séjour.",
+        "Bastia Umbra et Umbriafiere accueillent des manifestations une grande partie de l'année, pas seulement Agriumbria : parmi elles, Caccia Village, dédiée au monde de la chasse (nous en parlons dans un autre article). Pour les dates exactes de chaque édition, référez-vous toujours au calendrier officiel d'Umbriafiere, qui peut varier d'une année à l'autre.",
+      ],
+    },
+    {
+      slug: "caccia-village-umbriafiere",
+      category: "Événements",
+      title: "Caccia Village à Umbriafiere : la foire de la chasse près d'Assise",
+      excerpt: "Chaque année, généralement à la mi-mai, des centaines d'entreprises du monde de la chasse se réunissent à Bastia Umbra, entre Pérouse et Assise, à quelques minutes de La Mora.",
+      image: "/images/struttura/foto dell esterno della struttura.webp",
+      alt: "Extérieur d'Agriturismo La Mora, une base pratique pour visiter Caccia Village",
+      body: [
+        "Caccia Village est la foire dédiée au monde de la chasse qui se tient chaque année à Umbriafiere, le parc des expositions de Bastia Umbra, entre Pérouse et Assise. L'édition 2026 s'est déroulée du 16 au 18 mai, avec plus de 250 entreprises exposantes — la plus forte affluence de l'histoire de la manifestation : la foire tombe généralement à cette période, à la mi-mai.",
+        "Le programme couvre les armes et munitions (toujours exposées désactivées), les vêtements et équipements techniques, l'optique et l'instrumentation, un espace dédié aux chiens de chasse avec l'espace ENCI pour les épreuves cynophiles, ainsi que la gastronomie de gibier et des étals de boucherie spécialisée.",
+        "Même pour ceux qui viennent d'une autre région uniquement pour la foire, Umbriafiere se trouve à environ 3 km d'Agriturismo La Mora : une base pratique à la campagne, avec la possibilité — entre deux journées de foire — de consacrer quelques heures à Assise, à quelques minutes de là.",
+        "Caccia Village n'est pas le seul rendez-vous important accueilli par Umbriafiere : le calendrier comprend aussi Agriumbria, l'exposition nationale d'agriculture et d'élevage (nous en parlons dans un autre article). Les dates de chaque édition doivent toujours être vérifiées sur le calendrier officiel d'Umbriafiere, qui peut changer d'une année à l'autre.",
+      ],
+    },
   ],
   de: [
     {
@@ -283,6 +380,34 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Der Monte Subasio ist das Massiv, das sich über Assisi erhebt, heute ein Regionalpark: Hochweiden, Stein- und Buchenwälder und ein Netz von Wegen, die die Stadt mit der Eremo delle Carceri verbinden und weiter zum Gipfel auf 1.290 Metern führen.",
         "Er ist der Ort, der dem Pecorino-Käse aus Subasio seinen Namen gab, der noch heute von den Höfen am Berg produziert wird, und das natürliche Hinterland, aus dem der berühmte rosa Stein gewonnen wird, aus dem ein Großteil Assisis erbaut ist.",
         "Wander- und Radbegeisterte finden die Wege direkt bei der Eremo delle Carceri (von Assisi aus in wenigen Autominuten erreichbar); sie bieten Ausblicke auf das umbrische Tal, die die Altstadt, so schön sie auch ist, einfach nicht bieten kann.",
+      ],
+    },
+    {
+      slug: "agriumbria-umbriafiere",
+      category: "Veranstaltungen",
+      title: "Agriumbria bei Umbriafiere: die Landwirtschaftsmesse 3 km von La Mora",
+      excerpt: "Jedes Jahr, in der Regel Ende März, findet Umbriens wichtigste nationale Ausstellung für Landwirtschaft, Viehzucht und Ernährung in Bastia Umbra statt, wenige Minuten von La Mora entfernt.",
+      image: "/images/home/esterno agriturismo la mora carretto e agriturismo.webp",
+      alt: "Außenansicht von Agriturismo La Mora, eine praktische Basis für den Besuch von Umbriafiere",
+      body: [
+        "Agriumbria ist die Nationale Ausstellung für Landwirtschaft, Viehzucht und Ernährung: eine der wichtigsten Fachmessen Mittelitaliens, die jedes Jahr bei Umbriafiere, dem Messegelände von Bastia Umbra, stattfindet. Die Ausgabe 2026 markierte das 57. Jubiläum und lief vom 27. bis 29. März — die Messe findet typischerweise in diesem Zeitraum statt, Ende März.",
+        "Der Rundgang deckt die gesamte Wertschöpfungskette ab, vom Feld bis zum Tisch: Landmaschinen und -geräte, Ausstellungen nationaler Rinder-, Schaf- und Geflügelrassen (darunter Chianina, Limousine, Charolaise und Romagnola), Technologien für Öl, Wein und Käsereien sowie ein Bereich für regionale Produkte und Verkostungen, der auch Besucher außerhalb der Branche anzieht.",
+        "Umbriafiere liegt etwa 3 km von Agriturismo La Mora entfernt: praktisch sowohl für Aussteller oder Messepersonal, die nicht jeden Tag lange Wege zurücklegen möchten, als auch für Besucher, die lieber auf dem Land als in einem Stadthotel übernachten — mit der Möglichkeit, rund um den Messebesuch auch einen Ausflug nach Assisi einzuplanen.",
+        "Bastia Umbra und Umbriafiere sind fast das ganze Jahr über Gastgeber für Veranstaltungen, nicht nur für Agriumbria: dazu gehört auch Caccia Village, gewidmet der Welt der Jagd (dazu mehr in einem weiteren Artikel). Die genauen Termine jeder Ausgabe sollten immer im offiziellen Kalender von Umbriafiere geprüft werden, da sie von Jahr zu Jahr variieren können.",
+      ],
+    },
+    {
+      slug: "caccia-village-umbriafiere",
+      category: "Veranstaltungen",
+      title: "Caccia Village bei Umbriafiere: die Jagdmesse nahe Assisi",
+      excerpt: "Jedes Jahr, in der Regel Mitte Mai, versammeln sich Hunderte Unternehmen der Jagdbranche in Bastia Umbra, zwischen Perugia und Assisi, wenige Minuten von La Mora entfernt.",
+      image: "/images/struttura/foto dell esterno della struttura.webp",
+      alt: "Außenansicht von Agriturismo La Mora, eine praktische Basis für den Besuch von Caccia Village",
+      body: [
+        "Caccia Village ist die Messe für die Welt der Jagd, die jedes Jahr bei Umbriafiere, dem Messegelände von Bastia Umbra zwischen Perugia und Assisi, stattfindet. Die Ausgabe 2026 lief vom 16. bis 18. Mai mit über 250 ausstellenden Unternehmen — der höchste Besucherandrang in der Geschichte der Veranstaltung: die Messe findet typischerweise in diesem Zeitraum statt, Mitte Mai.",
+        "Das Programm umfasst Waffen und Munition (immer deaktiviert ausgestellt), technische Bekleidung und Ausrüstung, Optik und Instrumente, einen Bereich für Jagdhunde mit ENCI-Fläche für Hundeprüfungen sowie Wildbret-Gastronomie und spezialisierte Metzgereistände.",
+        "Auch für alle, die nur wegen der Messe von außerhalb der Region anreisen, liegt Umbriafiere etwa 3 km von Agriturismo La Mora entfernt: eine praktische Basis auf dem Land, mit der Möglichkeit, zwischen den Messetagen ein paar Stunden in Assisi zu verbringen, nur wenige Minuten entfernt.",
+        "Caccia Village ist nicht die einzige wichtige Veranstaltung bei Umbriafiere: zum Kalender gehört auch Agriumbria, die nationale Ausstellung für Landwirtschaft und Viehzucht (dazu mehr in einem weiteren Artikel). Die Termine jeder Ausgabe sollten immer im offiziellen Kalender von Umbriafiere geprüft werden, da sie sich von Jahr zu Jahr ändern können.",
       ],
     },
   ],
