@@ -6,6 +6,7 @@ import { useApartmentsSectionActive } from "@/hooks/use-apartments-active";
 import type { Locale } from "@/lib/i18n";
 import { splitLocaleFromPath } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
+import { openRoomsWidget } from "@/lib/rrp-widget";
 
 const PHONE_TEL = "tel:+390758041164";
 
@@ -491,12 +492,15 @@ export function BookingBar({ locale }: { locale: Locale }) {
 
         {/* Deciso di abbandonare l'idea di un booking engine proprietario:
             bed-and-breakfast.it è ora il motore di prenotazione reale del
-            sito. rrp-widget-open-modal apre la modale camere (vedi
-            root-shell.tsx / rooms-widget-script.tsx) mascherata dietro la
-            grafica del sito. */}
+            sito. Qui NON usiamo la classe rrp-widget-open-modal (che apre
+            il modale coi valori di default): openRoomsWidget riscrive
+            prima l'iframe del modale con le date/ospiti scelti sopra,
+            così il form reale che si apre riparte da quello che l'utente
+            ha già selezionato, invece di ignorarlo (vedi rrp-widget.ts). */}
         <button
           type="button"
-          className={`rrp-widget-open-modal h-full w-full whitespace-nowrap px-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-500 ${
+          onClick={() => openRoomsWidget({ checkIn: booking.checkIn, checkOut: booking.checkOut, guests: booking.adults + booking.childCount })}
+          className={`h-full w-full whitespace-nowrap px-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors duration-500 ${
             inApartments ? "bg-[#141a30] hover:bg-[#1c2440]" : "bg-raspberry hover:bg-[#8a3844]"
           }`}
         >
@@ -686,7 +690,8 @@ function MobileBookingSheet({
 
         <button
           type="button"
-          className="rrp-widget-open-modal mt-5 w-full rounded-[3px] bg-raspberry py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
+          onClick={() => openRoomsWidget({ checkIn: booking.checkIn, checkOut: booking.checkOut, guests: booking.adults + booking.childCount })}
+          className="mt-5 w-full rounded-[3px] bg-raspberry py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
         >
           {t("booking", "prenotaOra", locale)}
         </button>

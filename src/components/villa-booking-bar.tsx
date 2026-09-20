@@ -4,6 +4,20 @@ import { useEffect, useRef, useState } from "react";
 import { VILLA_MAX_GUESTS } from "@/data/villa";
 import type { Locale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
+import { openRoomsWidget } from "@/lib/rrp-widget";
+
+/* input[type=date] restituisce sempre "YYYY-MM-DD" (formato HTML, non
+   quello italiano): va parsato a mano prima di passarlo a openRoomsWidget,
+   che si aspetta un vero Date. new Date("YYYY-MM-DD") lo interpreterebbe
+   come UTC mezzanotte, con rischio di finire sul giorno prima/dopo a
+   seconda del fuso orario del visitatore — costruiamo il Date con
+   anno/mese/giorno espliciti (locale, mezzanotte locale) per evitarlo. */
+function parseDateInputValue(value: string): Date | null {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return null;
+  const [, y, m, d] = match;
+  return new Date(Number(y), Number(m) - 1, Number(d));
+}
 
 const PHONE_TEL = "tel:+390758041164";
 
@@ -98,9 +112,10 @@ function GuestsStepper({
    con gli appartamenti di Agriturismo La Mora. La <BookingBar /> globale si
    nasconde da sola su questa route (vedi booking-bar.tsx); questa la
    sostituisce, stesso linguaggio visivo del resto del sito ma dati e CTA
-   completamente separati. Nessun motore di prenotazione reale esiste
-   ancora (come per gli appartamenti): il CTA apre WhatsApp con date/ospiti
-   già scritti nel messaggio. */
+   completamente separati. Il CTA apre il modale camere di
+   bed-and-breakfast.it (account Villa Relax, vedi rooms-widget-script.tsx)
+   con le date/ospiti scelti qui sopra già preselezionati nel form reale
+   (openRoomsWidget, vedi rrp-widget.ts) invece di aprirlo vuoto. */
 export function VillaBookingBar({ locale }: { locale: Locale }) {
   const [guestsOpen, setGuestsOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -214,13 +229,16 @@ export function VillaBookingBar({ locale }: { locale: Locale }) {
             )}
           </div>
 
-          {/* rrp-widget-open-modal apre la modale camere di bed-and-
-              breakfast.it — qui lo script caricato è quello di Villa Relax
-              (account separato, vedi rooms-widget-script.tsx), non più un
-              semplice link WhatsApp. */}
           <button
             type="button"
-            className="rrp-widget-open-modal flex h-full w-full items-center justify-center whitespace-nowrap bg-raspberry px-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
+            onClick={() =>
+              openRoomsWidget({
+                checkIn: parseDateInputValue(booking.checkIn),
+                checkOut: parseDateInputValue(booking.checkOut),
+                guests: booking.guests,
+              })
+            }
+            className="flex h-full w-full items-center justify-center whitespace-nowrap bg-raspberry px-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
           >
             {t("booking", "prenotaVilla", locale)}
           </button>
@@ -324,7 +342,14 @@ export function VillaBookingBar({ locale }: { locale: Locale }) {
 
             <button
               type="button"
-              className="rrp-widget-open-modal mt-5 flex w-full items-center justify-center rounded-[3px] bg-raspberry py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
+              onClick={() =>
+                openRoomsWidget({
+                  checkIn: parseDateInputValue(booking.checkIn),
+                  checkOut: parseDateInputValue(booking.checkOut),
+                  guests: booking.guests,
+                })
+              }
+              className="mt-5 flex w-full items-center justify-center rounded-[3px] bg-raspberry py-4 font-sans text-[13px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
             >
               {t("booking", "prenotaVilla", locale)} Relax
             </button>

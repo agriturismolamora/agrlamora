@@ -103,17 +103,12 @@ function mod(n: number, m: number) {
   return ((n % m) + m) % m;
 }
 
-/* Distanza circolare con segno più breve da `active` a `i`. */
-function circularOffset(i: number, active: number, n: number) {
-  let diff = mod(i - active, n);
-  if (diff > n / 2) diff -= n;
-  return diff;
-}
-
-/* Come circularOffset, ma per una posizione continua (non intera): usata
-   dal carousel pinned desktop per avere SEMPRE 2 vicine oblique per lato,
-   fin dal primo frame in cui la sezione entra in viewport — non solo dopo
-   che l'utente ha scrollato a metà percorso. */
+/* Distanza circolare con segno più breve da una posizione continua (non
+   intera) `pos` a `i`: usata dal carousel pinned desktop per avere SEMPRE 2
+   vicine oblique per lato, fin dal primo frame in cui la sezione entra in
+   viewport — non solo dopo che l'utente ha scrollato a metà percorso. Il
+   carousel mobile usa invece un offset lineare (i - active, niente mod):
+   percorso con capolinea, non circolare — vedi MobileCarousel. */
 function circularOffsetContinuous(i: number, pos: number, n: number) {
   let diff = mod(i - pos, n);
   if (diff > n / 2) diff -= n;
@@ -375,6 +370,22 @@ function PetBadge({ locale }: { locale: Locale }) {
     <span className="absolute right-3 top-3 z-10 rounded-full bg-cream px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.06em] text-olive-950 shadow-[0_6px_16px_rgba(0,0,0,0.3)]">
       {TXT[locale].petFriendly}
     </span>
+  );
+}
+
+/* Frecce ai bordi del carousel mobile (vedi MobileCarousel): indicano la
+   direzione ancora percorribile con lo swipe. */
+function ChevronIcon({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+      <path
+        d={direction === "left" ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7"}
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
@@ -804,7 +815,13 @@ function mobileCardWidth(vw: number) {
 }
 
 function MobileCarousel({ reducedMotion, locale }: { reducedMotion: boolean; locale: Locale }) {
-  const [active, setActive] = useState(START_INDEX);
+  // Da mobile si parte dal PRIMO appartamento (indice 0), non dalla
+  // "mediana" (START_INDEX/Pesci) usata dal carousel desktop: richiesta
+  // esplicita ("UN UNICA card centrale, partendo dal primo appartamento").
+  // Il percorso è inoltre LINEARE, non circolare (vedi step sotto): scorrere
+  // oltre l'ultimo appartamento non deve tornare al primo, deve fermarsi
+  // per lasciare spazio al CTA "tutti gli appartamenti" che appare lì.
+  const [active, setActive] = useState(0);
   const [locked, setLocked] = useState(false);
   const [revealed, setRevealed] = useState<number | null>(null);
   const [cardWidth, setCardWidth] = useState(280);
@@ -832,7 +849,7 @@ function MobileCarousel({ reducedMotion, locale }: { reducedMotion: boolean; loc
   }, []);
 
   const step = useCallback((dir: 1 | -1) => {
-    setActive((cur) => mod(cur + dir, N));
+    setActive((cur) => clamp(cur + dir, 0, MAX_POS));
     setLocked(true);
     setRevealed(null);
     if (lockTimer.current) clearTimeout(lockTimer.current);
@@ -884,8 +901,32 @@ function MobileCarousel({ reducedMotion, locale }: { reducedMotion: boolean; loc
         className="relative z-[2] mt-10 w-full touch-pan-y select-none outline-none"
         style={{ height: `${regionHeight}px` }}
       >
+        {/* Frecce ai bordi: indicano la direzione in cui si può ancora
+            scorrere, sparendo da sole al capolinea (active 0 o MAX_POS) —
+            invece di un'etichetta di testo permanente ("scorri a
+            sinistra/destra"), coerente con l'estetica minimale del sito e
+            già autoesplicativa insieme alle card oblique parzialmente
+            visibili sui lati. */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1 top-1/2 z-20 -translate-y-1/2 text-cream/50 transition-opacity duration-300"
+          style={{ opacity: active > 0 ? 1 : 0 }}
+        >
+          <ChevronIcon direction="left" />
+        </span>
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute right-1 top-1/2 z-20 -translate-y-1/2 text-cream/50 transition-opacity duration-300"
+          style={{ opacity: active < MAX_POS ? 1 : 0 }}
+        >
+          <ChevronIcon direction="right" />
+        </span>
+
         {APARTMENTS.map((apt, i) => {
-          const offset = circularOffset(i, active, N);
+          // Offset LINEARE (non circularOffset): niente wraparound, coerente
+          // con step() sopra — l'ultima card è un vero capolinea, non un
+          // punto che si ricollega alla prima.
+          const offset = i - active;
           const abs = Math.abs(offset);
           const hidden = abs > 1;
           const isCenter = offset === 0;
@@ -934,7 +975,19 @@ function MobileCarousel({ reducedMotion, locale }: { reducedMotion: boolean; loc
         })}
       </div>
 
-      <div className="relative z-[2] mt-12 flex flex-col items-center gap-3">
+      {/* Il CTA "tutti gli appartamenti" appare solo una volta raggiunta
+          l'ultima card (richiesta esplicita: naturale continuazione dello
+          swipe, non un blocco sempre presente sotto il carousel) — resta
+          nel flusso di layout (mai display:none) per non far saltare
+          l'altezza della sezione quando compare. */}
+      <div
+        className="relative z-[2] mt-12 flex flex-col items-center gap-3 transition-[opacity,transform] duration-500 ease-out"
+        style={{
+          opacity: active === MAX_POS ? 1 : 0,
+          transform: active === MAX_POS ? "translateY(0)" : "translateY(10px)",
+          pointerEvents: active === MAX_POS ? "auto" : "none",
+        }}
+      >
         <Link
           href={withLocale(locale, "/alloggi/")}
           className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.05em] text-[#0b0f1e]"
