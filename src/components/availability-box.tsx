@@ -38,7 +38,7 @@ export function AvailabilityBox({ apt }: { apt: Apartment }) {
 
         <button
           type="button"
-          className="rrp-widget-open-modal mt-6 w-full rounded-[3px] bg-raspberry py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
+          className="mt-6 w-full rounded-[3px] bg-raspberry py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
         >
           Prenota ora
         </button>

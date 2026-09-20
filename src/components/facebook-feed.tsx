@@ -36,8 +36,21 @@ const FALLBACK_PHOTOS = [
 
 /* Logo Facebook originale (cerchio blu ufficiale #1877F2 + "f" bianca),
    stesso principio di GoogleMark/TripadvisorMark in review-icons.tsx: colori
-   di brand reali, usato come attribuzione della piattaforma. */
-function FacebookMark({ size = 22 }: { size?: number }) {
+   di brand reali, usato come attribuzione della piattaforma. Variante
+   "mono": solo la "f" bianca, senza il cerchio blu — per l'uso dentro il
+   pulsante blu Facebook, dove il cerchio si confonderebbe con lo sfondo
+   dello stesso colore. */
+function FacebookMark({ size = 22, variant = "brand" }: { size?: number; variant?: "brand" | "mono" }) {
+  if (variant === "mono") {
+    return (
+      <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true">
+        <path
+          d="M15.5 12.25h-2.35V20h-3.2v-7.75H8.25V9.5h1.7v-1.65c0-2 .95-3.35 3.35-3.35h2v2.75h-1.3c-.85 0-1.05.35-1.05.95V9.5h2.3l-.35 2.75Z"
+          fill="#fff"
+        />
+      </svg>
+    );
+  }
   return (
     <svg viewBox="0 0 48 48" width={size} height={size} aria-hidden="true">
       <circle cx="24" cy="24" r="24" fill="#1877F2" />
@@ -72,15 +85,21 @@ export async function FacebookFeed({ locale }: { locale: Locale }) {
               </div>
             </div>
 
+            {/* Stesso "sistema pulsante" del resto del sito (forma, padding,
+                tipografia, HoverFill direzionale) ma con la palette presa
+                dal blu ufficiale Facebook (#1877F2, lo stesso di
+                FacebookMark) invece dell'oro generico usato altrove: resta
+                riconoscibile come brand Facebook senza sembrare un widget
+                esterno incollato nella pagina. */}
             <a
               href={FACEBOOK_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex shrink-0 items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-5 py-3 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]"
+              className="group relative inline-flex shrink-0 items-center gap-2.5 overflow-hidden rounded-lg bg-[#1877F2] px-5 py-3 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-white"
             >
-              <HoverFill color="#8f7330" />
+              <HoverFill color="#0f5dd8" />
               <span className="relative z-10 inline-flex items-center gap-2">
-                <FacebookMark size={16} />
+                <FacebookMark size={16} variant="mono" />
                 {text.cta}
                 <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                   →

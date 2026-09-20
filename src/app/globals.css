@@ -140,3 +140,37 @@ body {
 .grecaptcha-badge {
   visibility: hidden;
 }
+
+/* Riskin della "cornice" del widget camere bed-and-breakfast.it (vedi
+   root-shell.tsx): il fornitore inietta il proprio markup+CSS via
+   document.write, con selettori a singola classe (.rrp-widget-modal-*),
+   nessun !important — un prefisso "body " basta a vincere per specificità
+   senza dover toccare i loro file. L'iframe interno (il form di
+   prenotazione vero) resta invece fuori portata: è contenuto di un altro
+   dominio, non lo tocchiamo (richiesta esplicita: non aggirare i limiti
+   imposti dal fornitore). Qui viene ritoccato solo ciò che è DOM nostro:
+   overlay, contenitore, titolo, chiusura — stessi colori/font/raggio del
+   resto del sito, così il modale non sembra un elemento esterno incollato
+   nella pagina. */
+body .rrp-widget-modal-overlay {
+  background: rgba(28, 33, 23, 0.6) !important;
+}
+body .rrp-widget-modal-wrapper {
+  background: var(--color-cream) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.5);
+}
+body .rrp-widget-modal-title {
+  font-family: var(--font-display), serif !important;
+  font-size: 20px !important;
+  color: var(--color-ink) !important;
+}
+body .rrp-widget-modal-close {
+  color: var(--color-ink-soft) !important;
+}
+body .rrp-widget-modal-close:hover {
+  color: var(--color-raspberry) !important;
+}
+body .rrp-widget-iframe-form-camere {
+  border-radius: 3px;
+}

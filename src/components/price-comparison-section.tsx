@@ -75,6 +75,7 @@ const TEXT: Record<
     disclaimer: (checkin: string, checkout: string, nights: number, adults: number, apt: string, checkedOn: string) => string;
     points: { value: string; label: string; detail: string }[];
     whatsappTemplate: (apt: string, checkin: string, checkout: string, adults: number) => string;
+    bbAlternative: string;
   }
 > = {
   it: {
@@ -100,6 +101,7 @@ const TEXT: Record<
       { value: "-10%", label: "Tariffa non rimborsabile", detail: "Rispetto alla tariffa flessibile, per chi ha già le idee chiare." },
     ],
     whatsappTemplate: (apt, ci, co, a) => `Ciao! Vorrei un preventivo per l'appartamento ${apt} dal ${ci} al ${co} (${a} adulti).`,
+    bbAlternative: "Preferisci un altro modo di prenotare? Verifica su Bed & Breakfast.it",
   },
   en: {
     label: "Direct booking",
@@ -124,6 +126,7 @@ const TEXT: Record<
       { value: "-10%", label: "Non-refundable rate", detail: "Compared to the flexible rate, for those who already know their plans." },
     ],
     whatsappTemplate: (apt, ci, co, a) => `Hi! I'd like a quote for the ${apt} apartment from ${ci} to ${co} (${a} adults).`,
+    bbAlternative: "Prefer another way to book? Check availability on Bed & Breakfast.it",
   },
   fr: {
     label: "Réservation directe",
@@ -148,6 +151,7 @@ const TEXT: Record<
       { value: "-10%", label: "Tarif non remboursable", detail: "Par rapport au tarif flexible, pour ceux qui ont déjà décidé." },
     ],
     whatsappTemplate: (apt, ci, co, a) => `Bonjour ! Je voudrais un devis pour l'appartement ${apt} du ${ci} au ${co} (${a} adultes).`,
+    bbAlternative: "Vous préférez une autre façon de réserver ? Vérifiez sur Bed & Breakfast.it",
   },
   de: {
     label: "Direktbuchung",
@@ -172,6 +176,7 @@ const TEXT: Record<
       { value: "-10%", label: "Nicht erstattbarer Tarif", detail: "Im Vergleich zum flexiblen Tarif, für alle, die schon entschieden haben." },
     ],
     whatsappTemplate: (apt, ci, co, a) => `Hallo! Ich hätte gerne ein Angebot für das Apartment ${apt} vom ${ci} bis ${co} (${a} Erwachsene).`,
+    bbAlternative: "Lieber anders buchen? Verfügbarkeit auf Bed & Breakfast.it prüfen",
   },
 };
 
@@ -254,37 +259,41 @@ export async function PriceComparisonSection({ locale }: { locale: Locale }) {
                 </Reveal>
               )}
 
-              {/* Box "Sito ufficiale" — protagonista */}
-              <div className="relative mt-6 overflow-hidden rounded-[6px] border-2 border-gold bg-[#1f180e] px-6 py-7 text-center">
+              {/* Box "Sito ufficiale" — protagonista, ma sullo stesso
+                  linguaggio cromatico chiaro del resto della pagina (era un
+                  riquadro marrone scuro/oro, contrasto giudicato troppo
+                  forte dal titolare): pannello cream-dim dentro la card
+                  bianca, bordo oro a marcare comunque la gerarchia. */}
+              <div className="relative mt-6 overflow-hidden rounded-[6px] border-2 border-gold bg-cream-dim px-6 py-7 text-center">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3.5 py-1.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-[#1f180e]">
                   {text.sitoUfficiale}
                 </span>
-                <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-cream/60">
+                <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-ink-soft">
                   {text.prenotaConNoi}
                 </p>
 
                 {DIRECT_PRICE_EUR !== null ? (
                   <>
                     <div className="mt-2 flex items-baseline justify-center gap-2">
-                      <p className="font-display text-[clamp(48px,7vw,64px)] font-medium leading-none text-gold">
+                      <p className="font-display text-[clamp(48px,7vw,64px)] font-medium leading-none text-raspberry">
                         €{DIRECT_PRICE_PER_NIGHT}
                       </p>
-                      <span className="text-[13px] text-cream/50">{text.perNotte}</span>
+                      <span className="text-[13px] text-ink-soft">{text.perNotte}</span>
                     </div>
-                    <p className="mt-2 text-[12px] text-cream/55">
+                    <p className="mt-2 text-[12px] text-ink-soft">
                       {STAY.nights} {text.nights} a €{DIRECT_PRICE_EUR} · {tr(locale, DIRECT_PRICE_CONDITION)}
                     </p>
-                    <p className="mt-4 border-t border-cream/10 pt-4 text-[11px] leading-[1.6] text-cream/45">
+                    <p className="mt-4 border-t border-ink/10 pt-4 text-[11px] leading-[1.6] text-ink-soft/80">
                       {text.preferisciLiberta(DIRECT_PRICE_FLEX_PER_NIGHT, DIRECT_PRICE_FLEX_EUR, STAY.nights, tr(locale, DIRECT_PRICE_FLEX_CONDITION))}
                     </p>
                   </>
                 ) : (
-                  <p className="mx-auto mt-3 max-w-[300px] font-display text-[clamp(20px,3vw,26px)] font-normal leading-[1.3] text-gold">
+                  <p className="mx-auto mt-3 max-w-[300px] font-display text-[clamp(20px,3vw,26px)] font-normal leading-[1.3] text-raspberry">
                     {text.richiediPrezzo}
                   </p>
                 )}
 
-                <p className="mt-4 text-[12px] text-cream/50">
+                <p className="mt-4 text-[12px] text-ink-soft">
                   {STAY.nights} {text.nights} · {STAY.adults} {text.ospiti} · {text.apartment} {STAY.apartmentName}
                 </p>
 
@@ -292,9 +301,9 @@ export async function PriceComparisonSection({ locale }: { locale: Locale }) {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-7 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]"
+                  className="group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-7 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
                 >
-                  <HoverFill color="#8f7330" />
+                  <HoverFill color="#8a3844" />
                   <span className="relative z-10 inline-flex items-center gap-2.5">
                     {text.prenotaDirettamente}
                     <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
@@ -302,6 +311,18 @@ export async function PriceComparisonSection({ locale }: { locale: Locale }) {
                     </span>
                   </span>
                 </a>
+
+                {/* Alternativa secondaria: il widget bed-and-breakfast.it
+                    resta disponibile ma non è più il sistema principale —
+                    un semplice link testuale, non un altro pulsante, per
+                    non mettere l'utente davanti a più sistemi paritari
+                    (richiesta esplicita del titolare). */}
+                <button
+                  type="button"
+                  className="rrp-widget-open-modal mt-3 text-[10.5px] font-medium text-ink-soft underline decoration-ink-soft/40 underline-offset-4 transition-colors hover:text-raspberry"
+                >
+                  {text.bbAlternative}
+                </button>
               </div>
 
               {/* Fascia OTA secondaria */}
