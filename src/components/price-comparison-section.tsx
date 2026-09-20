@@ -18,10 +18,6 @@ import {
   OTA_PRICES,
 } from "@/data/price-comparison";
 
-const cheapestOta = Math.min(...OTA_PRICES.map((o) => o.priceEur));
-const savingsEur = DIRECT_PRICE_EUR !== null ? cheapestOta - DIRECT_PRICE_EUR : null;
-const savingsPct = savingsEur !== null && savingsEur > 0 ? Math.round((savingsEur / cheapestOta) * 100) : null;
-
 /* Le due condizioni tariffarie sono stringhe italiane fisse in
    price-comparison.ts (dato di business, non contenuto editoriale): qui
    una piccola mappa di traduzione stabile, non l'intera ristrutturazione
@@ -62,7 +58,7 @@ const TEXT: Record<
     heading: string;
     identity: string;
     reviewsSoon: string;
-    savings: (pct: number) => string;
+    noCommission: string;
     sitoUfficiale: string;
     prenotaConNoi: string;
     perNotte: string;
@@ -83,7 +79,7 @@ const TEXT: Record<
     heading: "Stesso appartamento, stesse date: confronta tu stesso.",
     identity: "Agriturismo · Assisi, Umbria",
     reviewsSoon: "Recensioni Google verificate in arrivo",
-    savings: (pct) => `-${pct}% rispetto alle altre piattaforme`,
+    noCommission: "Nessuna commissione di intermediazione, sconti dedicati a chi prenota diretto",
     sitoUfficiale: "Sito ufficiale",
     prenotaConNoi: "Prenota direttamente con l'agriturismo",
     perNotte: "/ notte",
@@ -108,7 +104,7 @@ const TEXT: Record<
     heading: "Same apartment, same dates: compare for yourself.",
     identity: "Agriturismo · Assisi, Umbria",
     reviewsSoon: "Verified Google reviews coming soon",
-    savings: (pct) => `-${pct}% compared to other platforms`,
+    noCommission: "No intermediary commission, discounts reserved for direct bookings",
     sitoUfficiale: "Official website",
     prenotaConNoi: "Book directly with the agriturismo",
     perNotte: "/ night",
@@ -133,7 +129,7 @@ const TEXT: Record<
     heading: "Même appartement, mêmes dates : comparez vous-même.",
     identity: "Agriturismo · Assise, Ombrie",
     reviewsSoon: "Avis Google vérifiés bientôt disponibles",
-    savings: (pct) => `-${pct}% par rapport aux autres plateformes`,
+    noCommission: "Aucune commission d'intermédiaire, réductions réservées aux réservations directes",
     sitoUfficiale: "Site officiel",
     prenotaConNoi: "Réservez directement avec l'agriturismo",
     perNotte: "/ nuit",
@@ -158,7 +154,7 @@ const TEXT: Record<
     heading: "Gleiches Apartment, gleiche Daten: vergleichen Sie selbst.",
     identity: "Agriturismo · Assisi, Umbrien",
     reviewsSoon: "Verifizierte Google-Bewertungen folgen in Kürze",
-    savings: (pct) => `-${pct}% im Vergleich zu anderen Plattformen`,
+    noCommission: "Keine Vermittlungsprovision, Rabatte nur bei Direktbuchung",
     sitoUfficiale: "Offizielle Website",
     prenotaConNoi: "Direkt beim Agriturismo buchen",
     perNotte: "/ Nacht",
@@ -250,14 +246,19 @@ export async function PriceComparisonSection({ locale }: { locale: Locale }) {
                 <span className="text-[12px] text-ink-soft">{DISTANCE_TR[locale]}</span>
               </div>
 
-              {/* Badge risparmio: solo se c'è un prezzo diretto reale da cui calcolarlo */}
-              {savingsPct !== null && (
-                <Reveal delay={160}>
-                  <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-raspberry px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.06em] text-cream">
-                    {text.savings(savingsPct)}
-                  </span>
-                </Reveal>
-              )}
+              {/* Niente più badge "-X%" con percentuale calcolata sul prezzo
+                  OTA: su richiesta del titolare, tolto perché non sempre
+                  verificabile con un confronto realmente omogeneo (Acquario,
+                  l'appartamento usato nel confronto, può non risultare
+                  disponibile sulle OTA per le date correnti). Messaggio
+                  qualitativo, sempre vero indipendentemente da disponibilità
+                  e date: nessuna commissione, sconti reali (elencati sotto)
+                  riservati a chi prenota diretto. */}
+              <Reveal delay={160}>
+                <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-raspberry px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.06em] text-cream">
+                  {text.noCommission}
+                </span>
+              </Reveal>
 
               {/* Box "Sito ufficiale" — protagonista, ma sullo stesso
                   linguaggio cromatico chiaro del resto della pagina (era un
