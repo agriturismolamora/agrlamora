@@ -111,6 +111,7 @@ const PHONE_DISPLAY = "075 8041164";
 const PHONE_TEL = "tel:+390758041164";
 const WHATSAPP_HREF = "https://wa.me/393934363917";
 const WHATSAPP_DISPLAY = "393 4363917";
+const FACEBOOK_URL = "https://www.facebook.com/p/Agriturismo-la-Mora-di-Assisi-100066662774182/";
 const EMAIL = "agriturismolamora@gmail.com";
 
 /* Soglia oltre la quale si considera "in cima" (Stato A) e soglia minima di
@@ -325,13 +326,22 @@ export function SiteHeader({ locale }: { locale: Locale }) {
     >
       {/* Top utility bar: sempre scura, presente sia in Stato A che B. */}
       <div className="bg-olive-950">
+        {/* Su una sola riga anche su mobile (richiesta esplicita): social a
+            sinistra, WhatsApp a destra. whitespace-nowrap + gap ridotti sotto
+            sm: verificato senza overflow da 320px in su in tutte e 4 le
+            lingue (la più lunga è il francese "Écrire sur WhatsApp"). */}
         <div
-          className="mx-auto flex max-w-[1600px] items-center justify-between text-[10px]"
-          style={{ paddingInline: "clamp(20px, 4vw, 56px)", paddingBlock: "7px" }}
+          className="mx-auto flex max-w-[1600px] items-center justify-between gap-3 whitespace-nowrap text-[10px]"
+          style={{ paddingInline: "clamp(16px, 4vw, 56px)", paddingBlock: "7px" }}
         >
-          <div className="hidden items-center gap-3 sm:flex">
-            {/* TODO: collegare ai profili social reali di Agriturismo La Mora quando confermati dal titolare */}
-            <a href="#" aria-label="Facebook Agriturismo La Mora" className="opacity-75 transition-opacity hover:opacity-100">
+          <div className="flex shrink-0 items-center gap-2.5 sm:gap-3">
+            <a
+              href={FACEBOOK_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook Agriturismo La Mora"
+              className="opacity-75 transition-opacity hover:opacity-100"
+            >
               <SocialIcon kind="facebook" />
             </a>
             <a
@@ -344,7 +354,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
               <SocialIcon kind="instagram" />
             </a>
           </div>
-          <div className="flex w-full items-center justify-end gap-4 font-medium uppercase tracking-[0.04em] sm:w-auto">
+          <div className="flex min-w-0 items-center justify-end gap-4 font-medium uppercase tracking-[0.02em] sm:tracking-[0.04em]">
             <span className="hidden text-cream/60 md:inline">{t("nav", "domande", locale)}</span>
             {/* Un solo contatto qui, WhatsApp (richiesta esplicita): prima
                 c'era anche "Chiama 075 8041164", ma è un fisso — non riceve
@@ -357,8 +367,8 @@ export function SiteHeader({ locale }: { locale: Locale }) {
               className="flex items-center gap-1.5 transition-colors hover:text-gold"
             >
               <WhatsAppIcon />
-              <span className="hidden sm:inline">{t("nav", "scriviWhatsapp", locale)}</span>
-              <span>{WHATSAPP_DISPLAY}</span>
+              <span>{t("nav", "scriviWhatsapp", locale)}</span>
+              <span className="tabular-nums">{WHATSAPP_DISPLAY}</span>
             </a>
           </div>
         </div>
@@ -632,9 +642,10 @@ export function SiteHeader({ locale }: { locale: Locale }) {
               <div className="flex flex-col items-center gap-3">
                 <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cream/50">{t("nav", "seguici", locale)}</span>
                 <div className="flex items-center gap-3">
-                  {/* TODO: collegare ai profili social reali quando confermati dal titolare */}
                   <a
-                    href="#"
+                    href={FACEBOOK_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     aria-label="Facebook Agriturismo La Mora"
                     className="flex h-9 w-9 items-center justify-center rounded-full border border-cream/25 text-cream/85 transition-colors hover:border-gold hover:text-gold"
                   >

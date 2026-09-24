@@ -9,8 +9,8 @@ const ADDRESS = "Via Fonte Citerna, 7 — 06081 Assisi PG";
 const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(
   "Agriturismo La Mora, Via Fonte Citerna 7, 06081 Assisi PG"
 );
-const PHONE_TEL = "tel:+390758041164";
-const PHONE_DISPLAY = "075 804 1164";
+const PHONE_TEL = "tel:+393934363917";
+const PHONE_DISPLAY = "393 4363917";
 const WHATSAPP_URL = "https://wa.me/393934363917";
 const EMAIL = "agriturismolamora@gmail.com";
 

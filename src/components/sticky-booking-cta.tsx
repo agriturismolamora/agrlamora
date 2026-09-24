@@ -49,8 +49,14 @@ export function StickyBookingCta({
     // pannello MENU (150). pointer-events-none sulla riga piena, riattivati
     // solo sui pulsanti. bottom = 20px + safe-area-inset-bottom: su iPhone
     // con home indicator resta lontana dalla gesture area.
+    // Transizione SOLO su opacity/transform (la dissolvenza vicino al
+    // footer): con transition-all anche un cambio di `bottom` (safe-area
+    // iOS, rotazione) veniva animato per 500ms, con la barra che "rincorre"
+    // il bordo dello schermo invece di restarci ancorata. Verificato che
+    // nessun antenato (body; main sulla pagina Villa) ha transform, filter,
+    // backdrop-filter, will-change, perspective o contain.
     <div
-      className="pointer-events-none fixed inset-x-0 z-[70] flex justify-center px-4 transition-all duration-500 ease-out sm:px-6"
+      className="pointer-events-none fixed inset-x-0 z-[70] flex justify-center px-4 transition-[opacity,transform] duration-500 ease-out sm:px-6"
       style={{
         bottom: "calc(1.25rem + env(safe-area-inset-bottom))",
         ...(nearFooter ? { opacity: 0, transform: "translateY(16px)" } : { opacity: 1, transform: "translateY(0)" }),

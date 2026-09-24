@@ -7,6 +7,7 @@ import {
   useEffect,
   useRef,
   useState,
+  useSyncExternalStore,
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from "react";
@@ -249,33 +250,40 @@ function cardWidthForViewport(vw: number, vh: number, headingH: number, ctaH: nu
 
 type Tier = "desktop" | "mobile";
 
-function tierFromWidth(w: number): Tier {
-  return w < 768 ? "mobile" : "desktop";
-}
+/* Mobile/desktop letti da matchMedia via useSyncExternalStore, non più da
+   useState("desktop") + useEffect: prima il server (che non conosce la
+   larghezza dello schermo) mandava a OGNI telefono la variante desktop —
+   sezione pinned alta 460vh — e il passaggio al carousel mobile avveniva
+   solo dopo l'hydration (verificato sul sito live: ~2,4s su CPU normale,
+   oltre 12s con CPU rallentata 4×, con la pagina che si accorciava di
+   ~3.800px al cambio). Ora sul server e durante l'hydration il tier vale
+   null: vengono renderizzate ENTRAMBE le varianti e il CSS (breakpoint md
+   di Tailwind, 48rem) mostra quella giusta già prima di qualunque JS;
+   dopo l'hydration resta montata solo quella corretta. Stessa soglia
+   esatta del CSS: la query è il complemento di (min-width: 48rem). */
+const MOBILE_QUERY = "not all and (min-width: 48rem)";
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
-function useViewportTier(): Tier {
-  const [tier, setTier] = useState<Tier>("desktop");
-  useEffect(() => {
-    function update() {
-      setTier(tierFromWidth(window.innerWidth));
-    }
-    update();
-    window.addEventListener("resize", update, { passive: true });
-    return () => window.removeEventListener("resize", update);
-  }, []);
-  return tier;
-}
-
-function useReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = () => setReduced(mq.matches);
-    onChange();
+function subscribeMedia(query: string) {
+  return (onChange: () => void) => {
+    const mq = window.matchMedia(query);
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
-  }, []);
-  return reduced;
+  };
+}
+const subscribeTier = subscribeMedia(MOBILE_QUERY);
+const subscribeReducedMotion = subscribeMedia(REDUCED_MOTION_QUERY);
+const getTier = (): Tier => (window.matchMedia(MOBILE_QUERY).matches ? "mobile" : "desktop");
+const getServerTier = (): Tier | null => null;
+const getReducedMotion = () => window.matchMedia(REDUCED_MOTION_QUERY).matches;
+const getServerReducedMotion = () => false;
+
+function useViewportTier(): Tier | null {
+  return useSyncExternalStore(subscribeTier, getTier, getServerTier);
+}
+
+function useReducedMotion(): boolean {
+  return useSyncExternalStore(subscribeReducedMotion, getReducedMotion, getServerReducedMotion);
 }
 
 /* Sfondo "cielo notturno stellato": tema decorativo della sezione (richiesta
@@ -1095,10 +1103,22 @@ export function ApartmentsCarousel({ locale }: { locale: Locale }) {
     <section id="section-apartments" data-snap-exempt="true" className="relative bg-midnight">
       {reducedMotion ? (
         <StaticGrid locale={locale} />
-      ) : tier === "mobile" ? (
-        <MobileCarousel reducedMotion={reducedMotion} locale={locale} />
       ) : (
-        <DesktopCarousel reducedMotion={reducedMotion} locale={locale} />
+        <>
+          {/* tier null (server/hydration): entrambe nel DOM, il CSS ne
+              mostra una. Wrapper senza overflow: non interferisce con lo
+              sticky del carousel desktop (vedi nota sopra). */}
+          {tier !== "desktop" && (
+            <div className="md:hidden">
+              <MobileCarousel reducedMotion={reducedMotion} locale={locale} />
+            </div>
+          )}
+          {tier !== "mobile" && (
+            <div className="hidden md:block">
+              <DesktopCarousel reducedMotion={reducedMotion} locale={locale} />
+            </div>
+          )}
+        </>
       )}
     </section>
   );

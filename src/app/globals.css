@@ -52,8 +52,16 @@
    mai istituire un contenitore di scroll, quindi non tocca `position:
    sticky` in nessun punto del sito (ImmersiveStory, il carousel pinned,
    PinnedHold). Supportato da Safari 16+ (settembre 2022 in su). */
+/* Sfondo del canvas = verde scurissimo del footer e della barra utility in
+   cima: è il colore che iOS mostra nel "rimbalzo" elastico oltre i bordi
+   della pagina. Senza, il canvas prendeva il crema del body e sotto il
+   footer scuro compariva una fascia chiara, scambiata per spazio vuoto
+   (verificato che nel layout sotto il footer non c'è né padding né margin:
+   il documento finisce esattamente dove finisce il footer). Il body resta
+   crema e copre sempre l'intera viewport (min-h-full). */
 html {
   overflow-x: clip;
+  background-color: var(--color-olive-950);
 }
 
 body {
