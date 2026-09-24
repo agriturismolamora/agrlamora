@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { RootShell } from "@/components/root-shell";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.agriturismoinassisi.it"),
+  metadataBase: new URL("https://www.lamoraassisi.com"),
   title: {
     default: "Agriturismo La Mora | Agriturismo with a Pool in Assisi, Umbria",
     template: "%s | Agriturismo La Mora",
@@ -10,12 +10,12 @@ export const metadata: Metadata = {
   description:
     "Agriturismo La Mora, in Assisi: 5 independent apartments surrounded by Umbrian countryside, a panoramic pool, organic breakfast and activities for families. 7 km from Perugia airport.",
   alternates: {
-    canonical: "https://www.agriturismoinassisi.it/en/",
+    canonical: "https://www.lamoraassisi.com/en/",
     languages: {
-      it: "https://www.agriturismoinassisi.it/",
-      en: "https://www.agriturismoinassisi.it/en/",
-      fr: "https://www.agriturismoinassisi.it/fr/",
-      de: "https://www.agriturismoinassisi.it/de/",
+      it: "https://www.lamoraassisi.com/",
+      en: "https://www.lamoraassisi.com/en/",
+      fr: "https://www.lamoraassisi.com/fr/",
+      de: "https://www.lamoraassisi.com/de/",
     },
   },
   icons: {

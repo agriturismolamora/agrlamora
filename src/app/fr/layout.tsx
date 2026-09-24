@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { RootShell } from "@/components/root-shell";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.agriturismoinassisi.it"),
+  metadataBase: new URL("https://www.lamoraassisi.com"),
   title: {
     default: "Agriturismo La Mora | Agriturismo avec piscine à Assise, Ombrie",
     template: "%s | Agriturismo La Mora",
@@ -10,12 +10,12 @@ export const metadata: Metadata = {
   description:
     "Agriturismo La Mora, à Assise : 5 appartements indépendants au cœur de la campagne ombrienne, piscine panoramique, petit-déjeuner bio et activités pour familles. À 7 km de l'aéroport de Pérouse.",
   alternates: {
-    canonical: "https://www.agriturismoinassisi.it/fr/",
+    canonical: "https://www.lamoraassisi.com/fr/",
     languages: {
-      it: "https://www.agriturismoinassisi.it/",
-      en: "https://www.agriturismoinassisi.it/en/",
-      fr: "https://www.agriturismoinassisi.it/fr/",
-      de: "https://www.agriturismoinassisi.it/de/",
+      it: "https://www.lamoraassisi.com/",
+      en: "https://www.lamoraassisi.com/en/",
+      fr: "https://www.lamoraassisi.com/fr/",
+      de: "https://www.lamoraassisi.com/de/",
     },
   },
   icons: {

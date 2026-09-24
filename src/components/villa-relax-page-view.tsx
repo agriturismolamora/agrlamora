@@ -139,8 +139,8 @@ const jsonLd = (locale: Locale, maxGuests: number) => ({
   "@type": "LodgingBusiness",
   name: "Villa Relax",
   description: "Villa indipendente con piscina privata ad Assisi, fino a 16 ospiti su 6 camere da letto.",
-  image: "https://www.agriturismoinassisi.it/images/villa/villa%20esterna.webp",
-  url: `https://www.agriturismoinassisi.it${withLocale(locale, "/villa-relax-assisi/")}`,
+  image: "https://www.lamoraassisi.com/images/villa/villa%20esterna.webp",
+  url: `https://www.lamoraassisi.com${withLocale(locale, "/villa-relax-assisi/")}`,
   telephone: "+39 075 8041164",
   email: "agriturismolamora@gmail.com",
   address: {
