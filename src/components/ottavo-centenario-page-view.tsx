@@ -40,7 +40,6 @@ const TEXT: Record<
     promoHeading: string;
     promoBody: string;
     promoCta: string;
-    waMsg: string;
     consiglioLabel: string;
     consiglioHeading: string;
     consiglioBody: string;
@@ -56,7 +55,6 @@ const TEXT: Record<
     promoHeading: "Colazione bio inclusa per chi prenota direttamente dal sito ufficiale.",
     promoBody: "Valida su ogni prenotazione diretta, non solo durante le celebrazioni — un modo per dire grazie a chi sceglie di scrivere direttamente a noi invece che passare da un intermediario.",
     promoCta: "Prenota direttamente",
-    waMsg: "Ciao! Vorrei prenotare direttamente e sapere di più sulla promo colazione inclusa.",
     consiglioLabel: "Un consiglio pratico",
     consiglioHeading: "Prenota con anticipo, se vieni in questo periodo.",
     consiglioBody: "Un anno di celebrazioni porta più visitatori del solito ad Assisi, e la disponibilità nei periodi centrali si esaurisce prima. Se hai già in mente delle date, meglio verificare presto — noi rispondiamo direttamente, senza intermediari, e ti diciamo subito cosa è ancora libero.",
@@ -71,7 +69,6 @@ const TEXT: Record<
     promoHeading: "Organic breakfast included for those who book directly through the official site.",
     promoBody: "Valid on every direct booking, not just during the celebrations — a way of saying thank you to those who choose to write to us directly instead of going through a middleman.",
     promoCta: "Book directly",
-    waMsg: "Hi! I'd like to book directly and know more about the included-breakfast promotion.",
     consiglioLabel: "A practical tip",
     consiglioHeading: "Book ahead if you're visiting during this period.",
     consiglioBody: "A year of celebrations brings more visitors than usual to Assisi, and availability during peak periods runs out sooner. If you already have dates in mind, it's best to check early — we reply directly, with no intermediaries, and tell you right away what's still available.",
@@ -86,7 +83,6 @@ const TEXT: Record<
     promoHeading: "Petit-déjeuner bio inclus pour une réservation directe sur le site officiel.",
     promoBody: "Valable sur toute réservation directe, pas seulement pendant les célébrations — une façon de remercier ceux qui choisissent de nous écrire directement plutôt que de passer par un intermédiaire.",
     promoCta: "Réserver directement",
-    waMsg: "Bonjour ! Je voudrais réserver directement et en savoir plus sur la promotion petit-déjeuner inclus.",
     consiglioLabel: "Un conseil pratique",
     consiglioHeading: "Réservez à l'avance si vous venez pendant cette période.",
     consiglioBody: "Une année de célébrations attire plus de visiteurs que d'habitude à Assise, et la disponibilité pendant les périodes centrales s'épuise plus vite. Si vous avez déjà des dates en tête, mieux vaut vérifier tôt — nous répondons directement, sans intermédiaires, et vous disons tout de suite ce qui est encore libre.",
@@ -101,7 +97,6 @@ const TEXT: Record<
     promoHeading: "Bio-Frühstück inklusive bei Direktbuchung über die offizielle Website.",
     promoBody: "Gültig für jede Direktbuchung, nicht nur während der Feierlichkeiten — eine Art, Danke zu sagen an alle, die sich entscheiden, uns direkt zu schreiben, statt über einen Vermittler zu buchen.",
     promoCta: "Direkt buchen",
-    waMsg: "Hallo! Ich möchte direkt buchen und mehr über die Aktion mit inklusivem Frühstück erfahren.",
     consiglioLabel: "Ein praktischer Tipp",
     consiglioHeading: "Buchen Sie frühzeitig, wenn Sie in diesem Zeitraum kommen.",
     consiglioBody: "Ein Jahr voller Feierlichkeiten bringt mehr Besucher als gewöhnlich nach Assisi, und die Verfügbarkeit in den zentralen Zeiträumen ist schneller erschöpft. Wenn Sie bereits Termine im Kopf haben, prüfen Sie am besten frühzeitig — wir antworten direkt, ohne Vermittler, und sagen Ihnen sofort, was noch frei ist.",
@@ -152,11 +147,13 @@ export function OttavoCentenarioPageView({ locale }: { locale: Locale }) {
                 {text.promoHeading}
               </p>
               <p className="mx-auto mt-3 max-w-[420px] text-[13px] leading-[1.7] text-ink-soft">{text.promoBody}</p>
-              <a
-                href={`https://wa.me/393934363917?text=${encodeURIComponent(text.waMsg)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]"
+              {/* Apre il modale di prenotazione di bed-and-breakfast.it come
+                  il resto del sito (classe rrp-widget-open-modal, vedi
+                  root-shell.tsx), non più WhatsApp: la promo vale proprio
+                  per chi prenota direttamente. */}
+              <button
+                type="button"
+                className="rrp-widget-open-modal group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]"
               >
                 <HoverFill color="#8f7330" />
                 <span className="relative z-10 inline-flex items-center gap-2.5">
@@ -165,7 +162,7 @@ export function OttavoCentenarioPageView({ locale }: { locale: Locale }) {
                     →
                   </span>
                 </span>
-              </a>
+              </button>
             </div>
           </Reveal>
 

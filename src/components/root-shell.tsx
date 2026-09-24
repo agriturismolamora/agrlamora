@@ -6,6 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { BookingBar } from "@/components/booking-bar";
 import { ConciergeChat } from "@/components/concierge-chat";
 import { BackToTop } from "@/components/back-to-top";
+import { RichiesteModal } from "@/components/richieste-modal";
 import { CookieConsentManager } from "@/components/cookie-consent-manager";
 import { RoomsWidgetScript } from "@/components/rooms-widget-script";
 import { OctorateWidgetScript } from "@/components/octorate-widget-script";
@@ -79,6 +80,9 @@ export function RootShell({ locale, children }: { locale: Locale; children: Reac
         <BookingBar locale={locale} />
         <ConciergeChat locale={locale} />
         <BackToTop locale={locale} />
+        {/* Pulsante flottante "Richiesta" + modulo in finestra, su ogni
+            pagina (La Mora o Villa Relax in base alla route). */}
+        <RichiesteModal locale={locale} />
         <CookieConsentManager locale={locale} />
         {/* Script Octorate/Trivago: invisibile, su ogni pagina (vedi
             octorate-widget-script.tsx). Indipendente dalla booking bar.

@@ -22,6 +22,35 @@ const TEXT: Record<Locale, string> = {
   de: "Verifizierte Bewertungen",
 };
 
+/* Sotto i 1024px le tre schede (Bed-and-breakfast.it, Google, TripAdvisor)
+   restano in UNA riga da scorrere col dito, come su desktop, invece di
+   impilarsi (richiesta esplicita del titolare). Il widget vive in uno Shadow
+   DOM aperto: creiamo noi lo shadow root prima di inizializzarlo e ci
+   "adottiamo" questo foglio di stile. Il loro codice riusa lo shadow root
+   esistente e lo svuota con innerHTML ad ogni aggiornamento, ma
+   adoptedStyleSheets non viene toccato da innerHTML: le regole restano.
+   Browser senza fogli di stile costruibili (Safari < 16.4): nessun errore,
+   resta il layout originale del widget. */
+const ROW_LAYOUT_CSS = `
+@media (max-width: 1023.98px) {
+  .rw-wrapper { max-width: none; margin: 0; padding: 5px 0; }
+  .rw-chipgrid { flex-wrap: nowrap; justify-content: flex-start; margin-bottom: 10px; }
+  .rw-chipgrid.rw-chipgrid-badge .rw-chip { width: 210px; flex: 0 0 auto; scroll-snap-align: start; }
+  .rw-credits { text-align: left; }
+  .rw-madeby { flex-direction: row; justify-content: flex-start; text-align: left; gap: .35rem; }
+}`;
+
+function adoptRowLayout(host: HTMLElement) {
+  try {
+    const root = host.shadowRoot ?? host.attachShadow({ mode: "open" });
+    const sheet = new CSSStyleSheet();
+    sheet.replaceSync(ROW_LAYOUT_CSS);
+    root.adoptedStyleSheets = [...root.adoptedStyleSheets, sheet];
+  } catch {
+    // Nessun supporto: il widget mantiene il suo layout (schede impilate).
+  }
+}
+
 function RecensioniBadgeWidget({ struttura, locale }: { struttura: "lamora" | "villa"; locale: Locale }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -42,6 +71,7 @@ function RecensioniBadgeWidget({ struttura, locale }: { struttura: "lamora" | "v
     // loro Shadow DOM; col colore "green" la ridefiniscono loro, già leggibile.
     if (struttura === "villa") el.style.setProperty("--rw-link", "var(--color-cream)");
     container.appendChild(el);
+    adoptRowLayout(el);
 
     // Il bundle si auto-inizializza solo su window "DOMContentLoaded" —
     // evento che, verificato direttamente, è già passato nel momento in cui
@@ -99,14 +129,17 @@ function RecensioniBadgeWidget({ struttura, locale }: { struttura: "lamora" | "v
    fuori scala su ogni pagina: al suo posto un link compatto sulla stessa
    riga dell'etichetta, che apre le preferenze cookie.
 
-   Layout orizzontale (etichetta a sinistra, badge a destra); flex-wrap
-   solo come rete di sicurezza sugli schermi più stretti. Il contenuto
-   interno del badge è Shadow DOM di bed-and-breakfast.it, non nostro. */
+   Da lg in su etichetta a sinistra e schede a destra; sotto, etichetta
+   sopra e schede in una riga scorrevole col dito (vedi ROW_LAYOUT_CSS). Il
+   contenitore scorrevole si allarga fino ai bordi dello schermo (-mx) così
+   le schede scorrono da bordo a bordo; scroll-px riallinea l'aggancio
+   (snap) al margine del footer invece che al bordo dello schermo. */
 export function RecensioniBadge({ struttura, locale }: { struttura: "lamora" | "villa"; locale: Locale }) {
   const consentText = CONSENT_TEXT[locale];
   return (
-    <div className="flex flex-wrap items-center justify-end gap-x-5 gap-y-2">
-      <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-cream/50">{TEXT[locale]}</span>
+    <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+      <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-cream/45">{TEXT[locale]}</span>
+      <div className="-mx-6 snap-x snap-mandatory scroll-px-6 overflow-x-auto px-6 [scrollbar-width:none] sm:-mx-10 sm:scroll-px-10 sm:px-10 lg:mx-0 lg:overflow-visible lg:px-0 [&::-webkit-scrollbar]:hidden">
       <ExternalContentGate
         locale={locale}
         category="functional"
@@ -122,6 +155,7 @@ export function RecensioniBadge({ struttura, locale }: { struttura: "lamora" | "
       >
         <RecensioniBadgeWidget struttura={struttura} locale={locale} />
       </ExternalContentGate>
+      </div>
     </div>
   );
 }

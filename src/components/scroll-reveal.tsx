@@ -1,12 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 
 /* Wrapper condiviso per il reveal-on-scroll usato da tutte le sezioni sotto
    il carousel appartamenti: evita di riscrivere IntersectionObserver in ogni
    componente. Il contenuto resta sempre nel DOM (mai display:none), quindi
    resta leggibile a crawler e screen reader anche prima del reveal — cambia
-   solo opacity/transform, mai visibility. */
+   solo opacity/transform, mai visibility.
+
+   SOLO da 768px (md) in su: lo stato "nascosto" vive nella classe .reveal
+   di globals.css, dentro una media query, non più nello stile inline. Su
+   telefono il contenuto è visibile dal primo istante, anche prima del JS:
+   con il reveal attivo, subito dopo ogni gesto di scroll dal 23% al 90%
+   dello schermo era ancora vuoto in attesa della dissolvenza (misurato su
+   mobile), l'effetto "blocco sezione per sezione" segnalato dal titolare. */
 export function Reveal({
   children,
   className = "",
@@ -53,13 +60,9 @@ export function Reveal({
   return (
     <Component
       ref={ref}
-      className={className}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0) scale(1)" : "translateY(34px) scale(0.97)",
-        transition: `opacity 850ms cubic-bezier(.16,1,.3,1) ${delay}ms, transform 850ms cubic-bezier(.16,1,.3,1) ${delay}ms`,
-        willChange: visible ? undefined : "opacity, transform",
-      }}
+      className={`reveal ${className}`}
+      data-revealed={visible ? "true" : undefined}
+      style={delay ? ({ "--reveal-delay": `${delay}ms` } as CSSProperties) : undefined}
     >
       {children}
     </Component>

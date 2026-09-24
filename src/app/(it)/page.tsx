@@ -17,7 +17,6 @@ import { LocationMap } from "@/components/location-map";
 import { LaMoraDaVivere } from "@/components/la-mora-da-vivere";
 import { VillaTeaser } from "@/components/villa-teaser";
 import { LastMinuteSection } from "@/components/last-minute-section";
-import { RichiesteSection } from "@/components/richieste-section";
 import { NewsletterSection } from "@/components/newsletter-section";
 import { CertificationsMarquee } from "@/components/certifications-marquee";
 import { PromoPopup } from "@/components/promo-popup";
@@ -54,7 +53,6 @@ export default function Home() {
       <ReviewGate writeReviewUrl={getWriteReviewUrl()} locale="it" />
       <LaMoraDaVivere locale="it" />
       <VillaTeaser locale="it" />
-      <RichiesteSection struttura="lamora" locale="it" />
       <LocationMap locale="it" />
       <FacebookFeed locale="it" />
       <NewsletterSection locale="it" />

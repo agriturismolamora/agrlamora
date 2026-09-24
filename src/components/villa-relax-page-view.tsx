@@ -7,7 +7,6 @@ import { MobileCoverflow } from "@/components/mobile-coverflow";
 import { NewsletterSection } from "@/components/newsletter-section";
 import { CertificationsMarquee } from "@/components/certifications-marquee";
 import { VillaBookingBar } from "@/components/villa-booking-bar";
-import { RichiesteSection } from "@/components/richieste-section";
 import { LastMinuteSection } from "@/components/last-minute-section";
 import { BbitWidgetCard } from "@/components/bbit-widget-card";
 import { bbitOfferteUrl } from "@/lib/bbit-widget-urls";
@@ -674,7 +673,6 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <RichiesteSection struttura="villa" locale={locale} />
 
       <NewsletterSection locale={locale} />
       <CertificationsMarquee locale={locale} />

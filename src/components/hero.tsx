@@ -78,7 +78,12 @@ export function Hero({ locale }: { locale: Locale }) {
         </span>
         {/* Logo ingrandito su mobile, richiesta esplicita del titolare:
             290px (max 76vw per restare nei margini a 320px) sotto md; da md
-            in su invariato, clamp(260px, 26vw, 370px). */}
+            in su invariato, clamp(260px, 26vw, 370px).
+            Nessun filtro CSS (prima: drop-shadow): un filter su un'immagine
+            sopra un <video> in riproduzione, dentro un contenitore con
+            transform, su alcuni iPhone/Android viene composto come un
+            rettangolo grigio attorno al logo. Il PNG è già trasparente;
+            la leggibilità la garantisce la velatura scura della hero. */}
         <Link href={withLocale(locale, "/")} aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`} className="mt-7 sm:mt-9">
           <Image
             src="/images/logo/logo-bianco-agriturismo-la-mora.png"
@@ -86,7 +91,7 @@ export function Hero({ locale }: { locale: Locale }) {
             width={370}
             height={278}
             priority
-            className="h-auto w-[min(290px,76vw)] drop-shadow-[0_2px_18px_rgba(0,0,0,0.35)] md:w-[clamp(260px,26vw,370px)]"
+            className="h-auto w-[min(290px,76vw)] md:w-[clamp(260px,26vw,370px)]"
           />
         </Link>
       </div>

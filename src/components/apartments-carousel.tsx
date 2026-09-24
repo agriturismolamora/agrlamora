@@ -1102,7 +1102,13 @@ export function ApartmentsCarousel({ locale }: { locale: Locale }) {
      orizzontale delle card fantasma resta garantito dall'overflow-hidden
      già presente sul div sticky stesso (non un antenato, quindi sicuro). */
   return (
-    <section id="section-apartments" data-snap-exempt="true" className="relative bg-midnight">
+    <section
+      id="section-apartments"
+      data-snap-exempt="true"
+      // max-md:mt-7: piccolo respiro (sfondo crema della pagina) tra le
+      // sezioni a tutta larghezza in apertura della home, solo su mobile.
+      className="relative bg-midnight max-md:mt-7"
+    >
       {/* tier null (server/hydration): entrambe le varianti nel DOM, il CSS
           ne mostra una. Wrapper senza overflow: non interferisce con lo
           sticky del carousel desktop (vedi nota sopra).

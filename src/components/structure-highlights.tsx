@@ -40,7 +40,7 @@ export function StructureHighlights({ locale }: { locale: Locale }) {
   const signatures = getSignatures(locale);
   const text = TEXT[locale];
   return (
-    <section id="section-highlights" className="relative bg-cream lg:min-h-[140vh]">
+    <section id="section-highlights" className="relative bg-cream max-md:mt-7 lg:min-h-[140vh]">
       <PinnedHold>
         <div className="grid grid-cols-1 lg:h-[100svh] lg:grid-cols-2 lg:items-stretch">
           {/* Colonna fotografica: full-bleed, nessun container/padding a

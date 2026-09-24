@@ -8,8 +8,10 @@ import { useEffect, useRef } from "react";
    ancora "running", ma la striscia resta visivamente ferma. Un loop rAF
    non ha questo problema. Il chiamante deve già duplicare il contenuto (due
    copie identiche in fila): il loop azzera l'offset a metà della larghezza
-   totale, così il ciclo resta impercettibile. Rispetta prefers-reduced-motion
-   restando fermo (stessa scelta già fatta per .animate-marquee). */
+   totale, così il ciclo resta impercettibile. Scorre anche con "Riduci
+   movimento" attivo sul dispositivo (richiesta esplicita del titolare: era
+   il motivo della striscia ferma sull'iPhone di Paolo — stessa scelta già
+   fatta per il video della hero e il carousel appartamenti). */
 export function MarqueeTrack({
   children,
   speed = 32,
@@ -24,7 +26,6 @@ export function MarqueeTrack({
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let offset = 0;
     let last = performance.now();

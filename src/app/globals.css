@@ -64,6 +64,28 @@ html {
   background-color: var(--color-olive-950);
 }
 
+/* Reveal-on-scroll (scroll-reveal.tsx): stato nascosto + dissolvenza SOLO
+   da md (48rem, 768px) in su — su telefono il contenuto è sempre visibile,
+   senza attese durante lo scroll. Stessi valori di prima su desktop/tablet.
+   In @layer components così le utility Tailwind restano prioritarie. */
+@layer components {
+  @media (min-width: 48rem) {
+    .reveal {
+      opacity: 0;
+      transform: translateY(34px) scale(0.97);
+      transition:
+        opacity 850ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+        transform 850ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+      will-change: opacity, transform;
+    }
+    .reveal[data-revealed="true"] {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      will-change: auto;
+    }
+  }
+}
+
 body {
   background: var(--color-cream);
   color: var(--color-ink);

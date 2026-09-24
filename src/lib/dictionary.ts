@@ -83,6 +83,7 @@ export const dict = {
     scoprDiPiu: { it: "Scopri di più", en: "Learn more", fr: "En savoir plus", de: "Mehr erfahren" },
     scriviciWhatsapp: { it: "Scrivici su WhatsApp", en: "Message us on WhatsApp", fr: "Écrivez-nous sur WhatsApp", de: "Schreiben Sie uns auf WhatsApp" },
     backToTop: { it: "Torna all'inizio della pagina", en: "Back to top", fr: "Retour en haut de page", de: "Nach oben" },
+    tornaSu: { it: "Torna su", en: "Back to top", fr: "Haut de page", de: "Nach oben" },
   },
 } as const;
 

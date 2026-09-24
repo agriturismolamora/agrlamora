@@ -135,7 +135,12 @@ export function ImmersiveStory({ locale }: { locale: Locale }) {
       ref={wrapperRef}
       id="section-story"
       data-snap-exempt="true"
-      className={reducedMotion ? "relative" : "relative min-h-[130vh] sm:min-h-[150vh]"}
+      /* Tratto di scroll "trattenuto" (sezione più alta della viewport +
+         contenuto sticky) SOLO da md in su: su telefono la sezione è alta
+         una schermata e scorre via normalmente, testo già tutto acceso (vedi
+         classe sulle parole) — richiesta esplicita del titolare, il blocco
+         temporaneo durante lo scroll su mobile era sgradevole. */
+      className={reducedMotion ? "relative max-md:mt-7" : "relative max-md:mt-7 md:min-h-[150vh]"}
     >
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
         {/* Livello 0: fotografia. */}
@@ -183,6 +188,9 @@ export function ImmersiveStory({ locale }: { locale: Locale }) {
                           ref={(el) => {
                             wordRefs.current[i] = el;
                           }}
+                          // max-md + !important: su telefono sempre acceso,
+                          // anche sopra al colore inline scritto dallo scroll.
+                          className="max-md:text-[#f1f1f1]!"
                           style={{ color: reducedMotion ? "#f1f1f1" : `rgba(241,241,241,${DIM_ALPHA})` }}
                         >
                           {word}
