@@ -17,13 +17,15 @@ const HERO_H1: Record<Locale, string> = {
 export function Hero({ locale }: { locale: Locale }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  /* Il video va in loop per tutti, anche con "Riduci movimento" attivo sul
+     telefono (richiesta esplicita del titolare: prima veniva messo in pausa
+     in quel caso, ed era il "video fermo al primo frame" visto sull'iPhone
+     di Paolo). play() esplicito come rete di sicurezza per i browser
+     integrati nelle app che a volte ignorano l'attributo autoplay; se il
+     sistema lo vieta (es. Risparmio energetico su iOS) resta il poster,
+     nessun errore. */
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (prefersReducedMotion && videoRef.current) {
-      videoRef.current.pause();
-    }
+    videoRef.current?.play().catch(() => {});
   }, []);
 
   return (

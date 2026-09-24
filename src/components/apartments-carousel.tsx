@@ -952,7 +952,11 @@ function MobileCarousel({ reducedMotion, locale }: { reducedMotion: boolean; loc
           const isCenter = offset === 0;
           const showPanel = isCenter && revealed === i;
           const translateX = offset * cardWidth * MOBILE_STEP_RATIO;
-          const rotate = reducedMotion ? 0 : offset === 0 ? 0 : MOBILE_ROTATE * Math.sign(offset);
+          // Card laterali oblique e scorrimento animato anche con "Riduci
+          // movimento" attivo (richiesta esplicita del titolare, dopo il test
+          // su iPhone di Paolo): qui il movimento parte solo dal dito
+          // dell'utente, mai da solo. reducedMotion resta per le stelle.
+          const rotate = offset === 0 ? 0 : MOBILE_ROTATE * Math.sign(offset);
           const scale = abs === 0 ? 1 : MOBILE_SIDE_SCALE;
           const opacity = hidden ? 0 : abs === 0 ? 1 : 0.9;
           // Stesso alone "da stella" del carousel desktop: tenue su tutte le
@@ -971,9 +975,7 @@ function MobileCarousel({ reducedMotion, locale }: { reducedMotion: boolean; loc
                 pointerEvents: hidden ? "none" : undefined,
                 boxShadow: `0 0 ${22 + glowT * 46}px ${glowT * 6}px rgba(238,241,251,${(0.16 + glowT * 0.6).toFixed(3)})`,
                 transition:
-                  reducedMotion
-                    ? "opacity 320ms ease"
-                    : "transform 480ms cubic-bezier(.22,1,.36,1), opacity 480ms cubic-bezier(.22,1,.36,1), box-shadow 480ms cubic-bezier(.22,1,.36,1)",
+                  "transform 480ms cubic-bezier(.22,1,.36,1), opacity 480ms cubic-bezier(.22,1,.36,1), box-shadow 480ms cubic-bezier(.22,1,.36,1)",
               }}
             >
               <CardFace
@@ -1101,24 +1103,25 @@ export function ApartmentsCarousel({ locale }: { locale: Locale }) {
      già presente sul div sticky stesso (non un antenato, quindi sicuro). */
   return (
     <section id="section-apartments" data-snap-exempt="true" className="relative bg-midnight">
-      {reducedMotion ? (
-        <StaticGrid locale={locale} />
-      ) : (
-        <>
-          {/* tier null (server/hydration): entrambe nel DOM, il CSS ne
-              mostra una. Wrapper senza overflow: non interferisce con lo
-              sticky del carousel desktop (vedi nota sopra). */}
-          {tier !== "desktop" && (
-            <div className="md:hidden">
-              <MobileCarousel reducedMotion={reducedMotion} locale={locale} />
-            </div>
-          )}
-          {tier !== "mobile" && (
-            <div className="hidden md:block">
-              <DesktopCarousel reducedMotion={reducedMotion} locale={locale} />
-            </div>
-          )}
-        </>
+      {/* tier null (server/hydration): entrambe le varianti nel DOM, il CSS
+          ne mostra una. Wrapper senza overflow: non interferisce con lo
+          sticky del carousel desktop (vedi nota sopra).
+          Mobile: SEMPRE il coverflow, anche con "Riduci movimento" attivo
+          sul telefono (era la causa delle card impilate viste sull'iPhone
+          di Paolo: la griglia statica è pensata per quell'impostazione).
+          Lo scorrimento è guidato solo dallo swipe dell'utente, niente
+          scroll bloccato. Desktop: con "Riduci movimento" resta la griglia
+          statica, perché lì il carousel è agganciato allo scroll della
+          pagina — esattamente ciò che quell'impostazione chiede di evitare. */}
+      {tier !== "desktop" && (
+        <div className="md:hidden">
+          <MobileCarousel reducedMotion={reducedMotion} locale={locale} />
+        </div>
+      )}
+      {tier !== "mobile" && (
+        <div className="hidden md:block">
+          {reducedMotion ? <StaticGrid locale={locale} /> : <DesktopCarousel reducedMotion={reducedMotion} locale={locale} />}
+        </div>
       )}
     </section>
   );
