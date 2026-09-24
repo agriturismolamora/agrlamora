@@ -32,6 +32,7 @@ export function ExternalContentGate({
   children,
   className,
   minHeight,
+  fallback,
 }: {
   locale: Locale;
   category: keyof ConsentCategories;
@@ -40,12 +41,16 @@ export function ExternalContentGate({
   /** Altezza minima del placeholder, per evitare salti di layout quando il
       widget reale ha una dimensione nota (es. i widget bbit mascherati). */
   minHeight?: number;
+  /** Placeholder alternativo al riquadro standard, per contesti dove quel
+      riquadro sarebbe fuori scala (es. il badge recensioni nel footer). */
+  fallback?: React.ReactNode;
 }) {
   const consent = useConsent();
   const allowed = category === "necessary" || consent?.categories[category] === true;
   const text = CONSENT_TEXT[locale];
 
   if (allowed) return <>{children}</>;
+  if (fallback !== undefined) return <>{fallback}</>;
 
   return (
     <div

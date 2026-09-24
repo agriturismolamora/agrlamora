@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import { ExternalContentGate } from "@/components/external-content-gate";
+import { CONSENT_TEXT } from "@/data/consent-text";
+import { openCookiePreferences } from "@/lib/consent";
 import { bbitRecensioniBadgeId } from "@/lib/bbit-widget-urls";
 import type { Locale } from "@/lib/i18n";
 
@@ -34,6 +36,11 @@ function RecensioniBadgeWidget({ struttura, locale }: { struttura: "lamora" | "v
     el.dataset.lang = locale;
     el.dataset.layout = "badge";
     el.dataset.color = struttura === "villa" ? "default" : "green";
+    // Col colore "default" il link di credito "Bed-and-breakfast.it" (e il
+    // contorno di focus delle card) è #333: invisibile sul footer scuro.
+    // Una custom property impostata sull'host batte la regola :host del
+    // loro Shadow DOM; col colore "green" la ridefiniscono loro, già leggibile.
+    if (struttura === "villa") el.style.setProperty("--rw-link", "var(--color-cream)");
     container.appendChild(el);
 
     // Il bundle si auto-inizializza solo su window "DOMContentLoaded" —
@@ -70,9 +77,14 @@ function RecensioniBadgeWidget({ struttura, locale }: { struttura: "lamora" | "v
    della pagina" degli script legacy, quindi può stare direttamente nella
    pagina senza il wrapper iframe di BbitInlineWidget.
 
-   Richiesta esplicita del titolare: NON sostituisce l'attuale sezione
-   "Ospiti e riconoscimenti" (reviews-section.tsx) — va solo in fondo alle
-   pagine appartamento e sulla pagina Villa Relax, mai in homepage.
+   Collocazione: nel footer di ogni pagina (site-footer.tsx), in basso a
+   destra, account La Mora ovunque e account Villa Relax sulle pagine
+   Villa. Scelta consapevole del titolare (settembre 2026) che SOSTITUISCE
+   la precedente richiesta "solo pagine appartamento e Villa, mai in
+   homepage": ora compare anche in home. Continua a NON sostituire la
+   sezione "Ospiti e riconoscimenti" (reviews-section.tsx).
+   Un solo badge per pagina: lo script cerca un unico elemento
+   #wdg-reviews, quindi non va rimontato anche dentro le pagine.
 
    Mostra i loghi Bed-and-breakfast.it/Google/TripAdvisor: deliberatamente
    NON mascherato. È un badge di fiducia multi-piattaforma — senza i loghi
@@ -82,16 +94,34 @@ function RecensioniBadgeWidget({ struttura, locale }: { struttura: "lamora" | "v
    wdgInit() interroga api.bed-and-breakfast.it direttamente dal browser
    del visitatore (non dal nostro server, a differenza delle recensioni
    Google): resta quindi dietro al consenso "Funzionali" (ExternalContentGate),
-   stesso trattamento dei widget offerte/last minute/punti di interesse. */
+   stesso trattamento dei widget offerte/last minute/punti di interesse.
+   Senza consenso, nel footer scuro il riquadro standard del gate sarebbe
+   fuori scala su ogni pagina: al suo posto un link compatto sulla stessa
+   riga dell'etichetta, che apre le preferenze cookie.
+
+   Layout orizzontale (etichetta a sinistra, badge a destra); flex-wrap
+   solo come rete di sicurezza sugli schermi più stretti. Il contenuto
+   interno del badge è Shadow DOM di bed-and-breakfast.it, non nostro. */
 export function RecensioniBadge({ struttura, locale }: { struttura: "lamora" | "villa"; locale: Locale }) {
+  const consentText = CONSENT_TEXT[locale];
   return (
-    <div className="mx-auto max-w-[420px] text-center">
-      <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-ink-soft">{TEXT[locale]}</span>
-      <div className="mt-3">
-        <ExternalContentGate locale={locale} category="functional" minHeight={70}>
-          <RecensioniBadgeWidget struttura={struttura} locale={locale} />
-        </ExternalContentGate>
-      </div>
+    <div className="flex flex-wrap items-center justify-end gap-x-5 gap-y-2">
+      <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-cream/50">{TEXT[locale]}</span>
+      <ExternalContentGate
+        locale={locale}
+        category="functional"
+        fallback={
+          <button
+            type="button"
+            onClick={openCookiePreferences}
+            className="text-[11px] text-cream/60 underline decoration-cream/30 underline-offset-4 transition-colors hover:text-cream/85"
+          >
+            {consentText.externalGate.button}
+          </button>
+        }
+      >
+        <RecensioniBadgeWidget struttura={struttura} locale={locale} />
+      </ExternalContentGate>
     </div>
   );
 }

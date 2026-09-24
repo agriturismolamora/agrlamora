@@ -100,11 +100,12 @@ export const APARTMENTS: Apartment[] = [
     slug: "sagittario",
     name: "Sagittario",
     zodiac: "sagittario",
-    /* Le foto "camera da letto" di questo appartamento in /public sono
-       thumbnail 120×90px (non l'originale): usata invece l'unica foto
-       interna a risoluzione reale (1600×1200) disponibile nella cartella. */
-    image: "/images/alloggi/appartamento sagittario/arredamento tavolo sagittario.jpeg",
-    alt: "Interno arredato dell'appartamento Sagittario, Agriturismo La Mora",
+    /* Unica card con una foto esterna (richiesta esplicita): scelta la
+       migliore tra le esterne disponibili — facciata in pietra, portone e
+       gazebo privato — verificata anche nel ritaglio verticale 3:4 della
+       card, dove resta leggibile. */
+    image: "/images/alloggi/appartamento sagittario/gazebo sagittario 1.jpeg",
+    alt: "Esterno in pietra dell'appartamento Sagittario con gazebo e giardino privato, Agriturismo La Mora",
     href: "/alloggi/sagittario/",
     petFriendly: true,
     maxGuests: 6,

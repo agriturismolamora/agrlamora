@@ -46,10 +46,10 @@ const NO_ACTIVE_SERVICES: Record<Locale, string> = {
 };
 
 const UPDATED_LABEL: Record<Locale, string> = {
-  it: "Ultimo aggiornamento: 20 settembre 2026 — versione del consenso: 2",
-  en: "Last updated: 20 September 2026 — consent version: 2",
-  fr: "Dernière mise à jour : 20 septembre 2026 — version du consentement : 2",
-  de: "Zuletzt aktualisiert: 20. September 2026 — Consent-Version: 2",
+  it: "Ultimo aggiornamento: 24 settembre 2026 — versione del consenso: 2",
+  en: "Last updated: 24 September 2026 — consent version: 2",
+  fr: "Dernière mise à jour : 24 septembre 2026 — version du consentement : 2",
+  de: "Zuletzt aktualisiert: 24. September 2026 — Consent-Version: 2",
 };
 
 const INTRO: Record<Locale, string> = {

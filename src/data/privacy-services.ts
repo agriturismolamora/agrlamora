@@ -4,7 +4,10 @@ import type { Locale } from "@/lib/i18n";
    il codice reale (non un template generico) il 7 settembre 2026, e
    aggiornata il 20 settembre 2026 con l'integrazione dei widget
    bed-and-breakfast.it (camere, richieste, offerte, last minute, punti di
-   interesse, badge recensioni):
+   interesse, badge recensioni), e il 24 settembre 2026: rimossi dal sito
+   il widget richieste (sostituito dal nostro modulo che prepara un
+   messaggio WhatsApp, nessun servizio terzo) e il widget punti di
+   interesse:
    - package.json: nessuna dipendenza di analytics/marketing/tracking.
    - .env.local: solo GOOGLE_PLACES_API_KEY, GOOGLE_PLACE_ID,
      NEXT_PUBLIC_RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET_KEY.
@@ -121,45 +124,45 @@ export const PRIVACY_SERVICES: PrivacyService[] = [
   },
   {
     id: "bbit-booking-request",
-    name: "Widget prenotazione e richiesta (Bed-and-breakfast.it)",
+    name: "Widget prenotazione (Bed-and-breakfast.it)",
     provider: "Studio Scivoletto S.r.l. Unipersonale (bed-and-breakfast.it)",
     category: "necessary",
     thirdParty: true,
     storage: [{ name: "cookie di sessione impostati da bed-and-breakfast.it nel modulo aperto", type: "cookie", duration: "definita da bed-and-breakfast.it, non modificabile da noi", firstParty: false }],
     active: true,
     description: {
-      it: "Il pulsante \"Prenota\" apre un modulo di prenotazione di bed-and-breakfast.it (camere disponibili, date, prezzi); il modulo \"Invia una richiesta al gestore\" apre invece il loro modulo di contatto, che offre anche il login \"Accedi con B&B.it\" o \"Accedi con Facebook\". In entrambi i casi il modulo si carica SOLO quando lo apri tu cliccando quel pulsante, mai automaticamente: è la stessa azione esplicita con cui richiedi la prenotazione o il contatto, quindi lo trattiamo come necessario, come le richieste che ci scrivi direttamente. Una volta aperto, sei nel loro modulo: i dati che inserisci lì sono trattati da bed-and-breakfast.it secondo la loro informativa, non dalla nostra.",
-      en: "The \"Book now\" button opens a bed-and-breakfast.it booking form (available rooms, dates, prices); the \"Send a request to the host\" form opens their own contact form instead, which also offers \"Sign in with B&B.it\" or \"Sign in with Facebook\". In both cases the form loads ONLY when you open it by clicking that button, never automatically: it's the same explicit action as asking to book or get in touch, so we treat it as necessary, like requests you send us directly. Once open, you're inside their form: any data you enter there is processed by bed-and-breakfast.it under their own notice, not ours.",
-      fr: "Le bouton « Réserver » ouvre un formulaire de réservation de bed-and-breakfast.it (chambres disponibles, dates, prix) ; le formulaire « Envoyer une demande au gestionnaire » ouvre quant à lui leur propre formulaire de contact, qui propose aussi la connexion « Se connecter avec B&B.it » ou « Se connecter avec Facebook ». Dans les deux cas, le formulaire ne se charge QUE lorsque vous l'ouvrez en cliquant sur ce bouton, jamais automatiquement : c'est la même action explicite que demander une réservation ou un contact, nous le traitons donc comme nécessaire, comme les demandes que vous nous envoyez directement. Une fois ouvert, vous êtes dans leur formulaire : les données que vous y saisissez sont traitées par bed-and-breakfast.it selon leur propre politique, pas la nôtre.",
-      de: "Die Schaltfläche „Jetzt buchen“ öffnet ein Buchungsformular von bed-and-breakfast.it (verfügbare Zimmer, Daten, Preise); das Formular „Anfrage an den Gastgeber senden“ öffnet dagegen deren eigenes Kontaktformular, das auch die Anmeldung „Mit B&B.it anmelden“ oder „Mit Facebook anmelden“ anbietet. In beiden Fällen wird das Formular NUR geladen, wenn Sie es durch Klick auf diese Schaltfläche öffnen, niemals automatisch: es ist dieselbe ausdrückliche Handlung wie eine Buchungs- oder Kontaktanfrage, wir behandeln es daher als notwendig, wie Anfragen, die Sie uns direkt schreiben. Einmal geöffnet, befinden Sie sich in deren Formular: die dort eingegebenen Daten werden von bed-and-breakfast.it gemäß deren eigener Hinweise verarbeitet, nicht von uns.",
+      it: "Il pulsante \"Prenota\" apre un modulo di prenotazione di bed-and-breakfast.it (camere disponibili, date, prezzi). Il modulo si carica SOLO quando lo apri tu cliccando quel pulsante, mai automaticamente: è la stessa azione esplicita con cui richiedi la prenotazione, quindi lo trattiamo come necessario, come le richieste che ci scrivi direttamente. Una volta aperto, sei nel loro modulo: i dati che inserisci lì sono trattati da bed-and-breakfast.it secondo la loro informativa, non dalla nostra.",
+      en: "The \"Book now\" button opens a bed-and-breakfast.it booking form (available rooms, dates, prices). The form loads ONLY when you open it by clicking that button, never automatically: it's the same explicit action as asking to book, so we treat it as necessary, like requests you send us directly. Once open, you're inside their form: any data you enter there is processed by bed-and-breakfast.it under their own notice, not ours.",
+      fr: "Le bouton « Réserver » ouvre un formulaire de réservation de bed-and-breakfast.it (chambres disponibles, dates, prix). Le formulaire ne se charge QUE lorsque vous l'ouvrez en cliquant sur ce bouton, jamais automatiquement : c'est la même action explicite que demander une réservation, nous le traitons donc comme nécessaire, comme les demandes que vous nous envoyez directement. Une fois ouvert, vous êtes dans leur formulaire : les données que vous y saisissez sont traitées par bed-and-breakfast.it selon leur propre politique, pas la nôtre.",
+      de: "Die Schaltfläche „Jetzt buchen“ öffnet ein Buchungsformular von bed-and-breakfast.it (verfügbare Zimmer, Daten, Preise). Das Formular wird NUR geladen, wenn Sie es durch Klick auf diese Schaltfläche öffnen, niemals automatisch: es ist dieselbe ausdrückliche Handlung wie eine Buchungsanfrage, wir behandeln es daher als notwendig, wie Anfragen, die Sie uns direkt schreiben. Einmal geöffnet, befinden Sie sich in deren Formular: die dort eingegebenen Daten werden von bed-and-breakfast.it gemäß deren eigener Hinweise verarbeitet, nicht von uns.",
     },
     purpose: {
-      it: "Permette di prenotare o inviare una richiesta di informazioni direttamente dal sito, senza dover scrivere via WhatsApp/email.",
-      en: "Lets you book or send an information request directly from the site, without having to write via WhatsApp/email.",
-      fr: "Permet de réserver ou d'envoyer une demande d'informations directement depuis le site, sans avoir à écrire via WhatsApp/e-mail.",
-      de: "Ermöglicht die Buchung oder das Senden einer Informationsanfrage direkt über die Website, ohne per WhatsApp/E-Mail schreiben zu müssen.",
+      it: "Permette di prenotare direttamente dal sito, senza dover scrivere via WhatsApp/email.",
+      en: "Lets you book directly from the site, without having to write via WhatsApp/email.",
+      fr: "Permet de réserver directement depuis le site, sans avoir à écrire via WhatsApp/e-mail.",
+      de: "Ermöglicht die Buchung direkt über die Website, ohne per WhatsApp/E-Mail schreiben zu müssen.",
     },
     privacyPolicyUrl: "https://www.bed-and-breakfast.it/privacy.cfm?locale=it",
   },
   {
     id: "bbit-passive-widgets",
-    name: "Widget offerte, last minute, punti di interesse e recensioni (Bed-and-breakfast.it)",
+    name: "Widget offerte, last minute e recensioni (Bed-and-breakfast.it)",
     provider: "Studio Scivoletto S.r.l. Unipersonale (bed-and-breakfast.it)",
     category: "functional",
     thirdParty: true,
     storage: [{ name: "possibili cookie tecnici impostati da bed-and-breakfast.it/api.bed-and-breakfast.it", type: "cookie", duration: "definita da bed-and-breakfast.it, non modificabile da noi", firstParty: false }],
     active: true,
     description: {
-      it: "A differenza del modulo di prenotazione/richiesta, questi contenuti (offerte in corso, last minute, punti di interesse nei dintorni, badge con il punteggio recensioni) si caricano da soli ad ogni visita della pagina in cui compaiono, senza un click: il tuo browser contatta direttamente bed-and-breakfast.it per mostrarli, il che espone il tuo indirizzo IP a loro anche se non interagisci con nulla. Per questo restano disattivati finché non accetti la categoria Funzionali: al loro posto vedi un breve avviso con un pulsante per attivarli.",
-      en: "Unlike the booking/request form, this content (current offers, last-minute deals, nearby points of interest, the reviews-score badge) loads on its own every time you visit the page it appears on, with no click: your browser contacts bed-and-breakfast.it directly to display it, which exposes your IP address to them even if you don't interact with anything. Because of this, it stays off until you accept the Functional category: in its place you'll see a short notice with a button to turn it on.",
-      fr: "Contrairement au formulaire de réservation/demande, ces contenus (offres en cours, dernière minute, points d'intérêt à proximité, badge du score des avis) se chargent d'eux-mêmes à chaque visite de la page où ils apparaissent, sans clic : votre navigateur contacte directement bed-and-breakfast.it pour les afficher, ce qui expose votre adresse IP même si vous n'interagissez avec rien. C'est pourquoi ils restent désactivés tant que vous n'avez pas accepté la catégorie Fonctionnels : à leur place, vous verrez un court avis avec un bouton pour les activer.",
-      de: "Anders als das Buchungs-/Anfrageformular laden sich diese Inhalte (aktuelle Angebote, Last-Minute-Angebote, Sehenswürdigkeiten in der Nähe, das Bewertungs-Badge) bei jedem Besuch der Seite, auf der sie erscheinen, von selbst, ohne Klick: Ihr Browser kontaktiert bed-and-breakfast.it direkt, um sie anzuzeigen, wodurch Ihre IP-Adresse offengelegt wird, auch wenn Sie mit nichts interagieren. Deshalb bleiben sie deaktiviert, bis Sie die Kategorie Funktional akzeptieren: an ihrer Stelle sehen Sie einen kurzen Hinweis mit einer Schaltfläche zur Aktivierung.",
+      it: "A differenza del modulo di prenotazione, questi contenuti (offerte in corso, last minute, badge con il punteggio recensioni) si caricano da soli ad ogni visita della pagina in cui compaiono, senza un click: il tuo browser contatta direttamente bed-and-breakfast.it per mostrarli, il che espone il tuo indirizzo IP a loro anche se non interagisci con nulla. Per questo restano disattivati finché non accetti la categoria Funzionali: al loro posto vedi un breve avviso con un pulsante per attivarli.",
+      en: "Unlike the booking form, this content (current offers, last-minute deals, the reviews-score badge) loads on its own every time you visit the page it appears on, with no click: your browser contacts bed-and-breakfast.it directly to display it, which exposes your IP address to them even if you don't interact with anything. Because of this, it stays off until you accept the Functional category: in its place you'll see a short notice with a button to turn it on.",
+      fr: "Contrairement au formulaire de réservation, ces contenus (offres en cours, dernière minute, badge du score des avis) se chargent d'eux-mêmes à chaque visite de la page où ils apparaissent, sans clic : votre navigateur contacte directement bed-and-breakfast.it pour les afficher, ce qui expose votre adresse IP même si vous n'interagissez avec rien. C'est pourquoi ils restent désactivés tant que vous n'avez pas accepté la catégorie Fonctionnels : à leur place, vous verrez un court avis avec un bouton pour les activer.",
+      de: "Anders als das Buchungsformular laden sich diese Inhalte (aktuelle Angebote, Last-Minute-Angebote, das Bewertungs-Badge) bei jedem Besuch der Seite, auf der sie erscheinen, von selbst, ohne Klick: Ihr Browser kontaktiert bed-and-breakfast.it direkt, um sie anzuzeigen, wodurch Ihre IP-Adresse offengelegt wird, auch wenn Sie mit nichts interagieren. Deshalb bleiben sie deaktiviert, bis Sie die Kategorie Funktional akzeptieren: an ihrer Stelle sehen Sie einen kurzen Hinweis mit einer Schaltfläche zur Aktivierung.",
     },
     purpose: {
-      it: "Mostra contenuti informativi (offerte, last minute, punti di interesse, punteggio recensioni) senza che tu debba visitare bed-and-breakfast.it separatamente.",
-      en: "Shows informational content (offers, last-minute deals, points of interest, reviews score) without you having to visit bed-and-breakfast.it separately.",
-      fr: "Affiche du contenu informatif (offres, dernière minute, points d'intérêt, score des avis) sans que vous ayez à visiter bed-and-breakfast.it séparément.",
-      de: "Zeigt informative Inhalte (Angebote, Last-Minute-Angebote, Sehenswürdigkeiten, Bewertungspunktzahl), ohne dass Sie bed-and-breakfast.it separat besuchen müssen.",
+      it: "Mostra contenuti informativi (offerte, last minute, punteggio recensioni) senza che tu debba visitare bed-and-breakfast.it separatamente.",
+      en: "Shows informational content (offers, last-minute deals, reviews score) without you having to visit bed-and-breakfast.it separately.",
+      fr: "Affiche du contenu informatif (offres, dernière minute, score des avis) sans que vous ayez à visiter bed-and-breakfast.it séparément.",
+      de: "Zeigt informative Inhalte (Angebote, Last-Minute-Angebote, Bewertungspunktzahl), ohne dass Sie bed-and-breakfast.it separat besuchen müssen.",
     },
     privacyPolicyUrl: "https://www.bed-and-breakfast.it/privacy.cfm?locale=it",
   },

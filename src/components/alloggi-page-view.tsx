@@ -5,6 +5,7 @@ import { getApartmentDetails } from "@/data/apartment-details";
 import { Reveal } from "@/components/scroll-reveal";
 import { ZodiacMark } from "@/components/zodiac-mark";
 import { HoverFill } from "@/components/hover-fill";
+import { PawIcon } from "@/components/amenity-icons";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
@@ -124,8 +125,13 @@ export function AlloggiPageView({ locale }: { locale: Locale }) {
                       className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                     />
                     {apt.petFriendly && (
-                      <span className="absolute right-3 top-3 rounded-full bg-cream px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.06em] text-olive-950 shadow-[0_6px_16px_rgba(0,0,0,0.3)]">
-                        {text.petFriendly}
+                      <span
+                        role="img"
+                        aria-label={text.petFriendly}
+                        title={text.petFriendly}
+                        className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-cream text-olive-950 shadow-[0_6px_16px_rgba(0,0,0,0.3)]"
+                      >
+                        <PawIcon />
                       </span>
                     )}
                     <div

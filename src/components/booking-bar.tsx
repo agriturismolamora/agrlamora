@@ -9,6 +9,7 @@ import { t } from "@/lib/dictionary";
 import { openRoomsWidget } from "@/lib/rrp-widget";
 
 const PHONE_TEL = "tel:+390758041164";
+const WHATSAPP_HREF = "https://wa.me/393934363917";
 
 const INTL_TAG: Record<Locale, string> = { it: "it-IT", en: "en-GB", fr: "fr-FR", de: "de-DE" };
 const WEEKDAYS_BY_LOCALE: Record<Locale, string[]> = {
@@ -61,6 +62,14 @@ function PhoneIcon() {
         strokeWidth="1.5"
         strokeLinejoin="round"
       />
+    </svg>
+  );
+}
+
+function WhatsAppIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.81L2 22l5.4-1.42a9.86 9.86 0 0 0 4.64 1.18h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.03c-.24.68-1.4 1.3-1.93 1.37-.5.07-1.02.1-3.31-.75-2.79-1.04-4.59-3.9-4.73-4.08-.14-.19-1.13-1.5-1.13-2.86 0-1.36.71-2.03.97-2.3.24-.26.55-.33.73-.33h.53c.17 0 .4-.03.62.48.24.55.8 1.91.87 2.05.07.14.11.3.02.49-.09.19-.14.3-.28.46-.14.16-.29.36-.42.48-.14.14-.28.29-.12.57.16.28.71 1.18 1.53 1.91 1.05.94 1.94 1.24 2.22 1.38.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.63.77 1.9.91.28.14.46.21.53.33.07.12.07.68-.17 1.36Z" />
     </svg>
   );
 }
@@ -507,26 +516,28 @@ export function BookingBar({ locale }: { locale: Locale }) {
           {t("booking", "prenotaOra", locale)}
         </button>
         <a
-          href={PHONE_TEL}
-          aria-label={t("booking", "chiamaAgriturismo", locale)}
+          href={WHATSAPP_HREF}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={t("booking", "whatsappAgriturismo", locale)}
           className={`flex h-full w-full items-center justify-center text-cream transition-colors duration-500 ${
             inApartments ? "bg-[#1f2742] hover:bg-[#28305a]" : "bg-raspberry-light hover:bg-[#ad5864]"
           }`}
         >
-          <PhoneIcon />
+          <WhatsAppIcon />
         </a>
       </div>
 
       {/* Mobile: CTA flottante che apre una bottom sheet con i campi in
-          verticale, affiancata da un pulsante di chiamata diretta — prima
-          "chiama invece" viveva solo dentro la sheet, un passaggio in più
-          per chi vuole solo telefonare al volo dalla barra sticky.
-          items-stretch (non items-center) + il pulsante telefono senza
+          verticale, affiancata da un pulsante WhatsApp diretto (prima era
+          un pulsante di chiamata al fisso: sostituito su richiesta
+          esplicita, il "chiama invece" resta dentro la sheet).
+          items-stretch (non items-center) + il pulsante WhatsApp senza
           altezza fissa: in tedesco "Verfügbarkeit prüfen" a 320px va su due
-          righe (verificato) — con un'altezza fissa sul pulsante telefono
+          righe (verificato) — con un'altezza fissa sul pulsante accanto
           quel wrap creava due pulsanti di altezza diversa, affiancati in
-          modo visibilmente scombinato. Ora l'altezza del telefono segue
-          sempre quella reale del pulsante di testo, qualunque sia la lingua.
+          modo visibilmente scombinato. Ora la sua altezza segue sempre
+          quella reale del pulsante di testo, qualunque sia la lingua.
           px-5/text-[12.5px]/tracking ridotto: guadagnano lo spazio che basta
           perché il tedesco resti su una riga fin dai 320px. */}
       <div className="flex items-stretch gap-2 md:hidden">
@@ -538,11 +549,13 @@ export function BookingBar({ locale }: { locale: Locale }) {
           {t("booking", "verificaDisponibilita", locale)}
         </button>
         <a
-          href={PHONE_TEL}
-          aria-label={t("booking", "chiamaAgriturismo", locale)}
+          href={WHATSAPP_HREF}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={t("booking", "whatsappAgriturismo", locale)}
           className="flex w-[52px] shrink-0 items-center justify-center rounded-[3px] bg-raspberry-light text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors hover:bg-[#ad5864]"
         >
-          <PhoneIcon />
+          <WhatsAppIcon />
         </a>
       </div>
 

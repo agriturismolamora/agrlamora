@@ -13,6 +13,7 @@ import {
 import { APARTMENTS, getBrochureWhatsappUrl, type Apartment } from "@/data/apartments";
 import { ZodiacMark } from "@/components/zodiac-mark";
 import { HoverFill } from "@/components/hover-fill";
+import { PawIcon } from "@/components/amenity-icons";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 
@@ -362,13 +363,21 @@ function BedIcon() {
   );
 }
 
-/* Badge testuale "pet friendly": sempre visibile (non lega al hover come
-   la riga statistiche), ancorato in alto a destra sulla card intera così
-   ruota/scala insieme ad essa senza calcoli aggiuntivi. */
+/* Zampetta "pet friendly": sempre visibile (non lega al hover come la riga
+   statistiche) — chi viaggia con un animale deve riconoscere Gemelli e
+   Sagittario già dalla card, prima di cliccare. Ancorata in alto a destra
+   sulla card intera così ruota/scala insieme ad essa senza calcoli
+   aggiuntivi; la dicitura resta come nome accessibile e tooltip. */
 function PetBadge({ locale }: { locale: Locale }) {
+  const label = TXT[locale].petFriendly;
   return (
-    <span className="absolute right-3 top-3 z-10 rounded-full bg-cream px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.06em] text-olive-950 shadow-[0_6px_16px_rgba(0,0,0,0.3)]">
-      {TXT[locale].petFriendly}
+    <span
+      role="img"
+      aria-label={label}
+      title={label}
+      className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-cream text-olive-950 shadow-[0_6px_16px_rgba(0,0,0,0.3)]"
+    >
+      <PawIcon />
     </span>
   );
 }

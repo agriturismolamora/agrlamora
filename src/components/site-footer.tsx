@@ -8,6 +8,7 @@ import { withLocale, splitLocaleFromPath } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
 import { CONSENT_TEXT } from "@/data/consent-text";
 import { openCookiePreferences } from "@/lib/consent";
+import { RecensioniBadge } from "@/components/recensioni-badge";
 
 const PHONE_TEL = "tel:+390758041164";
 const PHONE_DISPLAY = "075 8041164";
@@ -138,6 +139,15 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             </button>
             <span>© {new Date().getFullYear()} Agriturismo La Mora</span>
           </div>
+        </div>
+
+        {/* Badge recensioni in basso a destra, su ogni pagina: account
+            Villa Relax sulle pagine Villa, La Mora ovunque altro (stesso
+            confine onVillaPage dei link qui sopra). A destra anche su
+            mobile: resta lontano dal pulsante "torna su" in basso a
+            sinistra (vedi nota pl-[72px] sopra). */}
+        <div className="mt-8 flex justify-end">
+          <RecensioniBadge struttura={onVillaPage ? "villa" : "lamora"} locale={locale} />
         </div>
       </div>
     </footer>

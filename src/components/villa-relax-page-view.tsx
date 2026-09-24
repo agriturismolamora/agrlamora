@@ -7,8 +7,6 @@ import { NewsletterSection } from "@/components/newsletter-section";
 import { CertificationsMarquee } from "@/components/certifications-marquee";
 import { VillaBookingBar } from "@/components/villa-booking-bar";
 import { RichiesteSection } from "@/components/richieste-section";
-import { RecensioniBadge } from "@/components/recensioni-badge";
-import { PuntiInteresseSection } from "@/components/punti-interesse-section";
 import { LastMinuteSection } from "@/components/last-minute-section";
 import { BbitWidgetCard } from "@/components/bbit-widget-card";
 import { bbitOfferteUrl } from "@/lib/bbit-widget-urls";
@@ -667,17 +665,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <PuntiInteresseSection struttura="villa" locale={locale} />
-
       <RichiesteSection struttura="villa" locale={locale} />
-
-      {/* Richiesta esplicita: il badge recensioni con l'account bed-and-
-          breakfast.it di Villa Relax, separato da quello di La Mora. */}
-      <section className="bg-cream py-12 sm:py-14">
-        <div className="mx-auto max-w-[1100px] px-6 sm:px-10">
-          <RecensioniBadge struttura="villa" locale={locale} />
-        </div>
-      </section>
 
       <NewsletterSection locale={locale} />
       <CertificationsMarquee locale={locale} />

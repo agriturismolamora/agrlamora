@@ -10,8 +10,10 @@ import { useEffect, useRef, useState } from "react";
    continuo, muto), dove la fontana è pienamente visibile e ben inquadrata —
    verificato fotogramma per fotogramma prima di scegliere questi timestamp.
    Caricato solo quando la sezione entra in viewport (IntersectionObserver),
-   non subito al mount: il file è pesante (~7MB) per un contenuto che è solo
-   un dettaglio secondario della pagina piscina. */
+   non subito al mount: il file è pesante (~7MB). Nota: da quando la sezione
+   sta subito sotto la hero della pagina piscina, su molti schermi rientra
+   già nel rootMargin al primo caricamento — il vero rimedio al peso resta
+   tagliare fisicamente il file alla finestra 7s–12s. */
 const CLIP_START = 7;
 const CLIP_END = 12;
 

@@ -171,7 +171,27 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
         </div>
       </section>
 
+      {/* Il video della fontana idromassaggio viene subito dopo la hero,
+          prima di testo e foto (richiesta esplicita). Sfondi riallineati
+          di conseguenza per mantenere l'alternanza cream / cream-dim. */}
       <section className="bg-cream py-16 sm:py-20">
+        <div className="mx-auto grid max-w-[1100px] grid-cols-1 items-center gap-10 px-6 sm:grid-cols-2 sm:px-10 sm:gap-16">
+          <Reveal className="mx-auto w-full max-w-[320px] sm:max-w-none">
+            <HydromassageVideo />
+          </Reveal>
+          <Reveal delay={80}>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-olive-950">{text.fontanaLabel}</span>
+            <h2 className="mt-3 font-display text-[26px] font-normal leading-[1.2] text-ink">
+              {text.fontanaHeading}
+            </h2>
+            <p className="mt-4 text-[14px] leading-[1.75] text-ink-soft">
+              {text.fontanaBody}
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="bg-cream-dim py-16 sm:py-20">
         <div className="mx-auto max-w-[720px] px-6 sm:px-10">
           <Reveal>
             <p className="text-[15px] leading-[1.85] text-ink-soft">
@@ -196,7 +216,7 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className="bg-cream-dim py-16 sm:py-20">
+      <section className="bg-cream py-16 sm:py-20">
         <div className="mx-auto grid max-w-[1100px] grid-cols-1 gap-3 px-6 sm:grid-cols-3 sm:px-10">
           <Reveal className="sm:col-span-2">
             <div className="relative aspect-[16/10] overflow-hidden rounded-[3px]">
@@ -219,23 +239,6 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
                 className="object-cover"
               />
             </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="bg-cream py-16 sm:py-20">
-        <div className="mx-auto grid max-w-[1100px] grid-cols-1 items-center gap-10 px-6 sm:grid-cols-2 sm:px-10 sm:gap-16">
-          <Reveal className="mx-auto w-full max-w-[320px] sm:max-w-none">
-            <HydromassageVideo />
-          </Reveal>
-          <Reveal delay={80}>
-            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-olive-950">{text.fontanaLabel}</span>
-            <h2 className="mt-3 font-display text-[26px] font-normal leading-[1.2] text-ink">
-              {text.fontanaHeading}
-            </h2>
-            <p className="mt-4 text-[14px] leading-[1.75] text-ink-soft">
-              {text.fontanaBody}
-            </p>
           </Reveal>
         </div>
       </section>
