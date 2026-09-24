@@ -364,7 +364,7 @@ const HOST_ALT: Record<Locale, string> = {
 };
 
 /* Widget concierge fisso in basso a destra. bottom-24 su mobile per non
-   sovrapporsi al CTA "Verifica disponibilità" della booking bar (centrato
+   sovrapporsi al CTA "Prenota ora" della booking bar (centrato
    ma largo su schermi stretti); bottom-6 da sm in su, dove la booking bar
    compatta lascia ampio margine sul lato destro. Stessa logica di
    dissolvenza vicino al footer già usata dalla booking bar. */

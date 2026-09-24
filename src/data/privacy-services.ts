@@ -7,7 +7,8 @@ import type { Locale } from "@/lib/i18n";
    interesse, badge recensioni), e il 24 settembre 2026: rimossi dal sito
    il widget richieste (sostituito dal nostro modulo che prepara un
    messaggio WhatsApp, nessun servizio terzo) e il widget punti di
-   interesse:
+   interesse; aggiunto lo script Octorate (vedi octorate-widget-script.tsx),
+   con CONSENT_VERSION portata a "3":
    - package.json: nessuna dipendenza di analytics/marketing/tracking.
    - .env.local: solo GOOGLE_PLACES_API_KEY, GOOGLE_PLACE_ID,
      NEXT_PUBLIC_RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET_KEY.
@@ -165,6 +166,28 @@ export const PRIVACY_SERVICES: PrivacyService[] = [
       de: "Zeigt informative Inhalte (Angebote, Last-Minute-Angebote, Bewertungspunktzahl), ohne dass Sie bed-and-breakfast.it separat besuchen müssen.",
     },
     privacyPolicyUrl: "https://www.bed-and-breakfast.it/privacy.cfm?locale=it",
+  },
+  {
+    id: "octorate-widget",
+    name: "Script motore di prenotazione Octorate (collegamento Trivago)",
+    provider: "Octorate S.r.l.",
+    category: "necessary",
+    thirdParty: true,
+    storage: [],
+    active: true,
+    description: {
+      it: "Script del motore di prenotazione Octorate, collegato al canale Trivago della struttura: si carica in ogni pagina ma resta invisibile (nessun elemento mostrato). Il tuo browser scarica i suoi file da octorate.com e tre fogli di stile da unpkg.com, il che espone il tuo indirizzo IP a questi servizi. Non imposta cookie sul nostro sito e non legge nulla dal tuo dispositivo.",
+      en: "Script of the Octorate booking engine, linked to the property's Trivago channel: it loads on every page but stays invisible (nothing is displayed). Your browser downloads its files from octorate.com and three stylesheets from unpkg.com, which exposes your IP address to these services. It sets no cookies on our site and reads nothing from your device.",
+      fr: "Script du moteur de réservation Octorate, relié au canal Trivago de l'établissement : il se charge sur chaque page mais reste invisible (rien n'est affiché). Votre navigateur télécharge ses fichiers depuis octorate.com et trois feuilles de style depuis unpkg.com, ce qui expose votre adresse IP à ces services. Il ne dépose aucun cookie sur notre site et ne lit rien sur votre appareil.",
+      de: "Skript der Buchungsmaschine Octorate, verbunden mit dem Trivago-Kanal der Unterkunft: es wird auf jeder Seite geladen, bleibt aber unsichtbar (es wird nichts angezeigt). Ihr Browser lädt seine Dateien von octorate.com und drei Stylesheets von unpkg.com, wodurch Ihre IP-Adresse diesen Diensten offengelegt wird. Es setzt keine Cookies auf unserer Website und liest nichts von Ihrem Gerät.",
+    },
+    purpose: {
+      it: "Collega il sito al motore di prenotazione Octorate usato dalla struttura per il canale Trivago.",
+      en: "Connects the site to the Octorate booking engine the property uses for its Trivago channel.",
+      fr: "Relie le site au moteur de réservation Octorate utilisé par l'établissement pour le canal Trivago.",
+      de: "Verbindet die Website mit der Buchungsmaschine Octorate, die die Unterkunft für den Trivago-Kanal nutzt.",
+    },
+    privacyPolicyUrl: "https://www.octorate.com/it/privacy-policy/",
   },
   {
     id: "facebook-graph-photos",

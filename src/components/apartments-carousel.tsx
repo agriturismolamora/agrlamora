@@ -804,21 +804,23 @@ function DesktopCarousel({ reducedMotion, locale }: { reducedMotion: boolean; lo
    tastiera, mai intercettando lo scroll verticale della pagina. */
 const MOBILE_LOCK_MS = 480;
 const SWIPE_THRESHOLD = 46;
-const MOBILE_ROTATE = 3;
-/* Gap ridotto da 20 a 10: con la card attiva più stretta (vedi
-   mobileCardWidth sotto) un gap generoso lasciava le vicine quasi del
-   tutto fuori dal viewport — l'obiettivo esplicito ("card vicine
-   visibili parzialmente, con profondità, non schede impilate") richiede
-   che una porzione riconoscibile della foto successiva resti dentro i
-   bordi dello schermo. */
-const MOBILE_GAP = 10;
+/* Coverflow mobile (richiesta esplicita, stesso schema del carousel
+   desktop costruito sul riferimento): le vicine sono inclinate e
+   rimpicciolite come lo slot rel 1 del desktop (8°, scala 0.9 invece di
+   3°/0.94, che a colpo d'occhio sembravano card semplicemente affiancate)
+   e passano parzialmente DIETRO la card centrale — distanza tra i centri
+   pari all'86% della larghezza card invece di larghezza + gap — così a
+   390px ne resta visibile una fascia di ~80px invece di ~35px. */
+const MOBILE_ROTATE = 8;
+const MOBILE_SIDE_SCALE = 0.9;
+const MOBILE_STEP_RATIO = 0.86;
 
 /* Prima: clamp(vw*0.8, 260, 360) — a 375px la card attiva occupava 300px
    su 375 di viewport, lasciando alle vicine solo pochi px di sbavatura ai
    bordi (di fatto indistinguibile da una singola card impilata). Card più
    stretta (~70% invece di 80%) libera lo spazio perché la card successiva
-   sporga per davvero (~40px, foto riconoscibile) invece di sparire dietro
-   il bordo del contenitore. */
+   sporga per davvero (~80px con MOBILE_STEP_RATIO, foto riconoscibile)
+   invece di sparire dietro il bordo del contenitore. */
 function mobileCardWidth(vw: number) {
   return clamp(vw * 0.7, 220, 300);
 }
@@ -849,8 +851,9 @@ function MobileCarousel({ reducedMotion, locale }: { reducedMotion: boolean; loc
   // Altezza della regione derivata dalla larghezza reale della card (aspect
   // 3:4) invece di un h-[480px] fisso pensato per la card larga 360px di
   // prima: con la card ora più stretta (vedi mobileCardWidth) un'altezza
-  // fissa lasciava una fascia vuota sotto/sopra la card. +24px di margine
-  // per la leggera rotazione (fino a 3°) delle card laterali.
+  // fissa lasciava una fascia vuota sotto/sopra la card. +24px di margine:
+  // le laterali ruotano fino a 8° ma sono scalate a 0.9, il loro ingombro
+  // verticale resta comunque sotto quello della card centrale.
   const regionHeight = Math.round((cardWidth * 4) / 3) + 24;
 
   useEffect(() => () => {
@@ -940,9 +943,9 @@ function MobileCarousel({ reducedMotion, locale }: { reducedMotion: boolean; loc
           const hidden = abs > 1;
           const isCenter = offset === 0;
           const showPanel = isCenter && revealed === i;
-          const translateX = offset * (cardWidth + MOBILE_GAP);
+          const translateX = offset * cardWidth * MOBILE_STEP_RATIO;
           const rotate = reducedMotion ? 0 : offset === 0 ? 0 : MOBILE_ROTATE * Math.sign(offset);
-          const scale = abs === 0 ? 1 : 0.94;
+          const scale = abs === 0 ? 1 : MOBILE_SIDE_SCALE;
           const opacity = hidden ? 0 : abs === 0 ? 1 : 0.9;
           // Stesso alone "da stella" del carousel desktop: tenue su tutte le
           // card visibili, più intenso su quella al centro.

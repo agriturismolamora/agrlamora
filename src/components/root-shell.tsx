@@ -8,6 +8,7 @@ import { ConciergeChat } from "@/components/concierge-chat";
 import { BackToTop } from "@/components/back-to-top";
 import { CookieConsentManager } from "@/components/cookie-consent-manager";
 import { RoomsWidgetScript } from "@/components/rooms-widget-script";
+import { OctorateWidgetScript } from "@/components/octorate-widget-script";
 import type { Locale } from "@/lib/i18n";
 
 const JSON_LD_BASE = {
@@ -79,6 +80,14 @@ export function RootShell({ locale, children }: { locale: Locale; children: Reac
         <ConciergeChat locale={locale} />
         <BackToTop locale={locale} />
         <CookieConsentManager locale={locale} />
+        {/* Script Octorate/Trivago: invisibile, su ogni pagina (vedi
+            octorate-widget-script.tsx). Indipendente dalla booking bar.
+            DEVE restare PRIMA di RoomsWidgetScript: quello script fa
+            document.write di div#rrpWidgetModal subito dopo di sé, e React
+            tollera nodi estranei solo in CODA al body — un elemento React
+            dopo di lui farebbe fallire l'hydration dell'intera pagina
+            (verificato: "Hydration failed", root ri-renderizzato). */}
+        <OctorateWidgetScript />
         {/* Widget camere di bed-and-breakfast.it: apre una modale di selezione
             stanze/richiesta disponibilità quando si clicca un elemento con
             classe "rrp-widget-open-modal" (vedi booking-bar.tsx,

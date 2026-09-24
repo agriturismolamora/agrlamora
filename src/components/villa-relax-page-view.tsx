@@ -3,6 +3,7 @@ import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import { StarRow } from "@/components/review-icons";
 import { ApartmentGallery } from "@/components/apartment-gallery";
+import { MobileCoverflow } from "@/components/mobile-coverflow";
 import { NewsletterSection } from "@/components/newsletter-section";
 import { CertificationsMarquee } from "@/components/certifications-marquee";
 import { VillaBookingBar } from "@/components/villa-booking-bar";
@@ -492,18 +493,26 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
             <p className="mt-5 max-w-[560px] text-[15px] leading-[1.8] text-ink-soft">{text.configurazioniBody}</p>
           </Reveal>
 
-          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {configurations.map((config, i) => (
-              <Reveal key={config.name} delay={i * 80}>
-                <div className="flex h-full flex-col rounded-[6px] border border-ink/10 bg-cream px-7 py-8">
-                  <span className="font-display text-4xl text-raspberry">{config.guests}</span>
-                  <span className="mt-1 text-[11px] uppercase tracking-[0.06em] text-ink-soft">{text.ospitiWord}</span>
-                  <h3 className="mt-4 font-display text-[19px] font-normal leading-tight text-ink">{config.name}</h3>
-                  <p className="mt-2 text-[13px] uppercase tracking-[0.04em] text-ink-soft">{text.camereWord(config.bedrooms)}</p>
-                  <p className="mt-4 flex-1 text-[13px] leading-[1.7] text-ink-soft">{config.note}</p>
-                </div>
-              </Reveal>
-            ))}
+          {/* Su mobile coverflow (card centrale, vicine oblique ai lati,
+              swipe) invece delle tre card impilate — richiesta esplicita,
+              stesso pattern del carousel appartamenti della home. Da sm in
+              su resta la griglia a 3 colonne di prima. */}
+          <div className="mt-12">
+            <MobileCoverflow
+              ariaLabel={text.configurazioniLabel}
+              labels={configurations.map((config) => config.name)}
+              items={configurations.map((config, i) => (
+                <Reveal key={config.name} delay={i * 80} className="h-full">
+                  <div className="flex h-full flex-col rounded-[6px] border border-ink/10 bg-cream px-7 py-8">
+                    <span className="font-display text-4xl text-raspberry">{config.guests}</span>
+                    <span className="mt-1 text-[11px] uppercase tracking-[0.06em] text-ink-soft">{text.ospitiWord}</span>
+                    <h3 className="mt-4 font-display text-[19px] font-normal leading-tight text-ink">{config.name}</h3>
+                    <p className="mt-2 text-[13px] uppercase tracking-[0.04em] text-ink-soft">{text.camereWord(config.bedrooms)}</p>
+                    <p className="mt-4 flex-1 text-[13px] leading-[1.7] text-ink-soft">{config.note}</p>
+                  </div>
+                </Reveal>
+              ))}
+            />
           </div>
         </div>
       </section>

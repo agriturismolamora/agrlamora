@@ -127,6 +127,11 @@ function buildSections(locale: Locale): LegalSection[] {
                 se dai il consenso Funzionali che attiva i widget offerte/last minute/recensioni: i dati che inserisci in quel modulo, o la tua richiesta HTTP quando quei contenuti si caricano, sono trattati da loro
                 secondo la propria informativa privacy;
               </li>
+              <li>
+                <strong>Octorate S.r.l.</strong>, per lo script invisibile del motore di prenotazione Octorate (canale Trivago)
+                presente in ogni pagina: il tuo browser ne scarica i file da octorate.com e unpkg.com, esponendo il tuo indirizzo IP;
+                nessun cookie viene impostato sul nostro sito;
+              </li>
               <li>autorità pubbliche, quando richiesto dalla legge (es. comunicazioni obbligatorie legate all&apos;ospitalità turistica).</li>
             </ul>
           </>
@@ -304,6 +309,11 @@ function buildSections(locale: Locale): LegalSection[] {
                 <strong>Studio Scivoletto S.r.l. Unipersonale</strong> (bed-and-breakfast.it), if you open the booking form, or if you
                 give Functional consent that activates the offers/last-minute/reviews widgets: the data you enter in that form, or your HTTP request when that content loads, is processed by them under their own privacy
                 notice;
+              </li>
+              <li>
+                <strong>Octorate S.r.l.</strong>, for the invisible Octorate booking-engine script (Trivago channel) present on every
+                page: your browser downloads its files from octorate.com and unpkg.com, exposing your IP address; no cookies are set on
+                our site;
               </li>
               <li>public authorities, when required by law (e.g. mandatory reporting related to tourist accommodation).</li>
             </ul>
@@ -492,6 +502,11 @@ function buildSections(locale: Locale): LegalSection[] {
                 données que vous saisissez dans ce formulaire, ou votre requête HTTP lorsque ce
                 contenu se charge, sont traitées par eux selon leur propre politique de confidentialité ;
               </li>
+              <li>
+                <strong>Octorate S.r.l.</strong>, pour le script invisible du moteur de réservation Octorate (canal Trivago) présent
+                sur chaque page : votre navigateur télécharge ses fichiers depuis octorate.com et unpkg.com, ce qui expose votre adresse
+                IP ; aucun cookie n’est déposé sur notre site ;
+              </li>
               <li>les autorités publiques, lorsque la loi l’exige (par ex. déclarations obligatoires liées à l’hébergement touristique).</li>
             </ul>
           </>
@@ -677,6 +692,11 @@ function buildSections(locale: Locale): LegalSection[] {
                 oder wenn Sie die Funktional-Zustimmung erteilen, die die Widgets Angebote/Last-Minute/Bewertungen aktiviert: die
                 Daten, die Sie in dieses Formular eingeben, oder Ihre HTTP-Anfrage beim
                 Laden dieser Inhalte, werden von diesen gemäß ihrer eigenen Datenschutzerklärung verarbeitet;
+              </li>
+              <li>
+                <strong>Octorate S.r.l.</strong>, für das unsichtbare Skript der Buchungsmaschine Octorate (Trivago-Kanal) auf jeder
+                Seite: Ihr Browser lädt dessen Dateien von octorate.com und unpkg.com, wodurch Ihre IP-Adresse offengelegt wird; auf
+                unserer Website werden keine Cookies gesetzt;
               </li>
               <li>Behörden, sofern gesetzlich vorgeschrieben (z. B. Pflichtmeldungen im Zusammenhang mit touristischer Beherbergung).</li>
             </ul>

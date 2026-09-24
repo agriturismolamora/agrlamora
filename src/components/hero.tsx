@@ -58,8 +58,13 @@ export function Hero({ locale }: { locale: Locale }) {
 
       {/* Livello 2: contenuto. Centrato in modo assoluto sull'intero viewport
           della hero (non sul container della navbar). */}
+      {/* w-full sotto md: senza una larghezza esplicita, un blocco absolute
+          con left:50% si restringe a METÀ viewport (spazio residuo a destra
+          del left) — su mobile ~147px utili, e il max-width:100% delle
+          immagini schiacciava il logo ben sotto la larghezza voluta. Da md
+          in su resta com'era (w-auto): lì metà viewport basta e avanza. */}
       <div
-        className="absolute left-1/2 top-1/2 z-[2] flex -translate-x-1/2 -translate-y-1/2 flex-col items-center px-6 text-center text-cream"
+        className="absolute left-1/2 top-1/2 z-[2] flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center px-6 text-center text-cream md:w-auto"
       >
         <h1 className="sr-only">{HERO_H1[locale]}</h1>
         {/* Tracking ridotto sotto sm: a 0.4em su viewport stretti "ASSISI ·
@@ -69,9 +74,9 @@ export function Hero({ locale }: { locale: Locale }) {
         <span className="text-[11px] font-medium uppercase tracking-[0.26em] text-cream/90 sm:text-[13px] sm:tracking-[0.4em]">
           Assisi · Umbria
         </span>
-        {/* Logo ingrandito su mobile (pavimento del clamp portato da 220 a
-            260px): a 220px risultava piccolo rispetto allo spazio libero
-            della hero su schermi stretti, richiesta esplicita del titolare. */}
+        {/* Logo ingrandito su mobile, richiesta esplicita del titolare:
+            290px (max 76vw per restare nei margini a 320px) sotto md; da md
+            in su invariato, clamp(260px, 26vw, 370px). */}
         <Link href={withLocale(locale, "/")} aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`} className="mt-7 sm:mt-9">
           <Image
             src="/images/logo/logo-bianco-agriturismo-la-mora.png"
@@ -79,7 +84,7 @@ export function Hero({ locale }: { locale: Locale }) {
             width={370}
             height={278}
             priority
-            className="h-auto w-[clamp(260px,26vw,370px)] drop-shadow-[0_2px_18px_rgba(0,0,0,0.35)]"
+            className="h-auto w-[min(290px,76vw)] drop-shadow-[0_2px_18px_rgba(0,0,0,0.35)] md:w-[clamp(260px,26vw,370px)]"
           />
         </Link>
       </div>

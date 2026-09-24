@@ -2,24 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/* Estratto di ~5 secondi dal video fornito dal titolare
-   (IDROMASSAGGIOVIDEOLAMORA.mp4, 35s totali) che inquadra bene la fontana
-   idromassaggio: nessun tool di editing video disponibile in questa sessione
-   per tagliare fisicamente il file, quindi il file originale viene caricato
-   per intero ma la riproduzione resta vincolata alla finestra 7s–12s (loop
-   continuo, muto), dove la fontana è pienamente visibile e ben inquadrata —
-   verificato fotogramma per fotogramma prima di scegliere questi timestamp.
+/* Clip di 5 secondi della fontana idromassaggio, estratta dal video
+   fornito dal titolare (IDROMASSAGGIOVIDEOLAMORA.mp4, 35s originali) alla
+   finestra 7s–12s — dove la fontana è pienamente visibile e ben inquadrata
+   — e ricodificata per il web: H.264 High, 480×848, 30fps, ~1,2 Mbps, senza
+   traccia audio (riproduzione sempre muta), moov atom in testa (faststart)
+   per partire senza scaricare tutto il file. ~750KB invece dei ~7,5MB del
+   file intero. Loop nativo del <video>, nessuna logica di salto temporale.
    Caricato solo quando la sezione entra in viewport (IntersectionObserver),
-   non subito al mount: il file è pesante (~7MB). Nota: da quando la sezione
-   sta subito sotto la hero della pagina piscina, su molti schermi rientra
-   già nel rootMargin al primo caricamento — il vero rimedio al peso resta
-   tagliare fisicamente il file alla finestra 7s–12s. */
-const CLIP_START = 7;
-const CLIP_END = 12;
-
+   non subito al mount. */
 export function HydromassageVideo() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
@@ -41,35 +34,14 @@ export function HydromassageVideo() {
     return () => io.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (!shouldLoad) return;
-    const v = videoRef.current;
-    if (!v) return;
-
-    function onLoaded() {
-      if (v) v.currentTime = CLIP_START;
-    }
-    function onTimeUpdate() {
-      if (v && v.currentTime >= CLIP_END) {
-        v.currentTime = CLIP_START;
-      }
-    }
-    v.addEventListener("loadedmetadata", onLoaded);
-    v.addEventListener("timeupdate", onTimeUpdate);
-    return () => {
-      v.removeEventListener("loadedmetadata", onLoaded);
-      v.removeEventListener("timeupdate", onTimeUpdate);
-    };
-  }, [shouldLoad]);
-
   return (
     <div ref={containerRef} className="relative aspect-[9/16] w-full overflow-hidden rounded-[3px] sm:aspect-[3/4]">
       {shouldLoad && (
         <video
-          ref={videoRef}
           className="h-full w-full object-cover"
           autoPlay
           muted
+          loop
           playsInline
           preload="auto"
           aria-hidden="true"
