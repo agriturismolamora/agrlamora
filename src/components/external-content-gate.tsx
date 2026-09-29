@@ -21,8 +21,8 @@ import type { Locale } from "@/lib/i18n";
    aprire le preferenze cookie.
 
    Primo uso reale: i widget bed-and-breakfast.it che si caricano da soli
-   ad ogni visita della pagina (offerte, last minute, punti di interesse,
-   badge recensioni — vedi bbit-widget-card.tsx, last-minute-section.tsx,
+   ad ogni visita della pagina (offerte, last minute, badge recensioni —
+   vedi bbit-widget-card.tsx, last-minute-section.tsx,
    recensioni-badge.tsx), categoria "functional". Il widget camere/
    richieste resta invece "necessary" (si attiva solo al click su un
    pulsante di prenotazione/richiesta, la stessa logica di questo file). */

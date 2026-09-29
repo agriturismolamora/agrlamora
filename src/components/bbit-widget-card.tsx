@@ -3,11 +3,11 @@ import { ExternalContentGate } from "@/components/external-content-gate";
 import { BBIT_OFFERS_FAMILY_CSS } from "@/lib/bbit-widget-css";
 import type { Locale } from "@/lib/i18n";
 
-/* Card di presentazione condivisa da offerte/last minute/punti di
-   interesse: stessa cornice cream-dim del resto del sito, il widget vero
-   e proprio vive dentro (mascherato via BBIT_OFFERS_FAMILY_CSS). Entrambi
-   gli usi attuali (offerte, punti di interesse) si caricano da soli ad
-   ogni visita della pagina, quindi restano dietro al consenso "Funzionali"
+/* Card di presentazione per i widget bed-and-breakfast.it: stessa cornice
+   cream-dim del resto del sito, il widget vero e proprio vive dentro
+   (mascherato via BBIT_OFFERS_FAMILY_CSS). Usi attuali: widget Offerte
+   nella pagina Offerte e nella pagina Villa Relax. Si carica da solo ad
+   ogni visita della pagina, quindi resta dietro al consenso "Funzionali"
    (ExternalContentGate, vedi external-content-gate.tsx). */
 export function BbitWidgetCard({
   label,

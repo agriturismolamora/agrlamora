@@ -19,11 +19,6 @@ export function bbitLastMinuteUrl(struttura: "lamora" | "villa"): string {
   return `https://www.bed-and-breakfast.it/scripts/widget/widget_lastminute.cfm?orientamento=largo&n=${n}&id=${id}&idregione=${REGIONE_ID}&nomebeb=${encodeURIComponent(nomebeb)}`;
 }
 
-export function bbitProssimitaUrl(struttura: "lamora" | "villa"): string {
-  const id = struttura === "villa" ? VILLA_ID : LA_MORA_ID;
-  return `https://www.bed-and-breakfast.it/scripts/widget/widget_prossimita.cfm?id=${id}&idregione=${REGIONE_ID}`;
-}
-
 export function bbitRichiesteUrl(struttura: "lamora" | "villa", locale: string): string {
   const id = struttura === "villa" ? VILLA_ID : LA_MORA_ID;
   return `https://www.bed-and-breakfast.it/scripts/widget/widget_richieste.cfm?id=${id}&IDRegione=${REGIONE_ID}&locale=${locale}`;

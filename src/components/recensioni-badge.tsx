@@ -124,7 +124,7 @@ function RecensioniBadgeWidget({ struttura, locale }: { struttura: "lamora" | "v
    wdgInit() interroga api.bed-and-breakfast.it direttamente dal browser
    del visitatore (non dal nostro server, a differenza delle recensioni
    Google): resta quindi dietro al consenso "Funzionali" (ExternalContentGate),
-   stesso trattamento dei widget offerte/last minute/punti di interesse.
+   stesso trattamento dei widget offerte/last minute.
    Senza consenso, nel footer scuro il riquadro standard del gate sarebbe
    fuori scala su ogni pagina: al suo posto un link compatto sulla stessa
    riga dell'etichetta, che apre le preferenze cookie.

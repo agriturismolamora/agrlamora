@@ -32,8 +32,9 @@ const TEXT: Record<Locale, { label: string; heading: string; note: string; byCar
 
 /* Distanze reali in home: una riga per luogo con km/minuti in auto da
    Google Maps (valori e metodo in data/places.ts) e pulsante Maps con
-   l'URL esatto del titolare. Componente nuovo e autonomo — NON il vecchio
-   PuntiInteresseSection (widget bed-and-breakfast.it rimosso in passato).
+   l'URL esatto del titolare. Componente nuovo e autonomo, non il vecchio
+   widget "punti di interesse" di bed-and-breakfast.it (tolto dalle pagine
+   in passato, componente eliminato dal repo il 29/09/2026).
    Righe testuali, non card fotografiche: frasi factual estraibili anche
    dai motori AI (nome luogo + km + minuti nella stessa riga). */
 export function DistancesSection({ locale }: { locale: Locale }) {
