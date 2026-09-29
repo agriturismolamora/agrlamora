@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: "%s | Agriturismo La Mora",
   },
   description:
-    "Agriturismo La Mora, à Assise : 5 appartements indépendants au cœur de la campagne ombrienne, piscine panoramique, petit-déjeuner bio et activités pour familles. À 7 km de l'aéroport de Pérouse.",
+    "Agriturismo La Mora, à Assise : 5 appartements indépendants au cœur de la campagne ombrienne, piscine panoramique, petit-déjeuner bio et activités pour familles. À environ 11 km de l'aéroport de Pérouse.",
   alternates: {
     canonical: "https://www.lamoraassisi.com/fr/",
     languages: {

@@ -44,7 +44,7 @@ export default function Home() {
       <ApartmentsCarousel locale="fr" />
       <StructureHighlights locale="fr" />
       <PriceComparisonSection locale="fr" />
-      <LastMinuteSection struttura="lamora" locale="fr" />
+      <LastMinuteSection struttura="lamora" locale="fr" fallbackToOffers />
       <RankingSection locale="fr" />
       <BlogSection locale="fr" />
       <OutdoorLife locale="fr" />

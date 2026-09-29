@@ -111,7 +111,7 @@ Modal all'apertura della homepage: foto reale + testo promo con CTA. Candidato n
 - **Coppie** → cofanetto "Due notti romantiche" come cross-sell
 - **Viaggi di lavoro** → vicinanza a Umbria Fiere
 - **Ospiti con animali** → redirect a Gemelli/Sagittario
-- **Mercati esteri prioritari:** Olanda, Belgio, Francia, Regno Unito → distanza aeroporto Perugia Sant'Egidio (7 km), noleggio auto in loco
+- **Mercati esteri prioritari:** Olanda, Belgio, Francia, Regno Unito → distanza aeroporto Perugia Sant'Egidio (11,4 km su strada — Google Maps, 29/09/2026), noleggio auto in loco
 
 ---
 

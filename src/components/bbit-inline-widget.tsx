@@ -59,6 +59,9 @@ ${css ?? ""}
       const doc = iframe?.contentDocument;
       const body = doc?.body;
       if (!body || cancelled) return;
+      // Può essere richiamata più volte (documento già pronto + "load"):
+      // un solo osservatore attivo, sempre sul body del documento corrente.
+      ro?.disconnect();
       const update = () => {
         setHeight(Math.max(minHeight, body.scrollHeight));
         onContent?.(body);
@@ -68,25 +71,26 @@ ${css ?? ""}
       ro.observe(body);
     }
 
-    // Il contenuto del widget arriva in modo asincrono (document.write parte
-    // dallo script, ma il body dell'iframe esiste già al load dell'iframe
-    // stesso): il load dell'iframe basta come innesco, ResizeObserver copre
-    // le variazioni successive (immagine caricata, contenuto aggiornato).
+    // Il contenuto del widget arriva col documento srcdoc: il suo "load"
+    // scatta dopo che lo script (sincrono, document.write) ha scritto
+    // tutto, quindi è l'innesco affidabile — ResizeObserver copre le
+    // variazioni successive (immagine caricata, contenuto aggiornato).
     //
-    // Verificato empiricamente: per un iframe con srcDoc il documento è
-    // spesso già "complete" nel momento in cui QUESTO effect gira (il
-    // parsing/srcdoc/document.write del widget può completare prima che
-    // React committi e schedulizzi l'effect) — l'evento "load" è già
-    // passato e non arriva mai un secondo "load", quindi l'ascoltatore da
-    // solo lascia l'iframe bloccato sulla sua minHeight statica e
-    // onContent non scatta mai. Controlliamo quindi subito readyState e
-    // agganciamo direttamente se il documento è già pronto, tenendo
-    // comunque il listener "load" come rete di sicurezza per il caso in
-    // cui il widget remoto sia ancora in caricamento.
-    if (iframe.contentDocument?.readyState === "complete") {
+    // Due casi reali, entrambi verificati nel browser:
+    // - il documento srcdoc può essere già "complete" quando QUESTO effect
+    //   gira (parsing e document.write finiti prima che React committi):
+    //   il suo "load" è già passato, quindi si aggancia subito;
+    // - più spesso (29/09/2026, pagina home dopo il consenso) al momento
+    //   del mount l'iframe contiene ancora il documento iniziale
+    //   about:blank, ANCH'ESSO "complete" ma vuoto: agganciarsi a quello
+    //   e saltare il listener lasciava onContent cieco per sempre (la
+    //   sezione Last Minute non si accorgeva mai di "nessun last minute").
+    // Quindi: aggancio immediato SOLO se il documento è davvero quello
+    // srcdoc, e listener "load" registrato comunque, in ogni caso.
+    iframe.addEventListener("load", attach);
+    const initialDoc = iframe.contentDocument;
+    if (initialDoc?.readyState === "complete" && initialDoc.URL === "about:srcdoc") {
       attach();
-    } else {
-      iframe.addEventListener("load", attach);
     }
     return () => {
       cancelled = true;

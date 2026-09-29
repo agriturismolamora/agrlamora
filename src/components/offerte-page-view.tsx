@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
@@ -44,19 +43,19 @@ export function getOfferteMetadata(locale: Locale) {
 
 const GIFT_CARDS: Record<Locale, { href: string; title: string; desc: string; img: string }[]> = {
   it: [
-    { href: "/offerte/cofanetti-regalo/", title: "Cofanetti regalo", desc: "Quattro pacchetti pensati per coppie e famiglie, con notti, colazioni e servizi già inclusi.", img: "/images/Nuova cartella/Due notti romantiche/due notti romantiche.jpg" },
+    { href: "/offerte/cofanetti-regalo/", title: "Cofanetti regalo", desc: "Quattro pacchetti pensati per coppie e famiglie, con notti, colazioni e servizi già inclusi.", img: "/images/piscina/piscina agriturismo la mora di notte.jpeg" },
     { href: "/offerte/smartbox/", title: "Smartbox", desc: "Hai già un cofanetto Smartbox? Ecco come registrarlo e prenotare il soggiorno.", img: "/images/struttura/immagine di una sala dell agriturismo.webp" },
   ],
   en: [
-    { href: "/offerte/cofanetti-regalo/", title: "Gift boxes", desc: "Four packages designed for couples and families, with nights, breakfast and services already included.", img: "/images/Nuova cartella/Due notti romantiche/due notti romantiche.jpg" },
+    { href: "/offerte/cofanetti-regalo/", title: "Gift boxes", desc: "Four packages designed for couples and families, with nights, breakfast and services already included.", img: "/images/piscina/piscina agriturismo la mora di notte.jpeg" },
     { href: "/offerte/smartbox/", title: "Smartbox", desc: "Already have a Smartbox voucher? Here's how to register it and book your stay.", img: "/images/struttura/immagine di una sala dell agriturismo.webp" },
   ],
   fr: [
-    { href: "/offerte/cofanetti-regalo/", title: "Coffrets cadeaux", desc: "Quatre formules pensées pour les couples et les familles, nuits, petit-déjeuner et services déjà inclus.", img: "/images/Nuova cartella/Due notti romantiche/due notti romantiche.jpg" },
+    { href: "/offerte/cofanetti-regalo/", title: "Coffrets cadeaux", desc: "Quatre formules pensées pour les couples et les familles, nuits, petit-déjeuner et services déjà inclus.", img: "/images/piscina/piscina agriturismo la mora di notte.jpeg" },
     { href: "/offerte/smartbox/", title: "Smartbox", desc: "Vous avez déjà un coffret Smartbox ? Voici comment l'enregistrer et réserver votre séjour.", img: "/images/struttura/immagine di una sala dell agriturismo.webp" },
   ],
   de: [
-    { href: "/offerte/cofanetti-regalo/", title: "Geschenkboxen", desc: "Vier Pakete für Paare und Familien, mit Nächten, Frühstück und Leistungen bereits inbegriffen.", img: "/images/Nuova cartella/Due notti romantiche/due notti romantiche.jpg" },
+    { href: "/offerte/cofanetti-regalo/", title: "Geschenkboxen", desc: "Vier Pakete für Paare und Familien, mit Nächten, Frühstück und Leistungen bereits inbegriffen.", img: "/images/piscina/piscina agriturismo la mora di notte.jpeg" },
     { href: "/offerte/smartbox/", title: "Smartbox", desc: "Haben Sie bereits eine Smartbox? So registrieren Sie sie und buchen Ihren Aufenthalt.", img: "/images/struttura/immagine di una sala dell agriturismo.webp" },
   ],
 };
@@ -432,25 +431,13 @@ export function OffertePageView({ locale }: { locale: Locale }) {
               <Reveal key={c.href} delay={i * 80}>
                 <Link href={withLocale(locale, c.href)} className="group block">
                   <div className="relative aspect-[16/10] overflow-hidden rounded-[3px]">
-                    {/* Le immagini dei cofanetti ("Nuova cartella") non sono foto
-                        della struttura: niente filigrana La Mora sopra. */}
-                    {c.img.startsWith("/images/Nuova cartella/") ? (
-                      <Image
-                        src={c.img}
-                        alt={c.title}
-                        fill
-                        sizes="(max-width: 640px) 100vw, 500px"
-                        className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                      />
-                    ) : (
-                      <WatermarkedImage
-                        src={c.img}
-                        alt={c.title}
-                        fill
-                        sizes="(max-width: 640px) 100vw, 500px"
-                        className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                      />
-                    )}
+                    <WatermarkedImage
+                      src={c.img}
+                      alt={c.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, 500px"
+                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    />
                   </div>
                   <h3 className="mt-4 font-display text-[20px] font-normal text-ink">{c.title}</h3>
                   <p className="mt-2 text-[13px] leading-[1.7] text-ink-soft">{c.desc}</p>

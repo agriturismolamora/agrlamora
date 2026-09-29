@@ -8,8 +8,7 @@ const LOGO_SRC = "/images/logo/logo-bianco-agriturismo-la-mora.png";
 
    Solo per le foto REALI della struttura e del territorio fotografato dal
    titolare. Esclusi di proposito: blog, loghi, mappe, foto di terzi con
-   credito (Wikimedia), foto Google/Facebook, ritratti, immagini dei
-   cofanetti.
+   credito (Wikimedia), foto Google/Facebook, ritratti.
 
    Con `fill` la filigrana si posiziona nello stesso contenitore relativo
    dell'immagine (che next/image già richiede); senza `fill` l'immagine

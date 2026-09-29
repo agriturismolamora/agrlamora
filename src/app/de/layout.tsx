@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: "%s | Agriturismo La Mora",
   },
   description:
-    "Agriturismo La Mora, in Assisi: 5 unabhängige Apartments inmitten der umbrischen Landschaft, Panorama-Pool, Bio-Frühstück und Aktivitäten für Familien. 7 km vom Flughafen Perugia entfernt.",
+    "Agriturismo La Mora, in Assisi: 5 unabhängige Apartments inmitten der umbrischen Landschaft, Panorama-Pool, Bio-Frühstück und Aktivitäten für Familien. Etwa 11 km vom Flughafen Perugia entfernt.",
   alternates: {
     canonical: "https://www.lamoraassisi.com/de/",
     languages: {

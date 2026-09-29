@@ -121,7 +121,7 @@ Cartelle immagini per tutti i 5 appartamenti già pronte in `public/images/siste
 - **Coppie** → cofanetto "Due notti romantiche" come cross-sell
 - **Viaggi di lavoro** → valorizzare vicinanza a Umbria Fiere
 - **Ospiti con animali** → redirect a Gemelli/Sagittario
-- **Mercati esteri prioritari:** Olanda, Belgio, Francia, Regno Unito → valorizzare distanza aeroporto Perugia Sant'Egidio (7 km), possibilità noleggio auto in loco
+- **Mercati esteri prioritari:** Olanda, Belgio, Francia, Regno Unito → valorizzare distanza aeroporto Perugia Sant'Egidio (11,4 km su strada, 11 min in auto — Google Maps, 29/09/2026; prima indicato 7 km, allineato al dato Google il 29/09/2026), possibilità noleggio auto in loco
 
 ---
 
