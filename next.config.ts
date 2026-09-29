@@ -13,6 +13,23 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
+  // Vecchi URL del sito precedente → nuove pagine, 308 permanenti per
+  // preservare l'equity SEO (PLAN.md, "Continuità SEO del dominio").
+  // Il redirect di dominio (agriturismoinassisi.it / apex → www.lamoraassisi.com)
+  // NON sta qui: è nelle impostazioni Domains di Vercel, gira prima
+  // dell'app e conserva il path, quindi un vecchio URL arriva qui già sul
+  // dominio nuovo e viene poi instradato da queste regole.
+  async redirects() {
+    return [
+      { source: "/appartamento-pesci/", destination: "/alloggi/pesci/", permanent: true },
+      { source: "/appartamento-acquario/", destination: "/alloggi/acquario/", permanent: true },
+      { source: "/appartamento-sagittario/", destination: "/alloggi/sagittario/", permanent: true },
+      { source: "/appartamento-gemelli/", destination: "/alloggi/gemelli/", permanent: true },
+      { source: "/appartamento-bilancia/", destination: "/alloggi/bilancia/", permanent: true },
+      { source: "/recensioni/", destination: "/#section-reviews", permanent: true },
+      { source: "/contatti/", destination: "/#section-map", permanent: true },
+    ];
+  },
   images: {
     // Next 16 limita di default la qualità a [75]: i quality={90}/{92} già
     // usati nel codice (blog-section.tsx, apartments-carousel.tsx) senza
