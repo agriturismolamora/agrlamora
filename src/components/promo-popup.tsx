@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import { useEffect, useState } from "react";
 import { HoverFill } from "@/components/hover-fill";
 import { StarRow } from "@/components/review-icons";
@@ -164,7 +164,7 @@ export function PromoPopup({ locale }: { locale: Locale }) {
         </button>
 
         <div className="relative h-52 w-full shrink-0 sm:h-auto sm:w-[48%]">
-          <Image
+          <WatermarkedImage
             src="/images/piscina/piscina agriturismo la mora di notte.jpeg"
             alt="Piscina di Agriturismo La Mora illuminata di sera"
             fill

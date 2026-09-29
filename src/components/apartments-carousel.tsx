@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import {
   useCallback,
@@ -481,7 +481,7 @@ function CardFace({
       onMouseLeave={onMouseLeave}
       onClick={onClick}
     >
-      <Image src={apt.image} alt={apt.alt} fill quality={92} sizes={sizes} className="object-cover" />
+      <WatermarkedImage src={apt.image} alt={apt.alt} fill quality={92} sizes={sizes} className="object-cover" />
 
       {apt.petFriendly && <PetBadge locale={locale} />}
 

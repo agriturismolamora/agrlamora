@@ -10,7 +10,7 @@ import { t } from "@/lib/dictionary";
 const HOST_NAME = "Paolo";
 const HOST_PHOTO = "/images/villa/paologestoreagriturismolamora.webp";
 
-const PHONE_DISPLAY = "075 8041164";
+const PHONE_DISPLAY = "393 4363917";
 const WHATSAPP_URL = "https://wa.me/393934363917";
 const EMAIL = "agriturismolamora@gmail.com";
 

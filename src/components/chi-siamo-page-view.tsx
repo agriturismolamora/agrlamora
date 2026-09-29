@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { getGoogleReviews } from "@/lib/google-reviews";
 import { Reveal } from "@/components/scroll-reveal";
@@ -237,7 +237,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
   return (
     <>
       <section className="relative flex h-[92vh] min-h-[600px] items-end overflow-hidden">
-        <Image
+        <WatermarkedImage
           src="/images/home/foto dell agriturismo dall alto.webp"
           alt="Agriturismo La Mora visto dall'alto, nella campagna umbra vicino Assisi"
           fill
@@ -264,7 +264,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
         <div className="mx-auto flex max-w-[720px] flex-col items-center px-6 text-center sm:px-10">
           <Reveal>
             <div className="relative aspect-[3/4] w-full max-w-[220px] overflow-hidden rounded-[3px] shadow-[0_35px_70px_-30px_rgba(0,0,0,0.6)]">
-              <Image
+              <WatermarkedImage
                 src="/images/home/esterno agriturismo la mora carretto e agriturismo.webp"
                 alt="Ingresso di Agriturismo La Mora con carretto d'epoca"
                 fill
@@ -286,7 +286,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
           <Reveal>
             <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2 sm:gap-16">
               <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-[3px] sm:aspect-[16/11]">
-                <Image
+                <WatermarkedImage
                   src="/images/struttura/foto vista alto agriturismo la mora assisi.webp"
                   alt="Il casale di Agriturismo La Mora visto dall'alto"
                   fill
@@ -314,7 +314,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
                 <p className="mt-5 max-w-[440px] text-[15px] leading-[1.85] text-ink-soft">{text.evoluzioneBody}</p>
               </div>
               <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-[3px] sm:order-2 sm:aspect-[16/11]">
-                <Image
+                <WatermarkedImage
                   src="/images/struttura/immagine di una sala dell agriturismo.webp"
                   alt="Interno arredato di uno degli spazi comuni di Agriturismo La Mora"
                   fill
@@ -338,7 +338,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
 
           <Reveal delay={100}>
             <div className="relative mt-10 aspect-[16/8] overflow-hidden rounded-[3px] sm:mt-14">
-              <Image
+              <WatermarkedImage
                 src="/images/home/foto della piscina agriturismo la mora.webp"
                 alt="Piscina panoramica di Agriturismo La Mora"
                 fill
@@ -352,7 +352,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
             {text.moments.map((moment, i) => (
               <Reveal key={moment.title} delay={i * 60}>
                 <div className="relative aspect-[3/4] overflow-hidden rounded-[3px]">
-                  <Image src={moment.img} alt={moment.alt} fill sizes="(max-width: 640px) 45vw, 260px" className="object-cover" />
+                  <WatermarkedImage src={moment.img} alt={moment.alt} fill sizes="(max-width: 640px) 45vw, 260px" className="object-cover" />
                 </div>
                 <h3 className="mt-3 font-display text-[15px] font-normal leading-[1.2] text-ink sm:text-[17px]">
                   {moment.title}
@@ -368,7 +368,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
         <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-14 px-6 sm:grid-cols-[1fr_1fr] sm:gap-20 sm:px-10">
           <Reveal>
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/piscina/esterno parco agriturismo con casetta.webp"
                 alt="Angolo di giardino di Agriturismo La Mora"
                 fill
@@ -391,7 +391,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
         <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-10 px-6 sm:grid-cols-2 sm:gap-16 sm:px-10">
           <Reveal>
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] sm:aspect-[16/11]">
-              <Image
+              <WatermarkedImage
                 src="/images/territorio/assisi/assisi con tramonto.jpg"
                 alt="Assisi al tramonto, vista dalla campagna umbra"
                 fill
@@ -426,7 +426,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
         <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-10 px-6 sm:px-10 lg:grid-cols-[440px_1fr] lg:gap-16">
           <Reveal>
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/struttura/foto dell esterno della struttura.webp"
                 alt="Agriturismo La Mora, gestito dalla famiglia Mazzoli"
                 fill

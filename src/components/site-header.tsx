@@ -107,8 +107,8 @@ const LANGUAGES: { code: Locale; label: string }[] = [
   { code: "de", label: "DE" },
 ];
 
-const PHONE_DISPLAY = "075 8041164";
-const PHONE_TEL = "tel:+390758041164";
+const PHONE_DISPLAY = "393 4363917";
+const PHONE_TEL = "tel:+393934363917";
 const WHATSAPP_HREF = "https://wa.me/393934363917";
 const WHATSAPP_DISPLAY = "393 4363917";
 const FACEBOOK_URL = "https://www.facebook.com/p/Agriturismo-la-Mora-di-Assisi-100066662774182/";
@@ -356,10 +356,9 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           </div>
           <div className="flex min-w-0 items-center justify-end gap-4 font-medium uppercase tracking-[0.02em] sm:tracking-[0.04em]">
             <span className="hidden text-cream/60 md:inline">{t("nav", "domande", locale)}</span>
-            {/* Un solo contatto qui, WhatsApp (richiesta esplicita): prima
-                c'era anche "Chiama 075 8041164", ma è un fisso — non riceve
-                WhatsApp. Il fisso resta nel menu, nel footer, nella sezione
-                mappa e nel "chiama invece" della booking bar. */}
+            {/* Un solo contatto qui, WhatsApp (richiesta esplicita). Il
+                vecchio numero fisso è dismesso: l'unico numero della
+                struttura è il cellulare 393 4363917 (chiamate e WhatsApp). */}
             <a
               href={WHATSAPP_HREF}
               target="_blank"

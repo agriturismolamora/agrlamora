@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -9,7 +9,8 @@ import { HoverFill } from "@/components/hover-fill";
 import { ZodiacMark } from "@/components/zodiac-mark";
 import { AvailabilityBox } from "@/components/availability-box";
 import { ApartmentGallery } from "@/components/apartment-gallery";
-import { AMENITY_ICON_BY_LABEL, MirrorIcon } from "@/components/amenity-icons";
+import { AMENITY_ICON_BY_LABEL, MirrorIcon, PawIcon, WashingMachineIcon } from "@/components/amenity-icons";
+import { ScrollDog } from "@/components/scroll-dog";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 
@@ -22,6 +23,47 @@ function WhatsAppIcon() {
 }
 
 type Params = { slug: string };
+
+/* Quinta voce della fascia dati, solo per Gemelli e Sagittario (le due
+   unità pet friendly): zampetta + dicitura. */
+const PET_TEXT: Record<Locale, { label: string; value: string }> = {
+  it: { label: "Animali", value: "Pet friendly" },
+  en: { label: "Pets", value: "Pet friendly" },
+  fr: { label: "Animaux", value: "Acceptés" },
+  de: { label: "Haustiere", value: "Willkommen" },
+};
+
+/* Lavatrice in comune: servizio della struttura (non dell'unità) con una
+   sezione sua, come piscina e colazione, invece di una riga nella griglia
+   dotazioni — richiesta del titolare (29/09/2026). Nessuna foto reale
+   disponibile in public/, quindi icona e testo, niente placeholder. Solo i
+   due fatti confermati: in comune, uso incluso. */
+const LAUNDRY_TEXT: Record<Locale, { label: string; heading: string; body: string; pill: string }> = {
+  it: {
+    label: "Servizio lavanderia",
+    heading: "Lavatrice in comune, inclusa nel soggiorno.",
+    body: "Per chi si ferma più giorni o viaggia con bambini, in struttura c'è una lavatrice in comune a disposizione degli ospiti di tutti e cinque gli appartamenti. L'uso è incluso, senza costi aggiuntivi.",
+    pill: "Incluso",
+  },
+  en: {
+    label: "Laundry",
+    heading: "Shared washing machine, included in your stay.",
+    body: "For longer stays or trips with children, a shared washing machine is available on the property to guests of all five apartments. Its use is included, at no extra cost.",
+    pill: "Included",
+  },
+  fr: {
+    label: "Laverie",
+    heading: "Lave-linge commun, inclus dans le séjour.",
+    body: "Pour les longs séjours ou les voyages avec enfants, un lave-linge commun est à la disposition des hôtes des cinq appartements. Son utilisation est incluse, sans frais supplémentaires.",
+    pill: "Inclus",
+  },
+  de: {
+    label: "Waschmaschine",
+    heading: "Gemeinsame Waschmaschine, im Aufenthalt inbegriffen.",
+    body: "Für längere Aufenthalte oder Reisen mit Kindern steht den Gästen aller fünf Apartments eine gemeinsame Waschmaschine zur Verfügung. Die Nutzung ist inbegriffen, ohne Zusatzkosten.",
+    pill: "Inklusive",
+  },
+};
 
 const TEXT: Record<
   Locale,
@@ -195,10 +237,11 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {apt.petFriendly && <ScrollDog />}
 
       {/* 1. Hero immersiva */}
       <section className="relative flex h-[78vh] min-h-[520px] items-end overflow-hidden">
-        <Image src={hero.src} alt={hero.alt} fill priority sizes="100vw" className="object-cover" />
+        <WatermarkedImage src={hero.src} alt={hero.alt} fill priority sizes="100vw" className="object-cover" />
         <div
           aria-hidden="true"
           className="absolute inset-0"
@@ -234,7 +277,9 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
 
       {/* 2. Fascia dati essenziali */}
       <section className="border-b border-ink/10 bg-cream-dim">
-        <div className="mx-auto grid max-w-[1200px] grid-cols-2 gap-6 px-6 py-7 text-center sm:grid-cols-4 sm:px-10">
+        <div
+          className={`mx-auto grid max-w-[1200px] grid-cols-2 gap-6 px-6 py-7 text-center sm:px-10 ${apt.petFriendly ? "sm:grid-cols-5" : "sm:grid-cols-4"}`}
+        >
           <div>
             <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft">{t.ospiti}</dt>
             <dd className="mt-1 font-display text-2xl text-ink">{apt.maxGuests}</dd>
@@ -251,6 +296,17 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
             <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft">{t.bagni}</dt>
             <dd className="mt-1 font-display text-2xl text-ink">{apt.bathrooms}</dd>
           </div>
+          {apt.petFriendly && (
+            <div className="col-span-2 sm:col-span-1">
+              <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft">{PET_TEXT[locale].label}</dt>
+              <dd className="mt-1 inline-flex items-center gap-2 font-display text-2xl text-ink">
+                <span className="text-olive-700 [&_svg]:h-6 [&_svg]:w-6">
+                  <PawIcon />
+                </span>
+                {PET_TEXT[locale].value}
+              </dd>
+            </div>
+          )}
         </div>
       </section>
 
@@ -298,6 +354,34 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
                   </div>
                 );
               })}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 4b. Lavatrice in comune — sezione dedicata */}
+      <section aria-labelledby="laundry-heading" className="bg-olive-950 py-16 text-cream sm:py-20">
+        <div className="mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-10 px-6 sm:px-10 md:grid-cols-[auto_1fr] md:gap-16">
+          <Reveal>
+            <div className="flex h-28 w-28 items-center justify-center rounded-full border border-cream/20 text-gold sm:h-36 sm:w-36">
+              <WashingMachineIcon size={56} />
+            </div>
+          </Reveal>
+          <Reveal delay={80}>
+            <div className="max-w-[620px]">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cream/70">{LAUNDRY_TEXT[locale].label}</span>
+                <span className="rounded-full border border-gold/50 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-gold">
+                  {LAUNDRY_TEXT[locale].pill}
+                </span>
+              </div>
+              <h2
+                id="laundry-heading"
+                className="mt-4 font-display text-[clamp(26px,3vw,36px)] font-normal leading-[1.2] text-cream [text-wrap:balance]"
+              >
+                {LAUNDRY_TEXT[locale].heading}
+              </h2>
+              <p className="mt-5 text-[15px] leading-[1.8] text-cream/75">{LAUNDRY_TEXT[locale].body}</p>
             </div>
           </Reveal>
         </div>

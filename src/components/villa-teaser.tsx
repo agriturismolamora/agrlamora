@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import { Reveal } from "@/components/scroll-reveal";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
@@ -45,7 +45,7 @@ export function VillaTeaser({ locale }: { locale: Locale }) {
     <section aria-labelledby="villa-teaser-heading" className="bg-cream-dim py-20 sm:py-24">
       <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-10 px-6 sm:grid-cols-2 sm:gap-16 sm:px-10">
         <Reveal className="relative aspect-[4/5] overflow-hidden rounded-[3px] sm:aspect-[16/11]">
-          <Image
+          <WatermarkedImage
             src="/images/villa/vista esterno della villa.webp"
             alt="Villa Relax, villa indipendente con piscina privata vicino ad Assisi"
             fill

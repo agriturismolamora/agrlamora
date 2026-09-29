@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { PinnedHold } from "@/components/pinned-hold";
@@ -52,7 +52,7 @@ export function StructureHighlights({ locale }: { locale: Locale }) {
               coerente con "diventare più orizzontale" richiesto. */}
           <div className="relative order-1 aspect-[16/10] overflow-hidden lg:order-1 lg:aspect-auto lg:min-h-[560px]">
             <Reveal className="absolute inset-0" as="div">
-              <Image
+              <WatermarkedImage
                 src={HERO_IMAGE}
                 alt={HERO_ALT}
                 fill

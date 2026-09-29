@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
@@ -240,7 +240,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
   return (
     <>
       <section className="relative flex h-[92vh] min-h-[600px] items-end overflow-hidden">
-        <Image
+        <WatermarkedImage
           src="/images/piscina/piscina agriturismo la mora.webp"
           alt="Piscina panoramica di Agriturismo La Mora"
           fill
@@ -267,7 +267,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
         <div className="mx-auto flex max-w-[720px] flex-col items-center px-6 text-center sm:px-10">
           <Reveal>
             <div className="relative aspect-[3/4] w-full max-w-[220px] overflow-hidden rounded-[3px] shadow-[0_35px_70px_-30px_rgba(0,0,0,0.6)]">
-              <Image
+              <WatermarkedImage
                 src="/images/piscina/foto esterno prato verde con panchina in legno e campo da calcio.webp"
                 alt="Prato verde di Agriturismo La Mora"
                 fill
@@ -288,7 +288,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
         <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-12 px-6 sm:grid-cols-2 sm:gap-16 sm:px-10">
           <Reveal>
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] sm:aspect-[4/5]">
-              <Image
+              <WatermarkedImage
                 src="/images/servizi-extra/e-bike/immagine di due persone con ebike.webp"
                 alt="Noleggio e-bike di Agriturismo La Mora"
                 fill
@@ -355,7 +355,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
           </Reveal>
           <Reveal delay={100} className="order-1 sm:order-2">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/piscina/piscina agriturismo la mora lato.jpeg"
                 alt="Piscina panoramica di Agriturismo La Mora, vista laterale"
                 fill
@@ -371,7 +371,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
         <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-12 px-6 sm:grid-cols-2 sm:gap-16 sm:px-10">
           <Reveal>
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/piscina/esterno parco agriturismo con scivolo per bambini.jpg"
                 alt="Parco giochi per bambini di Agriturismo La Mora"
                 fill
@@ -391,7 +391,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
       </section>
 
       <section className="relative flex h-[80vh] min-h-[520px] items-center overflow-hidden">
-        <Image
+        <WatermarkedImage
           src="/images/servizi-extra/equitazione/foto di un cavallo agriturismo la mora.jpeg"
           alt="Uno dei cavalli dell'azienda agricola di Agriturismo La Mora"
           fill
@@ -438,7 +438,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
           </Reveal>
           <Reveal delay={100} className="order-1 sm:order-2">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/territorio/assisi/eremo delle carceri assisi.jpg"
                 alt="Eremo delle Carceri sul Monte Subasio, vicino Assisi"
                 fill
@@ -451,7 +451,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
       </section>
 
       <section className="relative flex h-[76vh] min-h-[480px] items-center justify-center overflow-hidden">
-        <Image
+        <WatermarkedImage
           src="/images/piscina/piscina agriturismo la mora di notte.jpeg"
           alt="Piscina di Agriturismo La Mora illuminata di sera"
           fill

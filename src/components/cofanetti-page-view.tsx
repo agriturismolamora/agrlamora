@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
@@ -174,7 +175,7 @@ export function CofanettiPageView({ locale }: { locale: Locale }) {
   return (
     <>
       <section className="relative flex h-[86vh] min-h-[560px] items-end overflow-hidden">
-        <Image
+        <WatermarkedImage
           src="/images/home/foto della piscina agriturismo la mora.webp"
           alt="Piscina di Agriturismo La Mora"
           fill
@@ -254,7 +255,7 @@ export function CofanettiPageView({ locale }: { locale: Locale }) {
       ))}
 
       <section className="relative flex h-[64vh] min-h-[440px] items-center justify-center overflow-hidden">
-        <Image
+        <WatermarkedImage
           src="/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg"
           alt="Basilica di Santa Maria degli Angeli, vicino Assisi"
           fill

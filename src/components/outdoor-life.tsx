@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import type { Locale } from "@/lib/i18n";
@@ -69,7 +69,7 @@ export function OutdoorLife({ locale }: { locale: Locale }) {
   return (
     <section aria-labelledby="outdoor-life-heading" className="relative bg-cream">
       <div className="relative h-[62vh] min-h-[380px] w-full overflow-hidden sm:h-[72vh]">
-        <Image
+        <WatermarkedImage
           src="/images/piscina/foto piscina di giorno.webp"
           alt="La piscina panoramica di Agriturismo La Mora vista di giorno"
           fill

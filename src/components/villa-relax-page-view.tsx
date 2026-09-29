@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import { StarRow } from "@/components/review-icons";
@@ -8,6 +9,7 @@ import { NewsletterSection } from "@/components/newsletter-section";
 import { CertificationsMarquee } from "@/components/certifications-marquee";
 import { VillaBookingBar } from "@/components/villa-booking-bar";
 import { LastMinuteSection } from "@/components/last-minute-section";
+import { LocationMap } from "@/components/location-map";
 import { BbitWidgetCard } from "@/components/bbit-widget-card";
 import { bbitOfferteUrl } from "@/lib/bbit-widget-urls";
 import {
@@ -140,7 +142,7 @@ const jsonLd = (locale: Locale, maxGuests: number) => ({
   description: "Villa indipendente con piscina privata ad Assisi, fino a 16 ospiti su 6 camere da letto.",
   image: "https://www.lamoraassisi.com/images/villa/villa%20esterna.webp",
   url: `https://www.lamoraassisi.com${withLocale(locale, "/villa-relax-assisi/")}`,
-  telephone: "+39 075 8041164",
+  telephone: "+39 393 4363917",
   email: "agriturismolamora@gmail.com",
   address: {
     "@type": "PostalAddress",
@@ -365,7 +367,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd(locale, VILLA_MAX_GUESTS)) }} />
 
       <section className="relative flex h-[90vh] min-h-[580px] items-end overflow-hidden">
-        <Image
+        <WatermarkedImage
           src="/images/villa/vista esterno della villa.webp"
           alt="Villa Relax, villa indipendente nella campagna di Assisi"
           fill
@@ -401,7 +403,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
           <Reveal>
             <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2 sm:gap-16">
               <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-[3px] sm:aspect-[16/11]">
-                <Image
+                <WatermarkedImage
                   src="/images/villa/villa esterno.webp"
                   alt="Esterno di Villa Relax, arredata in stile classico"
                   fill
@@ -429,7 +431,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
                 <p className="mt-5 max-w-[440px] text-[15px] leading-[1.85] text-ink-soft">{text.spaziBody}</p>
               </div>
               <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-[3px] sm:order-2 sm:aspect-[16/11]">
-                <Image
+                <WatermarkedImage
                   src="/images/villa/sala da pranzo villa interno.webp"
                   alt="Sala da pranzo interna di Villa Relax"
                   fill
@@ -520,7 +522,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
         <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-14 px-6 sm:grid-cols-2 sm:gap-20 sm:px-10">
           <Reveal>
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/villa/piscina esterna della villa.webp"
                 alt="Piscina privata di Villa Relax"
                 fill
@@ -673,6 +675,9 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
         </div>
       </section>
 
+      {/* Dove siamo: stessa sezione (e stessa posizione, in fondo prima di
+          newsletter/footer) della home La Mora, con dati di Villa Relax. */}
+      <LocationMap locale={locale} struttura="villa" />
 
       <NewsletterSection locale={locale} />
       <CertificationsMarquee locale={locale} />

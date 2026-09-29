@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import type { Locale } from "@/lib/i18n";
@@ -116,7 +116,7 @@ export function SustainabilitySection({ locale }: { locale: Locale }) {
         <div className="mt-12 grid grid-cols-1 gap-6 sm:mt-14 md:grid-cols-2">
           <Reveal>
             <div className="relative aspect-[4/3] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/servizi-extra/e-bike/immagine di due persone con ebike.webp"
                 alt="Ospiti in e-bike sulla strada di campagna vicino ad Agriturismo La Mora"
                 fill
@@ -139,7 +139,7 @@ export function SustainabilitySection({ locale }: { locale: Locale }) {
 
           <Reveal delay={120}>
             <div className="relative aspect-[4/3] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/servizi-extra/ricarica-elettrica/ricarica elettrica macchina.jpg"
                 alt="Colonnina di ricarica per auto elettriche nel parcheggio di Agriturismo La Mora"
                 fill

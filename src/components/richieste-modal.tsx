@@ -51,6 +51,11 @@ type Text = {
   msgIntro: (struttura: string) => string;
   msgNights: (n: number) => string;
   msgAnimale: string;
+  colonnina: string;
+  ebike: string;
+  ebikeDurata: string;
+  ebikeOpzioni: [string, string, string, string];
+  si: string;
 };
 
 const TEXT: Record<Locale, Text> = {
@@ -84,6 +89,11 @@ const TEXT: Record<Locale, Text> = {
     msgIntro: (s) => `Ciao! Vi scrivo dal sito con una richiesta per ${s}.`,
     msgNights: (n) => `${n} ${n === 1 ? "notte" : "notti"}`,
     msgAnimale: "Animale",
+    colonnina: "Colonnina di ricarica elettrica (22 kW)",
+    ebike: "Noleggio e-bike",
+    ebikeDurata: "Durata noleggio",
+    ebikeOpzioni: ["Mezza giornata — €15", "Giornata intera — €25", "Weekend — €40", "7 giorni — €90"],
+    si: "Sì",
   },
   en: {
     fab: "Request",
@@ -115,6 +125,11 @@ const TEXT: Record<Locale, Text> = {
     msgIntro: (s) => `Hi! I'm writing from the website with a request for ${s}.`,
     msgNights: (n) => `${n} ${n === 1 ? "night" : "nights"}`,
     msgAnimale: "Pet",
+    colonnina: "EV charging point (22 kW)",
+    ebike: "E-bike rental",
+    ebikeDurata: "Rental length",
+    ebikeOpzioni: ["Half day — €15", "Full day — €25", "Weekend — €40", "7 days — €90"],
+    si: "Yes",
   },
   fr: {
     fab: "Demande",
@@ -146,6 +161,11 @@ const TEXT: Record<Locale, Text> = {
     msgIntro: (s) => `Bonjour ! Je vous écris depuis le site avec une demande pour ${s}.`,
     msgNights: (n) => `${n} ${n === 1 ? "nuit" : "nuits"}`,
     msgAnimale: "Animal",
+    colonnina: "Borne de recharge électrique (22 kW)",
+    ebike: "Location de vélo électrique",
+    ebikeDurata: "Durée de location",
+    ebikeOpzioni: ["Demi-journée — 15 €", "Journée entière — 25 €", "Week-end — 40 €", "7 jours — 90 €"],
+    si: "Oui",
   },
   de: {
     fab: "Anfrage",
@@ -177,6 +197,11 @@ const TEXT: Record<Locale, Text> = {
     msgIntro: (s) => `Hallo! Ich schreibe Ihnen über die Website mit einer Anfrage für ${s}.`,
     msgNights: (n) => `${n} ${n === 1 ? "Nacht" : "Nächte"}`,
     msgAnimale: "Haustier",
+    colonnina: "E-Ladestation (22 kW)",
+    ebike: "E-Bike-Verleih",
+    ebikeDurata: "Mietdauer",
+    ebikeOpzioni: ["Halber Tag — 15 €", "Ganzer Tag — 25 €", "Wochenende — 40 €", "7 Tage — 90 €"],
+    si: "Ja",
   },
 };
 
@@ -304,6 +329,9 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
   const [pets, setPets] = useState(false);
   const [petSize, setPetSize] = useState("");
   const [petType, setPetType] = useState("");
+  const [evCharger, setEvCharger] = useState(false);
+  const [ebike, setEbike] = useState(false);
+  const [ebikeOption, setEbikeOption] = useState("");
   const [message, setMessage] = useState("");
   const [sentUrl, setSentUrl] = useState<string | null>(null);
   const today = useToday();
@@ -342,6 +370,8 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
     }
     if (preference) lines.push(`${isVilla ? text.soluzione : text.appartamento}: ${preference}`);
     if (pets) lines.push(`${text.msgAnimale}: ${petType} (${text.taglia}: ${petSize})`);
+    if (!isVilla && evCharger) lines.push(`${text.colonnina}: ${text.si}`);
+    if (!isVilla && ebike) lines.push(`${text.ebike}: ${ebikeOption}`);
     if (message.trim()) lines.push("", message.trim());
     return lines.join("\n");
   }
@@ -518,6 +548,41 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
           </div>
         )}
       </div>
+
+      {/* Extra di La Mora (PROJECT-BRIEF.md sezioni 2-3), non di Villa
+          Relax: colonnina da 22 kW da segnalare subito (serve a Paolo per
+          organizzarsi) e noleggio e-bike col listino ufficiale. Entrambi
+          facoltativi; la durata è obbligatoria solo se si sceglie l'e-bike. */}
+      {!isVilla && (
+        <div className="space-y-3 rounded-[3px] border border-ink/10 bg-white px-4 py-3">
+          <label className="flex items-center gap-2.5 text-[14px] text-ink">
+            <input type="checkbox" checked={evCharger} onChange={(e) => setEvCharger(e.target.checked)} className="h-4 w-4 accent-raspberry" />
+            {text.colonnina}
+          </label>
+          <label className="flex items-center gap-2.5 text-[14px] text-ink">
+            <input type="checkbox" checked={ebike} onChange={(e) => setEbike(e.target.checked)} className="h-4 w-4 accent-raspberry" />
+            {text.ebike}
+          </label>
+          {ebike && (
+            <label className="flex flex-col gap-1">
+              <span className="text-[9px] font-semibold uppercase tracking-[0.06em] text-ink-soft">
+                {text.ebikeDurata}
+                <span aria-hidden="true"> *</span>
+              </span>
+              <select required value={ebikeOption} onChange={(e) => setEbikeOption(e.target.value)} className="w-full rounded-[3px] border border-ink/15 bg-white px-2 py-1.5 text-[15px] text-ink outline-none focus:border-ink/40">
+                <option value="" disabled>
+                  —
+                </option>
+                {text.ebikeOpzioni.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
+        </div>
+      )}
 
       <label className="flex flex-col gap-1 rounded-[3px] border border-ink/10 bg-white px-4 py-2.5 transition-colors focus-within:border-ink/40">
         <span className="text-[9px] font-semibold uppercase tracking-[0.06em] text-ink-soft">{text.messaggio}</span>

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/i18n";
 
@@ -144,7 +144,7 @@ export function ImmersiveStory({ locale }: { locale: Locale }) {
     >
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
         {/* Livello 0: fotografia. */}
-        <Image
+        <WatermarkedImage
           src="/images/territorio/assisi/assisi con tramonto.jpg"
           alt="Assisi al tramonto, vista dalla campagna umbra intorno ad Agriturismo La Mora"
           fill

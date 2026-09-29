@@ -142,7 +142,47 @@ export function LeashIcon() {
   );
 }
 
+export function ParkingIcon() {
+  return (
+    <Base>
+      <rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M10 16.5v-9h2.8a2.6 2.6 0 0 1 0 5.2H10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </Base>
+  );
+}
+
+/* Barbecue: coppa del braciere con griglia + due gambe, fumo stilizzato. */
+export function BarbecueIcon() {
+  return (
+    <Base>
+      <path d="M4.5 10.5h15a7.5 7.5 0 0 1-15 0Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M9 17.2 7.5 21M15 17.2l1.5 3.8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M10 7.5c-.8-1 .8-2 0-3M14 7.5c-.8-1 .8-2 0-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    </Base>
+  );
+}
+
+export function WashingMachineIcon({ size = 20 }: { size?: number }) {
+  return (
+    <Base width={size} height={size}>
+      <rect x="4.5" y="3" width="15" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M4.5 7h15" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="12" cy="14" r="4" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M9.8 14.6c.8-.8 1.6-.8 2.2 0s1.4.8 2.2 0" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+      <circle cx="7.5" cy="5" r=".7" fill="currentColor" />
+    </Base>
+  );
+}
+
 export const AMENITY_ICON_BY_LABEL: Record<string, () => React.JSX.Element> = {
+  "Parcheggio gratuito all'interno della struttura": ParkingIcon,
+  "Barbecue in comune, incluso": BarbecueIcon,
+  "Free parking on the property": ParkingIcon,
+  "Shared barbecue, included": BarbecueIcon,
+  "Parking gratuit dans la propriété": ParkingIcon,
+  "Barbecue commun, inclus": BarbecueIcon,
+  "Kostenloser Parkplatz auf dem Gelände": ParkingIcon,
+  "Gemeinsamer Grill, inklusive": BarbecueIcon,
   // Italiano
   "TV con canali satellitari": TvIcon,
   "Cucina attrezzata": KitchenIcon,

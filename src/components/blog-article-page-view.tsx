@@ -7,6 +7,9 @@ import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { findMentionedPlaces } from "@/data/places";
+import { MapsButton } from "@/components/maps-button";
+import type { BlogPost } from "@/data/blog-posts";
 
 type Params = { slug: string };
 
@@ -26,12 +29,29 @@ export async function blogArticleMetadata(locale: Locale, params: Promise<Params
   };
 }
 
-const TEXT: Record<Locale, { allArticles: string; otherArticles: string }> = {
-  it: { allArticles: "Tutti gli articoli", otherArticles: "Altri articoli" },
-  en: { allArticles: "All articles", otherArticles: "More articles" },
-  fr: { allArticles: "Tous les articles", otherArticles: "Autres articles" },
-  de: { allArticles: "Alle Artikel", otherArticles: "Weitere Artikel" },
+const TEXT: Record<Locale, { allArticles: string; otherArticles: string; placesMentioned: string }> = {
+  it: { allArticles: "Tutti gli articoli", otherArticles: "Altri articoli", placesMentioned: "Luoghi citati nell'articolo" },
+  en: { allArticles: "All articles", otherArticles: "More articles", placesMentioned: "Places mentioned in this article" },
+  fr: { allArticles: "Tous les articles", otherArticles: "Autres articles", placesMentioned: "Lieux cités dans l'article" },
+  de: { allArticles: "Alle Artikel", otherArticles: "Weitere Artikel", placesMentioned: "Im Artikel erwähnte Orte" },
 };
+
+/* Tutto il testo visibile dell'articolo, per riconoscere quali luoghi di
+   data/places.ts vi sono nominati: i pulsanti Maps compaiono solo per
+   quelli, senza doverli elencare a mano articolo per articolo (e in 4
+   lingue) — un articolo nuovo che nomina Perugia o Umbria Fiere li
+   riceve da solo. */
+function articleText(post: BlogPost): string {
+  const parts: string[] = [post.title, post.intro, post.finalCtaHeading, post.finalCtaBody];
+  for (const block of post.content) {
+    if (block.type === "p" || block.type === "h2" || block.type === "h3") parts.push(block.text);
+    else if (block.type === "list") parts.push(...block.items);
+    else if (block.type === "facts") parts.push(...block.items.flatMap((f) => [f.label, f.value]));
+    else if (block.type === "image" && block.caption) parts.push(block.caption);
+    else if (block.type === "cta") parts.push(block.heading, block.body ?? "");
+  }
+  return parts.join(" · ");
+}
 
 /* Blocco CTA riusato per iniziale/centrale/finale: stesso componente,
    varianti solo di colore (oro per iniziale/centrale, raspberry per la
@@ -88,6 +108,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
   const index = posts.findIndex((p) => p.slug === slug);
   if (index === -1) notFound();
   const post = posts[index];
+  const mentionedPlaces = findMentionedPlaces(articleText(post));
   const related = posts.filter((_, i) => i !== index).slice(0, 3);
 
   const jsonLd = {
@@ -228,6 +249,19 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
               }
             })}
           </div>
+
+          {mentionedPlaces.length > 0 && (
+            <Reveal>
+              <aside aria-label={text.placesMentioned} className="mt-10 rounded-[6px] border border-ink/10 bg-cream-dim px-6 py-5">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-olive-950">{text.placesMentioned}</span>
+                <div className="mt-3 flex flex-wrap gap-2.5">
+                  {mentionedPlaces.map((place) => (
+                    <MapsButton key={place.key} place={place} locale={locale} showName />
+                  ))}
+                </div>
+              </aside>
+            </Reveal>
+          )}
 
           <Reveal delay={80}>
             <ArticleCta

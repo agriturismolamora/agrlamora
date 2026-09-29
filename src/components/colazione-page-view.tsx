@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
@@ -212,7 +213,7 @@ export function ColazionePageView({ locale }: { locale: Locale }) {
   return (
     <>
       <section className="relative flex h-[86vh] min-h-[560px] items-end overflow-hidden">
-        <Image
+        <WatermarkedImage
           src="/images/colazione/colazione bio agriturismo la mora.webp"
           alt="Colazione biologica servita ad Agriturismo La Mora"
           fill
@@ -241,7 +242,7 @@ export function ColazionePageView({ locale }: { locale: Locale }) {
         <div className="mx-auto flex max-w-[720px] flex-col items-center px-6 text-center sm:px-10">
           <Reveal>
             <div className="relative aspect-[3/4] w-full max-w-[220px] overflow-hidden rounded-[3px] shadow-[0_35px_70px_-30px_rgba(0,0,0,0.6)]">
-              <Image
+              <WatermarkedImage
                 src="/images/colazione/sala con colazione pronta agriturismo.webp"
                 alt="Sala comune con la colazione pronta ad Agriturismo La Mora"
                 fill
@@ -263,7 +264,7 @@ export function ColazionePageView({ locale }: { locale: Locale }) {
           <Reveal>
             <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2 sm:gap-16">
               <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-[3px] sm:aspect-[16/11]">
-                <Image
+                <WatermarkedImage
                   src="/images/colazione/colazione bio agriturismo la mora.webp"
                   alt="Colazione biologica servita ad Agriturismo La Mora"
                   fill
@@ -302,7 +303,7 @@ export function ColazionePageView({ locale }: { locale: Locale }) {
                 </p>
               </div>
               <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-[3px] sm:order-2 sm:aspect-[16/11]">
-                <Image
+                <WatermarkedImage
                   src="/images/colazione/sala con colazione pronta agriturismo.webp"
                   alt="Sala comune con la colazione pronta ad Agriturismo La Mora"
                   fill
@@ -376,7 +377,7 @@ export function ColazionePageView({ locale }: { locale: Locale }) {
       </section>
 
       <section className="relative flex h-[64vh] min-h-[440px] items-center justify-center overflow-hidden">
-        <Image
+        <WatermarkedImage
           src="/images/territorio/assisi/assisi con tramonto.jpg"
           alt="Assisi al tramonto, vista dalla campagna umbra"
           fill

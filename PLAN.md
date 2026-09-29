@@ -29,7 +29,7 @@ Il riferimento è un hotel di lusso sul mare (palette blu/acqua, atmosfera urban
 Il riferimento è composto da 10 blocchi in sequenza (uno per screenshot). Ogni blocco qui sotto indica cosa mostra il riferimento e il suo equivalente per La Mora.
 
 ### Elementi persistenti (presenti in ogni blocco)
-- **Header sticky**: trasparente su hero, diventa solido allo scroll. Logo La Mora (brand identity invariata) + nav: `Home · Chi Siamo · Territorio · Alloggi ▾ · Colazione Bio · Attività · Ottavo Centenario San Francesco · Recensioni · Offerte ▾ · Contatti` + selettore lingua IT/EN/FR/DE + menu hamburger mobile. Utility bar superiore con social icon + "Domande? Chiama / Scrivi su WhatsApp" (075 8041164 · 393 4363917 · WhatsApp).
+- **Header sticky**: trasparente su hero, diventa solido allo scroll. Logo La Mora (brand identity invariata) + nav: `Home · Chi Siamo · Territorio · Alloggi ▾ · Colazione Bio · Attività · Ottavo Centenario San Francesco · Recensioni · Offerte ▾ · Contatti` + selettore lingua IT/EN/FR/DE + menu hamburger mobile. Utility bar superiore con social icon + "Domande? Chiama / Scrivi su WhatsApp" (393 4363917 · WhatsApp).
   - Dropdown **Alloggi**: Pesci · Acquario · Sagittario · Gemelli · Bilancia
   - Dropdown **Offerte**: Smartbox · Cofanetti regalo
 - **Booking bar sticky in basso**: Arrivo · Partenza · Adulti · Bambini · Cerca disponibilità + pulsante chiamata rapida (il sito attuale ha già questo pattern — qui va solo elevato nello stile, coerente col riferimento)
@@ -57,7 +57,7 @@ Eyebrow "DAL BLOG DE LA MORA" (o simile), H2 tagline, CTA "TUTTE LE IDEE" in alt
 Il blocco "En Directo / Live Cam" del riferimento non è pertinente (La Mora non ha una webcam): riusa questo stesso schema visivo per il **Territorio**. Foto panoramica vista Assisi, eyebrow "IL TERRITORIO", headline poetica riscritta sui fatti reali (Basilica di San Francesco, Piazza del Comune, Rocca Maggiore e Minore), CTA "SCOPRI IL TERRITORIO" → pagina Territorio.
 
 ### Blocco 8 — Mappa + contatti rapidi (screenshot 8)
-Layout a due colonne: mappa (embed Google Maps reale, non serve l'illustrazione disegnata del riferimento) + pannello con nome struttura, indirizzo reale (Via Fonte Citerna, 7 — 06081 Assisi PG), bottone "APRI SU GOOGLE MAPS", email (agriturismolamora@gmail.com), telefono (075 8041164 / 393 4363917), bottone "SCRIVICI SU WHATSAPP", icone social.
+Layout a due colonne: mappa (embed Google Maps reale, non serve l'illustrazione disegnata del riferimento) + pannello con nome struttura, indirizzo reale (Via Fonte Citerna, 7 — 06081 Assisi PG), bottone "APRI SU GOOGLE MAPS", email (agriturismolamora@gmail.com), telefono (393 4363917), bottone "SCRIVICI SU WHATSAPP", icone social.
 
 ### Blocco 9 — Newsletter + badge fiducia + footer (screenshot 9)
 Newsletter signup (solo UI per ora). Striscia badge fiducia: sostituire i badge turistici baschi del riferimento con equivalenti reali — **badge recensioni Google reali** ("Buono · 45 recensioni Google" con stelline), eventuali certificazioni bio/sostenibilità (da confermare col titolare), badge "Pet Friendly". Footer scuro: logo, colonne nav (stessa gerarchia del menu), copyright con ragione sociale reale (AZ. AGR. LA MORA DI MAZZOLI GIUSEPPINA E PAOLO SOC. SEMP. AGRICOLA, P.IVA 03900200548 — **verificare che sia ancora corretta**), link legali (Privacy – Cookie – Sitemap).

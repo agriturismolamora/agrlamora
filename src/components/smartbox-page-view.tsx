@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import type { Locale } from "@/lib/i18n";
@@ -112,7 +112,7 @@ export function SmartboxPageView({ locale }: { locale: Locale }) {
   return (
     <>
       <section className="relative flex h-[46vh] min-h-[340px] items-end overflow-hidden">
-        <Image
+        <WatermarkedImage
           src="/images/home/foto della piscina agriturismo la mora.webp"
           alt="Agriturismo La Mora, la struttura che ti aspetta con il tuo cofanetto Smartbox"
           fill

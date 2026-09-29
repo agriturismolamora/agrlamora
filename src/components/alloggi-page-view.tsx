@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { APARTMENTS } from "@/data/apartments";
 import { getApartmentDetails } from "@/data/apartment-details";
@@ -117,7 +117,7 @@ export function AlloggiPageView({ locale }: { locale: Locale }) {
               <Reveal key={apt.slug} delay={i * 60}>
                 <Link href={withLocale(locale, apt.href)} className="group block">
                   <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] bg-ink/5">
-                    <Image
+                    <WatermarkedImage
                       src={apt.image}
                       alt={apt.alt}
                       fill

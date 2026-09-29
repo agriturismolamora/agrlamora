@@ -1,9 +1,12 @@
 import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { getPlace, type PlaceKey } from "@/data/places";
+import { MapsButton } from "@/components/maps-button";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -29,48 +32,48 @@ export function getTerritorioMetadata(locale: Locale) {
   return { title: m.title, description: m.description, alternates: { canonical: withLocale(locale, "/territorio/") } };
 }
 
-type Place = { name: string; src: string; alt: string; note: string; credit?: string };
+type Place = { name: string; src: string; alt: string; note: string; credit?: string; maps?: PlaceKey };
 
 const ASSISI_PLACES: Record<Locale, Place[]> = {
   it: [
-    { name: "Basilica di San Francesco", src: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilica di San Francesco ad Assisi", note: "Il cuore della città, patrimonio UNESCO: gli affreschi di Giotto nella Basilica Superiore sono tra i motivi principali per cui si viene ad Assisi." },
+    { name: "Basilica di San Francesco", src: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilica di San Francesco ad Assisi", note: "Il cuore della città, patrimonio UNESCO: gli affreschi di Giotto nella Basilica Superiore sono tra i motivi principali per cui si viene ad Assisi.", maps: "basilica" },
     { name: "Basilica di Santa Maria degli Angeli", src: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg", alt: "Basilica di Santa Maria degli Angeli con la Porziuncola", note: "Custodisce al suo interno la Porziuncola, la piccola chiesa dove San Francesco fondò l'ordine francescano. A pochi minuti dalla struttura." },
     { name: "Eremo delle Carceri", src: "/images/territorio/assisi/eremo delle carceri assisi.jpg", alt: "Eremo delle Carceri sul Monte Subasio", note: "Il romitorio dove Francesco si ritirava in preghiera, immerso nel bosco del Monte Subasio: una tappa più silenziosa, lontana dal centro." },
     { name: "Bosco di San Francesco", src: "/images/territorio/assisi/bosco di san francesco assisi.jpg", alt: "Bosco di San Francesco, area naturale protetta dal FAI", note: "Un percorso naturalistico gestito dal FAI, tra uliveti, bosco e il torrente Tescio: una passeggiata diversa dal centro storico." },
     { name: "Santuario di San Damiano", src: "/images/territorio/assisi/santuario san-damiano-assisi.jpg", alt: "Santuario di San Damiano nei dintorni di Assisi", note: "Dove Francesco udì il celebre invito a 'riparare la mia chiesa' e dove Chiara d'Assisi visse gran parte della sua vita." },
-    { name: "Piazza del Comune", src: "/images/territorio/assisi/piazza del comune assisi.jpg", alt: "Piazza del Comune ad Assisi, con il Tempio di Minerva", note: "Il centro laico della città medievale, con il Tempio di Minerva e la Torre del Popolo: da qui si irradiano le vie del centro storico.", credit: "Berthold Werner, Wikimedia Commons (pubblico dominio)" },
-    { name: "Rocca Maggiore", src: "/images/territorio/assisi/rocca maggiore assisi.jpg", alt: "Rocca Maggiore, la fortezza medievale che domina Assisi", note: "La fortezza che domina Assisi dall'alto da otto secoli, con una vista che arriva fino alla Valle Umbra.", credit: "Superchilum, Wikimedia Commons (CC BY-SA 3.0)" },
-    { name: "Rocca Minore", src: "/images/territorio/assisi/rocca minore assisi.jpg", alt: "Rocca Minore, la fortificazione minore di Assisi verso nord-est", note: "La più piccola delle due rocche cittadine, verso nord-est: meno visitata, ma con la stessa vista sulla città.", credit: "LigaDue, Wikimedia Commons (CC BY 3.0)" },
+    { name: "Piazza del Comune", src: "/images/territorio/assisi/piazza del comune assisi.jpg", alt: "Piazza del Comune ad Assisi, con il Tempio di Minerva", note: "Il centro laico della città medievale, con il Tempio di Minerva e la Torre del Popolo: da qui si irradiano le vie del centro storico.", credit: "Berthold Werner, Wikimedia Commons (pubblico dominio)", maps: "piazzaDelComune" },
+    { name: "Rocca Maggiore", src: "/images/territorio/assisi/rocca maggiore assisi.jpg", alt: "Rocca Maggiore, la fortezza medievale che domina Assisi", note: "La fortezza che domina Assisi dall'alto da otto secoli, con una vista che arriva fino alla Valle Umbra.", credit: "Superchilum, Wikimedia Commons (CC BY-SA 3.0)", maps: "roccaMaggiore" },
+    { name: "Rocca Minore", src: "/images/territorio/assisi/rocca minore assisi.jpg", alt: "Rocca Minore, la fortificazione minore di Assisi verso nord-est", note: "La più piccola delle due rocche cittadine, verso nord-est: meno visitata, ma con la stessa vista sulla città.", credit: "LigaDue, Wikimedia Commons (CC BY 3.0)", maps: "roccaMinore" },
   ],
   en: [
-    { name: "Basilica of St. Francis", src: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilica of St. Francis in Assisi", note: "The heart of the city, a UNESCO World Heritage Site: Giotto's frescoes in the Upper Basilica are among the main reasons people come to Assisi." },
+    { name: "Basilica of St. Francis", src: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilica of St. Francis in Assisi", note: "The heart of the city, a UNESCO World Heritage Site: Giotto's frescoes in the Upper Basilica are among the main reasons people come to Assisi.", maps: "basilica" },
     { name: "Basilica of Santa Maria degli Angeli", src: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg", alt: "Basilica of Santa Maria degli Angeli with the Porziuncola", note: "Houses the Porziuncola, the small church where St. Francis founded the Franciscan order. Minutes from the property." },
     { name: "Eremo delle Carceri", src: "/images/territorio/assisi/eremo delle carceri assisi.jpg", alt: "Eremo delle Carceri hermitage on Monte Subasio", note: "The hermitage where Francis withdrew to pray, set in the woods of Monte Subasio: a quieter stop, away from the centre." },
     { name: "Bosco di San Francesco", src: "/images/territorio/assisi/bosco di san francesco assisi.jpg", alt: "Bosco di San Francesco, a protected natural area run by FAI", note: "A nature trail managed by the FAI (Italian National Trust), through olive groves, woodland and the Tescio stream: a different kind of walk from the historic centre." },
     { name: "Sanctuary of San Damiano", src: "/images/territorio/assisi/santuario san-damiano-assisi.jpg", alt: "Sanctuary of San Damiano near Assisi", note: "Where Francis heard the famous call to 'repair my church' and where Clare of Assisi spent much of her life." },
-    { name: "Piazza del Comune", src: "/images/territorio/assisi/piazza del comune assisi.jpg", alt: "Piazza del Comune in Assisi, with the Temple of Minerva", note: "The secular heart of the medieval city, with the Temple of Minerva and the Torre del Popolo: the streets of the historic centre radiate out from here.", credit: "Berthold Werner, Wikimedia Commons (public domain)" },
-    { name: "Rocca Maggiore", src: "/images/territorio/assisi/rocca maggiore assisi.jpg", alt: "Rocca Maggiore, the medieval fortress overlooking Assisi", note: "The fortress that has overlooked Assisi for eight centuries, with a view reaching all the way to the Valle Umbra.", credit: "Superchilum, Wikimedia Commons (CC BY-SA 3.0)" },
-    { name: "Rocca Minore", src: "/images/territorio/assisi/rocca minore assisi.jpg", alt: "Rocca Minore, the smaller fortification of Assisi to the north-east", note: "The smaller of the town's two fortresses, to the north-east: less visited, but with the same view over the city.", credit: "LigaDue, Wikimedia Commons (CC BY 3.0)" },
+    { name: "Piazza del Comune", src: "/images/territorio/assisi/piazza del comune assisi.jpg", alt: "Piazza del Comune in Assisi, with the Temple of Minerva", note: "The secular heart of the medieval city, with the Temple of Minerva and the Torre del Popolo: the streets of the historic centre radiate out from here.", credit: "Berthold Werner, Wikimedia Commons (public domain)", maps: "piazzaDelComune" },
+    { name: "Rocca Maggiore", src: "/images/territorio/assisi/rocca maggiore assisi.jpg", alt: "Rocca Maggiore, the medieval fortress overlooking Assisi", note: "The fortress that has overlooked Assisi for eight centuries, with a view reaching all the way to the Valle Umbra.", credit: "Superchilum, Wikimedia Commons (CC BY-SA 3.0)", maps: "roccaMaggiore" },
+    { name: "Rocca Minore", src: "/images/territorio/assisi/rocca minore assisi.jpg", alt: "Rocca Minore, the smaller fortification of Assisi to the north-east", note: "The smaller of the town's two fortresses, to the north-east: less visited, but with the same view over the city.", credit: "LigaDue, Wikimedia Commons (CC BY 3.0)", maps: "roccaMinore" },
   ],
   fr: [
-    { name: "Basilique Saint-François", src: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilique Saint-François à Assise", note: "Le cœur de la ville, patrimoine de l'UNESCO : les fresques de Giotto dans la basilique supérieure sont l'une des principales raisons de venir à Assise." },
+    { name: "Basilique Saint-François", src: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilique Saint-François à Assise", note: "Le cœur de la ville, patrimoine de l'UNESCO : les fresques de Giotto dans la basilique supérieure sont l'une des principales raisons de venir à Assise.", maps: "basilica" },
     { name: "Basilique Sainte-Marie-des-Anges", src: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg", alt: "Basilique Sainte-Marie-des-Anges avec la Portioncule", note: "Elle abrite la Portioncule, la petite église où Saint François fonda l'ordre franciscain. À quelques minutes de la structure." },
     { name: "Ermitage des Carceri", src: "/images/territorio/assisi/eremo delle carceri assisi.jpg", alt: "Ermitage des Carceri sur le Mont Subasio", note: "L'ermitage où François se retirait pour prier, niché dans les bois du Mont Subasio : une étape plus silencieuse, loin du centre." },
     { name: "Bosco di San Francesco", src: "/images/territorio/assisi/bosco di san francesco assisi.jpg", alt: "Bosco di San Francesco, zone naturelle protégée par le FAI", note: "Un parcours naturaliste géré par le FAI, entre oliveraies, bois et le torrent Tescio : une promenade différente du centre historique." },
     { name: "Sanctuaire de San Damiano", src: "/images/territorio/assisi/santuario san-damiano-assisi.jpg", alt: "Sanctuaire de San Damiano aux environs d'Assise", note: "Là où François entendit le célèbre appel à « réparer mon église » et où Claire d'Assise passa une grande partie de sa vie." },
-    { name: "Piazza del Comune", src: "/images/territorio/assisi/piazza del comune assisi.jpg", alt: "Piazza del Comune à Assise, avec le temple de Minerve", note: "Le centre laïc de la ville médiévale, avec le temple de Minerve et la Torre del Popolo : c'est d'ici que rayonnent les rues du centre historique.", credit: "Berthold Werner, Wikimedia Commons (domaine public)" },
-    { name: "Rocca Maggiore", src: "/images/territorio/assisi/rocca maggiore assisi.jpg", alt: "Rocca Maggiore, la forteresse médiévale qui domine Assise", note: "La forteresse qui domine Assise depuis huit siècles, avec une vue qui s'étend jusqu'à la Valle Umbra.", credit: "Superchilum, Wikimedia Commons (CC BY-SA 3.0)" },
-    { name: "Rocca Minore", src: "/images/territorio/assisi/rocca minore assisi.jpg", alt: "Rocca Minore, la fortification mineure d'Assise vers le nord-est", note: "La plus petite des deux forteresses de la ville, vers le nord-est : moins visitée, mais avec la même vue sur la ville.", credit: "LigaDue, Wikimedia Commons (CC BY 3.0)" },
+    { name: "Piazza del Comune", src: "/images/territorio/assisi/piazza del comune assisi.jpg", alt: "Piazza del Comune à Assise, avec le temple de Minerve", note: "Le centre laïc de la ville médiévale, avec le temple de Minerve et la Torre del Popolo : c'est d'ici que rayonnent les rues du centre historique.", credit: "Berthold Werner, Wikimedia Commons (domaine public)", maps: "piazzaDelComune" },
+    { name: "Rocca Maggiore", src: "/images/territorio/assisi/rocca maggiore assisi.jpg", alt: "Rocca Maggiore, la forteresse médiévale qui domine Assise", note: "La forteresse qui domine Assise depuis huit siècles, avec une vue qui s'étend jusqu'à la Valle Umbra.", credit: "Superchilum, Wikimedia Commons (CC BY-SA 3.0)", maps: "roccaMaggiore" },
+    { name: "Rocca Minore", src: "/images/territorio/assisi/rocca minore assisi.jpg", alt: "Rocca Minore, la fortification mineure d'Assise vers le nord-est", note: "La plus petite des deux forteresses de la ville, vers le nord-est : moins visitée, mais avec la même vue sur la ville.", credit: "LigaDue, Wikimedia Commons (CC BY 3.0)", maps: "roccaMinore" },
   ],
   de: [
-    { name: "Basilika des Heiligen Franziskus", src: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilika des Heiligen Franziskus in Assisi", note: "Das Herz der Stadt, UNESCO-Welterbe: Giottos Fresken in der Oberkirche gehören zu den Hauptgründen, warum man nach Assisi kommt." },
+    { name: "Basilika des Heiligen Franziskus", src: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilika des Heiligen Franziskus in Assisi", note: "Das Herz der Stadt, UNESCO-Welterbe: Giottos Fresken in der Oberkirche gehören zu den Hauptgründen, warum man nach Assisi kommt.", maps: "basilica" },
     { name: "Basilika Santa Maria degli Angeli", src: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg", alt: "Basilika Santa Maria degli Angeli mit der Portiuncula", note: "Beherbergt die Portiuncula, die kleine Kirche, in der der Heilige Franziskus den Franziskanerorden gründete. Wenige Minuten von der Unterkunft entfernt." },
     { name: "Eremo delle Carceri", src: "/images/territorio/assisi/eremo delle carceri assisi.jpg", alt: "Einsiedelei Eremo delle Carceri auf dem Monte Subasio", note: "Die Einsiedelei, in die sich Franziskus zum Gebet zurückzog, mitten in den Wäldern des Monte Subasio: ein ruhigerer Ort, abseits des Zentrums." },
     { name: "Bosco di San Francesco", src: "/images/territorio/assisi/bosco di san francesco assisi.jpg", alt: "Bosco di San Francesco, ein vom FAI geschütztes Naturgebiet", note: "Ein vom FAI (italienischer Nationaltrust) verwalteter Naturpfad durch Olivenhaine, Wald und den Bach Tescio: ein anderer Spaziergang als die Altstadt." },
     { name: "Wallfahrtskirche San Damiano", src: "/images/territorio/assisi/santuario san-damiano-assisi.jpg", alt: "Wallfahrtskirche San Damiano bei Assisi", note: "Wo Franziskus den berühmten Ruf hörte, „meine Kirche wieder aufzubauen“, und wo Klara von Assisi einen Großteil ihres Lebens verbrachte." },
-    { name: "Piazza del Comune", src: "/images/territorio/assisi/piazza del comune assisi.jpg", alt: "Piazza del Comune in Assisi, mit dem Minerva-Tempel", note: "Das weltliche Zentrum der mittelalterlichen Stadt, mit dem Minerva-Tempel und dem Torre del Popolo: von hier strahlen die Gassen der Altstadt aus.", credit: "Berthold Werner, Wikimedia Commons (gemeinfrei)" },
-    { name: "Rocca Maggiore", src: "/images/territorio/assisi/rocca maggiore assisi.jpg", alt: "Rocca Maggiore, die mittelalterliche Festung über Assisi", note: "Die Festung, die seit acht Jahrhunderten über Assisi thront, mit einem Ausblick bis in die Valle Umbra.", credit: "Superchilum, Wikimedia Commons (CC BY-SA 3.0)" },
-    { name: "Rocca Minore", src: "/images/territorio/assisi/rocca minore assisi.jpg", alt: "Rocca Minore, die kleinere Festung von Assisi im Nordosten", note: "Die kleinere der beiden Festungen der Stadt, im Nordosten: weniger besucht, aber mit demselben Blick über die Stadt.", credit: "LigaDue, Wikimedia Commons (CC BY 3.0)" },
+    { name: "Piazza del Comune", src: "/images/territorio/assisi/piazza del comune assisi.jpg", alt: "Piazza del Comune in Assisi, mit dem Minerva-Tempel", note: "Das weltliche Zentrum der mittelalterlichen Stadt, mit dem Minerva-Tempel und dem Torre del Popolo: von hier strahlen die Gassen der Altstadt aus.", credit: "Berthold Werner, Wikimedia Commons (gemeinfrei)", maps: "piazzaDelComune" },
+    { name: "Rocca Maggiore", src: "/images/territorio/assisi/rocca maggiore assisi.jpg", alt: "Rocca Maggiore, die mittelalterliche Festung über Assisi", note: "Die Festung, die seit acht Jahrhunderten über Assisi thront, mit einem Ausblick bis in die Valle Umbra.", credit: "Superchilum, Wikimedia Commons (CC BY-SA 3.0)", maps: "roccaMaggiore" },
+    { name: "Rocca Minore", src: "/images/territorio/assisi/rocca minore assisi.jpg", alt: "Rocca Minore, die kleinere Festung von Assisi im Nordosten", note: "Die kleinere der beiden Festungen der Stadt, im Nordosten: weniger besucht, aber mit demselben Blick über die Stadt.", credit: "LigaDue, Wikimedia Commons (CC BY 3.0)", maps: "roccaMinore" },
   ],
 };
 
@@ -206,7 +209,7 @@ export function TerritorioPageView({ locale }: { locale: Locale }) {
   return (
     <>
       <section className="relative flex h-[64vh] min-h-[460px] items-end overflow-hidden">
-        <Image
+        <WatermarkedImage
           src="/images/territorio/assisi/assisi con tramonto.jpg"
           alt="Assisi al tramonto vista dalla campagna umbra"
           fill
@@ -242,11 +245,17 @@ export function TerritorioPageView({ locale }: { locale: Locale }) {
               <Reveal key={place.name} delay={i * 40}>
                 <div className={`grid grid-cols-1 items-center gap-8 sm:grid-cols-2 ${i % 2 === 1 ? "sm:[&>*:first-child]:order-2" : ""}`}>
                   <div className="relative aspect-[4/3] overflow-hidden rounded-[3px]">
-                    <Image src={place.src} alt={place.alt} fill sizes="(max-width: 640px) 100vw, 500px" className="object-cover" />
+                    {/* Foto di terzi con credito (Wikimedia): niente logo La Mora sopra. */}
+                    {place.credit ? (
+                      <Image src={place.src} alt={place.alt} fill sizes="(max-width: 640px) 100vw, 500px" className="object-cover" />
+                    ) : (
+                      <WatermarkedImage src={place.src} alt={place.alt} fill sizes="(max-width: 640px) 100vw, 500px" className="object-cover" />
+                    )}
                   </div>
                   <div>
                     <h3 className="font-display text-[22px] font-normal text-ink">{place.name}</h3>
                     <p className="mt-3 text-[14px] leading-[1.75] text-ink-soft">{place.note}</p>
+                    {place.maps && <MapsButton place={getPlace(place.maps)} locale={locale} className="mt-4" />}
                     {place.credit && (
                       <p className="mt-3 text-[11px] text-ink-soft/60">
                         {text.fotoWord}: {place.credit}
@@ -268,13 +277,14 @@ export function TerritorioPageView({ locale }: { locale: Locale }) {
               {text.dintorniHeading}
             </h2>
             <p className="mt-5 max-w-[640px] text-[14px] leading-[1.75] text-ink-soft">{text.dintorniBody}</p>
+            <MapsButton place={getPlace("spello")} locale={locale} showName className="mt-5" />
           </Reveal>
 
           <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2">
             {dintorniPlaces.map((place, i) => (
               <Reveal key={place.name} delay={i * 60}>
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[3px]">
-                  <Image src={place.src} alt={place.alt} fill sizes="(max-width: 640px) 100vw, 500px" className="object-cover" />
+                  <WatermarkedImage src={place.src} alt={place.alt} fill sizes="(max-width: 640px) 100vw, 500px" className="object-cover" />
                 </div>
                 <h3 className="mt-4 font-display text-[20px] font-normal text-ink">{place.name}</h3>
                 <p className="mt-2 text-[13px] leading-[1.7] text-ink-soft">{place.note}</p>
@@ -292,11 +302,15 @@ export function TerritorioPageView({ locale }: { locale: Locale }) {
               {text.perugiaHeading}
             </h2>
             <p className="mt-5 max-w-[640px] text-[14px] leading-[1.75] text-ink-soft">{text.perugiaBody}</p>
+            <div className="mt-5 flex flex-wrap gap-2.5">
+              <MapsButton place={getPlace("perugia")} locale={locale} showName />
+              <MapsButton place={getPlace("aeroporto")} locale={locale} showName />
+            </div>
           </Reveal>
 
           <Reveal delay={80}>
             <div className="relative mt-10 aspect-[16/8] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/territorio/perugia/perugia vista alto.jpg"
                 alt="Vista dall'alto del centro storico di Perugia"
                 fill

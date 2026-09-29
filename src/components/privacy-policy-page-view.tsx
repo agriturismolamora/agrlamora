@@ -30,7 +30,7 @@ function buildSections(locale: Locale): LegalSection[] {
           <p>
             <strong>AZ. AGR. LA MORA DI MAZZOLI GIUSEPPINA E PAOLO SOC. SEMP. AGRICOLA</strong>, P.IVA 03900200548, con sede in Via Fonte
             Citerna 7, 06081 Assisi (PG), Italia. Contatti: <a href="mailto:agriturismolamora@gmail.com">agriturismolamora@gmail.com</a>,
-            telefono/WhatsApp <a href="tel:+390758041164">075 8041164</a>.
+            telefono/WhatsApp <a href="tel:+393934363917">393 4363917</a>.
           </p>
         ),
       },
@@ -215,7 +215,7 @@ function buildSections(locale: Locale): LegalSection[] {
           <p>
             <strong>AZ. AGR. LA MORA DI MAZZOLI GIUSEPPINA E PAOLO SOC. SEMP. AGRICOLA</strong>, VAT number 03900200548, registered at Via
             Fonte Citerna 7, 06081 Assisi (PG), Italy. Contact: <a href="mailto:agriturismolamora@gmail.com">agriturismolamora@gmail.com</a>,
-            phone/WhatsApp <a href="tel:+390758041164">075 8041164</a>.
+            phone/WhatsApp <a href="tel:+393934363917">393 4363917</a>.
           </p>
         ),
       },
@@ -398,7 +398,7 @@ function buildSections(locale: Locale): LegalSection[] {
           <p>
             <strong>AZ. AGR. LA MORA DI MAZZOLI GIUSEPPINA E PAOLO SOC. SEMP. AGRICOLA</strong>, TVA 03900200548, siège Via Fonte Citerna
             7, 06081 Assise (PG), Italie. Contact : <a href="mailto:agriturismolamora@gmail.com">agriturismolamora@gmail.com</a>,
-            téléphone/WhatsApp <a href="tel:+390758041164">075 8041164</a>.
+            téléphone/WhatsApp <a href="tel:+393934363917">393 4363917</a>.
           </p>
         ),
       },
@@ -591,7 +591,7 @@ function buildSections(locale: Locale): LegalSection[] {
           <p>
             <strong>AZ. AGR. LA MORA DI MAZZOLI GIUSEPPINA E PAOLO SOC. SEMP. AGRICOLA</strong>, USt-IdNr. 03900200548, Sitz Via Fonte
             Citerna 7, 06081 Assisi (PG), Italien. Kontakt: <a href="mailto:agriturismolamora@gmail.com">agriturismolamora@gmail.com</a>,
-            Telefon/WhatsApp <a href="tel:+390758041164">075 8041164</a>.
+            Telefon/WhatsApp <a href="tel:+393934363917">393 4363917</a>.
           </p>
         ),
       },

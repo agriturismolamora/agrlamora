@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
@@ -150,7 +150,7 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
   return (
     <>
       <section className="relative flex h-[68vh] min-h-[480px] items-end overflow-hidden">
-        <Image
+        <WatermarkedImage
           src="/images/piscina/piscina agriturismo la mora di notte.jpeg"
           alt="Piscina panoramica di Agriturismo La Mora"
           fill
@@ -220,7 +220,7 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
         <div className="mx-auto grid max-w-[1100px] grid-cols-1 gap-3 px-6 sm:grid-cols-3 sm:px-10">
           <Reveal className="sm:col-span-2">
             <div className="relative aspect-[16/10] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/piscina/foto piscina di giorno.webp"
                 alt="Piscina di Agriturismo La Mora durante il giorno"
                 fill
@@ -231,7 +231,7 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
           </Reveal>
           <Reveal delay={80}>
             <div className="relative aspect-[16/10] overflow-hidden rounded-[3px] sm:aspect-auto sm:h-full">
-              <Image
+              <WatermarkedImage
                 src="/images/piscina/piscina agriturismo la mora lato.jpeg"
                 alt="Vista laterale della piscina"
                 fill
@@ -247,7 +247,7 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
         <div className="mx-auto grid max-w-[1100px] grid-cols-1 items-center gap-10 px-6 sm:grid-cols-2 sm:px-10 sm:gap-16">
           <Reveal>
             <div className="relative aspect-[4/3] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/piscina/esterno parco agriturismo con casetta.webp"
                 alt="Area relax accanto alla piscina di Agriturismo La Mora"
                 fill

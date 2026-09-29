@@ -182,6 +182,50 @@ body {
   }
 }
 
+/* Cagnolino che segue lo scroll (scroll-dog.tsx, solo pagine Gemelli e
+   Sagittario): trotterella e scodinzola solo mentre la pagina si muove
+   (data-moving="true", impostato dal componente), fermo altrimenti. Con
+   prefers-reduced-motion il componente non viene nemmeno montato; la
+   media query qui sotto è solo una seconda garanzia. */
+@keyframes dog-trot {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-2px) rotate(-3deg);
+  }
+}
+
+@keyframes dog-wag {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-28deg);
+  }
+}
+
+.scroll-dog[data-moving="true"] .scroll-dog-body {
+  animation: dog-trot 0.32s ease-in-out infinite;
+}
+
+.scroll-dog-tail {
+  transform-box: fill-box;
+  transform-origin: 100% 100%;
+}
+
+.scroll-dog[data-moving="true"] .scroll-dog-tail {
+  animation: dog-wag 0.24s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-dog {
+    display: none;
+  }
+}
+
 /* Il badge fluttuante di reCAPTCHA v3 è nascosto: i Termini di Google lo
    permettono SOLO perché mostriamo il testo di attribuzione richiesto nel
    modulo newsletter (newsletter-section.tsx). Se lo script non è caricato

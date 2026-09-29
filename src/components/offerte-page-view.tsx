@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
@@ -243,7 +244,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
   return (
     <>
       <section className="relative flex h-[86vh] min-h-[560px] items-end overflow-hidden">
-        <Image
+        <WatermarkedImage
           src="/images/home/esterno agriturismo la mora carretto e agriturismo.webp"
           alt="Ingresso di Agriturismo La Mora"
           fill
@@ -283,7 +284,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
         <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-12 px-6 sm:grid-cols-2 sm:gap-16 sm:px-10">
           <Reveal>
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/piscina/piscina vista sedie e piscina.jpg"
                 alt="Sedie a bordo piscina di Agriturismo La Mora"
                 fill
@@ -359,7 +360,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
           </Reveal>
           <Reveal delay={100} className="order-1 sm:order-2">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/struttura/foto dell esterno della struttura.webp"
                 alt="Esterno di Agriturismo La Mora"
                 fill
@@ -375,7 +376,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
         <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-12 px-6 sm:grid-cols-2 sm:gap-16 sm:px-10">
           <Reveal>
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/struttura/immagine cucina arredata.jpeg"
                 alt="Cucina arredata di uno degli appartamenti di Agriturismo La Mora"
                 fill
@@ -431,13 +432,25 @@ export function OffertePageView({ locale }: { locale: Locale }) {
               <Reveal key={c.href} delay={i * 80}>
                 <Link href={withLocale(locale, c.href)} className="group block">
                   <div className="relative aspect-[16/10] overflow-hidden rounded-[3px]">
-                    <Image
-                      src={c.img}
-                      alt={c.title}
-                      fill
-                      sizes="(max-width: 640px) 100vw, 500px"
-                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                    />
+                    {/* Le immagini dei cofanetti ("Nuova cartella") non sono foto
+                        della struttura: niente filigrana La Mora sopra. */}
+                    {c.img.startsWith("/images/Nuova cartella/") ? (
+                      <Image
+                        src={c.img}
+                        alt={c.title}
+                        fill
+                        sizes="(max-width: 640px) 100vw, 500px"
+                        className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                      />
+                    ) : (
+                      <WatermarkedImage
+                        src={c.img}
+                        alt={c.title}
+                        fill
+                        sizes="(max-width: 640px) 100vw, 500px"
+                        className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                      />
+                    )}
                   </div>
                   <h3 className="mt-4 font-display text-[20px] font-normal text-ink">{c.title}</h3>
                   <p className="mt-2 text-[13px] leading-[1.7] text-ink-soft">{c.desc}</p>
@@ -449,7 +462,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
       </section>
 
       <section className="relative flex h-[64vh] min-h-[440px] items-center justify-center overflow-hidden">
-        <Image
+        <WatermarkedImage
           src="/images/territorio/assisi/assisi con tramonto.jpg"
           alt="Assisi al tramonto vista dalla campagna umbra"
           fill

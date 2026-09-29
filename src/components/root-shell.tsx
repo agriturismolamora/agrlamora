@@ -18,7 +18,7 @@ const JSON_LD_BASE = {
   name: "Agriturismo La Mora",
   image: "https://www.lamoraassisi.com/images/piscina/piscina%20agriturismo%20la%20mora.webp",
   url: "https://www.lamoraassisi.com",
-  telephone: "+39 075 8041164",
+  telephone: "+39 393 4363917",
   email: "agriturismolamora@gmail.com",
   priceRange: "€€",
   address: {

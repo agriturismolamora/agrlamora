@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import { useCallback, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { useLightbox } from "@/components/gallery-lightbox";
 import type { GalleryImage } from "@/data/apartment-details";
@@ -91,7 +91,7 @@ export function ApartmentGallery({ images, locale }: { images: GalleryImage[]; l
               aria-label={text.openFullscreen(img.alt)}
               className="relative h-full w-full shrink-0"
             >
-              <Image
+              <WatermarkedImage
                 src={img.src}
                 alt={img.alt}
                 fill

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Apartment } from "@/data/apartments";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { PawIcon } from "@/components/amenity-icons";
 
 const WHATSAPP_URL = (name: string) =>
   `https://wa.me/393934363917?text=${encodeURIComponent(`Ciao! Vorrei informazioni sulla disponibilità dell'appartamento ${name}.`)}`;
@@ -122,7 +123,18 @@ export function AvailabilityBox({ apt, locale }: { apt: Apartment; locale: Local
           </div>
           <div>
             <dt className="text-ink-soft">{text.animali}</dt>
-            <dd className="mt-0.5 font-semibold text-ink">{apt.petFriendly ? text.animaliAmmessi : text.animaliPiccolaTaglia}</dd>
+            {/* Gemelli e Sagittario: pillola con zampetta, stesso segno delle
+                card del carousel in home. */}
+            {apt.petFriendly ? (
+              <dd className="mt-1">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-olive-950 py-0.5 pl-1.5 pr-2.5 text-[12px] font-semibold text-cream [&_svg]:h-4 [&_svg]:w-4">
+                  <PawIcon />
+                  {text.animaliAmmessi}
+                </span>
+              </dd>
+            ) : (
+              <dd className="mt-0.5 font-semibold text-ink">{text.animaliPiccolaTaglia}</dd>
+            )}
           </div>
         </dl>
 
@@ -142,8 +154,8 @@ export function AvailabilityBox({ apt, locale }: { apt: Apartment; locale: Local
           {text.scriviciWhatsapp}
         </a>
 
-        <a href="tel:+390758041164" className="mt-3 block text-center text-[12px] text-ink-soft underline decoration-ink-soft/30 underline-offset-4 hover:text-raspberry">
-          075 8041164
+        <a href="tel:+393934363917" className="mt-3 block text-center text-[12px] text-ink-soft underline decoration-ink-soft/30 underline-offset-4 hover:text-raspberry">
+          393 4363917
         </a>
 
         <p className="mt-5 text-[11px] leading-[1.6] text-ink-soft/80">{text.condizioni}</p>

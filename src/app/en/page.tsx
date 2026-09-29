@@ -7,6 +7,7 @@ import { RankingSection } from "@/components/ranking-section";
 import { OutdoorLife } from "@/components/outdoor-life";
 import { SustainabilitySection } from "@/components/sustainability-section";
 import { TerritorySection } from "@/components/territory-section";
+import { DistancesSection } from "@/components/distances-section";
 import { ReviewsSection } from "@/components/reviews-section";
 import { ReviewGate } from "@/components/review-gate";
 import { getWriteReviewUrl } from "@/lib/google-reviews";
@@ -49,6 +50,7 @@ export default function Home() {
       <OutdoorLife locale="en" />
       <SustainabilitySection locale="en" />
       <TerritorySection locale="en" />
+      <DistancesSection locale="en" />
       <ReviewsSection locale="en" />
       <ReviewGate writeReviewUrl={getWriteReviewUrl()} locale="en" />
       <LaMoraDaVivere locale="en" />

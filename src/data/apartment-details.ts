@@ -282,11 +282,14 @@ export function getApartmentDetails(locale: Locale): Record<string, ApartmentDet
   return merged;
 }
 
+/* Parcheggio e barbecue aggiunti su richiesta del titolare (29/09/2026),
+   comuni a tutte e cinque le unità. La lavatrice in comune non è qui ma
+   ha una sezione dedicata in apartment-page-view.tsx. */
 const SHARED_AMENITIES_BY_LOCALE: Record<Locale, string[]> = {
-  it: ["TV con canali satellitari", "Cucina attrezzata", "Aria condizionata", "Cassaforte", "Wi-Fi gratuito", "Biancheria da letto e da bagno", "Specchi e porta valigie"],
-  en: ["Satellite TV", "Equipped kitchen", "Air conditioning", "Safe", "Free Wi-Fi", "Bed and bath linen", "Mirrors and luggage rack"],
-  fr: ["TV satellite", "Cuisine équipée", "Climatisation", "Coffre-fort", "Wi-Fi gratuit", "Linge de lit et de bain", "Miroirs et porte-bagages"],
-  de: ["Sat-TV", "Ausgestattete Küche", "Klimaanlage", "Safe", "Kostenloses WLAN", "Bett- und Badwäsche", "Spiegel und Gepäckablage"],
+  it: ["TV con canali satellitari", "Cucina attrezzata", "Aria condizionata", "Cassaforte", "Wi-Fi gratuito", "Biancheria da letto e da bagno", "Specchi e porta valigie", "Parcheggio gratuito all'interno della struttura", "Barbecue in comune, incluso"],
+  en: ["Satellite TV", "Equipped kitchen", "Air conditioning", "Safe", "Free Wi-Fi", "Bed and bath linen", "Mirrors and luggage rack", "Free parking on the property", "Shared barbecue, included"],
+  fr: ["TV satellite", "Cuisine équipée", "Climatisation", "Coffre-fort", "Wi-Fi gratuit", "Linge de lit et de bain", "Miroirs et porte-bagages", "Parking gratuit dans la propriété", "Barbecue commun, inclus"],
+  de: ["Sat-TV", "Ausgestattete Küche", "Klimaanlage", "Safe", "Kostenloses WLAN", "Bett- und Badwäsche", "Spiegel und Gepäckablage", "Kostenloser Parkplatz auf dem Gelände", "Gemeinsamer Grill, inklusive"],
 };
 
 export function getSharedAmenities(locale: Locale): string[] {

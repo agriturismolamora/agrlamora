@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import { getGoogleReviews } from "@/lib/google-reviews";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
@@ -223,7 +223,7 @@ export async function PriceComparisonSection({ locale }: { locale: Locale }) {
                 desktop) — senza aggiustare la resa di default il crop
                 centrale tagliava via troppa struttura del gazebo in alto. */}
             <div className="relative aspect-[16/10] lg:aspect-auto">
-              <Image
+              <WatermarkedImage
                 src="/images/alloggi/appartamento sagittario/gazebo sagittario 2.jpeg"
                 alt="Gazebo esterno privato dell'appartamento Sagittario, Agriturismo La Mora"
                 fill

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
@@ -70,7 +70,7 @@ export function TerritorySection({ locale }: { locale: Locale }) {
         <div className="mt-16 grid grid-cols-1 gap-4 sm:mt-20 lg:grid-cols-[1.6fr_1fr] lg:gap-6">
           {/* Assisi: foto dominante. */}
           <Reveal delay={80} className="relative aspect-[4/3] overflow-hidden rounded-[3px] lg:aspect-auto lg:h-full">
-            <Image
+            <WatermarkedImage
               src="/images/territorio/assisi/basilica di assisi.jpg"
               alt="Basilica di San Francesco ad Assisi, a pochi minuti da Agriturismo La Mora"
               fill
@@ -89,7 +89,7 @@ export function TerritorySection({ locale }: { locale: Locale }) {
 
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-1 lg:gap-6">
             <Reveal delay={160} className="relative aspect-[4/3] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/territorio/assisi/eremo delle carceri assisi.jpg"
                 alt="Eremo delle Carceri, sul Monte Subasio ad Assisi"
                 fill
@@ -104,7 +104,7 @@ export function TerritorySection({ locale }: { locale: Locale }) {
               <span className="absolute bottom-4 left-4 font-display text-lg text-cream">{text.eremo}</span>
             </Reveal>
             <Reveal delay={240} className="relative aspect-[4/3] overflow-hidden rounded-[3px]">
-              <Image
+              <WatermarkedImage
                 src="/images/territorio/perugia/perugia vista alto.jpg"
                 alt="Perugia vista dall'alto, capoluogo dell'Umbria"
                 fill
