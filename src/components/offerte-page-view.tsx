@@ -154,7 +154,7 @@ const TEXT: Record<
     altreHeading: "Un regalo, o un cofanetto già in mano.",
     diversoHeading: "Cerchi qualcosa di diverso?",
     diversoBody: "Scrivici direttamente il tuo soggiorno — date, ospiti, esigenze particolari — e verifichiamo insieme disponibilità e condizioni più adatte a te.",
-    diversoCta: "Chiedi informazioni",
+    diversoCta: "Chiedi informazioni su WhatsApp",
     diversoWaMsg: "Ciao! Vorrei chiedere informazioni su un soggiorno a La Mora.",
     microItems: [
       { title: "Contatto diretto", text: "Scrivi a chi gestisce La Mora ogni giorno, non a un call center." },
@@ -187,7 +187,7 @@ const TEXT: Record<
     altreHeading: "A gift, or a voucher already in hand.",
     diversoHeading: "Looking for something different?",
     diversoBody: "Write to us directly about your stay — dates, guests, special needs — and we'll check together the availability and conditions that suit you best.",
-    diversoCta: "Ask for information",
+    diversoCta: "Ask for information on WhatsApp",
     diversoWaMsg: "Hi! I'd like information about a stay at La Mora.",
     microItems: [
       { title: "Direct contact", text: "Write to the people who run La Mora every day, not a call centre." },
@@ -220,7 +220,7 @@ const TEXT: Record<
     altreHeading: "Un cadeau, ou un coffret déjà en main.",
     diversoHeading: "Vous cherchez autre chose ?",
     diversoBody: "Écrivez-nous directement votre séjour — dates, hôtes, besoins particuliers — et nous vérifions ensemble la disponibilité et les conditions les plus adaptées.",
-    diversoCta: "Demander des informations",
+    diversoCta: "Demander des informations sur WhatsApp",
     diversoWaMsg: "Bonjour ! Je voudrais des informations sur un séjour à La Mora.",
     microItems: [
       { title: "Contact direct", text: "Écrivez à ceux qui gèrent La Mora chaque jour, pas à un centre d'appels." },
@@ -253,7 +253,7 @@ const TEXT: Record<
     altreHeading: "Ein Geschenk, oder eine Box bereits in der Hand.",
     diversoHeading: "Suchen Sie etwas anderes?",
     diversoBody: "Schreiben Sie uns direkt zu Ihrem Aufenthalt — Daten, Gäste, besondere Bedürfnisse — und wir prüfen gemeinsam die für Sie passende Verfügbarkeit und Konditionen.",
-    diversoCta: "Informationen anfordern",
+    diversoCta: "Informationen per WhatsApp anfordern",
     diversoWaMsg: "Hallo! Ich hätte gerne Informationen zu einem Aufenthalt bei La Mora.",
     microItems: [
       { title: "Direkter Kontakt", text: "Schreiben Sie an die, die La Mora jeden Tag führen, nicht an ein Callcenter." },
