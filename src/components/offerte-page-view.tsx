@@ -1,4 +1,7 @@
+import Image from "next/image";
 import { WatermarkedImage } from "@/components/watermarked-image";
+import { PhotoCreditLine } from "@/components/photo-credit";
+import { EUROCHOCOLATE_2024_PHOTO } from "@/data/photo-credits";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
@@ -22,35 +25,33 @@ const OFFERS_WIDGET_TEXT: Record<Locale, { label: string; heading: string }> = {
 /* Card dell'offerta Eurochocolate 2026 (src/data/promo.ts): rimanda
    all'articolo, dove stanno programma, distanze e condizioni complete. Stile
    standard del sito: il tema cioccolato resta solo nell'articolo e nel
-   popup. La validità è un testo datato, vero anche a offerta conclusa. */
-const EUROCHOCOLATE_CARD_TEXT: Record<Locale, { label: string; heading: string; body: string; cta: string; alt: string }> = {
+   popup. La validità è un testo datato, vero anche a offerta conclusa. Foto
+   reale di Eurochocolate 2024 con licenza CC BY-SA (src/data/photo-credits.ts):
+   niente filigrana, attribuzione completa sotto la card. */
+const EUROCHOCOLATE_CARD_TEXT: Record<Locale, { label: string; heading: string; body: string; cta: string }> = {
   it: {
     label: "Evento · Perugia",
     heading: "Eurochocolate 2026: -10% per tutta la durata dell'evento",
     body: "Dal 13 al 22 novembre 2026 Perugia ospita il festival internazionale del cioccolato, a 21 km da La Mora. Programma, come arrivare e condizioni dell'offerta sono nell'articolo dedicato.",
     cta: "Leggi l'articolo e le condizioni",
-    alt: "Sala della colazione di Agriturismo La Mora con il camino acceso",
   },
   en: {
     label: "Event · Perugia",
     heading: "Eurochocolate 2026: 10% off for the whole event",
     body: "From 13 to 22 November 2026 Perugia hosts the international chocolate festival, 21 km from La Mora. Programme, how to get there and the offer conditions are in our dedicated article.",
     cta: "Read the article and conditions",
-    alt: "Breakfast room at Agriturismo La Mora with the fire lit",
   },
   fr: {
     label: "Événement · Pérouse",
     heading: "Eurochocolate 2026 : -10 % pendant toute la durée de l'événement",
     body: "Du 13 au 22 novembre 2026, Pérouse accueille le festival international du chocolat, à 21 km de La Mora. Programme, accès et conditions de l'offre sont dans notre article dédié.",
     cta: "Lire l'article et les conditions",
-    alt: "Salle du petit-déjeuner de l'Agriturismo La Mora, feu allumé dans la cheminée",
   },
   de: {
     label: "Veranstaltung · Perugia",
     heading: "Eurochocolate 2026: -10 % während der gesamten Veranstaltung",
     body: "Vom 13. bis 22. November 2026 findet in Perugia das internationale Schokoladenfestival statt, 21 km von La Mora entfernt. Programm, Anreise und Angebotsbedingungen stehen in unserem Artikel.",
     cta: "Artikel und Bedingungen lesen",
-    alt: "Frühstücksraum des Agriturismo La Mora mit brennendem Kamin",
   },
 };
 
@@ -313,10 +314,10 @@ export function OffertePageView({ locale }: { locale: Locale }) {
               href={withLocale(locale, `/blog/${EUROCHOCOLATE_2026.articleSlug}/`)}
               className="group grid grid-cols-1 overflow-hidden rounded-[6px] border border-ink/10 bg-cream-dim sm:grid-cols-[2fr_3fr]"
             >
-              <div className="relative aspect-[16/10] sm:aspect-auto sm:min-h-[300px]">
-                <WatermarkedImage
-                  src="/images/colazione/colazione bio agriturismo la mora.webp"
-                  alt={EUROCHOCOLATE_CARD_TEXT[locale].alt}
+              <div className="relative aspect-[16/10] overflow-hidden sm:aspect-auto sm:min-h-[300px]">
+                <Image
+                  src={EUROCHOCOLATE_2024_PHOTO.src}
+                  alt={EUROCHOCOLATE_2024_PHOTO.alt[locale]}
                   fill
                   sizes="(max-width: 640px) 100vw, 450px"
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
@@ -337,6 +338,9 @@ export function OffertePageView({ locale }: { locale: Locale }) {
                 </span>
               </div>
             </Link>
+            <p className="mt-2 text-[11px] leading-[1.5] text-ink-soft/80">
+              <PhotoCreditLine credit={EUROCHOCOLATE_2024_PHOTO.credit} locale={locale} prefix={EUROCHOCOLATE_2024_PHOTO.caption[locale]} />
+            </p>
           </Reveal>
         </div>
       </section>

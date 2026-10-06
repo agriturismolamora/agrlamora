@@ -1,5 +1,6 @@
 import type { Locale } from "@/lib/i18n";
 import type { PromoId } from "@/data/promo";
+import { EUROCHOCOLATE_2024_PHOTO, CIOCCOLATO_FUSO_PHOTO, type PhotoCredit } from "@/data/photo-credits";
 
 /* Contenuto editoriale del blog: non semplici paragrafi ma un piccolo
    sistema di blocchi (ContentBlock), per poter alternare titoli, immagini,
@@ -14,10 +15,10 @@ export type ContentBlock =
   | { type: "p"; text: string }
   | { type: "h2"; text: string }
   | { type: "h3"; text: string }
-  /* credit/creditUrl: obbligatori per foto di terzi (Wikimedia Commons),
-     mostrati sotto l'immagine come nella pagina Territorio. portrait: foto
-     verticale, mostrata in 4:5 invece del 3:2 di default. */
-  | { type: "image"; src: string; alt: string; caption?: string; credit?: string; creditUrl?: string; portrait?: boolean }
+  /* credit: obbligatorio per foto di terzi con licenza libera (src/data/
+     photo-credits.ts), mostrato sotto l'immagine con link a licenza e file.
+     portrait: foto verticale, mostrata in 4:5 invece del 3:2 di default. */
+  | { type: "image"; src: string; alt: string; caption?: string; credit?: PhotoCredit; portrait?: boolean }
   | { type: "list"; items: string[] }
   | { type: "facts"; items: { label: string; value: string }[] }
   /* href "#prenota": invece di un link, un pulsante che apre la modale di
@@ -37,8 +38,13 @@ export type BlogPost = {
   metaDescription: string;
   image: string;
   alt: string;
-  /* Credito per un'immagine di copertina di terzi (mai per le foto nostre). */
-  imageCredit?: { text: string; url?: string };
+  /* Credito per una copertina di terzi (mai per le foto nostre) e
+     didascalia onesta (edizione/anno reali dello scatto). */
+  imageCredit?: PhotoCredit;
+  imageCaption?: string;
+  /* object-position CSS della copertina nei ritagli (hero, card): per
+     tenere in vista il soggetto quando il formato taglia molto. */
+  imagePosition?: string;
   /* Data reale di pubblicazione (YYYY-MM-DD), per il JSON-LD. Assente
      negli articoli più vecchi, di cui non si conosce una data affidabile. */
   datePublished?: string;
@@ -80,12 +86,13 @@ export type BlogPost = {
    "Chocolate Experience" e "Fabbrica del Cioccolato" NON compaiono sulla
    pagina ufficiale 2026: omessi. Ospiti citati per nome omessi di proposito
    (il programma può cambiare). */
-const EUROCHOCOLATE_HERO = "/images/colazione/colazione bio agriturismo la mora.webp";
-const EUROCHOCOLATE_COMMONS = {
-  src: "/images/territorio/perugia/eurochocolate 2024 piazza iv novembre perugia.jpg",
-  credit: "Flavia Ruffinelli, Wikimedia Commons (CC BY-SA 4.0)",
-  creditUrl: "https://commons.wikimedia.org/wiki/File:Eurochocolate_2024_a_Perugia.jpg",
-};
+/* Immagini (ottobre 2026): copertina e og:image = foto reale di
+   Eurochocolate 2024 da Wikimedia Commons (vedi src/data/photo-credits.ts);
+   nel testo, alternate a foto nostre ("il festival di giorno, la sera in
+   campagna"). Foto CC di Eurochocolate valide trovate: una sola (vedi
+   photo-credits.ts per i criteri). */
+const EUROCHOCOLATE_CAMINO = "/images/colazione/colazione bio agriturismo la mora.webp";
+const EUROCHOCOLATE_PARCO = "/images/piscina/esterno parco agriturismo con scivolo per bambini.jpg";
 const EUROCHOCOLATE_APARTMENT = "/images/alloggi/appartamento bilancia/foto orizzontale letto e sala intera orizzontale bilancia.jpeg";
 const EUROCHOCOLATE_OFFICIAL_URL = "https://www.eurochocolate.com/perugia2026/";
 
@@ -96,8 +103,11 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
     title: "Eurochocolate 2026: dove dormire vicino a Perugia",
     excerpt: "Date, programma e consigli pratici per Eurochocolate 2026 (Perugia, 13–22 novembre) e un -10% per chi soggiorna ad Agriturismo La Mora, a 21 km dal centro.",
     metaDescription: "Eurochocolate 2026 a Perugia dal 13 al 22 novembre: date, orari, cosa vedere e dove dormire. Agriturismo La Mora è a 21 km dal centro, con il 10% di sconto.",
-    image: EUROCHOCOLATE_HERO,
-    alt: "Sala della colazione di Agriturismo La Mora con il camino acceso e la tavola apparecchiata",
+    image: EUROCHOCOLATE_2024_PHOTO.src,
+    alt: EUROCHOCOLATE_2024_PHOTO.alt.it,
+    imageCaption: EUROCHOCOLATE_2024_PHOTO.caption.it,
+    imageCredit: EUROCHOCOLATE_2024_PHOTO.credit,
+    imagePosition: "28% 72%",
     datePublished: "2026-10-06",
     schemaType: "BlogPosting",
     theme: "chocolate",
@@ -155,15 +165,6 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "Il programma può cambiare durante l'edizione: per i singoli appuntamenti, gli orari dei laboratori e le novità dell'ultima ora fa fede la pagina ufficiale di Eurochocolate.",
       },
-      {
-        type: "image",
-        src: EUROCHOCOLATE_COMMONS.src,
-        alt: "Folla in piazza IV Novembre a Perugia, davanti alla Fontana Maggiore e alla Cattedrale di San Lorenzo, durante Eurochocolate 2024",
-        caption: "Piazza IV Novembre a Perugia durante Eurochocolate 2024.",
-        credit: EUROCHOCOLATE_COMMONS.credit,
-        creditUrl: EUROCHOCOLATE_COMMONS.creditUrl,
-        portrait: true,
-      },
       { type: "h2", text: "Cos'è la Città del Cioccolato e quando ha aperto?" },
       {
         type: "p",
@@ -172,6 +173,13 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       {
         type: "p",
         text: "Secondo il sito ufficiale è aperta tutti i giorni dalle 10:00 alle 19:00, con biglietto d'ingresso. Per Eurochocolate 2026 gli organizzatori annunciano sconti sul biglietto del museo per chi acquista al Chocolate Show: tariffe e condizioni aggiornate sono su cittadelcioccolato.it.",
+      },
+      {
+        type: "image",
+        src: CIOCCOLATO_FUSO_PHOTO.src,
+        alt: CIOCCOLATO_FUSO_PHOTO.alt.it,
+        caption: CIOCCOLATO_FUSO_PHOTO.caption.it,
+        credit: CIOCCOLATO_FUSO_PHOTO.credit,
       },
       { type: "h2", text: "Perché Perugia è la città del cioccolato?" },
       {
@@ -209,6 +217,12 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
+        src: EUROCHOCOLATE_CAMINO,
+        alt: "Sala della colazione di Agriturismo La Mora con il camino acceso e la tavola apparecchiata",
+        caption: "La sala della colazione di Agriturismo La Mora, con il camino acceso.",
+      },
+      {
+        type: "image",
         src: EUROCHOCOLATE_APARTMENT,
         alt: "Letto matrimoniale e soggiorno dell'appartamento Bilancia di Agriturismo La Mora",
         caption: "L'appartamento Bilancia, il più grande dei cinque.",
@@ -216,6 +230,13 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       {
         type: "p",
         text: "Dalla stessa base, la Basilica di San Francesco ad Assisi è a 7,5 km, circa 18 minuti in auto: un weekend a Eurochocolate si abbina facilmente a una giornata ad Assisi. Gemelli e Sagittario, con giardino privato recintato, accolgono anche chi viaggia con animali.",
+      },
+      { type: "p", text: "Per chi arriva con i bambini, magari reduci dal Fate Lab, nel giardino c'è un parco giochi con scivolo e giostrina." },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_PARCO,
+        alt: "Parco giochi con scivolo giallo e giostrina nel giardino di Agriturismo La Mora",
+        caption: "Il parco giochi nel giardino di La Mora.",
       },
       {
         type: "links",
@@ -253,8 +274,11 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
     title: "Eurochocolate 2026: where to stay near Perugia",
     excerpt: "Dates, programme and practical tips for Eurochocolate 2026 (Perugia, 13–22 November), plus 10% off at Agriturismo La Mora, 21 km from the centre.",
     metaDescription: "Eurochocolate 2026 in Perugia, 13–22 November: dates, opening hours, what to see and where to stay. Agriturismo La Mora is 21 km from the centre, with 10% off.",
-    image: EUROCHOCOLATE_HERO,
-    alt: "Breakfast room at Agriturismo La Mora with the fire lit and the table laid",
+    image: EUROCHOCOLATE_2024_PHOTO.src,
+    alt: EUROCHOCOLATE_2024_PHOTO.alt.en,
+    imageCaption: EUROCHOCOLATE_2024_PHOTO.caption.en,
+    imageCredit: EUROCHOCOLATE_2024_PHOTO.credit,
+    imagePosition: "28% 72%",
     datePublished: "2026-10-06",
     schemaType: "BlogPosting",
     theme: "chocolate",
@@ -312,15 +336,6 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "The programme may change during the festival: for individual events, workshop times and last-minute news, the official Eurochocolate page is the reference.",
       },
-      {
-        type: "image",
-        src: EUROCHOCOLATE_COMMONS.src,
-        alt: "Crowds in Piazza IV Novembre, Perugia, in front of the Fontana Maggiore and the Cathedral of San Lorenzo during Eurochocolate 2024",
-        caption: "Piazza IV Novembre in Perugia during Eurochocolate 2024.",
-        credit: EUROCHOCOLATE_COMMONS.credit,
-        creditUrl: EUROCHOCOLATE_COMMONS.creditUrl,
-        portrait: true,
-      },
       { type: "h2", text: "What is the Città del Cioccolato and when did it open?" },
       {
         type: "p",
@@ -329,6 +344,13 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       {
         type: "p",
         text: "According to its official website it is open every day from 10:00 to 19:00, with paid admission. For Eurochocolate 2026 the organisers announce discounts on museum tickets for anyone buying at the Chocolate Show: current prices and conditions are on cittadelcioccolato.it.",
+      },
+      {
+        type: "image",
+        src: CIOCCOLATO_FUSO_PHOTO.src,
+        alt: CIOCCOLATO_FUSO_PHOTO.alt.en,
+        caption: CIOCCOLATO_FUSO_PHOTO.caption.en,
+        credit: CIOCCOLATO_FUSO_PHOTO.credit,
       },
       { type: "h2", text: "Why is Perugia Italy's chocolate city?" },
       {
@@ -366,6 +388,12 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
+        src: EUROCHOCOLATE_CAMINO,
+        alt: "Breakfast room at Agriturismo La Mora with the fire lit and the table laid",
+        caption: "The breakfast room at Agriturismo La Mora, with the fire lit.",
+      },
+      {
+        type: "image",
         src: EUROCHOCOLATE_APARTMENT,
         alt: "Double bed and living area of the Bilancia apartment at Agriturismo La Mora",
         caption: "The Bilancia apartment, the largest of the five.",
@@ -373,6 +401,13 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       {
         type: "p",
         text: "From the same base, the Basilica of San Francesco in Assisi is 7.5 km away, about 18 minutes by car: a Eurochocolate weekend pairs easily with a day in Assisi. Gemelli and Sagittario, with a private fenced garden, also welcome guests travelling with pets.",
+      },
+      { type: "p", text: "If you're travelling with children, perhaps fresh from the Fate Lab, there's a playground with a slide and a small roundabout in the garden." },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_PARCO,
+        alt: "Playground with a yellow slide and a small roundabout in the garden of Agriturismo La Mora",
+        caption: "The playground in La Mora's garden.",
       },
       {
         type: "links",
@@ -410,8 +445,11 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
     title: "Eurochocolate 2026 : où dormir près de Pérouse",
     excerpt: "Dates, programme et conseils pratiques pour Eurochocolate 2026 (Pérouse, 13–22 novembre), et -10 % pour un séjour à l'Agriturismo La Mora, à 21 km du centre.",
     metaDescription: "Eurochocolate 2026 à Pérouse du 13 au 22 novembre : dates, horaires, que voir et où dormir. L'Agriturismo La Mora est à 21 km du centre, avec 10 % de remise.",
-    image: EUROCHOCOLATE_HERO,
-    alt: "Salle du petit-déjeuner de l'Agriturismo La Mora, feu allumé dans la cheminée et table dressée",
+    image: EUROCHOCOLATE_2024_PHOTO.src,
+    alt: EUROCHOCOLATE_2024_PHOTO.alt.fr,
+    imageCaption: EUROCHOCOLATE_2024_PHOTO.caption.fr,
+    imageCredit: EUROCHOCOLATE_2024_PHOTO.credit,
+    imagePosition: "28% 72%",
     datePublished: "2026-10-06",
     schemaType: "BlogPosting",
     theme: "chocolate",
@@ -469,15 +507,6 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "Le programme peut évoluer pendant le festival : pour chaque rendez-vous, les horaires des ateliers et les nouveautés de dernière minute, la page officielle d'Eurochocolate fait foi.",
       },
-      {
-        type: "image",
-        src: EUROCHOCOLATE_COMMONS.src,
-        alt: "Foule sur la Piazza IV Novembre à Pérouse, devant la Fontana Maggiore et la cathédrale San Lorenzo, pendant Eurochocolate 2024",
-        caption: "La Piazza IV Novembre à Pérouse pendant Eurochocolate 2024.",
-        credit: EUROCHOCOLATE_COMMONS.credit,
-        creditUrl: EUROCHOCOLATE_COMMONS.creditUrl,
-        portrait: true,
-      },
       { type: "h2", text: "Qu'est-ce que la Città del Cioccolato et quand a-t-elle ouvert ?" },
       {
         type: "p",
@@ -486,6 +515,13 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       {
         type: "p",
         text: "D'après son site officiel, elle est ouverte tous les jours de 10h00 à 19h00, avec entrée payante. Pour Eurochocolate 2026, les organisateurs annoncent des réductions sur le billet du musée pour les achats effectués au Chocolate Show : tarifs et conditions à jour sur cittadelcioccolato.it.",
+      },
+      {
+        type: "image",
+        src: CIOCCOLATO_FUSO_PHOTO.src,
+        alt: CIOCCOLATO_FUSO_PHOTO.alt.fr,
+        caption: CIOCCOLATO_FUSO_PHOTO.caption.fr,
+        credit: CIOCCOLATO_FUSO_PHOTO.credit,
       },
       { type: "h2", text: "Pourquoi Pérouse est-elle la ville du chocolat ?" },
       {
@@ -523,6 +559,12 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
+        src: EUROCHOCOLATE_CAMINO,
+        alt: "Salle du petit-déjeuner de l'Agriturismo La Mora, feu allumé dans la cheminée et table dressée",
+        caption: "La salle du petit-déjeuner de l'Agriturismo La Mora, feu allumé dans la cheminée.",
+      },
+      {
+        type: "image",
         src: EUROCHOCOLATE_APARTMENT,
         alt: "Lit double et coin salon de l'appartement Bilancia à l'Agriturismo La Mora",
         caption: "L'appartement Bilancia, le plus grand des cinq.",
@@ -530,6 +572,13 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       {
         type: "p",
         text: "Depuis la même base, la basilique Saint-François d'Assise est à 7,5 km, environ 18 minutes en voiture : un week-end à Eurochocolate se combine facilement avec une journée à Assise. Gemelli et Sagittario, avec jardin privé clôturé, accueillent aussi les voyageurs avec leurs animaux.",
+      },
+      { type: "p", text: "Pour ceux qui voyagent avec des enfants, peut-être tout juste sortis du Fate Lab, le jardin a une aire de jeux avec toboggan et petit manège." },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_PARCO,
+        alt: "Aire de jeux avec toboggan jaune et petit manège dans le jardin de l'Agriturismo La Mora",
+        caption: "L'aire de jeux dans le jardin de La Mora.",
       },
       {
         type: "links",
@@ -567,8 +616,11 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
     title: "Eurochocolate 2026: Übernachten in der Nähe von Perugia",
     excerpt: "Termine, Programm und praktische Tipps zur Eurochocolate 2026 (Perugia, 13.–22. November) – dazu 10 % Rabatt im Agriturismo La Mora, 21 km vom Zentrum.",
     metaDescription: "Eurochocolate 2026 in Perugia vom 13. bis 22. November: Termine, Öffnungszeiten, Programm und Unterkunft. Agriturismo La Mora liegt 21 km vom Zentrum, mit 10 % Rabatt.",
-    image: EUROCHOCOLATE_HERO,
-    alt: "Frühstücksraum des Agriturismo La Mora mit brennendem Kamin und gedecktem Tisch",
+    image: EUROCHOCOLATE_2024_PHOTO.src,
+    alt: EUROCHOCOLATE_2024_PHOTO.alt.de,
+    imageCaption: EUROCHOCOLATE_2024_PHOTO.caption.de,
+    imageCredit: EUROCHOCOLATE_2024_PHOTO.credit,
+    imagePosition: "28% 72%",
     datePublished: "2026-10-06",
     schemaType: "BlogPosting",
     theme: "chocolate",
@@ -626,15 +678,6 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "Das Programm kann sich während des Festivals ändern: Für einzelne Termine, Workshop-Zeiten und kurzfristige Neuigkeiten gilt die offizielle Seite der Eurochocolate.",
       },
-      {
-        type: "image",
-        src: EUROCHOCOLATE_COMMONS.src,
-        alt: "Menschenmenge auf der Piazza IV Novembre in Perugia vor der Fontana Maggiore und der Kathedrale San Lorenzo während der Eurochocolate 2024",
-        caption: "Die Piazza IV Novembre in Perugia während der Eurochocolate 2024.",
-        credit: EUROCHOCOLATE_COMMONS.credit,
-        creditUrl: EUROCHOCOLATE_COMMONS.creditUrl,
-        portrait: true,
-      },
       { type: "h2", text: "Was ist die Città del Cioccolato und wann wurde sie eröffnet?" },
       {
         type: "p",
@@ -643,6 +686,13 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       {
         type: "p",
         text: "Laut der offiziellen Website ist sie täglich von 10:00 bis 19:00 Uhr geöffnet, der Eintritt ist kostenpflichtig. Zur Eurochocolate 2026 kündigen die Veranstalter Ermäßigungen auf das Museumsticket für Einkäufe bei der Chocolate Show an: aktuelle Preise und Bedingungen auf cittadelcioccolato.it.",
+      },
+      {
+        type: "image",
+        src: CIOCCOLATO_FUSO_PHOTO.src,
+        alt: CIOCCOLATO_FUSO_PHOTO.alt.de,
+        caption: CIOCCOLATO_FUSO_PHOTO.caption.de,
+        credit: CIOCCOLATO_FUSO_PHOTO.credit,
       },
       { type: "h2", text: "Warum ist Perugia die Stadt der Schokolade?" },
       {
@@ -680,6 +730,12 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
+        src: EUROCHOCOLATE_CAMINO,
+        alt: "Frühstücksraum des Agriturismo La Mora mit brennendem Kamin und gedecktem Tisch",
+        caption: "Der Frühstücksraum des Agriturismo La Mora mit brennendem Kamin.",
+      },
+      {
+        type: "image",
         src: EUROCHOCOLATE_APARTMENT,
         alt: "Doppelbett und Wohnbereich der Ferienwohnung Bilancia im Agriturismo La Mora",
         caption: "Die Ferienwohnung Bilancia, die größte der fünf.",
@@ -687,6 +743,13 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       {
         type: "p",
         text: "Vom selben Ausgangspunkt ist die Basilika San Francesco in Assisi 7,5 km entfernt, rund 18 Minuten mit dem Auto: Ein Eurochocolate-Wochenende lässt sich leicht mit einem Tag in Assisi verbinden. Gemelli und Sagittario mit privatem, eingezäuntem Garten nehmen auch Gäste mit Haustieren auf.",
+      },
+      { type: "p", text: "Für Familien mit Kindern, vielleicht frisch aus dem Fate Lab, gibt es im Garten einen Spielplatz mit Rutsche und kleinem Karussell." },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_PARCO,
+        alt: "Spielplatz mit gelber Rutsche und kleinem Karussell im Garten des Agriturismo La Mora",
+        caption: "Der Spielplatz im Garten von La Mora.",
       },
       {
         type: "links",

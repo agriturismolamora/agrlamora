@@ -11,6 +11,7 @@ import { findMentionedPlaces } from "@/data/places";
 import { MapsButton } from "@/components/maps-button";
 import { BookingModalButton } from "@/components/booking-modal-button";
 import { PromoOfferBox } from "@/components/promo-offer-box";
+import { PhotoCreditLine } from "@/components/photo-credit";
 import { ChocolateDrip, CocoaParticles } from "@/components/chocolate-decor";
 import choco from "@/components/chocolate-theme.module.css";
 import type { BlogPost } from "@/data/blog-posts";
@@ -57,11 +58,11 @@ export async function blogArticleMetadata(locale: Locale, params: Promise<Params
   };
 }
 
-const TEXT: Record<Locale, { allArticles: string; otherArticles: string; placesMentioned: string; photo: string }> = {
-  it: { allArticles: "Tutti gli articoli", otherArticles: "Altri articoli", placesMentioned: "Luoghi citati nell'articolo", photo: "Foto" },
-  en: { allArticles: "All articles", otherArticles: "More articles", placesMentioned: "Places mentioned in this article", photo: "Photo" },
-  fr: { allArticles: "Tous les articles", otherArticles: "Autres articles", placesMentioned: "Lieux cités dans l'article", photo: "Photo" },
-  de: { allArticles: "Alle Artikel", otherArticles: "Weitere Artikel", placesMentioned: "Im Artikel erwähnte Orte", photo: "Foto" },
+const TEXT: Record<Locale, { allArticles: string; otherArticles: string; placesMentioned: string }> = {
+  it: { allArticles: "Tutti gli articoli", otherArticles: "Altri articoli", placesMentioned: "Luoghi citati nell'articolo" },
+  en: { allArticles: "All articles", otherArticles: "More articles", placesMentioned: "Places mentioned in this article" },
+  fr: { allArticles: "Tous les articles", otherArticles: "Autres articles", placesMentioned: "Lieux cités dans l'article" },
+  de: { allArticles: "Alle Artikel", otherArticles: "Weitere Artikel", placesMentioned: "Im Artikel erwähnte Orte" },
 };
 
 /* Tutto il testo visibile dell'articolo, per riconoscere quali luoghi di
@@ -376,19 +377,10 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
                     </div>
                     {(block.caption || block.credit) && (
                       <figcaption className={c.caption}>
-                        {block.caption}
-                        {block.credit && (
-                          <>
-                            {block.caption ? " " : ""}
-                            {text.photo}:{" "}
-                            {block.creditUrl ? (
-                              <a href={block.creditUrl} target="_blank" rel="noopener noreferrer" className={c.link}>
-                                {block.credit}
-                              </a>
-                            ) : (
-                              block.credit
-                            )}
-                          </>
+                        {block.credit ? (
+                          <PhotoCreditLine credit={block.credit} locale={locale} prefix={block.caption} linkClassName={c.link} />
+                        ) : (
+                          block.caption
                         )}
                       </figcaption>
                     )}
@@ -507,7 +499,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
       {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
 
       <section className="relative flex h-[56vh] min-h-[400px] items-end overflow-hidden">
-        <Image src={post.image} alt={post.alt} fill priority sizes="100vw" className="object-cover" />
+        <Image src={post.image} alt={post.alt} fill priority sizes="100vw" className="object-cover" style={{ objectPosition: post.imagePosition }} />
         <div
           aria-hidden="true"
           className="absolute inset-0"
@@ -517,6 +509,15 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
               : "linear-gradient(180deg, rgba(20,14,7,.05) 0%, rgba(20,14,7,.78) 100%)",
           }}
         />
+        {post.imageCredit && (
+          <PhotoCreditLine
+            credit={post.imageCredit}
+            locale={locale}
+            prefix={post.imageCaption}
+            className="absolute bottom-2 right-3 z-[2] max-w-[calc(100%-1.5rem)] text-right text-[10.5px] leading-[1.4] text-cream/80 sm:right-5"
+            linkClassName="underline decoration-cream/40 underline-offset-2 hover:text-cream"
+          />
+        )}
         <div className="relative z-[1] mx-auto w-full max-w-[760px] px-6 pb-12 sm:px-10">
           <Link
             href={withLocale(locale, "/blog/")}
@@ -575,10 +576,14 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
                       src={p.image}
                       alt={p.alt}
                       fill
+                      style={{ objectPosition: p.imagePosition }}
                       sizes="(max-width: 640px) 90vw, 340px"
                       className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                     />
                   </div>
+                  {p.imageCredit && (
+                    <PhotoCreditLine credit={p.imageCredit} locale={locale} linked={false} className="mt-1.5 block text-[10px] leading-[1.4] text-ink-soft/70" />
+                  )}
                   <h3 className="mt-3 font-display text-[16px] leading-[1.3] text-ink [text-wrap:balance]">{p.title}</h3>
                 </Link>
               </Reveal>

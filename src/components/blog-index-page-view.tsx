@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { PhotoCreditLine } from "@/components/photo-credit";
 import Link from "next/link";
 import { getBlogPosts } from "@/data/blog-posts";
 import { Reveal } from "@/components/scroll-reveal";
@@ -80,6 +81,7 @@ export function BlogIndexPageView({ locale }: { locale: Locale }) {
                   alt={featured.alt}
                   fill
                   priority
+                  style={{ objectPosition: featured.imagePosition }}
                   sizes="(max-width: 640px) 100vw, 540px"
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 />
@@ -90,6 +92,14 @@ export function BlogIndexPageView({ locale }: { locale: Locale }) {
                   {featured.title}
                 </h2>
                 <p className="mt-3 text-[14px] leading-[1.7] text-ink-soft">{featured.excerpt}</p>
+                {featured.imageCredit && (
+                  <PhotoCreditLine
+                    credit={featured.imageCredit}
+                    locale={locale}
+                    linked={false}
+                    className="mt-3 block text-[10.5px] leading-[1.5] text-ink-soft/70"
+                  />
+                )}
                 <span className="mt-5 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-raspberry">
                   {text.readMore}
                   <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
@@ -109,6 +119,7 @@ export function BlogIndexPageView({ locale }: { locale: Locale }) {
                       src={post.image}
                       alt={post.alt}
                       fill
+                      style={{ objectPosition: post.imagePosition }}
                       sizes="(max-width: 640px) 90vw, 280px"
                       className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                     />
@@ -117,6 +128,9 @@ export function BlogIndexPageView({ locale }: { locale: Locale }) {
                     {post.category}
                   </span>
                   <h3 className="mt-1.5 font-display text-[17px] leading-[1.3] text-ink [text-wrap:balance]">{post.title}</h3>
+                  {post.imageCredit && (
+                    <PhotoCreditLine credit={post.imageCredit} locale={locale} linked={false} className="mt-1.5 block text-[10px] leading-[1.4] text-ink-soft/70" />
+                  )}
                 </Link>
               </Reveal>
             ))}

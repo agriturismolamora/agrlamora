@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { PhotoCreditLine } from "@/components/photo-credit";
 import Link from "next/link";
 import { useState } from "react";
 import { Reveal } from "@/components/scroll-reveal";
@@ -39,6 +40,13 @@ const TEXT: Record<Locale, { label: string; heading: string; cta: string; scopri
 
 export function BlogSection({ locale }: { locale: Locale }) {
   const POSTS = getBlogPosts(locale);
+  /* Ventaglio desktop: al massimo FAN_MAX card. Con 8 articoli (dopo
+     Eurochocolate) le card sovrapposte superavano la larghezza della pagina
+     anche a 1440px e la prima e l'ultima venivano tagliate. La striscia
+     mobile scorre, quindi li mostra tutti; "Tutti gli articoli" porta
+     comunque all'indice completo. */
+  const FAN_MAX = 6;
+  const fanPosts = POSTS.slice(0, FAN_MAX);
   const text = TEXT[locale];
   /* z-index dell'hover deve vivere in state React: uno style inline con
      zIndex fisso (necessario per l'ordine base a ventaglio, i+1) batte
@@ -84,7 +92,7 @@ export function BlogSection({ locale }: { locale: Locale }) {
             i margini negativi/z-index dell'overlap vivono sui Link, un
             fade-in per-card romperebbe quella geometria. */}
         <Reveal delay={100} className="mt-14 hidden sm:mt-16 lg:flex lg:justify-center">
-          {POSTS.map((post, i) => (
+          {fanPosts.map((post, i) => (
             <Link
               key={post.slug}
               href={withLocale(locale, `/blog/${post.slug}/`)}
@@ -103,6 +111,7 @@ export function BlogSection({ locale }: { locale: Locale }) {
                 fill
                 quality={90}
                 sizes="270px"
+                style={{ objectPosition: post.imagePosition }}
                 className="object-cover transition-transform duration-500 ease-out group-hover/card:scale-[1.06]"
               />
               <div
@@ -123,6 +132,10 @@ export function BlogSection({ locale }: { locale: Locale }) {
                     →
                   </span>
                 </span>
+                {/* max-w: la card successiva del ventaglio copre il bordo destro. */}
+                {post.imageCredit && (
+                  <PhotoCreditLine credit={post.imageCredit} locale={locale} linked={false} className="mt-2 block max-w-[150px] text-[8.5px] leading-[1.35] text-cream/65 xl:max-w-[165px]" />
+                )}
               </div>
             </Link>
           ))}
@@ -135,7 +148,7 @@ export function BlogSection({ locale }: { locale: Locale }) {
               href={withLocale(locale, `/blog/${post.slug}/`)}
               className="group/card relative aspect-[3/4] w-[220px] shrink-0 snap-start overflow-hidden"
             >
-              <Image src={post.image} alt={post.alt} fill quality={90} sizes="220px" className="object-cover" />
+              <Image src={post.image} alt={post.alt} fill quality={90} sizes="220px" className="object-cover" style={{ objectPosition: post.imagePosition }} />
               <div
                 aria-hidden="true"
                 className="absolute inset-0"
@@ -152,6 +165,9 @@ export function BlogSection({ locale }: { locale: Locale }) {
                   {text.scopriDiPiu}
                   <span aria-hidden="true">→</span>
                 </span>
+                {post.imageCredit && (
+                  <PhotoCreditLine credit={post.imageCredit} locale={locale} linked={false} className="mt-2 block text-[8.5px] leading-[1.35] text-cream/65" />
+                )}
               </div>
             </Link>
           ))}

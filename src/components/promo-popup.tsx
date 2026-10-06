@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -12,6 +13,8 @@ import { useConsent } from "@/lib/consent";
 import { getActivePopupPromo, type Promo } from "@/data/promo";
 import { ChocolateDrip, CocoaParticles } from "@/components/chocolate-decor";
 import choco from "@/components/chocolate-theme.module.css";
+import { PhotoCreditLine } from "@/components/photo-credit";
+import { EUROCHOCOLATE_2024_PHOTO } from "@/data/photo-credits";
 
 /* Chiave del popup di prenotazione diretta: invariata, così finita una
    promo a tempo il ritorno a questo popup rispetta ancora il suo cooldown. */
@@ -252,12 +255,37 @@ export function PromoPopup({ locale }: { locale: Locale }) {
             type="button"
             onClick={() => setOpen(false)}
             aria-label={t("nav", "chiudi", locale)}
-            className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/25 text-[var(--crema)] transition-colors hover:bg-black/45"
+            className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/45 text-[var(--crema)] transition-colors hover:bg-black/65"
           >
             <CloseIcon />
           </button>
 
-          <div className="px-6 pb-2 pt-7 text-center sm:px-9 sm:pt-9">
+          {/* Foto reale di Eurochocolate (edizione 2024, CC BY-SA): niente
+              filigrana, didascalia con l'anno vero e attribuzione completa. */}
+          <div className="relative h-[118px] w-full overflow-hidden rounded-t-[10px] sm:h-[170px]">
+            <Image
+              src={EUROCHOCOLATE_2024_PHOTO.src}
+              alt={EUROCHOCOLATE_2024_PHOTO.alt[locale]}
+              fill
+              sizes="(max-width: 640px) 92vw, 460px"
+              className="object-cover"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0"
+              style={{ background: "linear-gradient(180deg, rgba(43,26,16,0) 45%, rgba(43,26,16,.9) 100%)" }}
+            />
+          </div>
+          <p className="px-5 pt-1.5 text-center text-[9.5px] leading-[1.4] text-[var(--crema)]/70 sm:px-9">
+            <PhotoCreditLine
+              credit={EUROCHOCOLATE_2024_PHOTO.credit}
+              locale={locale}
+              prefix={EUROCHOCOLATE_2024_PHOTO.caption[locale]}
+              linkClassName="underline decoration-[var(--crema)]/40 underline-offset-2 hover:text-[var(--crema)]"
+            />
+          </p>
+
+          <div className="px-6 pb-2 pt-4 text-center sm:px-9 sm:pt-5">
             <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--caramello-chiaro)]">{text.label}</span>
             <h2
               id="promo-popup-heading"
