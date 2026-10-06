@@ -1,6 +1,23 @@
 import type { Locale } from "@/lib/i18n";
 import type { PromoId } from "@/data/promo";
-import { EUROCHOCOLATE_2024_PHOTO, CIOCCOLATO_FUSO_PHOTO, type PhotoCredit } from "@/data/photo-credits";
+import {
+  EUROCHOCOLATE_2024_PHOTO,
+  CIOCCOLATO_FUSO_PHOTO,
+  SPOGLIAZIONE_FACCIATA_PHOTO,
+  SPOGLIAZIONE_ROSONE_PHOTO,
+  SPOGLIAZIONE_VEDUTA_PHOTO,
+  ALBERO_GUBBIO_PHOTO,
+  GUBBIO_NATALE_PIAZZA_PHOTO,
+  ALBERO_TRASIMENO_PHOTO,
+  ROCCA_DEL_LEONE_PHOTO,
+  TRASIMENO_VISTA_PHOTO,
+  RASIGLIA_BORGO_PHOTO,
+  RASIGLIA_MULINO_PHOTO,
+  RASIGLIA_TELAIO_PHOTO,
+  RASIGLIA_CASCATELLA_PHOTO,
+  type CreditedPhoto,
+  type PhotoCredit,
+} from "@/data/photo-credits";
 
 /* Contenuto editoriale del blog: non semplici paragrafi ma un piccolo
    sistema di blocchi (ContentBlock), per poter alternare titoli, immagini,
@@ -783,9 +800,2230 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
   },
 };
 
+/* ---- Blocco C (ottobre 2026): 4 articoli per traffico organico (SEO/GEO).
+   Solo fatti da fonti ufficiali o affidabili, verificati il 06/10/2026:
+   - Carlo Acutis: assisisantuariospogliazione.it (biografia, orari, storia
+     della chiesa), carloacutis.com (tomba nella navata destra), Vatican
+     News (canonizzazione 7/9/2025, rinvio dal 27/4/2025), visit-assisi.it
+     (ZTL, parcheggi, bus urbani).
+   - Natale: umbriatourism.it (Natale a Perugia 2025/26), italia.it (albero e
+     mercatini di Gubbio; Luci sul Trasimeno), Comune di Foligno (presepe di
+     Rasiglia).
+   - Albero sul lago: Provincia di Perugia (edizione 2023: misure, luci,
+     prezzo), italia.it (record dichiarato, periodo).
+   - Rasiglia: Comune di Foligno (scheda del borgo, Infopoint, eventi,
+     accessibilità; navette da Casenove nei periodi di punta), italia.it
+     (altitudine circa 600 m, "borgo dei ruscelli").
+   Distanze: Google Maps (indicazioni stradali, percorso consigliato da La
+   Mora) lette il 06/10/2026, vedi src/data/places.ts. Date 2026 di eventi
+   non ancora annunciate: forma evergreen con rimando ai siti ufficiali. */
+const LAMORA_BASILICA = "/images/territorio/assisi/basilica di assisi.jpg";
+const LAMORA_ACQUARIO = "/images/alloggi/appartamento acquario/orizzontale letto acquario.jpeg";
+const LAMORA_DALL_ALTO = "/images/home/foto dell agriturismo dall alto.webp";
+const LAMORA_PISCINA = "/images/piscina/piscina agriturismo la mora.webp";
+
+/* Copertina e blocchi immagine da una foto con licenza (photo-credits.ts):
+   alt, didascalia con l'anno reale e credito sempre insieme. */
+function cover(p: CreditedPhoto, l: Locale) {
+  return { image: p.src, alt: p.alt[l], imageCaption: p.caption[l], imageCredit: p.credit };
+}
+function credited(p: CreditedPhoto, l: Locale): ContentBlock {
+  return { type: "image", src: p.src, alt: p.alt[l], caption: p.caption[l], credit: p.credit };
+}
+
+const SANTUARIO_URL = "https://www.assisisantuariospogliazione.it/";
+
+const CARLO_ACUTIS_POST: Record<Locale, BlogPost> = {
+  it: {
+    slug: "carlo-acutis-assisi",
+    category: "Spiritualità",
+    title: "Carlo Acutis ad Assisi: guida alla tomba e al santuario",
+    excerpt: "Chi era San Carlo Acutis, dove riposa ad Assisi e come visitare il Santuario della Spogliazione: orari, parcheggi, cosa vedere vicino e dove dormire a 6,8 km.",
+    metaDescription: "San Carlo Acutis ad Assisi: la tomba nel Santuario della Spogliazione, orari, come arrivare, cosa vedere vicino e dove dormire a 6,8 km dal santuario.",
+    ...cover(SPOGLIAZIONE_FACCIATA_PHOTO, "it"),
+    imagePosition: "50% 20%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "In breve",
+      items: [
+        { label: "Dove riposa", value: "Santuario della Spogliazione (Santa Maria Maggiore), Assisi" },
+        { label: "Canonizzazione", value: "7 settembre 2025, piazza San Pietro" },
+        { label: "Memoria liturgica", value: "12 ottobre" },
+        { label: "Domenica e festivi", value: "visite sospese 10:30–12:30" },
+        { label: "A piedi dalla Basilica", value: "1,0 km · circa 13 min" },
+        { label: "Da La Mora", value: "6,8 km · circa 15 min in auto" },
+      ],
+    },
+    intro:
+      "Dal 6 aprile 2019 il corpo di Carlo Acutis riposa ad Assisi, nella chiesa di Santa Maria Maggiore, oggi Santuario della Spogliazione. Canonizzato il 7 settembre 2025, San Carlo Acutis è meta di molti pellegrini, soprattutto giovani. In questa guida trovi i fatti essenziali sulla sua vita e le informazioni pratiche per visitare il santuario, a 6,8 km da Agriturismo La Mora.",
+    introCtaHeading: "Visiti Assisi per San Carlo Acutis? Dormi a 6,8 km dal santuario, in campagna.",
+    introCtaLabel: "Prenota",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "Chi era Carlo Acutis?" },
+      {
+        type: "p",
+        text: "Carlo Acutis nacque a Londra il 3 maggio 1991 e visse a Milano, ma trascorse lunghi periodi ad Assisi, dove — scrive il santuario — «respirò la spiritualità di San Francesco». La Messa era per lui un appuntamento quotidiano, anche nelle chiese di Assisi: tra queste Santa Maria Maggiore, dove oggi riposa.",
+      },
+      {
+        type: "p",
+        text: "Colpito da una leucemia fulminante, la visse, secondo la biografia ufficiale del santuario, «come prova da offrire per il Papa e per la Chiesa». Morì il 12 ottobre 2006, a 15 anni.",
+      },
+      {
+        type: "facts",
+        items: [
+          { label: "Nascita", value: "Londra, 3 maggio 1991" },
+          { label: "Morte", value: "12 ottobre 2006" },
+          { label: "Beatificazione", value: "Assisi, 10 ottobre 2020" },
+          { label: "Canonizzazione", value: "Roma, 7 settembre 2025" },
+          { label: "Tomba", value: "Assisi, dal 6 aprile 2019" },
+          { label: "Memoria", value: "12 ottobre" },
+        ],
+      },
+      { type: "h2", text: "Quando è diventato santo Carlo Acutis?" },
+      {
+        type: "p",
+        text: "Il 10 ottobre 2020 Carlo Acutis è stato beatificato nella Basilica di San Francesco ad Assisi, in una celebrazione presieduta dal cardinale Agostino Vallini. La canonizzazione, inizialmente prevista per il 27 aprile 2025 durante il Giubileo degli adolescenti, fu rinviata dopo la morte di Papa Francesco: Papa Leone XIV lo ha proclamato santo il 7 settembre 2025 in piazza San Pietro, insieme a Pier Giorgio Frassati.",
+      },
+      {
+        type: "p",
+        text: "La memoria liturgica di San Carlo Acutis è il 12 ottobre, giorno della sua morte. Nel 2026 ricorrono vent'anni dalla scomparsa: per l'anniversario il santuario ha organizzato celebrazioni dal 9 al 12 ottobre.",
+      },
+      { type: "h2", text: "Dove si trova la tomba di Carlo Acutis?" },
+      {
+        type: "p",
+        text: "La tomba di San Carlo Acutis è nella chiesa di Santa Maria Maggiore, in piazza del Vescovado, nel centro storico di Assisi: è il Santuario della Spogliazione. Il corpo vi riposa dal 6 aprile 2019 e il monumento sepolcrale si trova nella navata destra.",
+      },
+      credited(SPOGLIAZIONE_VEDUTA_PHOTO, "it"),
+      { type: "h2", text: "Perché si chiama Santuario della Spogliazione?" },
+      {
+        type: "p",
+        text: "Il nome ricorda uno degli episodi più noti della vita di San Francesco: il giovane Francesco si spogliò delle sue vesti davanti al padre e al vescovo Guido, che lo ricoprì con il proprio pallio. La tradizione colloca l'episodio nel vescovado accanto alla chiesa. Il santuario custodisce la memoria di quel gesto e organizza visite guidate all'antico episcopio e alla «porta di Francesco».",
+      },
+      {
+        type: "p",
+        text: "La chiesa ha una storia lunga. Secondo la tradizione fu la prima cattedrale di Assisi, costruita nel IV secolo sopra una casa romana, la domus di Properzio; nel 1035 il titolo di cattedrale passò a San Rufino. Sul rosone è incisa la data 1163, l'abside fu ricostruita nel 1216 e la facciata ha assunto l'aspetto attuale nel 1938.",
+      },
+      credited(SPOGLIAZIONE_ROSONE_PHOTO, "it"),
+      { type: "h2", text: "Come si visita la tomba di Carlo Acutis?" },
+      {
+        type: "p",
+        text: "Il santuario è aperto tutti i giorni. Gli orari pubblicati sul sito ufficiale al momento della stesura di questa guida sono:",
+      },
+      {
+        type: "list",
+        items: [
+          "dal 1° novembre al 31 marzo: dalle 8:00 alle 19:00;",
+          "dal 1° aprile al 30 ottobre: dalle 8:00 alle 19:00 il lunedì e il giovedì, dalle 7:00 alle 19:00 negli altri giorni;",
+          "domenica e festivi: dalle 10:30 alle 12:30 le visite al santuario e alla tomba sono sospese per la Messa delle 11:00 (chi vuole partecipare deve entrare entro le 10:30).",
+        ],
+      },
+      {
+        type: "p",
+        text: "Le Messe sono alle 18:00 nei giorni feriali, precedute dal rosario alle 17:30, e alle 9:30 e alle 11:00 nei festivi. Il santuario propone anche visite guidate alla domus di Properzio, nella cripta, dalle 12:30 alle 13:30 (la cripta non è visitabile durante le celebrazioni), e all'antico episcopio con la porta di Francesco, per cui consiglia la prenotazione. Orari e celebrazioni possono cambiare: prima di partire controlla il sito ufficiale del santuario.",
+      },
+      { type: "h2", text: "Come si arriva al Santuario della Spogliazione?" },
+      {
+        type: "p",
+        text: "Da Agriturismo La Mora il santuario dista 6,8 km, circa 15 minuti in auto secondo Google Maps. Il centro storico di Assisi è in buona parte zona a traffico limitato (ZTL), con regole che cambiano secondo la stagione: conviene lasciare l'auto in uno dei parcheggi indicati dal portale turistico del Comune e proseguire a piedi.",
+      },
+      {
+        type: "list",
+        items: [
+          "Parcheggi a pagamento: Giovanni Paolo II, Mojano, Porta Nuova e Matteotti.",
+          "Parcheggi gratuiti: zona cimitero (via Egidio Albornoz), piazza Caduti Forze dell'Ordine e Porta San Giacomo.",
+          "In città circolano anche le linee urbane di autobus A, B e C.",
+        ],
+      },
+      { type: "h2", text: "Cosa vedere vicino al Santuario della Spogliazione?" },
+      {
+        type: "p",
+        text: "Il santuario è nel centro storico e da qui i luoghi principali di Assisi si raggiungono a piedi:",
+      },
+      {
+        type: "list",
+        items: [
+          "la Basilica di San Francesco: 1,0 km, circa 13 minuti a piedi lungo via San Francesco secondo Google Maps;",
+          "Piazza del Comune, con il Tempio di Minerva e la Torre del Popolo;",
+          "la Cattedrale di San Rufino, che nel 1035 ereditò da Santa Maria Maggiore il titolo di cattedrale;",
+          "la Rocca Maggiore, la fortezza che domina la città.",
+        ],
+      },
+      { type: "h2", text: "Come abbinare la visita alla Basilica di San Francesco?" },
+      {
+        type: "p",
+        text: "Un itinerario semplice, tutto a piedi: la mattina al Santuario della Spogliazione (la domenica e i festivi le visite alla tomba sono sospese dalle 10:30 alle 12:30), poi lungo via San Francesco fino alla Basilica di San Francesco, dove Carlo Acutis è stato beatificato nel 2020. Nel pomeriggio si risale verso Piazza del Comune e la Cattedrale di San Rufino.",
+      },
+      {
+        type: "image",
+        src: LAMORA_BASILICA,
+        alt: "La Basilica di San Francesco ad Assisi in una giornata di sole, con il prato davanti",
+        caption: "La Basilica di San Francesco, a circa 1 km a piedi dal santuario.",
+      },
+      {
+        type: "p",
+        text: "Nel 2026 Assisi celebra anche l'Ottavo Centenario della morte di San Francesco (1226–2026). E a 2,2 km da La Mora, nella piana sotto la città, c'è la Basilica di Santa Maria degli Angeli con la Porziuncola: ne parliamo nella nostra guida dedicata.",
+      },
+      { type: "h2", text: "Dove dormire vicino alla tomba di Carlo Acutis?" },
+      {
+        type: "p",
+        text: "Agriturismo La Mora, in via Fonte Citerna 7, è a 6,8 km dal Santuario della Spogliazione (circa 15 minuti in auto) e a 7,5 km dalla Basilica di San Francesco. I cinque appartamenti indipendenti hanno cucina attrezzata, Wi-Fi e aria condizionata, e il parcheggio è gratuito all'interno della struttura: una base tranquilla in campagna, comoda per famiglie e piccoli gruppi.",
+      },
+      {
+        type: "image",
+        src: LAMORA_ACQUARIO,
+        alt: "Camera dell'appartamento Acquario di Agriturismo La Mora, con letto matrimoniale e letto a castello",
+        caption: "Una camera dell'appartamento Acquario.",
+      },
+      {
+        type: "p",
+        text: "Per i gruppi più numerosi l'appartamento Bilancia ospita fino a 8 persone; Gemelli e Sagittario, con giardino privato recintato, accolgono anche chi viaggia con animali.",
+      },
+      {
+        type: "links",
+        heading: "Organizza la visita",
+        items: [
+          { label: "Gli appartamenti di La Mora", href: "/alloggi/" },
+          { label: "Le offerte per chi prenota diretto", href: "/offerte/" },
+          { label: "Il territorio intorno a La Mora", href: "/territorio/" },
+          { label: "Ottavo Centenario di San Francesco", href: "/ottavo-centenario-san-francesco/" },
+          { label: "Guida alla Basilica di Santa Maria degli Angeli", href: "/blog/basilica-santa-maria-degli-angeli/" },
+          { label: "Sito ufficiale del Santuario della Spogliazione", href: SANTUARIO_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Domande frequenti su Carlo Acutis ad Assisi",
+      items: [
+        { q: "Dove è sepolto Carlo Acutis?", a: "Ad Assisi, nella chiesa di Santa Maria Maggiore — Santuario della Spogliazione, in piazza del Vescovado. Il corpo vi riposa dal 6 aprile 2019." },
+        { q: "Quando è stato canonizzato Carlo Acutis?", a: "Il 7 settembre 2025, da Papa Leone XIV, in piazza San Pietro a Roma, insieme a Pier Giorgio Frassati. Era stato beatificato ad Assisi il 10 ottobre 2020." },
+        { q: "Quando si festeggia San Carlo Acutis?", a: "La memoria liturgica è il 12 ottobre, giorno della sua morte nel 2006." },
+        { q: "Si può visitare la tomba la domenica?", a: "Sì, ma la domenica e nei giorni festivi le visite al santuario e alla tomba sono sospese dalle 10:30 alle 12:30, durante la Messa delle 11:00." },
+        { q: "Quanto dista il santuario dalla Basilica di San Francesco?", a: "Circa 1 km, 13 minuti a piedi lungo via San Francesco secondo Google Maps." },
+        { q: "Dove parcheggiare per visitare il santuario?", a: "Il centro storico è in buona parte ZTL: conviene usare i parcheggi indicati dal Comune, a pagamento (Giovanni Paolo II, Mojano, Porta Nuova, Matteotti) o gratuiti (zona cimitero, piazza Caduti Forze dell'Ordine, Porta San Giacomo), e proseguire a piedi." },
+        { q: "Quanto dista Agriturismo La Mora dal santuario?", a: "6,8 km, circa 15 minuti in auto secondo Google Maps." },
+      ],
+    },
+    finalCtaHeading: "Un pellegrinaggio ad Assisi, con una casa in campagna dove tornare la sera.",
+    finalCtaBody: "Scegli l'appartamento giusto per te, la tua famiglia o il tuo gruppo.",
+    finalCtaLabel: "Scopri gli appartamenti",
+    finalCtaHref: "/alloggi/",
+  },
+  en: {
+    slug: "carlo-acutis-assisi",
+    category: "Spirituality",
+    title: "Carlo Acutis in Assisi: a guide to his tomb and sanctuary",
+    excerpt: "Who Saint Carlo Acutis was, where he rests in Assisi and how to visit the Sanctuary of Renunciation: opening hours, parking, what's nearby and where to stay, 6.8 km away.",
+    metaDescription: "Saint Carlo Acutis in Assisi: his tomb in the Sanctuary of Renunciation, opening hours, getting there, what to see nearby and where to stay 6.8 km away.",
+    ...cover(SPOGLIAZIONE_FACCIATA_PHOTO, "en"),
+    imagePosition: "50% 20%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "At a glance",
+      items: [
+        { label: "Resting place", value: "Santuario della Spogliazione (Santa Maria Maggiore), Assisi" },
+        { label: "Canonisation", value: "7 September 2025, St Peter's Square" },
+        { label: "Feast day", value: "12 October" },
+        { label: "Sundays and holidays", value: "no visits 10:30–12:30" },
+        { label: "On foot from the Basilica", value: "1.0 km · about 13 min" },
+        { label: "From La Mora", value: "6.8 km · about 15 min by car" },
+      ],
+    },
+    intro:
+      "Since 6 April 2019 the body of Carlo Acutis has rested in Assisi, in the church of Santa Maria Maggiore, now the Santuario della Spogliazione (Sanctuary of Renunciation). Canonised on 7 September 2025, Saint Carlo Acutis draws many pilgrims, especially young people. This guide covers the essential facts of his life and the practical information you need to visit the sanctuary, 6.8 km from Agriturismo La Mora.",
+    introCtaHeading: "Visiting Assisi for Saint Carlo Acutis? Stay in the countryside, 6.8 km from the sanctuary.",
+    introCtaLabel: "Book",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "Who was Carlo Acutis?" },
+      {
+        type: "p",
+        text: "Carlo Acutis was born in London on 3 May 1991 and lived in Milan, but spent long periods in Assisi where, as the sanctuary puts it, he “breathed in the spirituality of Saint Francis”. Daily Mass was a fixed appointment for him, in Assisi's churches too — among them Santa Maria Maggiore, where he now rests.",
+      },
+      {
+        type: "p",
+        text: "Struck by a sudden, aggressive leukaemia, he lived it, according to the sanctuary's official biography, “as a trial to offer for the Pope and for the Church”. He died on 12 October 2006, aged 15.",
+      },
+      {
+        type: "facts",
+        items: [
+          { label: "Born", value: "London, 3 May 1991" },
+          { label: "Died", value: "12 October 2006" },
+          { label: "Beatified", value: "Assisi, 10 October 2020" },
+          { label: "Canonised", value: "Rome, 7 September 2025" },
+          { label: "Tomb", value: "Assisi, since 6 April 2019" },
+          { label: "Feast day", value: "12 October" },
+        ],
+      },
+      { type: "h2", text: "When did Carlo Acutis become a saint?" },
+      {
+        type: "p",
+        text: "Carlo Acutis was beatified on 10 October 2020 in the Basilica of San Francesco in Assisi, at a celebration presided over by Cardinal Agostino Vallini. His canonisation, originally scheduled for 27 April 2025 during the Jubilee of Adolescents, was postponed after the death of Pope Francis: Pope Leo XIV proclaimed him a saint on 7 September 2025 in St Peter's Square, together with Pier Giorgio Frassati.",
+      },
+      {
+        type: "p",
+        text: "The liturgical memorial of Saint Carlo Acutis is on 12 October, the day of his death. 2026 marks twenty years since he died: for the anniversary the sanctuary organised celebrations from 9 to 12 October.",
+      },
+      { type: "h2", text: "Where is Carlo Acutis's tomb?" },
+      {
+        type: "p",
+        text: "The tomb of Saint Carlo Acutis is in the church of Santa Maria Maggiore, on Piazza del Vescovado in the historic centre of Assisi: this is the Sanctuary of Renunciation. His body has rested here since 6 April 2019, and the tomb monument is in the right-hand aisle.",
+      },
+      credited(SPOGLIAZIONE_VEDUTA_PHOTO, "en"),
+      { type: "h2", text: "Why is it called the Sanctuary of Renunciation?" },
+      {
+        type: "p",
+        text: "The name recalls one of the best-known episodes in the life of Saint Francis: the young Francis stripped off his clothes before his father and Bishop Guido, who covered him with his own mantle. Tradition places the episode in the bishop's palace next to the church. The sanctuary keeps the memory of that gesture alive and runs guided tours of the old bishop's palace and the “door of Francis”.",
+      },
+      {
+        type: "p",
+        text: "The church has a long history. According to tradition it was Assisi's first cathedral, built in the 4th century over a Roman house, the domus of Propertius; in 1035 the title of cathedral passed to San Rufino. The rose window bears the date 1163, the apse was rebuilt in 1216 and the façade took on its present appearance in 1938.",
+      },
+      credited(SPOGLIAZIONE_ROSONE_PHOTO, "en"),
+      { type: "h2", text: "How can you visit Carlo Acutis's tomb?" },
+      {
+        type: "p",
+        text: "The sanctuary is open every day. The opening hours published on the official website at the time of writing are:",
+      },
+      {
+        type: "list",
+        items: [
+          "1 November to 31 March: 8:00 to 19:00;",
+          "1 April to 30 October: 8:00 to 19:00 on Mondays and Thursdays, 7:00 to 19:00 on the other days;",
+          "Sundays and holidays: from 10:30 to 12:30 visits to the sanctuary and the tomb are suspended for the 11:00 Mass (if you wish to attend, enter by 10:30).",
+        ],
+      },
+      {
+        type: "p",
+        text: "Mass is at 18:00 on weekdays, preceded by the rosary at 17:30, and at 9:30 and 11:00 on Sundays and holidays. The sanctuary also offers guided tours of the domus of Propertius in the crypt, from 12:30 to 13:30 (the crypt is closed to visitors during services), and of the old bishop's palace with the door of Francis, for which booking is recommended. Times and services can change: check the sanctuary's official website before you go.",
+      },
+      { type: "h2", text: "How do you get to the Sanctuary of Renunciation?" },
+      {
+        type: "p",
+        text: "From Agriturismo La Mora the sanctuary is 6.8 km away, about 15 minutes by car according to Google Maps. Much of Assisi's historic centre is a limited traffic zone (ZTL), with rules that change with the season: it's best to leave the car in one of the car parks listed by the town's official tourism website and continue on foot.",
+      },
+      {
+        type: "list",
+        items: [
+          "Paid car parks: Giovanni Paolo II, Mojano, Porta Nuova and Matteotti.",
+          "Free car parks: cemetery area (Via Egidio Albornoz), Piazza Caduti Forze dell'Ordine and Porta San Giacomo.",
+          "Town bus lines A, B and C also run through Assisi.",
+        ],
+      },
+      { type: "h2", text: "What can you see near the Sanctuary of Renunciation?" },
+      {
+        type: "p",
+        text: "The sanctuary is in the historic centre, and Assisi's main sights are within walking distance:",
+      },
+      {
+        type: "list",
+        items: [
+          "the Basilica of San Francesco: 1.0 km, about 13 minutes on foot along Via San Francesco according to Google Maps;",
+          "Piazza del Comune, with the Temple of Minerva and the Torre del Popolo;",
+          "the Cathedral of San Rufino, which inherited the title of cathedral from Santa Maria Maggiore in 1035;",
+          "the Rocca Maggiore, the fortress overlooking the town.",
+        ],
+      },
+      { type: "h2", text: "How can you combine the visit with the Basilica of San Francesco?" },
+      {
+        type: "p",
+        text: "A simple itinerary, all on foot: the Sanctuary of Renunciation in the morning (on Sundays and holidays visits to the tomb are suspended from 10:30 to 12:30), then along Via San Francesco to the Basilica of San Francesco, where Carlo Acutis was beatified in 2020. In the afternoon, walk back up towards Piazza del Comune and the Cathedral of San Rufino.",
+      },
+      {
+        type: "image",
+        src: LAMORA_BASILICA,
+        alt: "The Basilica of San Francesco in Assisi on a sunny day, with the lawn in front",
+        caption: "The Basilica of San Francesco, about 1 km on foot from the sanctuary.",
+      },
+      {
+        type: "p",
+        text: "In 2026 Assisi is also celebrating the Eighth Centenary of the death of Saint Francis (1226–2026). And 2.2 km from La Mora, on the plain below the town, stands the Basilica of Santa Maria degli Angeli with the Porziuncola: we cover it in a dedicated guide.",
+      },
+      { type: "h2", text: "Where to stay near Carlo Acutis's tomb?" },
+      {
+        type: "p",
+        text: "Agriturismo La Mora, at Via Fonte Citerna 7, is 6.8 km from the Sanctuary of Renunciation (about 15 minutes by car) and 7.5 km from the Basilica of San Francesco. Its five independent apartments have a fully equipped kitchen, Wi-Fi and air conditioning, with free parking on site: a quiet countryside base that works well for families and small groups.",
+      },
+      {
+        type: "image",
+        src: LAMORA_ACQUARIO,
+        alt: "Bedroom of the Acquario apartment at Agriturismo La Mora, with a double bed and a bunk bed",
+        caption: "A bedroom in the Acquario apartment.",
+      },
+      {
+        type: "p",
+        text: "For larger groups, the Bilancia apartment sleeps up to 8; Gemelli and Sagittario, with a private fenced garden, also welcome guests travelling with pets.",
+      },
+      {
+        type: "links",
+        heading: "Plan your visit",
+        items: [
+          { label: "La Mora's apartments", href: "/alloggi/" },
+          { label: "Offers for direct bookings", href: "/offerte/" },
+          { label: "The area around La Mora", href: "/territorio/" },
+          { label: "Eighth Centenary of Saint Francis", href: "/ottavo-centenario-san-francesco/" },
+          { label: "Guide to the Basilica of Santa Maria degli Angeli", href: "/blog/basilica-santa-maria-degli-angeli/" },
+          { label: "Official website of the Sanctuary", href: SANTUARIO_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Carlo Acutis in Assisi: frequently asked questions",
+      items: [
+        { q: "Where is Carlo Acutis buried?", a: "In Assisi, in the church of Santa Maria Maggiore — Sanctuary of Renunciation, on Piazza del Vescovado. His body has rested there since 6 April 2019." },
+        { q: "When was Carlo Acutis canonised?", a: "On 7 September 2025, by Pope Leo XIV, in St Peter's Square in Rome, together with Pier Giorgio Frassati. He had been beatified in Assisi on 10 October 2020." },
+        { q: "When is the feast of Saint Carlo Acutis?", a: "His liturgical memorial is on 12 October, the day he died in 2006." },
+        { q: "Can you visit the tomb on Sundays?", a: "Yes, but on Sundays and holidays visits to the sanctuary and the tomb are suspended from 10:30 to 12:30, during the 11:00 Mass." },
+        { q: "How far is the sanctuary from the Basilica of San Francesco?", a: "About 1 km, a 13-minute walk along Via San Francesco according to Google Maps." },
+        { q: "Where can you park to visit the sanctuary?", a: "Much of the historic centre is a ZTL: use the car parks listed by the town — paid (Giovanni Paolo II, Mojano, Porta Nuova, Matteotti) or free (cemetery area, Piazza Caduti Forze dell'Ordine, Porta San Giacomo) — and continue on foot." },
+        { q: "How far is Agriturismo La Mora from the sanctuary?", a: "6.8 km, about 15 minutes by car according to Google Maps." },
+      ],
+    },
+    finalCtaHeading: "A pilgrimage to Assisi, with a countryside home to return to in the evening.",
+    finalCtaBody: "Choose the right apartment for you, your family or your group.",
+    finalCtaLabel: "Discover the apartments",
+    finalCtaHref: "/alloggi/",
+  },
+  fr: {
+    slug: "carlo-acutis-assisi",
+    category: "Spiritualité",
+    title: "Carlo Acutis à Assise : guide de son tombeau et du sanctuaire",
+    excerpt: "Qui était saint Carlo Acutis, où il repose à Assise et comment visiter le Sanctuaire du Dépouillement : horaires, parkings, que voir autour et où dormir, à 6,8 km.",
+    metaDescription: "Saint Carlo Acutis à Assise : son tombeau au Sanctuaire du Dépouillement, horaires, accès, que voir autour et où dormir à 6,8 km du sanctuaire.",
+    ...cover(SPOGLIAZIONE_FACCIATA_PHOTO, "fr"),
+    imagePosition: "50% 20%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "En bref",
+      items: [
+        { label: "Où il repose", value: "Santuario della Spogliazione (Santa Maria Maggiore), Assise" },
+        { label: "Canonisation", value: "7 septembre 2025, place Saint-Pierre" },
+        { label: "Mémoire liturgique", value: "12 octobre" },
+        { label: "Dimanches et fêtes", value: "visites suspendues 10h30–12h30" },
+        { label: "À pied depuis la basilique", value: "1,0 km · env. 13 min" },
+        { label: "Depuis La Mora", value: "6,8 km · env. 15 min en voiture" },
+      ],
+    },
+    intro:
+      "Depuis le 6 avril 2019, le corps de Carlo Acutis repose à Assise, dans l'église Santa Maria Maggiore, aujourd'hui Santuario della Spogliazione (Sanctuaire du Dépouillement). Canonisé le 7 septembre 2025, saint Carlo Acutis attire de nombreux pèlerins, surtout des jeunes. Ce guide réunit l'essentiel sur sa vie et les informations pratiques pour visiter le sanctuaire, à 6,8 km de l'Agriturismo La Mora.",
+    introCtaHeading: "Vous venez à Assise pour saint Carlo Acutis ? Dormez à la campagne, à 6,8 km du sanctuaire.",
+    introCtaLabel: "Réserver",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "Qui était Carlo Acutis ?" },
+      {
+        type: "p",
+        text: "Carlo Acutis est né à Londres le 3 mai 1991 et a vécu à Milan, mais il passait de longues périodes à Assise où, écrit le sanctuaire, il « respira la spiritualité de saint François ». La messe était pour lui un rendez-vous quotidien, y compris dans les églises d'Assise — parmi elles Santa Maria Maggiore, où il repose aujourd'hui.",
+      },
+      {
+        type: "p",
+        text: "Frappé par une leucémie foudroyante, il la vécut, selon la biographie officielle du sanctuaire, « comme une épreuve à offrir pour le Pape et pour l'Église ». Il est mort le 12 octobre 2006, à 15 ans.",
+      },
+      {
+        type: "facts",
+        items: [
+          { label: "Naissance", value: "Londres, 3 mai 1991" },
+          { label: "Décès", value: "12 octobre 2006" },
+          { label: "Béatification", value: "Assise, 10 octobre 2020" },
+          { label: "Canonisation", value: "Rome, 7 septembre 2025" },
+          { label: "Tombeau", value: "Assise, depuis le 6 avril 2019" },
+          { label: "Mémoire", value: "12 octobre" },
+        ],
+      },
+      { type: "h2", text: "Quand Carlo Acutis est-il devenu saint ?" },
+      {
+        type: "p",
+        text: "Carlo Acutis a été béatifié le 10 octobre 2020 dans la basilique Saint-François d'Assise, lors d'une célébration présidée par le cardinal Agostino Vallini. Sa canonisation, d'abord prévue le 27 avril 2025 pendant le Jubilé des adolescents, a été reportée après la mort du pape François : le pape Léon XIV l'a proclamé saint le 7 septembre 2025 sur la place Saint-Pierre, en même temps que Pier Giorgio Frassati.",
+      },
+      {
+        type: "p",
+        text: "La mémoire liturgique de saint Carlo Acutis est fixée au 12 octobre, jour de sa mort. En 2026, cela fait vingt ans qu'il est mort : pour cet anniversaire, le sanctuaire a organisé des célébrations du 9 au 12 octobre.",
+      },
+      { type: "h2", text: "Où se trouve le tombeau de Carlo Acutis ?" },
+      {
+        type: "p",
+        text: "Le tombeau de saint Carlo Acutis se trouve dans l'église Santa Maria Maggiore, piazza del Vescovado, dans le centre historique d'Assise : c'est le Sanctuaire du Dépouillement. Son corps y repose depuis le 6 avril 2019 et le monument funéraire se trouve dans le bas-côté droit.",
+      },
+      credited(SPOGLIAZIONE_VEDUTA_PHOTO, "fr"),
+      { type: "h2", text: "Pourquoi l'appelle-t-on Sanctuaire du Dépouillement ?" },
+      {
+        type: "p",
+        text: "Le nom rappelle l'un des épisodes les plus célèbres de la vie de saint François : le jeune François se dépouilla de ses vêtements devant son père et l'évêque Guido, qui le couvrit de son propre manteau. La tradition situe l'épisode à l'évêché, à côté de l'église. Le sanctuaire garde la mémoire de ce geste et propose des visites guidées de l'ancien évêché et de la « porte de François ».",
+      },
+      {
+        type: "p",
+        text: "L'église a une longue histoire. Selon la tradition, ce fut la première cathédrale d'Assise, construite au IVe siècle sur une maison romaine, la domus de Properce ; en 1035, le titre de cathédrale passa à San Rufino. La rosace porte la date de 1163, l'abside fut reconstruite en 1216 et la façade a pris son aspect actuel en 1938.",
+      },
+      credited(SPOGLIAZIONE_ROSONE_PHOTO, "fr"),
+      { type: "h2", text: "Comment visiter le tombeau de Carlo Acutis ?" },
+      {
+        type: "p",
+        text: "Le sanctuaire est ouvert tous les jours. Les horaires publiés sur le site officiel au moment de la rédaction de ce guide sont :",
+      },
+      {
+        type: "list",
+        items: [
+          "du 1er novembre au 31 mars : de 8h00 à 19h00 ;",
+          "du 1er avril au 30 octobre : de 8h00 à 19h00 le lundi et le jeudi, de 7h00 à 19h00 les autres jours ;",
+          "dimanches et jours fériés : de 10h30 à 12h30, les visites du sanctuaire et du tombeau sont suspendues pour la messe de 11h00 (pour y assister, il faut entrer avant 10h30).",
+        ],
+      },
+      {
+        type: "p",
+        text: "Les messes ont lieu à 18h00 en semaine, précédées du chapelet à 17h30, et à 9h30 et 11h00 les dimanches et jours fériés. Le sanctuaire propose aussi des visites guidées de la domus de Properce, dans la crypte, de 12h30 à 13h30 (la crypte ne se visite pas pendant les célébrations), et de l'ancien évêché avec la porte de François, pour lesquelles la réservation est conseillée. Horaires et célébrations peuvent changer : consultez le site officiel du sanctuaire avant de partir.",
+      },
+      { type: "h2", text: "Comment se rendre au Sanctuaire du Dépouillement ?" },
+      {
+        type: "p",
+        text: "Depuis l'Agriturismo La Mora, le sanctuaire est à 6,8 km, environ 15 minutes en voiture selon Google Maps. Le centre historique d'Assise est en grande partie en zone à trafic limité (ZTL), avec des règles qui changent selon la saison : mieux vaut laisser la voiture dans l'un des parkings indiqués par le site touristique officiel de la commune et continuer à pied.",
+      },
+      {
+        type: "list",
+        items: [
+          "Parkings payants : Giovanni Paolo II, Mojano, Porta Nuova et Matteotti.",
+          "Parkings gratuits : zone du cimetière (via Egidio Albornoz), piazza Caduti Forze dell'Ordine et Porta San Giacomo.",
+          "Les lignes de bus urbaines A, B et C desservent aussi la ville.",
+        ],
+      },
+      { type: "h2", text: "Que voir près du Sanctuaire du Dépouillement ?" },
+      {
+        type: "p",
+        text: "Le sanctuaire est au cœur du centre historique, d'où l'on rejoint à pied les principaux sites d'Assise :",
+      },
+      {
+        type: "list",
+        items: [
+          "la basilique Saint-François : 1,0 km, environ 13 minutes à pied par la via San Francesco selon Google Maps ;",
+          "la piazza del Comune, avec le temple de Minerve et la Torre del Popolo ;",
+          "la cathédrale San Rufino, qui reçut de Santa Maria Maggiore le titre de cathédrale en 1035 ;",
+          "la Rocca Maggiore, la forteresse qui domine la ville.",
+        ],
+      },
+      { type: "h2", text: "Comment combiner la visite avec la basilique Saint-François ?" },
+      {
+        type: "p",
+        text: "Un itinéraire simple, entièrement à pied : le matin au Sanctuaire du Dépouillement (les dimanches et jours fériés, les visites du tombeau sont suspendues de 10h30 à 12h30), puis la via San Francesco jusqu'à la basilique Saint-François, où Carlo Acutis a été béatifié en 2020. L'après-midi, remontez vers la piazza del Comune et la cathédrale San Rufino.",
+      },
+      {
+        type: "image",
+        src: LAMORA_BASILICA,
+        alt: "La basilique Saint-François d'Assise par une journée ensoleillée, avec la pelouse devant",
+        caption: "La basilique Saint-François, à environ 1 km à pied du sanctuaire.",
+      },
+      {
+        type: "p",
+        text: "En 2026, Assise célèbre aussi le huitième centenaire de la mort de saint François (1226–2026). Et à 2,2 km de La Mora, dans la plaine au pied de la ville, se trouve la basilique Sainte-Marie-des-Anges avec la Portioncule : nous lui consacrons un guide.",
+      },
+      { type: "h2", text: "Où dormir près du tombeau de Carlo Acutis ?" },
+      {
+        type: "p",
+        text: "L'Agriturismo La Mora, via Fonte Citerna 7, est à 6,8 km du Sanctuaire du Dépouillement (environ 15 minutes en voiture) et à 7,5 km de la basilique Saint-François. Ses cinq appartements indépendants disposent d'une cuisine équipée, du Wi-Fi et de la climatisation, avec parking gratuit dans la propriété : une base tranquille à la campagne, pratique pour les familles et les petits groupes.",
+      },
+      {
+        type: "image",
+        src: LAMORA_ACQUARIO,
+        alt: "Chambre de l'appartement Acquario à l'Agriturismo La Mora, avec un lit double et des lits superposés",
+        caption: "Une chambre de l'appartement Acquario.",
+      },
+      {
+        type: "p",
+        text: "Pour les groupes plus nombreux, l'appartement Bilancia accueille jusqu'à 8 personnes ; Gemelli et Sagittario, avec jardin privé clôturé, accueillent aussi les voyageurs avec leurs animaux.",
+      },
+      {
+        type: "links",
+        heading: "Organisez votre visite",
+        items: [
+          { label: "Les appartements de La Mora", href: "/alloggi/" },
+          { label: "Les offres en réservation directe", href: "/offerte/" },
+          { label: "Les environs de La Mora", href: "/territorio/" },
+          { label: "Huitième centenaire de saint François", href: "/ottavo-centenario-san-francesco/" },
+          { label: "Guide de la basilique Sainte-Marie-des-Anges", href: "/blog/basilica-santa-maria-degli-angeli/" },
+          { label: "Site officiel du Sanctuaire", href: SANTUARIO_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Carlo Acutis à Assise : questions fréquentes",
+      items: [
+        { q: "Où est enterré Carlo Acutis ?", a: "À Assise, dans l'église Santa Maria Maggiore — Sanctuaire du Dépouillement, piazza del Vescovado. Son corps y repose depuis le 6 avril 2019." },
+        { q: "Quand Carlo Acutis a-t-il été canonisé ?", a: "Le 7 septembre 2025, par le pape Léon XIV, place Saint-Pierre à Rome, avec Pier Giorgio Frassati. Il avait été béatifié à Assise le 10 octobre 2020." },
+        { q: "Quand fête-t-on saint Carlo Acutis ?", a: "Sa mémoire liturgique est le 12 octobre, jour de sa mort en 2006." },
+        { q: "Peut-on visiter le tombeau le dimanche ?", a: "Oui, mais les dimanches et jours fériés, les visites du sanctuaire et du tombeau sont suspendues de 10h30 à 12h30, pendant la messe de 11h00." },
+        { q: "Quelle distance entre le sanctuaire et la basilique Saint-François ?", a: "Environ 1 km, soit 13 minutes à pied par la via San Francesco selon Google Maps." },
+        { q: "Où se garer pour visiter le sanctuaire ?", a: "Le centre historique est en grande partie en ZTL : utilisez les parkings indiqués par la commune, payants (Giovanni Paolo II, Mojano, Porta Nuova, Matteotti) ou gratuits (zone du cimetière, piazza Caduti Forze dell'Ordine, Porta San Giacomo), puis continuez à pied." },
+        { q: "À quelle distance l'Agriturismo La Mora se trouve-t-il du sanctuaire ?", a: "À 6,8 km, environ 15 minutes en voiture selon Google Maps." },
+      ],
+    },
+    finalCtaHeading: "Un pèlerinage à Assise, avec une maison à la campagne où rentrer le soir.",
+    finalCtaBody: "Choisissez l'appartement qui vous convient, pour vous, votre famille ou votre groupe.",
+    finalCtaLabel: "Découvrir les appartements",
+    finalCtaHref: "/alloggi/",
+  },
+  de: {
+    slug: "carlo-acutis-assisi",
+    category: "Spiritualität",
+    title: "Carlo Acutis in Assisi: Grab und Heiligtum – ein Leitfaden",
+    excerpt: "Wer der heilige Carlo Acutis war, wo er in Assisi ruht und wie man das Heiligtum der Entkleidung besucht: Öffnungszeiten, Parken, Sehenswertes und Unterkunft, 6,8 km entfernt.",
+    metaDescription: "Der heilige Carlo Acutis in Assisi: sein Grab im Heiligtum der Entkleidung, Öffnungszeiten, Anreise, Sehenswertes und Unterkunft 6,8 km vom Heiligtum.",
+    ...cover(SPOGLIAZIONE_FACCIATA_PHOTO, "de"),
+    imagePosition: "50% 20%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "Auf einen Blick",
+      items: [
+        { label: "Grab", value: "Santuario della Spogliazione (Santa Maria Maggiore), Assisi" },
+        { label: "Heiligsprechung", value: "7. September 2025, Petersplatz" },
+        { label: "Gedenktag", value: "12. Oktober" },
+        { label: "Sonn- und Feiertage", value: "keine Besuche 10:30–12:30" },
+        { label: "Zu Fuß von der Basilika", value: "1,0 km · ca. 13 Min." },
+        { label: "Ab La Mora", value: "6,8 km · ca. 15 Min. mit dem Auto" },
+      ],
+    },
+    intro:
+      "Seit dem 6. April 2019 ruht der Leichnam von Carlo Acutis in Assisi, in der Kirche Santa Maria Maggiore, heute Santuario della Spogliazione (Heiligtum der Entkleidung). Seit seiner Heiligsprechung am 7. September 2025 ist der heilige Carlo Acutis Ziel vieler Pilger, vor allem junger Menschen. Dieser Leitfaden fasst das Wesentliche zu seinem Leben und die praktischen Informationen für den Besuch des Heiligtums zusammen – 6,8 km vom Agriturismo La Mora entfernt.",
+    introCtaHeading: "Sie besuchen Assisi wegen des heiligen Carlo Acutis? Übernachten Sie auf dem Land, 6,8 km vom Heiligtum.",
+    introCtaLabel: "Buchen",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "Wer war Carlo Acutis?" },
+      {
+        type: "p",
+        text: "Carlo Acutis wurde am 3. Mai 1991 in London geboren und lebte in Mailand, verbrachte aber lange Zeiten in Assisi, wo er – so das Heiligtum – „die Spiritualität des heiligen Franziskus atmete“. Die tägliche Messe war für ihn ein fester Termin, auch in den Kirchen von Assisi – darunter Santa Maria Maggiore, wo er heute ruht.",
+      },
+      {
+        type: "p",
+        text: "An einer plötzlichen, schweren Leukämie erkrankt, nahm er sie laut der offiziellen Biografie des Heiligtums „als Prüfung an, die er für den Papst und die Kirche aufopferte“. Er starb am 12. Oktober 2006 im Alter von 15 Jahren.",
+      },
+      {
+        type: "facts",
+        items: [
+          { label: "Geboren", value: "London, 3. Mai 1991" },
+          { label: "Gestorben", value: "12. Oktober 2006" },
+          { label: "Seligsprechung", value: "Assisi, 10. Oktober 2020" },
+          { label: "Heiligsprechung", value: "Rom, 7. September 2025" },
+          { label: "Grab", value: "Assisi, seit 6. April 2019" },
+          { label: "Gedenktag", value: "12. Oktober" },
+        ],
+      },
+      { type: "h2", text: "Wann wurde Carlo Acutis heiliggesprochen?" },
+      {
+        type: "p",
+        text: "Carlo Acutis wurde am 10. Oktober 2020 in der Basilika San Francesco in Assisi seliggesprochen, in einer Feier unter dem Vorsitz von Kardinal Agostino Vallini. Seine Heiligsprechung war ursprünglich für den 27. April 2025 während des Jubiläums der Jugendlichen geplant und wurde nach dem Tod von Papst Franziskus verschoben: Papst Leo XIV. sprach ihn am 7. September 2025 auf dem Petersplatz heilig, zusammen mit Pier Giorgio Frassati.",
+      },
+      {
+        type: "p",
+        text: "Der liturgische Gedenktag des heiligen Carlo Acutis ist der 12. Oktober, sein Todestag. 2026 jährt sich sein Tod zum zwanzigsten Mal: Zum Jahrestag hat das Heiligtum vom 9. bis 12. Oktober Feierlichkeiten organisiert.",
+      },
+      { type: "h2", text: "Wo befindet sich das Grab von Carlo Acutis?" },
+      {
+        type: "p",
+        text: "Das Grab des heiligen Carlo Acutis befindet sich in der Kirche Santa Maria Maggiore an der Piazza del Vescovado in der Altstadt von Assisi: Sie ist das Heiligtum der Entkleidung. Sein Leichnam ruht hier seit dem 6. April 2019, das Grabmonument steht im rechten Seitenschiff.",
+      },
+      credited(SPOGLIAZIONE_VEDUTA_PHOTO, "de"),
+      { type: "h2", text: "Warum heißt es Heiligtum der Entkleidung?" },
+      {
+        type: "p",
+        text: "Der Name erinnert an eine der bekanntesten Episoden im Leben des heiligen Franziskus: Der junge Franziskus legte vor seinem Vater und Bischof Guido seine Kleider ab, und der Bischof bedeckte ihn mit seinem eigenen Mantel. Die Überlieferung verortet die Szene im Bischofspalast neben der Kirche. Das Heiligtum hält die Erinnerung an diese Geste wach und bietet Führungen durch den alten Bischofspalast und zur „Tür des Franziskus“ an.",
+      },
+      {
+        type: "p",
+        text: "Die Kirche hat eine lange Geschichte. Der Überlieferung nach war sie die erste Kathedrale von Assisi, im 4. Jahrhundert über einem römischen Haus errichtet, der Domus des Properz; 1035 ging der Titel der Kathedrale an San Rufino über. In die Fensterrose ist die Jahreszahl 1163 eingemeißelt, die Apsis wurde 1216 neu errichtet, und die Fassade erhielt 1938 ihr heutiges Aussehen.",
+      },
+      credited(SPOGLIAZIONE_ROSONE_PHOTO, "de"),
+      { type: "h2", text: "Wie kann man das Grab von Carlo Acutis besuchen?" },
+      {
+        type: "p",
+        text: "Das Heiligtum ist täglich geöffnet. Die zum Zeitpunkt dieses Leitfadens auf der offiziellen Website veröffentlichten Öffnungszeiten:",
+      },
+      {
+        type: "list",
+        items: [
+          "1. November bis 31. März: 8:00 bis 19:00 Uhr;",
+          "1. April bis 30. Oktober: montags und donnerstags 8:00 bis 19:00 Uhr, an den übrigen Tagen 7:00 bis 19:00 Uhr;",
+          "Sonn- und Feiertage: Von 10:30 bis 12:30 Uhr sind Besuche des Heiligtums und des Grabes wegen der Messe um 11:00 Uhr ausgesetzt (wer teilnehmen möchte, muss bis 10:30 Uhr in der Kirche sein).",
+        ],
+      },
+      {
+        type: "p",
+        text: "Die Messe ist werktags um 18:00 Uhr, davor um 17:30 Uhr der Rosenkranz, sonn- und feiertags um 9:30 und 11:00 Uhr. Das Heiligtum bietet außerdem Führungen an: durch die Domus des Properz in der Krypta von 12:30 bis 13:30 Uhr (während der Gottesdienste ist die Krypta nicht zugänglich) und durch den alten Bischofspalast mit der Tür des Franziskus, für die eine Reservierung empfohlen wird. Zeiten und Gottesdienste können sich ändern: Prüfen Sie vor der Abfahrt die offizielle Website des Heiligtums.",
+      },
+      { type: "h2", text: "Wie kommt man zum Heiligtum der Entkleidung?" },
+      {
+        type: "p",
+        text: "Vom Agriturismo La Mora ist das Heiligtum 6,8 km entfernt, laut Google Maps rund 15 Minuten mit dem Auto. Die Altstadt von Assisi ist großenteils verkehrsberuhigte Zone (ZTL) mit Regeln, die je nach Saison wechseln: Am besten lässt man das Auto auf einem der Parkplätze, die das offizielle Tourismusportal der Stadt nennt, und geht zu Fuß weiter.",
+      },
+      {
+        type: "list",
+        items: [
+          "Kostenpflichtige Parkplätze: Giovanni Paolo II, Mojano, Porta Nuova und Matteotti.",
+          "Kostenlose Parkplätze: Friedhofsbereich (Via Egidio Albornoz), Piazza Caduti Forze dell'Ordine und Porta San Giacomo.",
+          "In der Stadt verkehren außerdem die Stadtbuslinien A, B und C.",
+        ],
+      },
+      { type: "h2", text: "Was gibt es in der Nähe des Heiligtums der Entkleidung zu sehen?" },
+      {
+        type: "p",
+        text: "Das Heiligtum liegt mitten in der Altstadt, von hier aus sind die wichtigsten Sehenswürdigkeiten Assisis zu Fuß erreichbar:",
+      },
+      {
+        type: "list",
+        items: [
+          "die Basilika San Francesco: 1,0 km, laut Google Maps rund 13 Minuten zu Fuß über die Via San Francesco;",
+          "die Piazza del Comune mit dem Minerva-Tempel und dem Torre del Popolo;",
+          "die Kathedrale San Rufino, die 1035 von Santa Maria Maggiore den Titel der Kathedrale übernahm;",
+          "die Rocca Maggiore, die Festung über der Stadt.",
+        ],
+      },
+      { type: "h2", text: "Wie lässt sich der Besuch mit der Basilika San Francesco verbinden?" },
+      {
+        type: "p",
+        text: "Eine einfache Route, ganz zu Fuß: morgens das Heiligtum der Entkleidung (an Sonn- und Feiertagen sind Besuche am Grab von 10:30 bis 12:30 Uhr ausgesetzt), dann über die Via San Francesco zur Basilika San Francesco, wo Carlo Acutis 2020 seliggesprochen wurde. Am Nachmittag geht es hinauf zur Piazza del Comune und zur Kathedrale San Rufino.",
+      },
+      {
+        type: "image",
+        src: LAMORA_BASILICA,
+        alt: "Die Basilika San Francesco in Assisi an einem sonnigen Tag, mit der Wiese davor",
+        caption: "Die Basilika San Francesco, rund 1 km zu Fuß vom Heiligtum.",
+      },
+      {
+        type: "p",
+        text: "2026 feiert Assisi außerdem den 800. Todestag des heiligen Franziskus (1226–2026). Und 2,2 km von La Mora entfernt, in der Ebene unterhalb der Stadt, steht die Basilika Santa Maria degli Angeli mit der Portiuncula: Ihr widmen wir einen eigenen Leitfaden.",
+      },
+      { type: "h2", text: "Wo übernachten in der Nähe des Grabes von Carlo Acutis?" },
+      {
+        type: "p",
+        text: "Das Agriturismo La Mora in der Via Fonte Citerna 7 liegt 6,8 km vom Heiligtum der Entkleidung (rund 15 Minuten mit dem Auto) und 7,5 km von der Basilika San Francesco entfernt. Die fünf unabhängigen Ferienwohnungen haben eine voll ausgestattete Küche, WLAN und Klimaanlage, dazu kostenlose Parkplätze auf dem Gelände: ein ruhiger Ausgangspunkt auf dem Land, ideal für Familien und kleine Gruppen.",
+      },
+      {
+        type: "image",
+        src: LAMORA_ACQUARIO,
+        alt: "Schlafzimmer der Ferienwohnung Acquario im Agriturismo La Mora, mit Doppelbett und Etagenbett",
+        caption: "Ein Schlafzimmer der Ferienwohnung Acquario.",
+      },
+      {
+        type: "p",
+        text: "Für größere Gruppen bietet die Ferienwohnung Bilancia Platz für bis zu 8 Personen; Gemelli und Sagittario mit privatem, eingezäuntem Garten nehmen auch Gäste mit Haustieren auf.",
+      },
+      {
+        type: "links",
+        heading: "Planen Sie Ihren Besuch",
+        items: [
+          { label: "Die Ferienwohnungen von La Mora", href: "/alloggi/" },
+          { label: "Angebote bei Direktbuchung", href: "/offerte/" },
+          { label: "Die Umgebung von La Mora", href: "/territorio/" },
+          { label: "800 Jahre heiliger Franziskus", href: "/ottavo-centenario-san-francesco/" },
+          { label: "Leitfaden zur Basilika Santa Maria degli Angeli", href: "/blog/basilica-santa-maria-degli-angeli/" },
+          { label: "Offizielle Website des Heiligtums", href: SANTUARIO_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Carlo Acutis in Assisi: häufige Fragen",
+      items: [
+        { q: "Wo ist Carlo Acutis begraben?", a: "In Assisi, in der Kirche Santa Maria Maggiore – Heiligtum der Entkleidung, an der Piazza del Vescovado. Sein Leichnam ruht dort seit dem 6. April 2019." },
+        { q: "Wann wurde Carlo Acutis heiliggesprochen?", a: "Am 7. September 2025 von Papst Leo XIV. auf dem Petersplatz in Rom, zusammen mit Pier Giorgio Frassati. Seliggesprochen worden war er am 10. Oktober 2020 in Assisi." },
+        { q: "Wann ist der Gedenktag des heiligen Carlo Acutis?", a: "Sein liturgischer Gedenktag ist der 12. Oktober, sein Todestag im Jahr 2006." },
+        { q: "Kann man das Grab sonntags besuchen?", a: "Ja, aber an Sonn- und Feiertagen sind Besuche des Heiligtums und des Grabes von 10:30 bis 12:30 Uhr während der Messe um 11:00 Uhr ausgesetzt." },
+        { q: "Wie weit ist das Heiligtum von der Basilika San Francesco entfernt?", a: "Rund 1 km, laut Google Maps 13 Minuten zu Fuß über die Via San Francesco." },
+        { q: "Wo parkt man für den Besuch des Heiligtums?", a: "Die Altstadt ist großenteils ZTL: Nutzen Sie die von der Stadt genannten Parkplätze, kostenpflichtig (Giovanni Paolo II, Mojano, Porta Nuova, Matteotti) oder kostenlos (Friedhofsbereich, Piazza Caduti Forze dell'Ordine, Porta San Giacomo), und gehen Sie zu Fuß weiter." },
+        { q: "Wie weit ist das Agriturismo La Mora vom Heiligtum entfernt?", a: "6,8 km, laut Google Maps rund 15 Minuten mit dem Auto." },
+      ],
+    },
+    finalCtaHeading: "Eine Pilgerreise nach Assisi – mit einem Zuhause auf dem Land für den Abend.",
+    finalCtaBody: "Wählen Sie die passende Ferienwohnung für sich, Ihre Familie oder Ihre Gruppe.",
+    finalCtaLabel: "Die Ferienwohnungen entdecken",
+    finalCtaHref: "/alloggi/",
+  },
+};
+
+const ITALIA_GUBBIO_URL = "https://www.italia.it/it/umbria/cosa-fare/natale-a-gubbio-albero-di-natale-e-mercatini";
+const UMBRIA_TOURISM_URL = "https://www.umbriatourism.it/";
+const VISIT_ASSISI_URL = "https://www.visit-assisi.it/";
+
+const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
+  it: {
+    slug: "mercatini-di-natale-umbria",
+    category: "Eventi",
+    title: "Mercatini di Natale in Umbria: Perugia, Gubbio e il Trasimeno",
+    excerpt: "Mercatini e luci di Natale in Umbria: Perugia, l'albero di Gubbio, l'albero sull'acqua del Trasimeno e il presepe vivente di Rasiglia, con date e distanze da Assisi.",
+    metaDescription: "Mercatini di Natale in Umbria: Perugia, Gubbio e il suo albero da record, l'albero sul lago Trasimeno e il presepe di Rasiglia. Date, distanze e consigli.",
+    ...cover(ALBERO_GUBBIO_PHOTO, "it"),
+    imagePosition: "30% 50%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "In breve",
+      items: [
+        { label: "Periodo", value: "da fine novembre all'Epifania" },
+        { label: "Albero sul Trasimeno", value: "5 dicembre 2026 – 6 gennaio 2027" },
+        { label: "Perugia", value: "21,0 km da La Mora · circa 23 min" },
+        { label: "Gubbio", value: "54,7 km · circa 42 min" },
+        { label: "Castiglione del Lago", value: "64,3 km · circa 50 min" },
+        { label: "Rasiglia", value: "36,5 km · circa 37 min" },
+      ],
+    },
+    intro:
+      "In Umbria il Natale ha tanti indirizzi: i mercatini nel centro di Perugia, l'albero di luci di Gubbio, l'albero disegnato sull'acqua del Trasimeno, il presepe vivente di Rasiglia. Da Agriturismo La Mora, nella campagna di Assisi, si raggiungono tutti in giornata. Ecco cosa vedere, quando e a che distanza (in auto, secondo Google Maps). Non tutte le date 2026 sono già state annunciate: dove mancano le conferme ti indichiamo il sito ufficiale da controllare.",
+    introCtaHeading: "Mercatini, alberi di luci e presepi: una base in campagna per vederli tutti.",
+    introCtaLabel: "Prenota",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "Quando ci sono i mercatini di Natale in Umbria?" },
+      {
+        type: "p",
+        text: "In genere da fine novembre all'Epifania, ma ogni città ha il suo calendario. A Perugia l'edizione 2025/26 è andata dal 29 novembre al 6 gennaio; a Gubbio i mercatini aprono da fine novembre e l'albero si accende per tradizione il 7 dicembre; a Castiglione del Lago «Luci sul Trasimeno» 2026/27 è in programma dal 5 dicembre 2026 al 6 gennaio 2027. Per Perugia e Gubbio le date 2026 non erano ancora state pubblicate quando abbiamo scritto questa guida: controllale sui siti ufficiali prima di partire.",
+      },
+      { type: "h2", text: "Cosa vedere al Natale di Perugia?" },
+      {
+        type: "p",
+        text: "Nell'edizione 2025/26, «Perugia, un Natale insieme», il centro storico si è riempito di luci e di installazioni d'artista, anche di Mimmo Paladino. I mercatini, con artigianato, specialità gastronomiche e idee regalo, erano lungo corso Vannucci e tra corso Vannucci e la Rocca Paolina; al Cassero e sulla terrazza dell'ex Mercato Coperto c'erano videomapping e scenografie luminose, con gli alberi di piazza della Repubblica e piazza Matteotti, spettacoli e attività per bambini.",
+      },
+      {
+        type: "p",
+        text: "Il programma cambia ogni anno: per l'edizione 2026 controlla il portale turistico ufficiale della Regione, Umbria Tourism. Perugia è a 21,0 km da La Mora, circa 23 minuti in auto. Se vieni a novembre, dal 13 al 22 novembre 2026 in città c'è anche Eurochocolate: ne parliamo in una guida dedicata.",
+      },
+      { type: "h2", text: "Dove si trova l'albero di Natale più grande del mondo?" },
+      {
+        type: "p",
+        text: "A Gubbio. Dal 1981, sulle pendici del Monte Ingino, sopra la città, oltre 300 luci disegnano un albero alto 750 metri, con una base di 450 metri; nel 1991 l'albero di Natale di Gubbio è entrato nel Guinness dei primati come il più grande del mondo. Per tradizione si accende il 7 dicembre, vigilia dell'Immacolata, e resta acceso ogni sera fino a tarda notte: nell'edizione 2025/26, secondo Umbria Tourism, dal 7 dicembre all'11 gennaio, dalle 17:00.",
+      },
+      credited(GUBBIO_NATALE_PIAZZA_PHOTO, "it"),
+      {
+        type: "p",
+        text: "Da fine novembre la grande Piazza dei Quaranta Martiri ospita i mercatini di Natale, con bancarelle in stile tirolese: artigianato, decorazioni e specialità gastronomiche. Gubbio è a 54,7 km da La Mora, circa 42 minuti in auto lungo la SS318.",
+      },
+      { type: "h2", text: "Com'è l'albero di Natale sul lago Trasimeno?" },
+      {
+        type: "p",
+        text: "A Castiglione del Lago, dal 2019, le luci disegnano un albero di Natale sull'acqua del Trasimeno: 1.080 metri di lunghezza e 50 di larghezza, con 2.400 luci perimetrali alimentate da energia rinnovabile. È il cuore di «Luci sul Trasimeno», che nel 2026/27 si visita tutti i giorni dal 5 dicembre al 6 gennaio, dalle 17:00 alle 23:00. Secondo gli organizzatori, nelle sue proporzioni l'albero si vede solo dal «Percorso dell'Albero», a pagamento, sotto le mura della Rocca del Leone.",
+      },
+      credited(ALBERO_TRASIMENO_PHOTO, "it"),
+      {
+        type: "p",
+        text: "Biglietti, parcheggi e cosa c'è intorno: trovi tutto nella nostra guida all'albero di Natale sul lago Trasimeno. Castiglione del Lago è a 64,3 km da La Mora, circa 50 minuti.",
+      },
+      { type: "h2", text: "Dove vedere un presepe vivente in Umbria?" },
+      {
+        type: "p",
+        text: "A Rasiglia, il borgo dei ruscelli in comune di Foligno, il presepe vivente «Rasiglia, Paese presepe» si svolge il 26 dicembre e il 6 gennaio. Rasiglia è a 36,5 km da La Mora, circa 37 minuti: ti raccontiamo come visitarla nella nostra guida dedicata.",
+      },
+      {
+        type: "p",
+        text: "Per il Natale ad Assisi, a pochi minuti da La Mora, il calendario degli eventi è sul portale turistico ufficiale del Comune, visit-assisi.it.",
+      },
+      { type: "h2", text: "Come organizzare un weekend tra mercatini e luci di Natale?" },
+      {
+        type: "list",
+        items: [
+          "Venerdì sera: Perugia, a 23 minuti, per le luci e i mercatini del centro.",
+          "Sabato: Gubbio, con i mercatini di Piazza dei Quaranta Martiri e, quando fa buio, l'albero acceso sul Monte Ingino.",
+          "Domenica: Castiglione del Lago per l'albero sul Trasimeno, visitabile dalle 17:00.",
+          "Se sei in Umbria il 26 dicembre o il 6 gennaio: il presepe vivente di Rasiglia.",
+        ],
+      },
+      { type: "h2", text: "Dove dormire per i mercatini di Natale in Umbria?" },
+      {
+        type: "p",
+        text: "Agriturismo La Mora è in via Fonte Citerna 7, nella campagna di Assisi: Perugia è a 21,0 km, Rasiglia a 36,5 km, Gubbio a 54,7 km e Castiglione del Lago a 64,3 km. I cinque appartamenti indipendenti hanno cucina attrezzata, Wi-Fi e aria condizionata, e il parcheggio è gratuito all'interno della struttura: la sera, dopo i mercatini, si torna in campagna.",
+      },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_CAMINO,
+        alt: "Sala della colazione di Agriturismo La Mora con il camino acceso e la tavola apparecchiata",
+        caption: "La sala della colazione di Agriturismo La Mora, con il camino acceso.",
+      },
+      {
+        type: "links",
+        heading: "Organizza il tuo Natale in Umbria",
+        items: [
+          { label: "Gli appartamenti di La Mora", href: "/alloggi/" },
+          { label: "Le offerte per chi prenota diretto", href: "/offerte/" },
+          { label: "Il territorio intorno a La Mora", href: "/territorio/" },
+          { label: "Guida all'albero di Natale sul lago Trasimeno", href: "/blog/albero-di-natale-lago-trasimeno/" },
+          { label: "Guida a Rasiglia, la piccola Venezia dell'Umbria", href: "/blog/rasiglia-piccola-venezia-umbria/" },
+          { label: "Eurochocolate 2026 a Perugia", href: "/blog/eurochocolate-2026-dove-dormire/" },
+          { label: "Natale a Gubbio su italia.it", href: ITALIA_GUBBIO_URL },
+          { label: "Umbria Tourism, portale ufficiale della Regione", href: UMBRIA_TOURISM_URL },
+          { label: "Eventi ad Assisi su visit-assisi.it", href: VISIT_ASSISI_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Domande frequenti sui mercatini di Natale in Umbria",
+      items: [
+        { q: "Quando iniziano i mercatini di Natale in Umbria?", a: "In genere a fine novembre: a Gubbio i mercatini di Piazza dei Quaranta Martiri aprono da fine novembre, a Perugia l'edizione 2025/26 è iniziata il 29 novembre. Le date cambiano ogni anno: controlla i siti ufficiali." },
+        { q: "Dove si trova l'albero di Natale più grande del mondo?", a: "A Gubbio, sulle pendici del Monte Ingino: alto 750 metri, con una base di 450, è nel Guinness dei primati dal 1991. Si accende per tradizione il 7 dicembre." },
+        { q: "L'albero sul lago Trasimeno è lo stesso di Gubbio?", a: "No. Quello del Trasimeno è disegnato con le luci sull'acqua del lago a Castiglione del Lago, dal 2019; nel 2026/27 si visita dal 5 dicembre 2026 al 6 gennaio 2027." },
+        { q: "Quando c'è il presepe vivente di Rasiglia?", a: "«Rasiglia, Paese presepe» si svolge il 26 dicembre e il 6 gennaio." },
+        { q: "Quanto dista Gubbio da Assisi?", a: "Da Agriturismo La Mora, nella campagna di Assisi, Piazza dei Quaranta Martiri a Gubbio è a 54,7 km, circa 42 minuti in auto secondo Google Maps." },
+        { q: "Dove dormire per vedere i mercatini di Natale in Umbria?", a: "Agriturismo La Mora, vicino ad Assisi, è a 21,0 km da Perugia, 36,5 km da Rasiglia, 54,7 km da Gubbio e 64,3 km da Castiglione del Lago: cinque appartamenti indipendenti con cucina e parcheggio gratuito." },
+      ],
+    },
+    finalCtaHeading: "Le luci di Natale dell'Umbria, e la sera una casa in campagna.",
+    finalCtaBody: "Scegli l'appartamento per il tuo weekend di mercatini.",
+    finalCtaLabel: "Scopri gli appartamenti",
+    finalCtaHref: "/alloggi/",
+  },
+  en: {
+    slug: "mercatini-di-natale-umbria",
+    category: "Events",
+    title: "Christmas markets in Umbria: Perugia, Gubbio and Lake Trasimeno",
+    excerpt: "Christmas markets and lights in Umbria: Perugia, the Gubbio tree, the tree drawn on Lake Trasimeno and the living nativity of Rasiglia, with dates and distances from Assisi.",
+    metaDescription: "Christmas markets in Umbria: Perugia, Gubbio and its record-breaking tree, the tree on Lake Trasimeno and Rasiglia's nativity. Dates, distances and tips.",
+    ...cover(ALBERO_GUBBIO_PHOTO, "en"),
+    imagePosition: "30% 50%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "At a glance",
+      items: [
+        { label: "Season", value: "late November to Epiphany" },
+        { label: "Tree on Lake Trasimeno", value: "5 December 2026 – 6 January 2027" },
+        { label: "Perugia", value: "21.0 km from La Mora · about 23 min" },
+        { label: "Gubbio", value: "54.7 km · about 42 min" },
+        { label: "Castiglione del Lago", value: "64.3 km · about 50 min" },
+        { label: "Rasiglia", value: "36.5 km · about 37 min" },
+      ],
+    },
+    intro:
+      "Christmas in Umbria has many addresses: the markets in the heart of Perugia, the Gubbio tree of lights, the tree drawn on the water of Lake Trasimeno, the living nativity of Rasiglia. From Agriturismo La Mora, in the countryside outside Assisi, each is an easy day trip. Here is what to see, when, and how far it is (by car, according to Google Maps). Not every 2026 date has been announced yet: where there is no confirmation, we point you to the official website to check.",
+    introCtaHeading: "Markets, trees of light and nativity scenes: one countryside base for all of them.",
+    introCtaLabel: "Book",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "When are the Christmas markets in Umbria?" },
+      {
+        type: "p",
+        text: "Usually from late November to Epiphany, but every town has its own calendar. In Perugia the 2025/26 edition ran from 29 November to 6 January; in Gubbio the markets open from late November and the tree is traditionally lit on 7 December; in Castiglione del Lago, “Luci sul Trasimeno” 2026/27 is scheduled from 5 December 2026 to 6 January 2027. For Perugia and Gubbio the 2026 dates had not yet been published when we wrote this guide: check the official websites before you go.",
+      },
+      { type: "h2", text: "What can you see at Christmas in Perugia?" },
+      {
+        type: "p",
+        text: "In the 2025/26 edition, “Perugia, un Natale insieme”, the historic centre was filled with lights and artists' installations, including works by Mimmo Paladino. The markets, with crafts, food specialities and gift ideas, ran along Corso Vannucci and between Corso Vannucci and the Rocca Paolina; the Cassero and the terrace of the former Mercato Coperto hosted videomapping and light displays, alongside the trees in Piazza della Repubblica and Piazza Matteotti, shows and children's activities.",
+      },
+      {
+        type: "p",
+        text: "The programme changes every year: for the 2026 edition, check the region's official tourism website, Umbria Tourism. Perugia is 21.0 km from La Mora, about 23 minutes by car. If you come in November, Eurochocolate is also on in the city from 13 to 22 November 2026: we cover it in a dedicated guide.",
+      },
+      { type: "h2", text: "Where is the world's largest Christmas tree?" },
+      {
+        type: "p",
+        text: "In Gubbio. Since 1981, on the slopes of Monte Ingino above the town, more than 300 lights have drawn a tree 750 metres high with a 450-metre base; in 1991 the Gubbio Christmas tree entered the Guinness World Records as the largest in the world. It is traditionally lit on 7 December, the eve of the Immaculate Conception, and stays lit every evening until late at night: in the 2025/26 edition, according to Umbria Tourism, from 7 December to 11 January, from 17:00.",
+      },
+      credited(GUBBIO_NATALE_PIAZZA_PHOTO, "en"),
+      {
+        type: "p",
+        text: "From late November the large Piazza dei Quaranta Martiri hosts the Christmas markets, with Tyrolean-style stalls selling crafts, decorations and food specialities. Gubbio is 54.7 km from La Mora, about 42 minutes by car along the SS318.",
+      },
+      { type: "h2", text: "What is the Christmas tree on Lake Trasimeno like?" },
+      {
+        type: "p",
+        text: "At Castiglione del Lago, since 2019, lights have drawn a Christmas tree on the water of Lake Trasimeno: 1,080 metres long and 50 metres wide, with 2,400 perimeter lights powered by renewable energy. It is the heart of “Luci sul Trasimeno”, which in 2026/27 is open every day from 5 December to 6 January, from 17:00 to 23:00. According to the organisers, the tree can only be seen in its proper proportions from the paid “Percorso dell'Albero” (Tree Path), below the walls of the Rocca del Leone.",
+      },
+      credited(ALBERO_TRASIMENO_PHOTO, "en"),
+      {
+        type: "p",
+        text: "Tickets, parking and what else is on: it's all in our guide to the Christmas tree on Lake Trasimeno. Castiglione del Lago is 64.3 km from La Mora, about 50 minutes.",
+      },
+      { type: "h2", text: "Where can you see a living nativity in Umbria?" },
+      {
+        type: "p",
+        text: "In Rasiglia, the “village of streams” in the municipality of Foligno, the living nativity “Rasiglia, Paese presepe” takes place on 26 December and 6 January. Rasiglia is 36.5 km from La Mora, about 37 minutes: our dedicated guide explains how to visit.",
+      },
+      {
+        type: "p",
+        text: "For Christmas in Assisi, a few minutes from La Mora, the events calendar is on the town's official tourism website, visit-assisi.it.",
+      },
+      { type: "h2", text: "How to plan a weekend of Christmas markets and lights?" },
+      {
+        type: "list",
+        items: [
+          "Friday evening: Perugia, 23 minutes away, for the lights and the markets in the centre.",
+          "Saturday: Gubbio, with the markets in Piazza dei Quaranta Martiri and, once it's dark, the tree lit up on Monte Ingino.",
+          "Sunday: Castiglione del Lago for the tree on Lake Trasimeno, open from 17:00.",
+          "If you're in Umbria on 26 December or 6 January: the living nativity of Rasiglia.",
+        ],
+      },
+      { type: "h2", text: "Where to stay for the Christmas markets in Umbria?" },
+      {
+        type: "p",
+        text: "Agriturismo La Mora is at Via Fonte Citerna 7, in the countryside outside Assisi: Perugia is 21.0 km away, Rasiglia 36.5 km, Gubbio 54.7 km and Castiglione del Lago 64.3 km. Its five independent apartments have a fully equipped kitchen, Wi-Fi and air conditioning, with free parking on site: after the markets, you come back to the countryside for the night.",
+      },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_CAMINO,
+        alt: "Breakfast room at Agriturismo La Mora with the fire lit and the table laid",
+        caption: "The breakfast room at Agriturismo La Mora, with the fire lit.",
+      },
+      {
+        type: "links",
+        heading: "Plan your Christmas in Umbria",
+        items: [
+          { label: "La Mora's apartments", href: "/alloggi/" },
+          { label: "Offers for direct bookings", href: "/offerte/" },
+          { label: "The area around La Mora", href: "/territorio/" },
+          { label: "Guide to the Christmas tree on Lake Trasimeno", href: "/blog/albero-di-natale-lago-trasimeno/" },
+          { label: "Guide to Rasiglia, the little Venice of Umbria", href: "/blog/rasiglia-piccola-venezia-umbria/" },
+          { label: "Eurochocolate 2026 in Perugia", href: "/blog/eurochocolate-2026-dove-dormire/" },
+          { label: "Christmas in Gubbio on italia.it", href: ITALIA_GUBBIO_URL },
+          { label: "Umbria Tourism, the region's official website", href: UMBRIA_TOURISM_URL },
+          { label: "Events in Assisi on visit-assisi.it", href: VISIT_ASSISI_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Christmas markets in Umbria: frequently asked questions",
+      items: [
+        { q: "When do the Christmas markets in Umbria start?", a: "Usually in late November: in Gubbio the markets in Piazza dei Quaranta Martiri open from late November, and in Perugia the 2025/26 edition began on 29 November. Dates change every year, so check the official websites." },
+        { q: "Where is the world's largest Christmas tree?", a: "In Gubbio, on the slopes of Monte Ingino: 750 metres high with a 450-metre base, it has been in the Guinness World Records since 1991. It is traditionally lit on 7 December." },
+        { q: "Is the tree on Lake Trasimeno the same as the one in Gubbio?", a: "No. The Trasimeno tree is drawn in lights on the water of the lake at Castiglione del Lago, since 2019; in 2026/27 it can be visited from 5 December 2026 to 6 January 2027." },
+        { q: "When is the living nativity in Rasiglia?", a: "“Rasiglia, Paese presepe” takes place on 26 December and 6 January." },
+        { q: "How far is Gubbio from Assisi?", a: "From Agriturismo La Mora, in the countryside outside Assisi, Piazza dei Quaranta Martiri in Gubbio is 54.7 km away, about 42 minutes by car according to Google Maps." },
+        { q: "Where to stay to visit the Christmas markets in Umbria?", a: "Agriturismo La Mora, near Assisi, is 21.0 km from Perugia, 36.5 km from Rasiglia, 54.7 km from Gubbio and 64.3 km from Castiglione del Lago: five independent apartments with a kitchen and free parking." },
+      ],
+    },
+    finalCtaHeading: "Umbria's Christmas lights, and a countryside home for the night.",
+    finalCtaBody: "Choose the apartment for your Christmas market weekend.",
+    finalCtaLabel: "Discover the apartments",
+    finalCtaHref: "/alloggi/",
+  },
+  fr: {
+    slug: "mercatini-di-natale-umbria",
+    category: "Événements",
+    title: "Marchés de Noël en Ombrie : Pérouse, Gubbio et le lac Trasimène",
+    excerpt: "Marchés et lumières de Noël en Ombrie : Pérouse, le sapin de Gubbio, le sapin dessiné sur le lac Trasimène et la crèche vivante de Rasiglia, avec dates et distances depuis Assise.",
+    metaDescription: "Marchés de Noël en Ombrie : Pérouse, Gubbio et son sapin record, le sapin sur le lac Trasimène et la crèche de Rasiglia. Dates, distances et conseils.",
+    ...cover(ALBERO_GUBBIO_PHOTO, "fr"),
+    imagePosition: "30% 50%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "En bref",
+      items: [
+        { label: "Période", value: "de fin novembre à l'Épiphanie" },
+        { label: "Sapin du Trasimène", value: "5 décembre 2026 – 6 janvier 2027" },
+        { label: "Pérouse", value: "21,0 km de La Mora · env. 23 min" },
+        { label: "Gubbio", value: "54,7 km · env. 42 min" },
+        { label: "Castiglione del Lago", value: "64,3 km · env. 50 min" },
+        { label: "Rasiglia", value: "36,5 km · env. 37 min" },
+      ],
+    },
+    intro:
+      "En Ombrie, Noël a plusieurs adresses : les marchés au cœur de Pérouse, le sapin de lumières de Gubbio, le sapin dessiné sur l'eau du lac Trasimène, la crèche vivante de Rasiglia. Depuis l'Agriturismo La Mora, dans la campagne d'Assise, tous se rejoignent dans la journée. Voici quoi voir, quand, et à quelle distance (en voiture, selon Google Maps). Toutes les dates 2026 ne sont pas encore annoncées : quand une confirmation manque, nous indiquons le site officiel à consulter.",
+    introCtaHeading: "Marchés, sapins de lumière et crèches : une base à la campagne pour tout voir.",
+    introCtaLabel: "Réserver",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "Quand ont lieu les marchés de Noël en Ombrie ?" },
+      {
+        type: "p",
+        text: "En général de fin novembre à l'Épiphanie, mais chaque ville a son calendrier. À Pérouse, l'édition 2025/26 s'est tenue du 29 novembre au 6 janvier ; à Gubbio, les marchés ouvrent dès la fin novembre et le sapin s'allume traditionnellement le 7 décembre ; à Castiglione del Lago, « Luci sul Trasimeno » 2026/27 est programmé du 5 décembre 2026 au 6 janvier 2027. Pour Pérouse et Gubbio, les dates 2026 n'étaient pas encore publiées au moment où nous avons écrit ce guide : vérifiez-les sur les sites officiels avant de partir.",
+      },
+      { type: "h2", text: "Que voir à Noël à Pérouse ?" },
+      {
+        type: "p",
+        text: "Lors de l'édition 2025/26, « Perugia, un Natale insieme », le centre historique s'est rempli de lumières et d'installations d'artistes, dont Mimmo Paladino. Les marchés, avec artisanat, spécialités gastronomiques et idées cadeaux, s'étendaient le long du corso Vannucci et entre le corso Vannucci et la Rocca Paolina ; le Cassero et la terrasse de l'ancien Mercato Coperto accueillaient videomapping et scénographies lumineuses, avec les sapins de la piazza della Repubblica et de la piazza Matteotti, des spectacles et des activités pour les enfants.",
+      },
+      {
+        type: "p",
+        text: "Le programme change chaque année : pour l'édition 2026, consultez le site touristique officiel de la région, Umbria Tourism. Pérouse est à 21,0 km de La Mora, environ 23 minutes en voiture. Si vous venez en novembre, Eurochocolate a aussi lieu en ville du 13 au 22 novembre 2026 : nous lui consacrons un guide.",
+      },
+      { type: "h2", text: "Où se trouve le plus grand sapin de Noël du monde ?" },
+      {
+        type: "p",
+        text: "À Gubbio. Depuis 1981, sur les pentes du Monte Ingino au-dessus de la ville, plus de 300 lumières dessinent un sapin haut de 750 mètres, avec une base de 450 mètres ; en 1991, le sapin de Noël de Gubbio est entré au Guinness des records comme le plus grand du monde. Il s'allume traditionnellement le 7 décembre, veille de l'Immaculée Conception, et reste allumé chaque soir jusque tard dans la nuit : lors de l'édition 2025/26, selon Umbria Tourism, du 7 décembre au 11 janvier, à partir de 17h00.",
+      },
+      credited(GUBBIO_NATALE_PIAZZA_PHOTO, "fr"),
+      {
+        type: "p",
+        text: "Dès la fin novembre, la grande Piazza dei Quaranta Martiri accueille les marchés de Noël, avec des stands de style tyrolien : artisanat, décorations et spécialités gastronomiques. Gubbio est à 54,7 km de La Mora, environ 42 minutes en voiture par la SS318.",
+      },
+      { type: "h2", text: "À quoi ressemble le sapin de Noël sur le lac Trasimène ?" },
+      {
+        type: "p",
+        text: "À Castiglione del Lago, depuis 2019, des lumières dessinent un sapin de Noël sur l'eau du lac Trasimène : 1 080 mètres de long et 50 de large, avec 2 400 lumières périmétriques alimentées par des énergies renouvelables. C'est le cœur de « Luci sul Trasimeno », ouvert en 2026/27 tous les jours du 5 décembre au 6 janvier, de 17h00 à 23h00. Selon les organisateurs, on ne voit le sapin dans ses justes proportions que depuis le « Percorso dell'Albero » (le parcours du sapin), payant, sous les remparts de la Rocca del Leone.",
+      },
+      credited(ALBERO_TRASIMENO_PHOTO, "fr"),
+      {
+        type: "p",
+        text: "Billets, parkings et animations : tout est dans notre guide du sapin de Noël sur le lac Trasimène. Castiglione del Lago est à 64,3 km de La Mora, environ 50 minutes.",
+      },
+      { type: "h2", text: "Où voir une crèche vivante en Ombrie ?" },
+      {
+        type: "p",
+        text: "À Rasiglia, le « village des ruisseaux » sur la commune de Foligno, la crèche vivante « Rasiglia, Paese presepe » a lieu le 26 décembre et le 6 janvier. Rasiglia est à 36,5 km de La Mora, environ 37 minutes : notre guide explique comment la visiter.",
+      },
+      {
+        type: "p",
+        text: "Pour Noël à Assise, à quelques minutes de La Mora, le calendrier des événements se trouve sur le site touristique officiel de la commune, visit-assisi.it.",
+      },
+      { type: "h2", text: "Comment organiser un week-end de marchés et de lumières de Noël ?" },
+      {
+        type: "list",
+        items: [
+          "Vendredi soir : Pérouse, à 23 minutes, pour les lumières et les marchés du centre.",
+          "Samedi : Gubbio, avec les marchés de la Piazza dei Quaranta Martiri et, à la nuit tombée, le sapin allumé sur le Monte Ingino.",
+          "Dimanche : Castiglione del Lago pour le sapin du lac Trasimène, ouvert dès 17h00.",
+          "Si vous êtes en Ombrie le 26 décembre ou le 6 janvier : la crèche vivante de Rasiglia.",
+        ],
+      },
+      { type: "h2", text: "Où dormir pour les marchés de Noël en Ombrie ?" },
+      {
+        type: "p",
+        text: "L'Agriturismo La Mora se trouve via Fonte Citerna 7, dans la campagne d'Assise : Pérouse est à 21,0 km, Rasiglia à 36,5 km, Gubbio à 54,7 km et Castiglione del Lago à 64,3 km. Ses cinq appartements indépendants disposent d'une cuisine équipée, du Wi-Fi et de la climatisation, avec parking gratuit dans la propriété : le soir, après les marchés, on rentre à la campagne.",
+      },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_CAMINO,
+        alt: "Salle du petit-déjeuner de l'Agriturismo La Mora, feu allumé dans la cheminée et table dressée",
+        caption: "La salle du petit-déjeuner de l'Agriturismo La Mora, feu allumé dans la cheminée.",
+      },
+      {
+        type: "links",
+        heading: "Organisez votre Noël en Ombrie",
+        items: [
+          { label: "Les appartements de La Mora", href: "/alloggi/" },
+          { label: "Les offres en réservation directe", href: "/offerte/" },
+          { label: "Les environs de La Mora", href: "/territorio/" },
+          { label: "Guide du sapin de Noël sur le lac Trasimène", href: "/blog/albero-di-natale-lago-trasimeno/" },
+          { label: "Guide de Rasiglia, la petite Venise de l'Ombrie", href: "/blog/rasiglia-piccola-venezia-umbria/" },
+          { label: "Eurochocolate 2026 à Pérouse", href: "/blog/eurochocolate-2026-dove-dormire/" },
+          { label: "Noël à Gubbio sur italia.it", href: ITALIA_GUBBIO_URL },
+          { label: "Umbria Tourism, site officiel de la région", href: UMBRIA_TOURISM_URL },
+          { label: "Événements à Assise sur visit-assisi.it", href: VISIT_ASSISI_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Marchés de Noël en Ombrie : questions fréquentes",
+      items: [
+        { q: "Quand commencent les marchés de Noël en Ombrie ?", a: "En général fin novembre : à Gubbio, les marchés de la Piazza dei Quaranta Martiri ouvrent dès la fin novembre, et à Pérouse l'édition 2025/26 a commencé le 29 novembre. Les dates changent chaque année : vérifiez sur les sites officiels." },
+        { q: "Où se trouve le plus grand sapin de Noël du monde ?", a: "À Gubbio, sur les pentes du Monte Ingino : haut de 750 mètres avec une base de 450, il figure au Guinness des records depuis 1991. Il s'allume traditionnellement le 7 décembre." },
+        { q: "Le sapin du lac Trasimène est-il le même que celui de Gubbio ?", a: "Non. Celui du Trasimène est dessiné en lumières sur l'eau du lac à Castiglione del Lago, depuis 2019 ; en 2026/27, il se visite du 5 décembre 2026 au 6 janvier 2027." },
+        { q: "Quand a lieu la crèche vivante de Rasiglia ?", a: "« Rasiglia, Paese presepe » a lieu le 26 décembre et le 6 janvier." },
+        { q: "Quelle distance entre Gubbio et Assise ?", a: "Depuis l'Agriturismo La Mora, dans la campagne d'Assise, la Piazza dei Quaranta Martiri de Gubbio est à 54,7 km, environ 42 minutes en voiture selon Google Maps." },
+        { q: "Où dormir pour visiter les marchés de Noël en Ombrie ?", a: "L'Agriturismo La Mora, près d'Assise, est à 21,0 km de Pérouse, 36,5 km de Rasiglia, 54,7 km de Gubbio et 64,3 km de Castiglione del Lago : cinq appartements indépendants avec cuisine et parking gratuit." },
+      ],
+    },
+    finalCtaHeading: "Les lumières de Noël de l'Ombrie, et le soir une maison à la campagne.",
+    finalCtaBody: "Choisissez l'appartement pour votre week-end de marchés de Noël.",
+    finalCtaLabel: "Découvrir les appartements",
+    finalCtaHref: "/alloggi/",
+  },
+  de: {
+    slug: "mercatini-di-natale-umbria",
+    category: "Veranstaltungen",
+    title: "Weihnachtsmärkte in Umbrien: Perugia, Gubbio und der Trasimenische See",
+    excerpt: "Weihnachtsmärkte und Lichter in Umbrien: Perugia, der Baum von Gubbio, der auf den Trasimenischen See gezeichnete Baum und die lebende Krippe von Rasiglia – mit Terminen und Entfernungen ab Assisi.",
+    metaDescription: "Weihnachtsmärkte in Umbrien: Perugia, Gubbio mit seinem Rekordbaum, der Baum auf dem Trasimenischen See und die Krippe von Rasiglia. Termine und Tipps.",
+    ...cover(ALBERO_GUBBIO_PHOTO, "de"),
+    imagePosition: "30% 50%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "Auf einen Blick",
+      items: [
+        { label: "Zeitraum", value: "Ende November bis Dreikönig" },
+        { label: "Baum am Trasimenischen See", value: "5. Dezember 2026 – 6. Januar 2027" },
+        { label: "Perugia", value: "21,0 km ab La Mora · ca. 23 Min." },
+        { label: "Gubbio", value: "54,7 km · ca. 42 Min." },
+        { label: "Castiglione del Lago", value: "64,3 km · ca. 50 Min." },
+        { label: "Rasiglia", value: "36,5 km · ca. 37 Min." },
+      ],
+    },
+    intro:
+      "Weihnachten hat in Umbrien viele Adressen: die Märkte im Zentrum von Perugia, den Lichterbaum von Gubbio, den auf das Wasser des Trasimenischen Sees gezeichneten Baum, die lebende Krippe von Rasiglia. Vom Agriturismo La Mora auf dem Land bei Assisi erreichen Sie alle bequem an einem Tag. Hier lesen Sie, was es zu sehen gibt, wann und wie weit es ist (mit dem Auto, laut Google Maps). Noch sind nicht alle Termine für 2026 bekannt: Wo eine Bestätigung fehlt, nennen wir die offizielle Website zum Nachsehen.",
+    introCtaHeading: "Märkte, Lichterbäume und Krippen: ein Ausgangspunkt auf dem Land für alles.",
+    introCtaLabel: "Buchen",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "Wann finden die Weihnachtsmärkte in Umbrien statt?" },
+      {
+        type: "p",
+        text: "Meist von Ende November bis Dreikönig, doch jede Stadt hat ihren eigenen Kalender. In Perugia lief die Ausgabe 2025/26 vom 29. November bis 6. Januar; in Gubbio öffnen die Märkte ab Ende November, und der Baum wird traditionell am 7. Dezember angezündet; in Castiglione del Lago ist „Luci sul Trasimeno“ 2026/27 vom 5. Dezember 2026 bis 6. Januar 2027 geplant. Für Perugia und Gubbio waren die Termine 2026 bei Redaktionsschluss dieses Leitfadens noch nicht veröffentlicht: Prüfen Sie sie vor der Abreise auf den offiziellen Websites.",
+      },
+      { type: "h2", text: "Was gibt es zu Weihnachten in Perugia zu sehen?" },
+      {
+        type: "p",
+        text: "In der Ausgabe 2025/26, „Perugia, un Natale insieme“, war die Altstadt voller Lichter und Künstlerinstallationen, unter anderem von Mimmo Paladino. Die Märkte mit Kunsthandwerk, kulinarischen Spezialitäten und Geschenkideen lagen am Corso Vannucci und zwischen Corso Vannucci und Rocca Paolina; am Cassero und auf der Terrasse des ehemaligen Mercato Coperto gab es Videomapping und Lichtinszenierungen, dazu die Weihnachtsbäume auf der Piazza della Repubblica und der Piazza Matteotti, Shows und Programm für Kinder.",
+      },
+      {
+        type: "p",
+        text: "Das Programm ändert sich jedes Jahr: Für die Ausgabe 2026 sehen Sie auf dem offiziellen Tourismusportal der Region nach, Umbria Tourism. Perugia liegt 21,0 km von La Mora entfernt, rund 23 Minuten mit dem Auto. Wenn Sie im November kommen: Vom 13. bis 22. November 2026 findet in der Stadt auch die Eurochocolate statt – dazu gibt es einen eigenen Leitfaden.",
+      },
+      { type: "h2", text: "Wo steht der größte Weihnachtsbaum der Welt?" },
+      {
+        type: "p",
+        text: "In Gubbio. Seit 1981 zeichnen an den Hängen des Monte Ingino oberhalb der Stadt mehr als 300 Lichter einen 750 Meter hohen Baum mit 450 Metern Basis; 1991 kam der Weihnachtsbaum von Gubbio als größter der Welt ins Guinness-Buch der Rekorde. Traditionell wird er am 7. Dezember angezündet, am Vorabend von Mariä Empfängnis, und leuchtet jeden Abend bis spät in die Nacht: in der Ausgabe 2025/26 laut Umbria Tourism vom 7. Dezember bis 11. Januar, ab 17:00 Uhr.",
+      },
+      credited(GUBBIO_NATALE_PIAZZA_PHOTO, "de"),
+      {
+        type: "p",
+        text: "Ab Ende November finden auf der großen Piazza dei Quaranta Martiri die Weihnachtsmärkte statt, mit Ständen im Tiroler Stil: Kunsthandwerk, Dekoration und kulinarische Spezialitäten. Gubbio liegt 54,7 km von La Mora entfernt, rund 42 Minuten mit dem Auto über die SS318.",
+      },
+      { type: "h2", text: "Wie sieht der Weihnachtsbaum auf dem Trasimenischen See aus?" },
+      {
+        type: "p",
+        text: "In Castiglione del Lago zeichnen Lichter seit 2019 einen Weihnachtsbaum auf das Wasser des Trasimenischen Sees: 1.080 Meter lang und 50 Meter breit, mit 2.400 Umrisslichtern, die mit erneuerbarer Energie betrieben werden. Er ist das Herzstück von „Luci sul Trasimeno“, 2026/27 täglich vom 5. Dezember bis 6. Januar von 17:00 bis 23:00 Uhr geöffnet. Laut den Veranstaltern ist der Baum in seinen richtigen Proportionen nur vom kostenpflichtigen „Percorso dell'Albero“ (Baumweg) unterhalb der Mauern der Rocca del Leone zu sehen.",
+      },
+      credited(ALBERO_TRASIMENO_PHOTO, "de"),
+      {
+        type: "p",
+        text: "Tickets, Parken und Rahmenprogramm: Alles steht in unserem Leitfaden zum Weihnachtsbaum auf dem Trasimenischen See. Castiglione del Lago liegt 64,3 km von La Mora entfernt, rund 50 Minuten.",
+      },
+      { type: "h2", text: "Wo gibt es eine lebende Krippe in Umbrien?" },
+      {
+        type: "p",
+        text: "In Rasiglia, dem „Dorf der Bäche“ in der Gemeinde Foligno, findet die lebende Krippe „Rasiglia, Paese presepe“ am 26. Dezember und am 6. Januar statt. Rasiglia liegt 36,5 km von La Mora entfernt, rund 37 Minuten: Wie man es besucht, erklären wir in einem eigenen Leitfaden.",
+      },
+      {
+        type: "p",
+        text: "Für Weihnachten in Assisi, wenige Minuten von La Mora, steht der Veranstaltungskalender auf dem offiziellen Tourismusportal der Stadt, visit-assisi.it.",
+      },
+      { type: "h2", text: "Wie plant man ein Wochenende mit Weihnachtsmärkten und Lichtern?" },
+      {
+        type: "list",
+        items: [
+          "Freitagabend: Perugia, 23 Minuten entfernt, für die Lichter und Märkte im Zentrum.",
+          "Samstag: Gubbio mit den Märkten auf der Piazza dei Quaranta Martiri und, sobald es dunkel ist, dem leuchtenden Baum am Monte Ingino.",
+          "Sonntag: Castiglione del Lago für den Baum auf dem Trasimenischen See, geöffnet ab 17:00 Uhr.",
+          "Wenn Sie am 26. Dezember oder 6. Januar in Umbrien sind: die lebende Krippe von Rasiglia.",
+        ],
+      },
+      { type: "h2", text: "Wo übernachten für die Weihnachtsmärkte in Umbrien?" },
+      {
+        type: "p",
+        text: "Das Agriturismo La Mora liegt in der Via Fonte Citerna 7 auf dem Land bei Assisi: Perugia ist 21,0 km entfernt, Rasiglia 36,5 km, Gubbio 54,7 km und Castiglione del Lago 64,3 km. Die fünf unabhängigen Ferienwohnungen haben eine voll ausgestattete Küche, WLAN und Klimaanlage, dazu kostenlose Parkplätze auf dem Gelände: Nach den Märkten geht es abends zurück aufs Land.",
+      },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_CAMINO,
+        alt: "Frühstücksraum des Agriturismo La Mora mit brennendem Kamin und gedecktem Tisch",
+        caption: "Der Frühstücksraum des Agriturismo La Mora mit brennendem Kamin.",
+      },
+      {
+        type: "links",
+        heading: "Planen Sie Ihr Weihnachten in Umbrien",
+        items: [
+          { label: "Die Ferienwohnungen von La Mora", href: "/alloggi/" },
+          { label: "Angebote bei Direktbuchung", href: "/offerte/" },
+          { label: "Die Umgebung von La Mora", href: "/territorio/" },
+          { label: "Leitfaden zum Weihnachtsbaum auf dem Trasimenischen See", href: "/blog/albero-di-natale-lago-trasimeno/" },
+          { label: "Leitfaden zu Rasiglia, dem kleinen Venedig Umbriens", href: "/blog/rasiglia-piccola-venezia-umbria/" },
+          { label: "Eurochocolate 2026 in Perugia", href: "/blog/eurochocolate-2026-dove-dormire/" },
+          { label: "Weihnachten in Gubbio auf italia.it", href: ITALIA_GUBBIO_URL },
+          { label: "Umbria Tourism, offizielles Portal der Region", href: UMBRIA_TOURISM_URL },
+          { label: "Veranstaltungen in Assisi auf visit-assisi.it", href: VISIT_ASSISI_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Weihnachtsmärkte in Umbrien: häufige Fragen",
+      items: [
+        { q: "Wann beginnen die Weihnachtsmärkte in Umbrien?", a: "Meist Ende November: In Gubbio öffnen die Märkte auf der Piazza dei Quaranta Martiri ab Ende November, in Perugia begann die Ausgabe 2025/26 am 29. November. Die Termine ändern sich jedes Jahr: Prüfen Sie die offiziellen Websites." },
+        { q: "Wo steht der größte Weihnachtsbaum der Welt?", a: "In Gubbio, an den Hängen des Monte Ingino: 750 Meter hoch mit 450 Metern Basis, seit 1991 im Guinness-Buch der Rekorde. Er wird traditionell am 7. Dezember angezündet." },
+        { q: "Ist der Baum am Trasimenischen See derselbe wie in Gubbio?", a: "Nein. Der Baum am Trasimenischen See wird seit 2019 bei Castiglione del Lago mit Lichtern auf das Wasser gezeichnet; 2026/27 ist er vom 5. Dezember 2026 bis 6. Januar 2027 zu sehen." },
+        { q: "Wann findet die lebende Krippe in Rasiglia statt?", a: "„Rasiglia, Paese presepe“ findet am 26. Dezember und am 6. Januar statt." },
+        { q: "Wie weit ist Gubbio von Assisi entfernt?", a: "Vom Agriturismo La Mora auf dem Land bei Assisi liegt die Piazza dei Quaranta Martiri in Gubbio 54,7 km entfernt, laut Google Maps rund 42 Minuten mit dem Auto." },
+        { q: "Wo übernachtet man für die Weihnachtsmärkte in Umbrien?", a: "Das Agriturismo La Mora bei Assisi liegt 21,0 km von Perugia, 36,5 km von Rasiglia, 54,7 km von Gubbio und 64,3 km von Castiglione del Lago entfernt: fünf unabhängige Ferienwohnungen mit Küche und kostenlosem Parkplatz." },
+      ],
+    },
+    finalCtaHeading: "Umbriens Weihnachtslichter – und abends ein Zuhause auf dem Land.",
+    finalCtaBody: "Wählen Sie die Ferienwohnung für Ihr Weihnachtsmarkt-Wochenende.",
+    finalCtaLabel: "Die Ferienwohnungen entdecken",
+    finalCtaHref: "/alloggi/",
+  },
+};
+
+const LUCI_TRASIMENO_URL = "https://www.lucisultrasimeno.it/";
+
+const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
+  it: {
+    slug: "albero-di-natale-lago-trasimeno",
+    category: "Eventi",
+    title: "Albero di Natale sul lago Trasimeno: date, biglietti e come vederlo",
+    excerpt: "A Castiglione del Lago un albero di Natale di luci lungo 1.080 metri disegnato sull'acqua del Trasimeno: date 2026/27, biglietti, da dove si vede e come arrivare da Assisi.",
+    metaDescription: "L'albero di Natale sul lago Trasimeno a Castiglione del Lago: date 2026/27, orari, biglietti, da dove si vede e come arrivare da Assisi in circa 50 minuti.",
+    ...cover(ALBERO_TRASIMENO_PHOTO, "it"),
+    imagePosition: "50% 0%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "In breve",
+      items: [
+        { label: "Dove", value: "Castiglione del Lago, lago Trasimeno" },
+        { label: "Edizione 2026/27", value: "5 dicembre 2026 – 6 gennaio 2027" },
+        { label: "Orario", value: "tutti i giorni, 17:00–23:00" },
+        { label: "Biglietto", value: "10 € · 5 € da 13 a 17 anni · gratis fino a 12" },
+        { label: "Misure", value: "1.080 m di lunghezza, 50 m di larghezza" },
+        { label: "Da La Mora", value: "64,3 km · circa 50 min in auto" },
+      ],
+    },
+    intro:
+      "Dal dicembre 2019 Castiglione del Lago accende sul lago Trasimeno un albero di Natale disegnato con le luci sull'acqua, lungo 1.080 metri: gli organizzatori lo presentano come «l'albero di Natale più grande del mondo costruito sull'acqua». È il cuore di «Luci sul Trasimeno», che nell'edizione 2026/27 va dal 5 dicembre al 6 gennaio. Ecco come vederlo, quanto costa e come arrivarci da Agriturismo La Mora, a circa 50 minuti.",
+    introCtaHeading: "L'albero sul lago, i mercatini e Assisi: dormi in campagna, in mezzo a tutto.",
+    introCtaLabel: "Prenota",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "Com'è fatto l'albero di Natale sul lago Trasimeno?" },
+      {
+        type: "p",
+        text: "È un'opera di ingegneria elettrica costruita direttamente nel lago: secondo gli organizzatori si può realizzare solo sulle acque poco profonde del Trasimeno. Le luci disegnano la sagoma dell'albero sulla superficie, sorrette da 166 pali, e lo spettacolo non è mai uguale: forma, intensità e riflessi cambiano con il punto da cui lo si guarda e con il tempo.",
+      },
+      {
+        type: "facts",
+        items: [
+          { label: "Lunghezza", value: "1.080 metri" },
+          { label: "Larghezza", value: "50 metri" },
+          { label: "Luci perimetrali", value: "2.400" },
+          { label: "Lampade interne", value: "250" },
+          { label: "Cavo", value: "7.165 metri" },
+          { label: "Energia", value: "100% da fonti rinnovabili" },
+        ],
+      },
+      { type: "h2", text: "Quando si può vedere l'albero sul Trasimeno?" },
+      {
+        type: "p",
+        text: "L'edizione 2026/27 di Luci sul Trasimeno è in programma tutti i giorni dal 5 dicembre 2026 al 6 gennaio 2027, dalle 17:00 alle 23:00; in caso di maltempo, avvertono gli organizzatori, gli orari possono cambiare. Il programma degli eventi giornalieri era ancora in aggiornamento quando abbiamo scritto questa guida: controllalo sul sito ufficiale.",
+      },
+      { type: "h2", text: "Da dove si vede l'albero di Natale sul lago?" },
+      {
+        type: "p",
+        text: "Secondo gli organizzatori, nella sua forma e nelle sue proporzioni l'albero si vede solo dal «Percorso dell'Albero», a pagamento. Il punto di osservazione è nell'area del «Poggio», sotto le mura della Rocca del Leone, la rocca medievale di Castiglione del Lago; l'evento si svolge lungo le mura che costeggiano il centro storico e la rocca, in via Belvedere, a partire da Porta Fiorentina.",
+      },
+      credited(ROCCA_DEL_LEONE_PHOTO, "it"),
+      {
+        type: "p",
+        text: "Il biglietto del Percorso dell'Albero, nell'edizione 2026/27, costa 10 euro; 5 euro dai 13 ai 17 anni; è gratuito fino a 12 anni e per le persone con disabilità. Comprende anche il Babbo Natale Xmas Garden e il Sentiero del Presepe e si acquista alla biglietteria dell'evento oppure online, sul sito ufficiale.",
+      },
+      { type: "h2", text: "Cos'altro c'è a Luci sul Trasimeno?" },
+      {
+        type: "p",
+        text: "Lungo via Belvedere ci sono le Casette del Natale, con artigianato e prodotti tipici, e la pista di pattinaggio del Ghiaccio Park; il programma 2026 comprende anche la mostra di mattoncini «Castiglione del Lego». Di giorno vale la pena passeggiare nel centro storico di Castiglione del Lago, sul promontorio affacciato sul lago.",
+      },
+      credited(TRASIMENO_VISTA_PHOTO, "it"),
+      { type: "h2", text: "Come arrivare a Castiglione del Lago da Assisi?" },
+      {
+        type: "p",
+        text: "In auto: da Agriturismo La Mora sono 64,3 km, circa 50 minuti secondo Google Maps, lungo il raccordo autostradale Perugia–Bettolle. Gli organizzatori segnalano numerosi parcheggi gratuiti a poche decine di metri dall'evento, da cui si raggiunge a piedi il centro storico; nei giorni festivi e prefestivi c'è una navetta gratuita.",
+      },
+      {
+        type: "p",
+        text: "Il raccordo passa da Perugia, a 21,0 km da La Mora: nello stesso giorno puoi fermarti per le luci e i mercatini del centro, che raccontiamo nella guida ai mercatini di Natale in Umbria.",
+      },
+      { type: "h2", text: "Dove dormire per vedere l'albero sul Trasimeno?" },
+      {
+        type: "p",
+        text: "Agriturismo La Mora è nella campagna di Assisi, in via Fonte Citerna 7: da qui Castiglione del Lago è a circa 50 minuti, Perugia a 23 e la Basilica di San Francesco a 18. I cinque appartamenti indipendenti hanno cucina attrezzata, Wi-Fi, aria condizionata e parcheggio gratuito: una base per un weekend di Natale tra il lago, Perugia e Assisi.",
+      },
+      {
+        type: "image",
+        src: LAMORA_DALL_ALTO,
+        alt: "Agriturismo La Mora vista dall'alto: gli edifici, la piscina, il gazebo, il campo da calcio e i campi intorno",
+        caption: "Agriturismo La Mora dall'alto, nella campagna di Assisi.",
+      },
+      {
+        type: "links",
+        heading: "Organizza il weekend",
+        items: [
+          { label: "Gli appartamenti di La Mora", href: "/alloggi/" },
+          { label: "Le offerte per chi prenota diretto", href: "/offerte/" },
+          { label: "Il territorio intorno a La Mora", href: "/territorio/" },
+          { label: "Guida ai mercatini di Natale in Umbria", href: "/blog/mercatini-di-natale-umbria/" },
+          { label: "Sito ufficiale di Luci sul Trasimeno", href: LUCI_TRASIMENO_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Domande frequenti sull'albero di Natale sul Trasimeno",
+      items: [
+        { q: "Quando si vede l'albero di Natale sul lago Trasimeno?", a: "Nell'edizione 2026/27, tutti i giorni dal 5 dicembre 2026 al 6 gennaio 2027, dalle 17:00 alle 23:00. Con il maltempo gli orari possono cambiare." },
+        { q: "Quanto costa il biglietto?", a: "Nel 2026/27 il biglietto del Percorso dell'Albero costa 10 euro, 5 euro dai 13 ai 17 anni; è gratuito fino a 12 anni e per le persone con disabilità. Comprende anche il Babbo Natale Xmas Garden e il Sentiero del Presepe." },
+        { q: "Si può vedere l'albero senza biglietto?", a: "Secondo gli organizzatori, nella sua forma e nelle sue proporzioni l'albero si vede solo dal Percorso dell'Albero, a pagamento, sotto le mura della Rocca del Leone." },
+        { q: "Quanto è grande l'albero sul lago?", a: "1.080 metri di lunghezza e 50 di larghezza, con 2.400 luci perimetrali e 250 lampade interne, alimentate al 100% da energia rinnovabile." },
+        { q: "È lo stesso albero di Gubbio?", a: "No. Quello di Gubbio è acceso dal 1981 sulle pendici del Monte Ingino ed è nel Guinness dei primati come albero di Natale più grande del mondo; quello del Trasimeno, dal 2019, è costruito sull'acqua del lago a Castiglione del Lago." },
+        { q: "Dove si parcheggia a Castiglione del Lago?", a: "Gli organizzatori indicano numerosi parcheggi gratuiti a poche decine di metri dall'evento; nei giorni festivi e prefestivi è previsto un servizio navetta gratuito." },
+        { q: "Quanto dista Agriturismo La Mora da Castiglione del Lago?", a: "64,3 km, circa 50 minuti in auto secondo Google Maps, lungo il raccordo Perugia–Bettolle." },
+      ],
+    },
+    finalCtaHeading: "Natale sul lago, la notte in campagna.",
+    finalCtaBody: "Scegli l'appartamento per il tuo weekend di Natale in Umbria.",
+    finalCtaLabel: "Scopri gli appartamenti",
+    finalCtaHref: "/alloggi/",
+  },
+  en: {
+    slug: "albero-di-natale-lago-trasimeno",
+    category: "Events",
+    title: "Christmas tree on Lake Trasimeno: dates, tickets and how to see it",
+    excerpt: "At Castiglione del Lago, a Christmas tree of lights 1,080 metres long drawn on the water of Lake Trasimeno: 2026/27 dates, tickets, where to see it from and how to get there from Assisi.",
+    metaDescription: "The Christmas tree on Lake Trasimeno at Castiglione del Lago: 2026/27 dates, opening hours, tickets, where to see it and how to get there from Assisi.",
+    ...cover(ALBERO_TRASIMENO_PHOTO, "en"),
+    imagePosition: "50% 0%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "At a glance",
+      items: [
+        { label: "Where", value: "Castiglione del Lago, Lake Trasimeno" },
+        { label: "2026/27 edition", value: "5 December 2026 – 6 January 2027" },
+        { label: "Hours", value: "every day, 17:00–23:00" },
+        { label: "Ticket", value: "€10 · €5 ages 13–17 · free up to 12" },
+        { label: "Size", value: "1,080 m long, 50 m wide" },
+        { label: "From La Mora", value: "64.3 km · about 50 min by car" },
+      ],
+    },
+    intro:
+      "Since December 2019, Castiglione del Lago has lit up a Christmas tree drawn in lights on the water of Lake Trasimeno, 1,080 metres long: the organisers present it as “the world's largest Christmas tree built on water”. It is the heart of “Luci sul Trasimeno”, which in its 2026/27 edition runs from 5 December to 6 January. Here's how to see it, what it costs and how to get there from Agriturismo La Mora, about 50 minutes away.",
+    introCtaHeading: "The tree on the lake, the markets and Assisi: stay in the countryside, close to it all.",
+    introCtaLabel: "Book",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "How is the Christmas tree on Lake Trasimeno made?" },
+      {
+        type: "p",
+        text: "It is a feat of electrical engineering built right in the lake: according to the organisers it can only be made on the shallow waters of Trasimeno. The lights trace the outline of the tree on the surface, held up by 166 poles, and the show is never the same twice: shape, brightness and reflections change with where you watch from and with the weather.",
+      },
+      {
+        type: "facts",
+        items: [
+          { label: "Length", value: "1,080 metres" },
+          { label: "Width", value: "50 metres" },
+          { label: "Perimeter lights", value: "2,400" },
+          { label: "Inner lamps", value: "250" },
+          { label: "Cable", value: "7,165 metres" },
+          { label: "Energy", value: "100% renewable" },
+        ],
+      },
+      { type: "h2", text: "When can you see the tree on Lake Trasimeno?" },
+      {
+        type: "p",
+        text: "The 2026/27 edition of Luci sul Trasimeno is scheduled every day from 5 December 2026 to 6 January 2027, from 17:00 to 23:00; in bad weather, the organisers warn, opening hours may change. The daily events programme was still being updated when we wrote this guide: check it on the official website.",
+      },
+      { type: "h2", text: "Where can you see the Christmas tree on the lake from?" },
+      {
+        type: "p",
+        text: "According to the organisers, the tree can only be seen in its proper shape and proportions from the paid “Percorso dell'Albero” (Tree Path). The viewing point is in the “Poggio” area, below the walls of the Rocca del Leone, the medieval fortress of Castiglione del Lago; the event runs along the walls that skirt the historic centre and the fortress, on Via Belvedere, starting from Porta Fiorentina.",
+      },
+      credited(ROCCA_DEL_LEONE_PHOTO, "en"),
+      {
+        type: "p",
+        text: "In the 2026/27 edition, the Tree Path ticket costs €10, or €5 for ages 13 to 17; it is free for children up to 12 and for people with disabilities. It also includes the Babbo Natale Xmas Garden and the Sentiero del Presepe (nativity trail), and can be bought at the event ticket office or online on the official website.",
+      },
+      { type: "h2", text: "What else is there at Luci sul Trasimeno?" },
+      {
+        type: "p",
+        text: "Along Via Belvedere you'll find the Casette del Natale, little Christmas huts selling crafts and local products, and the Ghiaccio Park ice rink; the 2026 programme also includes “Castiglione del Lego”, an exhibition of building bricks. By day it's worth strolling through the historic centre of Castiglione del Lago, on its promontory overlooking the lake.",
+      },
+      credited(TRASIMENO_VISTA_PHOTO, "en"),
+      { type: "h2", text: "How do you get to Castiglione del Lago from Assisi?" },
+      {
+        type: "p",
+        text: "By car: from Agriturismo La Mora it's 64.3 km, about 50 minutes according to Google Maps, along the Perugia–Bettolle motorway link. The organisers point to plenty of free car parks a few dozen metres from the event, from which you can walk into the historic centre; on Sundays, public holidays and the days before them there is a free shuttle.",
+      },
+      {
+        type: "p",
+        text: "The motorway link passes Perugia, 21.0 km from La Mora: on the same day you can stop for the lights and markets in the centre, which we describe in our guide to the Christmas markets in Umbria.",
+      },
+      { type: "h2", text: "Where to stay to see the tree on Lake Trasimeno?" },
+      {
+        type: "p",
+        text: "Agriturismo La Mora is in the countryside outside Assisi, at Via Fonte Citerna 7: from here Castiglione del Lago is about 50 minutes away, Perugia 23 and the Basilica of San Francesco 18. The five independent apartments have a fully equipped kitchen, Wi-Fi, air conditioning and free parking: a base for a Christmas weekend between the lake, Perugia and Assisi.",
+      },
+      {
+        type: "image",
+        src: LAMORA_DALL_ALTO,
+        alt: "Agriturismo La Mora from above: the buildings, the pool, the gazebo, the football pitch and the surrounding fields",
+        caption: "Agriturismo La Mora from above, in the countryside outside Assisi.",
+      },
+      {
+        type: "links",
+        heading: "Plan your weekend",
+        items: [
+          { label: "La Mora's apartments", href: "/alloggi/" },
+          { label: "Offers for direct bookings", href: "/offerte/" },
+          { label: "The area around La Mora", href: "/territorio/" },
+          { label: "Guide to the Christmas markets in Umbria", href: "/blog/mercatini-di-natale-umbria/" },
+          { label: "Official website of Luci sul Trasimeno", href: LUCI_TRASIMENO_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "The Christmas tree on Lake Trasimeno: frequently asked questions",
+      items: [
+        { q: "When can you see the Christmas tree on Lake Trasimeno?", a: "In the 2026/27 edition, every day from 5 December 2026 to 6 January 2027, from 17:00 to 23:00. Opening hours may change in bad weather." },
+        { q: "How much is the ticket?", a: "In 2026/27 the Tree Path ticket costs €10, or €5 for ages 13 to 17; it is free up to age 12 and for people with disabilities. It also includes the Babbo Natale Xmas Garden and the nativity trail." },
+        { q: "Can you see the tree without a ticket?", a: "According to the organisers, the tree can only be seen in its proper shape and proportions from the paid Tree Path, below the walls of the Rocca del Leone." },
+        { q: "How big is the tree on the lake?", a: "1,080 metres long and 50 metres wide, with 2,400 perimeter lights and 250 inner lamps, powered 100% by renewable energy." },
+        { q: "Is it the same tree as Gubbio's?", a: "No. Gubbio's tree has been lit on the slopes of Monte Ingino since 1981 and is in the Guinness World Records as the world's largest Christmas tree; the Trasimeno tree, since 2019, is built on the water of the lake at Castiglione del Lago." },
+        { q: "Where can you park in Castiglione del Lago?", a: "The organisers point to plenty of free car parks a few dozen metres from the event; on Sundays, public holidays and the days before them a free shuttle runs." },
+        { q: "How far is Agriturismo La Mora from Castiglione del Lago?", a: "64.3 km, about 50 minutes by car according to Google Maps, along the Perugia–Bettolle motorway link." },
+      ],
+    },
+    finalCtaHeading: "Christmas on the lake, nights in the countryside.",
+    finalCtaBody: "Choose the apartment for your Christmas weekend in Umbria.",
+    finalCtaLabel: "Discover the apartments",
+    finalCtaHref: "/alloggi/",
+  },
+  fr: {
+    slug: "albero-di-natale-lago-trasimeno",
+    category: "Événements",
+    title: "Sapin de Noël sur le lac Trasimène : dates, billets et où le voir",
+    excerpt: "À Castiglione del Lago, un sapin de Noël de lumières long de 1 080 mètres dessiné sur l'eau du lac Trasimène : dates 2026/27, billets, d'où le voir et comment venir depuis Assise.",
+    metaDescription: "Le sapin de Noël sur le lac Trasimène à Castiglione del Lago : dates 2026/27, horaires, billets, d'où le voir et comment s'y rendre depuis Assise.",
+    ...cover(ALBERO_TRASIMENO_PHOTO, "fr"),
+    imagePosition: "50% 0%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "En bref",
+      items: [
+        { label: "Où", value: "Castiglione del Lago, lac Trasimène" },
+        { label: "Édition 2026/27", value: "5 décembre 2026 – 6 janvier 2027" },
+        { label: "Horaires", value: "tous les jours, 17h00–23h00" },
+        { label: "Billet", value: "10 € · 5 € de 13 à 17 ans · gratuit jusqu'à 12 ans" },
+        { label: "Dimensions", value: "1 080 m de long, 50 m de large" },
+        { label: "Depuis La Mora", value: "64,3 km · env. 50 min en voiture" },
+      ],
+    },
+    intro:
+      "Depuis décembre 2019, Castiglione del Lago allume sur le lac Trasimène un sapin de Noël dessiné en lumières sur l'eau, long de 1 080 mètres : les organisateurs le présentent comme « le plus grand sapin de Noël du monde construit sur l'eau ». C'est le cœur de « Luci sul Trasimeno », dont l'édition 2026/27 a lieu du 5 décembre au 6 janvier. Voici comment le voir, combien cela coûte et comment s'y rendre depuis l'Agriturismo La Mora, à environ 50 minutes.",
+    introCtaHeading: "Le sapin sur le lac, les marchés et Assise : dormez à la campagne, au milieu de tout.",
+    introCtaLabel: "Réserver",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "Comment est fait le sapin de Noël du lac Trasimène ?" },
+      {
+        type: "p",
+        text: "C'est un ouvrage d'ingénierie électrique construit directement dans le lac : selon les organisateurs, il ne peut être réalisé que sur les eaux peu profondes du Trasimène. Les lumières tracent la silhouette du sapin à la surface, portées par 166 poteaux, et le spectacle n'est jamais le même : forme, intensité et reflets changent selon l'endroit d'où on le regarde et selon la météo.",
+      },
+      {
+        type: "facts",
+        items: [
+          { label: "Longueur", value: "1 080 mètres" },
+          { label: "Largeur", value: "50 mètres" },
+          { label: "Lumières périmétriques", value: "2 400" },
+          { label: "Lampes intérieures", value: "250" },
+          { label: "Câble", value: "7 165 mètres" },
+          { label: "Énergie", value: "100 % renouvelable" },
+        ],
+      },
+      { type: "h2", text: "Quand peut-on voir le sapin du Trasimène ?" },
+      {
+        type: "p",
+        text: "L'édition 2026/27 de Luci sul Trasimeno est programmée tous les jours du 5 décembre 2026 au 6 janvier 2027, de 17h00 à 23h00 ; par mauvais temps, préviennent les organisateurs, les horaires peuvent changer. Le programme des animations quotidiennes était encore en cours de mise à jour quand nous avons écrit ce guide : consultez-le sur le site officiel.",
+      },
+      { type: "h2", text: "D'où voit-on le sapin de Noël sur le lac ?" },
+      {
+        type: "p",
+        text: "Selon les organisateurs, on ne voit le sapin dans sa forme et ses proportions que depuis le « Percorso dell'Albero » (le parcours du sapin), payant. Le point d'observation se trouve dans la zone du « Poggio », sous les remparts de la Rocca del Leone, la forteresse médiévale de Castiglione del Lago ; l'événement se déroule le long des remparts qui bordent le centre historique et la forteresse, via Belvedere, à partir de la Porta Fiorentina.",
+      },
+      credited(ROCCA_DEL_LEONE_PHOTO, "fr"),
+      {
+        type: "p",
+        text: "Pour l'édition 2026/27, le billet du parcours coûte 10 euros, 5 euros de 13 à 17 ans ; il est gratuit jusqu'à 12 ans et pour les personnes handicapées. Il comprend aussi le Babbo Natale Xmas Garden et le Sentiero del Presepe (le sentier de la crèche), et s'achète à la billetterie de l'événement ou en ligne sur le site officiel.",
+      },
+      { type: "h2", text: "Qu'y a-t-il d'autre à Luci sul Trasimeno ?" },
+      {
+        type: "p",
+        text: "Le long de la via Belvedere, on trouve les Casette del Natale, des chalets d'artisanat et de produits typiques, et la patinoire du Ghiaccio Park ; le programme 2026 comprend aussi « Castiglione del Lego », une exposition de briques de construction. Le jour, une promenade dans le centre historique de Castiglione del Lago, sur son promontoire au-dessus du lac, vaut le détour.",
+      },
+      credited(TRASIMENO_VISTA_PHOTO, "fr"),
+      { type: "h2", text: "Comment aller à Castiglione del Lago depuis Assise ?" },
+      {
+        type: "p",
+        text: "En voiture : depuis l'Agriturismo La Mora, il y a 64,3 km, environ 50 minutes selon Google Maps, par la voie rapide Pérouse–Bettolle. Les organisateurs signalent de nombreux parkings gratuits à quelques dizaines de mètres de l'événement, d'où l'on rejoint à pied le centre historique ; les dimanches, jours fériés et veilles de fêtes, une navette gratuite circule.",
+      },
+      {
+        type: "p",
+        text: "La voie rapide passe par Pérouse, à 21,0 km de La Mora : le même jour, vous pouvez vous arrêter pour les lumières et les marchés du centre, que nous décrivons dans notre guide des marchés de Noël en Ombrie.",
+      },
+      { type: "h2", text: "Où dormir pour voir le sapin du lac Trasimène ?" },
+      {
+        type: "p",
+        text: "L'Agriturismo La Mora est dans la campagne d'Assise, via Fonte Citerna 7 : d'ici, Castiglione del Lago est à environ 50 minutes, Pérouse à 23 et la basilique Saint-François à 18. Les cinq appartements indépendants ont une cuisine équipée, le Wi-Fi, la climatisation et un parking gratuit : une base pour un week-end de Noël entre le lac, Pérouse et Assise.",
+      },
+      {
+        type: "image",
+        src: LAMORA_DALL_ALTO,
+        alt: "L'Agriturismo La Mora vu d'en haut : les bâtiments, la piscine, le gazebo, le terrain de football et les champs alentour",
+        caption: "L'Agriturismo La Mora vu d'en haut, dans la campagne d'Assise.",
+      },
+      {
+        type: "links",
+        heading: "Organisez votre week-end",
+        items: [
+          { label: "Les appartements de La Mora", href: "/alloggi/" },
+          { label: "Les offres en réservation directe", href: "/offerte/" },
+          { label: "Les environs de La Mora", href: "/territorio/" },
+          { label: "Guide des marchés de Noël en Ombrie", href: "/blog/mercatini-di-natale-umbria/" },
+          { label: "Site officiel de Luci sul Trasimeno", href: LUCI_TRASIMENO_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Le sapin de Noël du lac Trasimène : questions fréquentes",
+      items: [
+        { q: "Quand peut-on voir le sapin de Noël sur le lac Trasimène ?", a: "Pour l'édition 2026/27, tous les jours du 5 décembre 2026 au 6 janvier 2027, de 17h00 à 23h00. Par mauvais temps, les horaires peuvent changer." },
+        { q: "Combien coûte le billet ?", a: "En 2026/27, le billet du Percorso dell'Albero coûte 10 euros, 5 euros de 13 à 17 ans ; il est gratuit jusqu'à 12 ans et pour les personnes handicapées. Il comprend aussi le Babbo Natale Xmas Garden et le sentier de la crèche." },
+        { q: "Peut-on voir le sapin sans billet ?", a: "Selon les organisateurs, on ne voit le sapin dans sa forme et ses proportions que depuis le parcours payant, sous les remparts de la Rocca del Leone." },
+        { q: "Quelle est la taille du sapin sur le lac ?", a: "1 080 mètres de long et 50 de large, avec 2 400 lumières périmétriques et 250 lampes intérieures, alimentées à 100 % par des énergies renouvelables." },
+        { q: "Est-ce le même sapin que celui de Gubbio ?", a: "Non. Celui de Gubbio s'allume depuis 1981 sur les pentes du Monte Ingino et figure au Guinness des records comme le plus grand sapin de Noël du monde ; celui du Trasimène, depuis 2019, est construit sur l'eau du lac à Castiglione del Lago." },
+        { q: "Où se garer à Castiglione del Lago ?", a: "Les organisateurs indiquent de nombreux parkings gratuits à quelques dizaines de mètres de l'événement ; les dimanches, jours fériés et veilles de fêtes, une navette gratuite est prévue." },
+        { q: "À quelle distance l'Agriturismo La Mora se trouve-t-il de Castiglione del Lago ?", a: "À 64,3 km, environ 50 minutes en voiture selon Google Maps, par la voie rapide Pérouse–Bettolle." },
+      ],
+    },
+    finalCtaHeading: "Noël sur le lac, les nuits à la campagne.",
+    finalCtaBody: "Choisissez l'appartement pour votre week-end de Noël en Ombrie.",
+    finalCtaLabel: "Découvrir les appartements",
+    finalCtaHref: "/alloggi/",
+  },
+  de: {
+    slug: "albero-di-natale-lago-trasimeno",
+    category: "Veranstaltungen",
+    title: "Weihnachtsbaum auf dem Trasimenischen See: Termine, Tickets und Aussicht",
+    excerpt: "In Castiglione del Lago ein 1.080 Meter langer Weihnachtsbaum aus Lichtern auf dem Wasser des Trasimenischen Sees: Termine 2026/27, Tickets, von wo man ihn sieht und Anreise ab Assisi.",
+    metaDescription: "Der Weihnachtsbaum auf dem Trasimenischen See in Castiglione del Lago: Termine 2026/27, Öffnungszeiten, Tickets, beste Sicht und Anreise ab Assisi.",
+    ...cover(ALBERO_TRASIMENO_PHOTO, "de"),
+    imagePosition: "50% 0%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "Auf einen Blick",
+      items: [
+        { label: "Wo", value: "Castiglione del Lago, Trasimenischer See" },
+        { label: "Ausgabe 2026/27", value: "5. Dezember 2026 – 6. Januar 2027" },
+        { label: "Öffnungszeiten", value: "täglich 17:00–23:00 Uhr" },
+        { label: "Ticket", value: "10 € · 5 € von 13 bis 17 Jahren · frei bis 12" },
+        { label: "Maße", value: "1.080 m lang, 50 m breit" },
+        { label: "Ab La Mora", value: "64,3 km · ca. 50 Min. mit dem Auto" },
+      ],
+    },
+    intro:
+      "Seit Dezember 2019 lässt Castiglione del Lago auf dem Trasimenischen See einen Weihnachtsbaum aus Lichtern auf dem Wasser erstrahlen, 1.080 Meter lang: Die Veranstalter nennen ihn „den größten auf dem Wasser gebauten Weihnachtsbaum der Welt“. Er ist das Herzstück von „Luci sul Trasimeno“, das in der Ausgabe 2026/27 vom 5. Dezember bis 6. Januar läuft. Hier lesen Sie, wie Sie ihn sehen, was es kostet und wie Sie vom Agriturismo La Mora hinkommen – rund 50 Minuten entfernt.",
+    introCtaHeading: "Der Baum auf dem See, die Märkte und Assisi: Übernachten Sie auf dem Land, mittendrin.",
+    introCtaLabel: "Buchen",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "Wie ist der Weihnachtsbaum auf dem Trasimenischen See gebaut?" },
+      {
+        type: "p",
+        text: "Er ist ein Werk der Elektrotechnik, direkt im See errichtet: Laut den Veranstaltern lässt er sich nur im flachen Wasser des Trasimenischen Sees bauen. Die Lichter zeichnen, getragen von 166 Masten, den Umriss des Baumes auf die Wasseroberfläche, und das Schauspiel ist nie gleich: Form, Leuchtkraft und Spiegelungen ändern sich mit dem Standort und dem Wetter.",
+      },
+      {
+        type: "facts",
+        items: [
+          { label: "Länge", value: "1.080 Meter" },
+          { label: "Breite", value: "50 Meter" },
+          { label: "Umrisslichter", value: "2.400" },
+          { label: "Innere Lampen", value: "250" },
+          { label: "Kabel", value: "7.165 Meter" },
+          { label: "Energie", value: "100 % erneuerbar" },
+        ],
+      },
+      { type: "h2", text: "Wann kann man den Baum auf dem Trasimenischen See sehen?" },
+      {
+        type: "p",
+        text: "Die Ausgabe 2026/27 von Luci sul Trasimeno ist täglich vom 5. Dezember 2026 bis 6. Januar 2027 geplant, von 17:00 bis 23:00 Uhr; bei schlechtem Wetter, so die Veranstalter, können sich die Zeiten ändern. Das Tagesprogramm wurde bei Redaktionsschluss dieses Leitfadens noch aktualisiert: Prüfen Sie es auf der offiziellen Website.",
+      },
+      { type: "h2", text: "Von wo sieht man den Weihnachtsbaum auf dem See?" },
+      {
+        type: "p",
+        text: "Laut den Veranstaltern ist der Baum in seiner Form und seinen Proportionen nur vom kostenpflichtigen „Percorso dell'Albero“ (Baumweg) aus zu sehen. Der Aussichtspunkt liegt im Bereich „Poggio“ unterhalb der Mauern der Rocca del Leone, der mittelalterlichen Festung von Castiglione del Lago; die Veranstaltung erstreckt sich entlang der Mauern, die Altstadt und Festung säumen, in der Via Belvedere ab der Porta Fiorentina.",
+      },
+      credited(ROCCA_DEL_LEONE_PHOTO, "de"),
+      {
+        type: "p",
+        text: "In der Ausgabe 2026/27 kostet das Ticket für den Baumweg 10 Euro, 5 Euro von 13 bis 17 Jahren; für Kinder bis 12 Jahre und für Menschen mit Behinderung ist der Eintritt frei. Es umfasst auch den Babbo Natale Xmas Garden und den Sentiero del Presepe (Krippenweg) und ist an der Kasse der Veranstaltung oder online auf der offiziellen Website erhältlich.",
+      },
+      { type: "h2", text: "Was gibt es sonst bei Luci sul Trasimeno?" },
+      {
+        type: "p",
+        text: "Entlang der Via Belvedere stehen die Casette del Natale, Weihnachtshütten mit Kunsthandwerk und regionalen Produkten, und die Eisbahn des Ghiaccio Park; zum Programm 2026 gehört auch „Castiglione del Lego“, eine Ausstellung mit Bausteinen. Tagsüber lohnt ein Spaziergang durch die Altstadt von Castiglione del Lago, auf einem Vorgebirge über dem See.",
+      },
+      credited(TRASIMENO_VISTA_PHOTO, "de"),
+      { type: "h2", text: "Wie kommt man von Assisi nach Castiglione del Lago?" },
+      {
+        type: "p",
+        text: "Mit dem Auto: Vom Agriturismo La Mora sind es 64,3 km, laut Google Maps rund 50 Minuten, über den Autobahnzubringer Perugia–Bettolle. Die Veranstalter nennen zahlreiche kostenlose Parkplätze wenige Dutzend Meter von der Veranstaltung entfernt, von denen man zu Fuß in die Altstadt gelangt; an Sonn- und Feiertagen sowie am Vortag fährt ein kostenloser Shuttlebus.",
+      },
+      {
+        type: "p",
+        text: "Der Zubringer führt an Perugia vorbei, 21,0 km von La Mora: Am selben Tag können Sie dort für die Lichter und Märkte im Zentrum haltmachen, die wir im Leitfaden zu den Weihnachtsmärkten in Umbrien beschreiben.",
+      },
+      { type: "h2", text: "Wo übernachten, um den Baum auf dem Trasimenischen See zu sehen?" },
+      {
+        type: "p",
+        text: "Das Agriturismo La Mora liegt auf dem Land bei Assisi, in der Via Fonte Citerna 7: Von hier sind es rund 50 Minuten nach Castiglione del Lago, 23 nach Perugia und 18 zur Basilika San Francesco. Die fünf unabhängigen Ferienwohnungen haben eine voll ausgestattete Küche, WLAN, Klimaanlage und kostenlose Parkplätze: ein Ausgangspunkt für ein Weihnachtswochenende zwischen See, Perugia und Assisi.",
+      },
+      {
+        type: "image",
+        src: LAMORA_DALL_ALTO,
+        alt: "Das Agriturismo La Mora von oben: die Gebäude, der Pool, der Pavillon, der Fußballplatz und die Felder ringsum",
+        caption: "Das Agriturismo La Mora von oben, auf dem Land bei Assisi.",
+      },
+      {
+        type: "links",
+        heading: "Planen Sie Ihr Wochenende",
+        items: [
+          { label: "Die Ferienwohnungen von La Mora", href: "/alloggi/" },
+          { label: "Angebote bei Direktbuchung", href: "/offerte/" },
+          { label: "Die Umgebung von La Mora", href: "/territorio/" },
+          { label: "Leitfaden zu den Weihnachtsmärkten in Umbrien", href: "/blog/mercatini-di-natale-umbria/" },
+          { label: "Offizielle Website von Luci sul Trasimeno", href: LUCI_TRASIMENO_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Der Weihnachtsbaum auf dem Trasimenischen See: häufige Fragen",
+      items: [
+        { q: "Wann sieht man den Weihnachtsbaum auf dem Trasimenischen See?", a: "In der Ausgabe 2026/27 täglich vom 5. Dezember 2026 bis 6. Januar 2027, von 17:00 bis 23:00 Uhr. Bei schlechtem Wetter können sich die Zeiten ändern." },
+        { q: "Was kostet das Ticket?", a: "2026/27 kostet das Ticket für den Percorso dell'Albero 10 Euro, 5 Euro von 13 bis 17 Jahren; bis 12 Jahre und für Menschen mit Behinderung ist der Eintritt frei. Es umfasst auch den Babbo Natale Xmas Garden und den Krippenweg." },
+        { q: "Kann man den Baum ohne Ticket sehen?", a: "Laut den Veranstaltern ist der Baum in seiner Form und seinen Proportionen nur vom kostenpflichtigen Baumweg unterhalb der Mauern der Rocca del Leone aus zu sehen." },
+        { q: "Wie groß ist der Baum auf dem See?", a: "1.080 Meter lang und 50 Meter breit, mit 2.400 Umrisslichtern und 250 inneren Lampen, zu 100 % mit erneuerbarer Energie betrieben." },
+        { q: "Ist es derselbe Baum wie in Gubbio?", a: "Nein. Der Baum von Gubbio leuchtet seit 1981 an den Hängen des Monte Ingino und steht als größter Weihnachtsbaum der Welt im Guinness-Buch der Rekorde; der Baum am Trasimenischen See wird seit 2019 bei Castiglione del Lago auf dem Wasser errichtet." },
+        { q: "Wo parkt man in Castiglione del Lago?", a: "Die Veranstalter nennen zahlreiche kostenlose Parkplätze wenige Dutzend Meter von der Veranstaltung entfernt; an Sonn- und Feiertagen sowie am Vortag fährt ein kostenloser Shuttlebus." },
+        { q: "Wie weit ist das Agriturismo La Mora von Castiglione del Lago entfernt?", a: "64,3 km, laut Google Maps rund 50 Minuten mit dem Auto, über den Zubringer Perugia–Bettolle." },
+      ],
+    },
+    finalCtaHeading: "Weihnachten am See, die Nächte auf dem Land.",
+    finalCtaBody: "Wählen Sie die Ferienwohnung für Ihr Weihnachtswochenende in Umbrien.",
+    finalCtaLabel: "Die Ferienwohnungen entdecken",
+    finalCtaHref: "/alloggi/",
+  },
+};
+
+const RASIGLIA_COMUNE_URL = "https://comune.foligno.pg.it/vivere-il-comune/luoghi/il-borgo-di-rasiglia/";
+
+const RASIGLIA_POST: Record<Locale, BlogPost> = {
+  it: {
+    slug: "rasiglia-piccola-venezia-umbria",
+    category: "Gita di un giorno",
+    title: "Rasiglia, la piccola Venezia dell'Umbria: cosa vedere e come arrivare",
+    excerpt: "Rasiglia, il borgo dei ruscelli vicino a Foligno: cosa vedere tra sorgenti, cascatelle e telai, come arrivare da Assisi, parcheggio, ingresso, Infopoint ed eventi.",
+    metaDescription: "Rasiglia, la piccola Venezia dell'Umbria: cosa vedere, come arrivare da Assisi in circa 37 minuti, parcheggio, ingresso, orari dell'Infopoint ed eventi.",
+    ...cover(RASIGLIA_BORGO_PHOTO, "it"),
+    imagePosition: "50% 85%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "In breve",
+      items: [
+        { label: "Dove", value: "frazione di Foligno (PG), a circa 600 m di quota" },
+        { label: "Da La Mora", value: "36,5 km · circa 37 min in auto" },
+        { label: "Biglietto", value: "nessuno indicato dal Comune: è un borgo abitato" },
+        { label: "Eventi", value: "presepe vivente il 26 dicembre e il 6 gennaio; Penelope a Rasiglia a giugno" },
+        { label: "Infopoint", value: "Località I Santi · 0742 354459" },
+        { label: "Accessibilità", value: "non accessibile in sedia a rotelle" },
+      ],
+    },
+    intro:
+      "Rasiglia è un piccolo borgo medievale in comune di Foligno, a circa 600 metri di quota, attraversato da ruscelli, canali e cascatelle: per questo la chiamano «piccola Venezia dell'Umbria». Da Agriturismo La Mora, vicino ad Assisi, si arriva in circa 37 minuti. In questa guida trovi cosa vedere, come arrivare, dove lasciare l'auto, gli orari dell'Infopoint e i giorni migliori per andarci, con le informazioni del Comune di Foligno.",
+    introCtaHeading: "Una gita a Rasiglia partendo dalla campagna di Assisi? Prenota il tuo appartamento.",
+    introCtaLabel: "Prenota",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "Perché Rasiglia è chiamata la piccola Venezia dell'Umbria?" },
+      {
+        type: "p",
+        text: "Per l'acqua che la attraversa. Il paese, scrive il Comune di Foligno, conserva le caratteristiche del borgo medievale, raccolto in una struttura ad anfiteatro, ed è celebre soprattutto per le sue sorgenti. La principale, Capovena, nasce nella parte alta del paese, ai piedi del palazzo che i Trinci occupavano al tempo del loro governo sul territorio di Foligno: scende tra le case formando rivoli e cascatelle che si riuniscono in una grande vasca, la «Peschiera», e poi si riversano nel fiume Menotre. Altre sorgenti sono quelle di Alzabove e Venarella.",
+      },
+      credited(RASIGLIA_CASCATELLA_PHOTO, "it"),
+      { type: "h2", text: "Cosa vedere a Rasiglia?" },
+      {
+        type: "p",
+        text: "Rasiglia si scopre a piedi, seguendo l'acqua tra vicoli e ponticelli. Da secoli la vita del borgo è scandita dall'acqua, che muoveva la tessitura, la lavorazione della lana e la tintura: una tradizione che il Comune fa risalire al 1200.",
+      },
+      {
+        type: "list",
+        items: [
+          "la sorgente di Capovena, nella parte alta del paese;",
+          "la Peschiera, la grande vasca dove si riuniscono i ruscelli prima del Menotre;",
+          "i mulini ad acqua e il parco archeologico-industriale del tessile;",
+          "i vicoli e i ponticelli lungo i corsi d'acqua.",
+        ],
+      },
+      credited(RASIGLIA_MULINO_PHOTO, "it"),
+      {
+        type: "p",
+        text: "Il parco archeologico-industriale del tessile, secondo il Comune, è un raro esempio di conservazione di tutti gli elementi necessari alla produzione tessile, dalla tosatura al prodotto finito: racconta il passaggio dai telai a mano a quelli idraulici, sostituiti all'inizio del Novecento dal telaio meccanico Jacquard.",
+      },
+      credited(RASIGLIA_TELAIO_PHOTO, "it"),
+      { type: "h2", text: "Come arrivare a Rasiglia da Assisi?" },
+      {
+        type: "p",
+        text: "In auto: da Agriturismo La Mora sono 36,5 km, circa 37 minuti secondo Google Maps, lungo la SS75 verso Foligno e poi la SS77 della Val di Chienti. Rasiglia si trova nel Parco dell'Altolina, l'area di alta collina alle spalle di Foligno che il Comune descrive come una delle più suggestive dell'Appennino umbro-marchigiano.",
+      },
+      { type: "h2", text: "Dove si parcheggia a Rasiglia?" },
+      {
+        type: "p",
+        text: "La scheda ufficiale del Comune di Foligno non indica parcheggi né regole di sosta per il borgo. Nei giorni di maggiore affluenza, come quelli del presepe vivente, possono esserci indicazioni dedicate: prima di partire chiama l'Infopoint di Rasiglia (0742 354459 o 0742 354165) o controlla il sito del Comune.",
+      },
+      { type: "h2", text: "Quanto costa visitare Rasiglia? Biglietti e orari" },
+      {
+        type: "p",
+        text: "Rasiglia è un borgo abitato e la scheda del Comune non prevede biglietti d'ingresso. In Località I Santi c'è l'Infopoint di Rasiglia, aperto con questi orari (scheda del Comune aggiornata a giugno 2026):",
+      },
+      {
+        type: "list",
+        items: [
+          "dal 21 marzo al 30 giugno: sabato, domenica, festivi e prefestivi, 9:00–13:00 e 15:00–19:00;",
+          "dal 1° luglio al 15 settembre: tutti i giorni, 9:00–13:00 e 15:00–19:00;",
+          "dal 16 settembre al 31 ottobre: sabato e domenica, 9:00–13:00 e 15:00–19:00;",
+          "novembre, dicembre e gennaio: festivi e prefestivi, 9:00–13:00 e 15:00–19:00 (chiuso la mattina del 25 dicembre e del 1° gennaio);",
+          "dal 1° febbraio al 20 marzo: chiuso.",
+        ],
+      },
+      {
+        type: "p",
+        text: "Nella stessa scheda il borgo è indicato come non accessibile in sedia a rotelle.",
+      },
+      { type: "h2", text: "Quando andare a Rasiglia?" },
+      {
+        type: "p",
+        text: "Il borgo si visita tutto l'anno, e due appuntamenti valgono il viaggio: «Rasiglia, Paese presepe», il presepe vivente del 26 dicembre e del 6 gennaio, e «Penelope a Rasiglia», dedicata agli antichi mestieri della tessitura, il primo fine settimana di giugno (compatibilmente con le altre festività nazionali). D'estate, dal 1° luglio al 15 settembre, l'Infopoint è aperto tutti i giorni.",
+      },
+      { type: "h2", text: "Cosa vedere vicino a Rasiglia?" },
+      {
+        type: "p",
+        text: "Il Parco dell'Altolina è un territorio di alta collina rimasto da sempre isolato rispetto alla via Flaminia e alla Valle Umbra: il Comune lo descrive disseminato di luoghi ameni e di borghi che sembrano essersi fermati nel tempo. A dicembre puoi abbinare il presepe di Rasiglia ai mercatini di Natale in Umbria; nella bella stagione, alle altre gite di un giorno da La Mora, come le Cascate delle Marmore.",
+      },
+      { type: "h2", text: "Dove dormire per visitare Rasiglia?" },
+      {
+        type: "p",
+        text: "Agriturismo La Mora, in via Fonte Citerna 7 nella campagna di Assisi, è a 36,5 km da Rasiglia, circa 37 minuti in auto. I cinque appartamenti indipendenti hanno cucina attrezzata, Wi-Fi, aria condizionata e parcheggio gratuito; d'estate, dopo una giornata tra ruscelli e vicoli, c'è la piscina, aperta dal 1° maggio al 28 settembre, dalle 9:00 alle 19:00.",
+      },
+      {
+        type: "image",
+        src: LAMORA_PISCINA,
+        alt: "La piscina di Agriturismo La Mora illuminata di sera",
+        caption: "La piscina di La Mora, illuminata la sera.",
+      },
+      {
+        type: "links",
+        heading: "Organizza la gita",
+        items: [
+          { label: "Gli appartamenti di La Mora", href: "/alloggi/" },
+          { label: "Le offerte per chi prenota diretto", href: "/offerte/" },
+          { label: "Il territorio intorno a La Mora", href: "/territorio/" },
+          { label: "Guida ai mercatini di Natale in Umbria", href: "/blog/mercatini-di-natale-umbria/" },
+          { label: "Guida alle Cascate delle Marmore", href: "/blog/cascate-delle-marmore/" },
+          { label: "Scheda ufficiale di Rasiglia (Comune di Foligno)", href: RASIGLIA_COMUNE_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Domande frequenti su Rasiglia",
+      items: [
+        { q: "Dove si trova Rasiglia?", a: "È una frazione del comune di Foligno, in Umbria, a circa 600 metri di quota, nel Parco dell'Altolina. Da Agriturismo La Mora, vicino ad Assisi, sono 36,5 km." },
+        { q: "Perché Rasiglia è chiamata la piccola Venezia dell'Umbria?", a: "Per i ruscelli, i canali e le cascatelle che attraversano il paese, alimentati dalle sorgenti di Capovena, Alzabove e Venarella." },
+        { q: "Si paga per entrare a Rasiglia?", a: "La scheda ufficiale del Comune di Foligno non indica biglietti d'ingresso: Rasiglia è un borgo abitato, che si visita passeggiando." },
+        { q: "Come si arriva a Rasiglia da Assisi?", a: "In auto, lungo la SS75 verso Foligno e poi la SS77 della Val di Chienti: da Agriturismo La Mora sono 36,5 km, circa 37 minuti secondo Google Maps." },
+        { q: "Quando c'è il presepe vivente di Rasiglia?", a: "«Rasiglia, Paese presepe» si svolge il 26 dicembre e il 6 gennaio." },
+        { q: "Rasiglia è accessibile in sedia a rotelle?", a: "No: la scheda del Comune di Foligno indica il borgo come non accessibile in sedia a rotelle." },
+        { q: "Quando è aperto l'Infopoint di Rasiglia?", a: "Tutti i giorni dal 1° luglio al 15 settembre; nel weekend o nei festivi e prefestivi negli altri mesi, dalle 9:00 alle 13:00 e dalle 15:00 alle 19:00. È chiuso dal 1° febbraio al 20 marzo." },
+      ],
+    },
+    finalCtaHeading: "Una giornata tra ruscelli e vicoli, la sera in campagna.",
+    finalCtaBody: "Scegli l'appartamento giusto per la tua gita in Umbria.",
+    finalCtaLabel: "Scopri gli appartamenti",
+    finalCtaHref: "/alloggi/",
+  },
+  en: {
+    slug: "rasiglia-piccola-venezia-umbria",
+    category: "Day trip",
+    title: "Rasiglia, the little Venice of Umbria: what to see and how to get there",
+    excerpt: "Rasiglia, the village of streams near Foligno: what to see among springs, little waterfalls and looms, how to get there from Assisi, parking, admission, the Infopoint and events.",
+    metaDescription: "Rasiglia, the little Venice of Umbria: what to see, how to get there from Assisi in about 37 minutes, parking, admission, Infopoint hours and events.",
+    ...cover(RASIGLIA_BORGO_PHOTO, "en"),
+    imagePosition: "50% 85%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "At a glance",
+      items: [
+        { label: "Where", value: "a hamlet of Foligno (PG), at about 600 m" },
+        { label: "From La Mora", value: "36.5 km · about 37 min by car" },
+        { label: "Ticket", value: "none listed by the municipality: it's a lived-in village" },
+        { label: "Events", value: "living nativity on 26 December and 6 January; Penelope a Rasiglia in June" },
+        { label: "Infopoint", value: "Località I Santi · +39 0742 354459" },
+        { label: "Accessibility", value: "not wheelchair accessible" },
+      ],
+    },
+    intro:
+      "Rasiglia is a small medieval village in the municipality of Foligno, at about 600 metres above sea level, crossed by streams, channels and little waterfalls: that's why it's called the “little Venice of Umbria”. From Agriturismo La Mora, near Assisi, it takes about 37 minutes to get there. This guide covers what to see, how to get there, where to leave the car, Infopoint opening hours and the best days to go, based on information from the Municipality of Foligno.",
+    introCtaHeading: "A day trip to Rasiglia from the countryside outside Assisi? Book your apartment.",
+    introCtaLabel: "Book",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "Why is Rasiglia called the little Venice of Umbria?" },
+      {
+        type: "p",
+        text: "Because of the water running through it. The village, writes the Municipality of Foligno, keeps the features of a medieval borgo, gathered in an amphitheatre shape, and is famous above all for its springs. The main one, Capovena, rises in the upper part of the village, at the foot of the palace the Trinci family occupied when they ruled the Foligno area: it flows down between the houses in rivulets and little waterfalls that collect in a large basin, the “Peschiera”, and then pour into the river Menotre. The other springs are Alzabove and Venarella.",
+      },
+      credited(RASIGLIA_CASCATELLA_PHOTO, "en"),
+      { type: "h2", text: "What is there to see in Rasiglia?" },
+      {
+        type: "p",
+        text: "Rasiglia is best discovered on foot, following the water through lanes and over little bridges. For centuries life here has been shaped by water, which powered weaving, wool working and dyeing: a tradition the municipality dates back to the 1200s.",
+      },
+      {
+        type: "list",
+        items: [
+          "the Capovena spring, in the upper part of the village;",
+          "the Peschiera, the large basin where the streams meet before the Menotre;",
+          "the water mills and the textile archaeological-industrial park;",
+          "the lanes and little bridges along the watercourses.",
+        ],
+      },
+      credited(RASIGLIA_MULINO_PHOTO, "en"),
+      {
+        type: "p",
+        text: "According to the municipality, the textile archaeological-industrial park is a rare example of the preservation of every element needed for textile production, from shearing to the finished product: it tells the story of the move from hand looms to hydraulic ones, replaced in the early 20th century by the mechanical Jacquard loom.",
+      },
+      credited(RASIGLIA_TELAIO_PHOTO, "en"),
+      { type: "h2", text: "How do you get to Rasiglia from Assisi?" },
+      {
+        type: "p",
+        text: "By car: from Agriturismo La Mora it's 36.5 km, about 37 minutes according to Google Maps, along the SS75 towards Foligno and then the SS77 Val di Chienti road. Rasiglia lies in the Parco dell'Altolina, the hill country behind Foligno that the municipality describes as one of the most striking areas of the Umbria–Marche Apennines.",
+      },
+      { type: "h2", text: "Where can you park in Rasiglia?" },
+      {
+        type: "p",
+        text: "The Municipality of Foligno's official page does not list car parks or parking rules for the village. On the busiest days, such as those of the living nativity, there may be specific arrangements: before you set off, call the Rasiglia Infopoint (+39 0742 354459 or +39 0742 354165) or check the municipality's website.",
+      },
+      { type: "h2", text: "How much does it cost to visit Rasiglia? Tickets and opening hours" },
+      {
+        type: "p",
+        text: "Rasiglia is a lived-in village and the municipality's page lists no admission ticket. In Località I Santi you'll find the Rasiglia Infopoint, open at these times (municipality page updated in June 2026):",
+      },
+      {
+        type: "list",
+        items: [
+          "21 March to 30 June: Saturdays, Sundays, public holidays and the days before them, 9:00–13:00 and 15:00–19:00;",
+          "1 July to 15 September: every day, 9:00–13:00 and 15:00–19:00;",
+          "16 September to 31 October: Saturdays and Sundays, 9:00–13:00 and 15:00–19:00;",
+          "November, December and January: public holidays and the days before them, 9:00–13:00 and 15:00–19:00 (closed on the mornings of 25 December and 1 January);",
+          "1 February to 20 March: closed.",
+        ],
+      },
+      {
+        type: "p",
+        text: "The same page lists the village as not wheelchair accessible.",
+      },
+      { type: "h2", text: "When is the best time to visit Rasiglia?" },
+      {
+        type: "p",
+        text: "The village can be visited all year round, and two events are worth the trip: “Rasiglia, Paese presepe”, the living nativity on 26 December and 6 January, and “Penelope a Rasiglia”, devoted to the old weaving crafts, on the first weekend of June (depending on other national holidays). In summer, from 1 July to 15 September, the Infopoint is open every day.",
+      },
+      { type: "h2", text: "What else is there to see near Rasiglia?" },
+      {
+        type: "p",
+        text: "The Parco dell'Altolina is hill country that has always stayed apart from the Via Flaminia and the Umbrian Valley: the municipality describes it as dotted with pleasant spots and villages that seem to have stopped in time. In December you can combine the Rasiglia nativity with the Christmas markets in Umbria; in the warmer months, with other day trips from La Mora, such as the Marmore Falls.",
+      },
+      { type: "h2", text: "Where to stay to visit Rasiglia?" },
+      {
+        type: "p",
+        text: "Agriturismo La Mora, at Via Fonte Citerna 7 in the countryside outside Assisi, is 36.5 km from Rasiglia, about 37 minutes by car. The five independent apartments have a fully equipped kitchen, Wi-Fi, air conditioning and free parking; in summer, after a day among streams and lanes, there's the pool, open from 1 May to 28 September, from 9:00 to 19:00.",
+      },
+      {
+        type: "image",
+        src: LAMORA_PISCINA,
+        alt: "The swimming pool at Agriturismo La Mora lit up in the evening",
+        caption: "La Mora's pool, lit up in the evening.",
+      },
+      {
+        type: "links",
+        heading: "Plan your day trip",
+        items: [
+          { label: "La Mora's apartments", href: "/alloggi/" },
+          { label: "Offers for direct bookings", href: "/offerte/" },
+          { label: "The area around La Mora", href: "/territorio/" },
+          { label: "Guide to the Christmas markets in Umbria", href: "/blog/mercatini-di-natale-umbria/" },
+          { label: "Guide to the Marmore Falls", href: "/blog/cascate-delle-marmore/" },
+          { label: "Official Rasiglia page (Municipality of Foligno)", href: RASIGLIA_COMUNE_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Rasiglia: frequently asked questions",
+      items: [
+        { q: "Where is Rasiglia?", a: "It's a hamlet of the municipality of Foligno, in Umbria, at about 600 metres above sea level, in the Parco dell'Altolina. From Agriturismo La Mora, near Assisi, it's 36.5 km." },
+        { q: "Why is Rasiglia called the little Venice of Umbria?", a: "Because of the streams, channels and little waterfalls that run through the village, fed by the Capovena, Alzabove and Venarella springs." },
+        { q: "Do you have to pay to enter Rasiglia?", a: "The Municipality of Foligno's official page lists no admission ticket: Rasiglia is a lived-in village that you visit on foot." },
+        { q: "How do you get to Rasiglia from Assisi?", a: "By car, along the SS75 towards Foligno and then the SS77 Val di Chienti road: from Agriturismo La Mora it's 36.5 km, about 37 minutes according to Google Maps." },
+        { q: "When is the living nativity in Rasiglia?", a: "“Rasiglia, Paese presepe” takes place on 26 December and 6 January." },
+        { q: "Is Rasiglia wheelchair accessible?", a: "No: the Municipality of Foligno's page lists the village as not wheelchair accessible." },
+        { q: "When is the Rasiglia Infopoint open?", a: "Every day from 1 July to 15 September; at weekends or on public holidays and the days before them in the other months, from 9:00 to 13:00 and 15:00 to 19:00. It is closed from 1 February to 20 March." },
+      ],
+    },
+    finalCtaHeading: "A day among streams and lanes, evenings in the countryside.",
+    finalCtaBody: "Choose the right apartment for your day trips in Umbria.",
+    finalCtaLabel: "Discover the apartments",
+    finalCtaHref: "/alloggi/",
+  },
+  fr: {
+    slug: "rasiglia-piccola-venezia-umbria",
+    category: "Excursion d'une journée",
+    title: "Rasiglia, la petite Venise de l'Ombrie : que voir et comment y aller",
+    excerpt: "Rasiglia, le village des ruisseaux près de Foligno : que voir entre sources, cascatelles et métiers à tisser, comment venir depuis Assise, parking, entrée, Infopoint et événements.",
+    metaDescription: "Rasiglia, la petite Venise de l'Ombrie : que voir, comment y aller depuis Assise en 37 minutes environ, parking, entrée, horaires de l'Infopoint, événements.",
+    ...cover(RASIGLIA_BORGO_PHOTO, "fr"),
+    imagePosition: "50% 85%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "En bref",
+      items: [
+        { label: "Où", value: "hameau de Foligno (PG), à environ 600 m d'altitude" },
+        { label: "Depuis La Mora", value: "36,5 km · env. 37 min en voiture" },
+        { label: "Billet", value: "aucun indiqué par la commune : c'est un village habité" },
+        { label: "Événements", value: "crèche vivante les 26 décembre et 6 janvier ; Penelope a Rasiglia en juin" },
+        { label: "Infopoint", value: "Località I Santi · +39 0742 354459" },
+        { label: "Accessibilité", value: "non accessible en fauteuil roulant" },
+      ],
+    },
+    intro:
+      "Rasiglia est un petit village médiéval de la commune de Foligno, à environ 600 mètres d'altitude, traversé par des ruisseaux, des canaux et des cascatelles : c'est pourquoi on l'appelle la « petite Venise de l'Ombrie ». Depuis l'Agriturismo La Mora, près d'Assise, on y arrive en 37 minutes environ. Ce guide indique que voir, comment y aller, où laisser la voiture, les horaires de l'Infopoint et les meilleurs moments pour y aller, d'après les informations de la commune de Foligno.",
+    introCtaHeading: "Une excursion à Rasiglia depuis la campagne d'Assise ? Réservez votre appartement.",
+    introCtaLabel: "Réserver",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "Pourquoi appelle-t-on Rasiglia la petite Venise de l'Ombrie ?" },
+      {
+        type: "p",
+        text: "Pour l'eau qui la traverse. Le village, écrit la commune de Foligno, a gardé les caractéristiques d'un bourg médiéval, rassemblé en amphithéâtre, et il est surtout célèbre pour ses sources. La principale, Capovena, jaillit dans le haut du village, au pied du palais qu'occupaient les Trinci au temps où ils gouvernaient le territoire de Foligno : elle descend entre les maisons en ruisselets et cascatelles qui se rejoignent dans un grand bassin, la « Peschiera », avant de se jeter dans la rivière Menotre. Les autres sources sont celles d'Alzabove et de Venarella.",
+      },
+      credited(RASIGLIA_CASCATELLA_PHOTO, "fr"),
+      { type: "h2", text: "Que voir à Rasiglia ?" },
+      {
+        type: "p",
+        text: "Rasiglia se découvre à pied, en suivant l'eau entre ruelles et petits ponts. Depuis des siècles, la vie du village est rythmée par l'eau, qui faisait tourner le tissage, le travail de la laine et la teinture : une tradition que la commune fait remonter au XIIIe siècle.",
+      },
+      {
+        type: "list",
+        items: [
+          "la source de Capovena, dans le haut du village ;",
+          "la Peschiera, le grand bassin où se rejoignent les ruisseaux avant le Menotre ;",
+          "les moulins à eau et le parc archéologique et industriel du textile ;",
+          "les ruelles et les petits ponts le long des cours d'eau.",
+        ],
+      },
+      credited(RASIGLIA_MULINO_PHOTO, "fr"),
+      {
+        type: "p",
+        text: "Selon la commune, le parc archéologique et industriel du textile est un rare exemple de conservation de tous les éléments nécessaires à la production textile, de la tonte au produit fini : il raconte le passage des métiers à tisser manuels aux métiers hydrauliques, remplacés au début du XXe siècle par le métier mécanique Jacquard.",
+      },
+      credited(RASIGLIA_TELAIO_PHOTO, "fr"),
+      { type: "h2", text: "Comment aller à Rasiglia depuis Assise ?" },
+      {
+        type: "p",
+        text: "En voiture : depuis l'Agriturismo La Mora, il y a 36,5 km, environ 37 minutes selon Google Maps, par la SS75 en direction de Foligno puis la SS77 du Val di Chienti. Rasiglia se trouve dans le Parco dell'Altolina, la zone de hautes collines derrière Foligno que la commune décrit comme l'une des plus belles de l'Apennin ombrien et marchesan.",
+      },
+      { type: "h2", text: "Où se garer à Rasiglia ?" },
+      {
+        type: "p",
+        text: "La page officielle de la commune de Foligno n'indique ni parkings ni règles de stationnement pour le village. Les jours de grande affluence, comme ceux de la crèche vivante, des dispositions particulières peuvent être prises : avant de partir, appelez l'Infopoint de Rasiglia (+39 0742 354459 ou +39 0742 354165) ou consultez le site de la commune.",
+      },
+      { type: "h2", text: "Combien coûte la visite de Rasiglia ? Billets et horaires" },
+      {
+        type: "p",
+        text: "Rasiglia est un village habité et la page de la commune ne prévoit aucun billet d'entrée. À Località I Santi se trouve l'Infopoint de Rasiglia, ouvert aux horaires suivants (page de la commune mise à jour en juin 2026) :",
+      },
+      {
+        type: "list",
+        items: [
+          "du 21 mars au 30 juin : samedi, dimanche, jours fériés et veilles de fêtes, 9h00–13h00 et 15h00–19h00 ;",
+          "du 1er juillet au 15 septembre : tous les jours, 9h00–13h00 et 15h00–19h00 ;",
+          "du 16 septembre au 31 octobre : samedi et dimanche, 9h00–13h00 et 15h00–19h00 ;",
+          "novembre, décembre et janvier : jours fériés et veilles de fêtes, 9h00–13h00 et 15h00–19h00 (fermé le matin du 25 décembre et du 1er janvier) ;",
+          "du 1er février au 20 mars : fermé.",
+        ],
+      },
+      {
+        type: "p",
+        text: "La même page indique que le village n'est pas accessible en fauteuil roulant.",
+      },
+      { type: "h2", text: "Quand aller à Rasiglia ?" },
+      {
+        type: "p",
+        text: "Le village se visite toute l'année, et deux rendez-vous valent le voyage : « Rasiglia, Paese presepe », la crèche vivante du 26 décembre et du 6 janvier, et « Penelope a Rasiglia », consacrée aux anciens métiers du tissage, le premier week-end de juin (selon les autres fêtes nationales). En été, du 1er juillet au 15 septembre, l'Infopoint est ouvert tous les jours.",
+      },
+      { type: "h2", text: "Que voir près de Rasiglia ?" },
+      {
+        type: "p",
+        text: "Le Parco dell'Altolina est un territoire de hautes collines resté de tout temps à l'écart de la via Flaminia et de la Valle Umbra : la commune le décrit parsemé de lieux charmants et de villages qui semblent arrêtés dans le temps. En décembre, vous pouvez combiner la crèche de Rasiglia avec les marchés de Noël en Ombrie ; à la belle saison, avec d'autres excursions d'une journée depuis La Mora, comme les cascades des Marmore.",
+      },
+      { type: "h2", text: "Où dormir pour visiter Rasiglia ?" },
+      {
+        type: "p",
+        text: "L'Agriturismo La Mora, via Fonte Citerna 7 dans la campagne d'Assise, est à 36,5 km de Rasiglia, environ 37 minutes en voiture. Les cinq appartements indépendants ont une cuisine équipée, le Wi-Fi, la climatisation et un parking gratuit ; en été, après une journée entre ruisseaux et ruelles, il y a la piscine, ouverte du 1er mai au 28 septembre, de 9h00 à 19h00.",
+      },
+      {
+        type: "image",
+        src: LAMORA_PISCINA,
+        alt: "La piscine de l'Agriturismo La Mora illuminée le soir",
+        caption: "La piscine de La Mora, illuminée le soir.",
+      },
+      {
+        type: "links",
+        heading: "Organisez l'excursion",
+        items: [
+          { label: "Les appartements de La Mora", href: "/alloggi/" },
+          { label: "Les offres en réservation directe", href: "/offerte/" },
+          { label: "Les environs de La Mora", href: "/territorio/" },
+          { label: "Guide des marchés de Noël en Ombrie", href: "/blog/mercatini-di-natale-umbria/" },
+          { label: "Guide des cascades des Marmore", href: "/blog/cascate-delle-marmore/" },
+          { label: "Page officielle de Rasiglia (commune de Foligno)", href: RASIGLIA_COMUNE_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Rasiglia : questions fréquentes",
+      items: [
+        { q: "Où se trouve Rasiglia ?", a: "C'est un hameau de la commune de Foligno, en Ombrie, à environ 600 mètres d'altitude, dans le Parco dell'Altolina. Depuis l'Agriturismo La Mora, près d'Assise, il y a 36,5 km." },
+        { q: "Pourquoi appelle-t-on Rasiglia la petite Venise de l'Ombrie ?", a: "Pour les ruisseaux, les canaux et les cascatelles qui traversent le village, alimentés par les sources de Capovena, d'Alzabove et de Venarella." },
+        { q: "Faut-il payer pour entrer à Rasiglia ?", a: "La page officielle de la commune de Foligno n'indique aucun billet d'entrée : Rasiglia est un village habité, qui se visite à pied." },
+        { q: "Comment aller à Rasiglia depuis Assise ?", a: "En voiture, par la SS75 en direction de Foligno puis la SS77 du Val di Chienti : depuis l'Agriturismo La Mora, il y a 36,5 km, environ 37 minutes selon Google Maps." },
+        { q: "Quand a lieu la crèche vivante de Rasiglia ?", a: "« Rasiglia, Paese presepe » a lieu le 26 décembre et le 6 janvier." },
+        { q: "Rasiglia est-elle accessible en fauteuil roulant ?", a: "Non : la page de la commune de Foligno indique que le village n'est pas accessible en fauteuil roulant." },
+        { q: "Quand l'Infopoint de Rasiglia est-il ouvert ?", a: "Tous les jours du 1er juillet au 15 septembre ; le week-end ou les jours fériés et veilles de fêtes les autres mois, de 9h00 à 13h00 et de 15h00 à 19h00. Il est fermé du 1er février au 20 mars." },
+      ],
+    },
+    finalCtaHeading: "Une journée entre ruisseaux et ruelles, le soir à la campagne.",
+    finalCtaBody: "Choisissez l'appartement qui convient à vos excursions en Ombrie.",
+    finalCtaLabel: "Découvrir les appartements",
+    finalCtaHref: "/alloggi/",
+  },
+  de: {
+    slug: "rasiglia-piccola-venezia-umbria",
+    category: "Tagesausflug",
+    title: "Rasiglia, das kleine Venedig Umbriens: Sehenswertes und Anreise",
+    excerpt: "Rasiglia, das Dorf der Bäche bei Foligno: Sehenswertes zwischen Quellen, kleinen Wasserfällen und Webstühlen, Anreise ab Assisi, Parken, Eintritt, Infopoint und Veranstaltungen.",
+    metaDescription: "Rasiglia, das kleine Venedig Umbriens: Sehenswertes, Anreise ab Assisi in rund 37 Minuten, Parken, Eintritt, Öffnungszeiten des Infopoints, Termine.",
+    ...cover(RASIGLIA_BORGO_PHOTO, "de"),
+    imagePosition: "50% 85%",
+    datePublished: "2026-10-06",
+    inBreve: {
+      heading: "Auf einen Blick",
+      items: [
+        { label: "Wo", value: "Ortsteil von Foligno (PG), auf rund 600 m Höhe" },
+        { label: "Ab La Mora", value: "36,5 km · ca. 37 Min. mit dem Auto" },
+        { label: "Eintritt", value: "laut Gemeinde kein Ticket: ein bewohntes Dorf" },
+        { label: "Termine", value: "lebende Krippe am 26. Dezember und 6. Januar; Penelope a Rasiglia im Juni" },
+        { label: "Infopoint", value: "Località I Santi · +39 0742 354459" },
+        { label: "Barrierefreiheit", value: "nicht rollstuhlgerecht" },
+      ],
+    },
+    intro:
+      "Rasiglia ist ein kleines mittelalterliches Dorf in der Gemeinde Foligno, auf rund 600 Metern Höhe, durchzogen von Bächen, Kanälen und kleinen Wasserfällen: Deshalb nennt man es das „kleine Venedig Umbriens“. Vom Agriturismo La Mora bei Assisi erreichen Sie es in rund 37 Minuten. Dieser Leitfaden zeigt, was es zu sehen gibt, wie Sie hinkommen, wo Sie das Auto abstellen, die Öffnungszeiten des Infopoints und die besten Tage für einen Besuch – nach den Angaben der Gemeinde Foligno.",
+    introCtaHeading: "Ein Ausflug nach Rasiglia vom Land bei Assisi aus? Buchen Sie Ihre Ferienwohnung.",
+    introCtaLabel: "Buchen",
+    introCtaHref: BOOKING_MODAL_HREF,
+    content: [
+      { type: "h2", text: "Warum heißt Rasiglia das kleine Venedig Umbriens?" },
+      {
+        type: "p",
+        text: "Wegen des Wassers, das es durchfließt. Das Dorf, schreibt die Gemeinde Foligno, hat die Züge eines mittelalterlichen Borgo bewahrt, amphitheaterförmig angelegt, und ist vor allem für seine Quellen berühmt. Die wichtigste, Capovena, entspringt im oberen Teil des Dorfes, am Fuß des Palastes, den die Familie Trinci zur Zeit ihrer Herrschaft über das Gebiet von Foligno bewohnte: Sie fließt in Rinnsalen und kleinen Wasserfällen zwischen den Häusern hinab, die sich in einem großen Becken, der „Peschiera“, sammeln und dann in den Fluss Menotre münden. Weitere Quellen sind Alzabove und Venarella.",
+      },
+      credited(RASIGLIA_CASCATELLA_PHOTO, "de"),
+      { type: "h2", text: "Was gibt es in Rasiglia zu sehen?" },
+      {
+        type: "p",
+        text: "Rasiglia entdeckt man zu Fuß, immer dem Wasser nach, durch Gassen und über kleine Brücken. Seit Jahrhunderten bestimmt das Wasser das Leben im Dorf: Es trieb Weberei, Wollverarbeitung und Färberei an – eine Tradition, die die Gemeinde auf das 13. Jahrhundert zurückführt.",
+      },
+      {
+        type: "list",
+        items: [
+          "die Quelle Capovena im oberen Teil des Dorfes;",
+          "die Peschiera, das große Becken, in dem sich die Bäche vor dem Menotre sammeln;",
+          "die Wassermühlen und den archäologisch-industriellen Textilpark;",
+          "die Gassen und kleinen Brücken entlang der Wasserläufe.",
+        ],
+      },
+      credited(RASIGLIA_MULINO_PHOTO, "de"),
+      {
+        type: "p",
+        text: "Laut der Gemeinde ist der archäologisch-industrielle Textilpark ein seltenes Beispiel dafür, dass alle für die Textilherstellung nötigen Elemente erhalten sind, von der Schur bis zum fertigen Produkt: Er erzählt vom Übergang vom Handwebstuhl zum wassergetriebenen Webstuhl, der Anfang des 20. Jahrhunderts vom mechanischen Jacquard-Webstuhl abgelöst wurde.",
+      },
+      credited(RASIGLIA_TELAIO_PHOTO, "de"),
+      { type: "h2", text: "Wie kommt man von Assisi nach Rasiglia?" },
+      {
+        type: "p",
+        text: "Mit dem Auto: Vom Agriturismo La Mora sind es 36,5 km, laut Google Maps rund 37 Minuten, über die SS75 Richtung Foligno und dann die SS77 della Val di Chienti. Rasiglia liegt im Parco dell'Altolina, dem Hügelland hinter Foligno, das die Gemeinde als eine der eindrucksvollsten Gegenden des umbrisch-marchigianischen Apennins beschreibt.",
+      },
+      { type: "h2", text: "Wo parkt man in Rasiglia?" },
+      {
+        type: "p",
+        text: "Die offizielle Seite der Gemeinde Foligno nennt für das Dorf weder Parkplätze noch Parkregeln. An Tagen mit großem Andrang, etwa bei der lebenden Krippe, kann es eigene Regelungen geben: Rufen Sie vor der Abfahrt beim Infopoint Rasiglia an (+39 0742 354459 oder +39 0742 354165) oder sehen Sie auf der Website der Gemeinde nach.",
+      },
+      { type: "h2", text: "Was kostet ein Besuch in Rasiglia? Tickets und Öffnungszeiten" },
+      {
+        type: "p",
+        text: "Rasiglia ist ein bewohntes Dorf, und die Seite der Gemeinde sieht kein Eintrittsticket vor. In der Località I Santi befindet sich der Infopoint Rasiglia, zu diesen Zeiten geöffnet (Seite der Gemeinde, Stand Juni 2026):",
+      },
+      {
+        type: "list",
+        items: [
+          "21. März bis 30. Juni: samstags, sonntags, an Feiertagen und deren Vortagen, 9:00–13:00 und 15:00–19:00 Uhr;",
+          "1. Juli bis 15. September: täglich, 9:00–13:00 und 15:00–19:00 Uhr;",
+          "16. September bis 31. Oktober: samstags und sonntags, 9:00–13:00 und 15:00–19:00 Uhr;",
+          "November, Dezember und Januar: an Feiertagen und deren Vortagen, 9:00–13:00 und 15:00–19:00 Uhr (am Vormittag des 25. Dezember und des 1. Januar geschlossen);",
+          "1. Februar bis 20. März: geschlossen.",
+        ],
+      },
+      {
+        type: "p",
+        text: "Auf derselben Seite wird das Dorf als nicht rollstuhlgerecht angegeben.",
+      },
+      { type: "h2", text: "Wann ist die beste Zeit für Rasiglia?" },
+      {
+        type: "p",
+        text: "Das Dorf lässt sich das ganze Jahr über besuchen, und zwei Termine lohnen die Reise besonders: „Rasiglia, Paese presepe“, die lebende Krippe am 26. Dezember und am 6. Januar, und „Penelope a Rasiglia“, den alten Webhandwerken gewidmet, am ersten Juniwochenende (je nach den übrigen Nationalfeiertagen). Im Sommer, vom 1. Juli bis 15. September, ist der Infopoint täglich geöffnet.",
+      },
+      { type: "h2", text: "Was gibt es in der Nähe von Rasiglia zu sehen?" },
+      {
+        type: "p",
+        text: "Der Parco dell'Altolina ist ein Hügelland, das seit jeher abseits der Via Flaminia und des Umbrischen Tals liegt: Die Gemeinde beschreibt es als übersät mit lieblichen Orten und Dörfern, in denen die Zeit stehen geblieben scheint. Im Dezember lässt sich die Krippe von Rasiglia mit den Weihnachtsmärkten in Umbrien verbinden; in der warmen Jahreszeit mit anderen Tagesausflügen ab La Mora, etwa zu den Marmore-Wasserfällen.",
+      },
+      { type: "h2", text: "Wo übernachten für einen Besuch in Rasiglia?" },
+      {
+        type: "p",
+        text: "Das Agriturismo La Mora in der Via Fonte Citerna 7, auf dem Land bei Assisi, liegt 36,5 km von Rasiglia entfernt, rund 37 Minuten mit dem Auto. Die fünf unabhängigen Ferienwohnungen haben eine voll ausgestattete Küche, WLAN, Klimaanlage und kostenlose Parkplätze; im Sommer wartet nach einem Tag zwischen Bächen und Gassen der Pool, geöffnet vom 1. Mai bis 28. September von 9:00 bis 19:00 Uhr.",
+      },
+      {
+        type: "image",
+        src: LAMORA_PISCINA,
+        alt: "Der Pool des Agriturismo La Mora, abends beleuchtet",
+        caption: "Der Pool von La Mora, abends beleuchtet.",
+      },
+      {
+        type: "links",
+        heading: "Planen Sie Ihren Ausflug",
+        items: [
+          { label: "Die Ferienwohnungen von La Mora", href: "/alloggi/" },
+          { label: "Angebote bei Direktbuchung", href: "/offerte/" },
+          { label: "Die Umgebung von La Mora", href: "/territorio/" },
+          { label: "Leitfaden zu den Weihnachtsmärkten in Umbrien", href: "/blog/mercatini-di-natale-umbria/" },
+          { label: "Leitfaden zu den Marmore-Wasserfällen", href: "/blog/cascate-delle-marmore/" },
+          { label: "Offizielle Seite zu Rasiglia (Gemeinde Foligno)", href: RASIGLIA_COMUNE_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Rasiglia: häufige Fragen",
+      items: [
+        { q: "Wo liegt Rasiglia?", a: "Rasiglia ist ein Ortsteil der Gemeinde Foligno in Umbrien, auf rund 600 Metern Höhe im Parco dell'Altolina. Vom Agriturismo La Mora bei Assisi sind es 36,5 km." },
+        { q: "Warum heißt Rasiglia das kleine Venedig Umbriens?", a: "Wegen der Bäche, Kanäle und kleinen Wasserfälle, die das Dorf durchziehen, gespeist von den Quellen Capovena, Alzabove und Venarella." },
+        { q: "Kostet Rasiglia Eintritt?", a: "Die offizielle Seite der Gemeinde Foligno nennt kein Eintrittsticket: Rasiglia ist ein bewohntes Dorf, das man zu Fuß erkundet." },
+        { q: "Wie kommt man von Assisi nach Rasiglia?", a: "Mit dem Auto über die SS75 Richtung Foligno und dann die SS77 della Val di Chienti: Vom Agriturismo La Mora sind es 36,5 km, laut Google Maps rund 37 Minuten." },
+        { q: "Wann findet die lebende Krippe in Rasiglia statt?", a: "„Rasiglia, Paese presepe“ findet am 26. Dezember und am 6. Januar statt." },
+        { q: "Ist Rasiglia rollstuhlgerecht?", a: "Nein: Die Seite der Gemeinde Foligno gibt das Dorf als nicht rollstuhlgerecht an." },
+        { q: "Wann ist der Infopoint Rasiglia geöffnet?", a: "Täglich vom 1. Juli bis 15. September; in den übrigen Monaten am Wochenende oder an Feiertagen und deren Vortagen, von 9:00 bis 13:00 und 15:00 bis 19:00 Uhr. Vom 1. Februar bis 20. März ist er geschlossen." },
+      ],
+    },
+    finalCtaHeading: "Ein Tag zwischen Bächen und Gassen, abends auf dem Land.",
+    finalCtaBody: "Wählen Sie die passende Ferienwohnung für Ihre Ausflüge in Umbrien.",
+    finalCtaLabel: "Die Ferienwohnungen entdecken",
+    finalCtaHref: "/alloggi/",
+  },
+};
+
 const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
   it: [
     EUROCHOCOLATE_POST.it,
+    CARLO_ACUTIS_POST.it,
+    NATALE_UMBRIA_POST.it,
+    ALBERO_TRASIMENO_POST.it,
+    RASIGLIA_POST.it,
     {
       slug: "basilica-santa-maria-degli-angeli",
       category: "Territorio",
@@ -1226,6 +3464,10 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
   ],
   en: [
     EUROCHOCOLATE_POST.en,
+    CARLO_ACUTIS_POST.en,
+    NATALE_UMBRIA_POST.en,
+    ALBERO_TRASIMENO_POST.en,
+    RASIGLIA_POST.en,
     {
       slug: "basilica-santa-maria-degli-angeli",
       category: "Territory",
@@ -1666,6 +3908,10 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
   ],
   fr: [
     EUROCHOCOLATE_POST.fr,
+    CARLO_ACUTIS_POST.fr,
+    NATALE_UMBRIA_POST.fr,
+    ALBERO_TRASIMENO_POST.fr,
+    RASIGLIA_POST.fr,
     {
       slug: "basilica-santa-maria-degli-angeli",
       category: "Territoire",
@@ -2106,6 +4352,10 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
   ],
   de: [
     EUROCHOCOLATE_POST.de,
+    CARLO_ACUTIS_POST.de,
+    NATALE_UMBRIA_POST.de,
+    ALBERO_TRASIMENO_POST.de,
+    RASIGLIA_POST.de,
     {
       slug: "basilica-santa-maria-degli-angeli",
       category: "Umgebung",

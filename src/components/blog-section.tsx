@@ -123,7 +123,9 @@ export function BlogSection({ locale }: { locale: Locale }) {
                 {post.category}
               </span>
               <div className="absolute inset-x-4 bottom-4">
-                <span className="block font-display text-[17px] leading-[1.25] text-cream [text-wrap:balance]">
+                {/* max-w come per il credito: con i titoli lunghi (Blocco C)
+                    le ultime parole finivano sotto la card successiva. */}
+                <span className="block max-w-[150px] font-display text-[17px] leading-[1.25] text-cream [text-wrap:balance] xl:max-w-[165px]">
                   {post.title}
                 </span>
                 <span className="mt-3 inline-flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-cream/85">

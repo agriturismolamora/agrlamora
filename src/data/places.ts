@@ -10,7 +10,19 @@ import type { Locale } from "@/lib/i18n";
    avesse esattamente il place_id qui sotto (per Perugia: "Centro storico
    di Perugia"; per Spello: "Centro Storico Spello"). Valori non
    arrotondati: sono quelli mostrati da Google Maps. I tempi dipendono dal
-   traffico: vanno letti come indicativi. */
+   traffico: vanno letti come indicativi.
+
+   Luoghi aggiunti il 06/10/2026 per gli articoli del blog (blogOnly: non
+   compaiono nella sezione "Distanze" della home):
+   - Santuario della Spogliazione e Cascate di Rasiglia: place_id forniti
+     dal titolare;
+   - Gubbio (Piazza dei Quaranta Martiri), Albero di Natale di Gubbio, Rocca
+     del Leone: place_id letti da Google Maps (feature id della scheda del
+     luogo) e VERIFICATI riaprendo Google Maps con place_id:<id> — nome e
+     indirizzo restituiti coincidono con il luogo cercato.
+   Distanze e tempi: indicazioni stradali di Google Maps (web), percorso
+   consigliato da La Mora, lette il 06/10/2026 alle 21:55; per questi luoghi
+   Google mostra solo km e minuti, quindi meters/seconds non sono indicati. */
 export type PlaceKey =
   | "basilica"
   | "piazzaDelComune"
@@ -19,19 +31,27 @@ export type PlaceKey =
   | "perugia"
   | "spello"
   | "aeroporto"
-  | "umbriafiere";
+  | "umbriafiere"
+  | "santuarioSpogliazione"
+  | "rasiglia"
+  | "gubbio"
+  | "alberoGubbio"
+  | "roccaDelLeone";
 
 export type PlaceInfo = {
   key: PlaceKey;
   placeId: string;
   mapsUrl: string;
-  /* Distanza in metri e durata in secondi, come restituite da Google. */
-  meters: number;
-  seconds: number;
+  /* Distanza in metri e durata in secondi, come restituite da Google
+     (assenti per i luoghi letti dall'interfaccia web, vedi sopra). */
+  meters?: number;
+  seconds?: number;
   /* Stringhe mostrate da Google Maps (it), riportate identiche. */
   km: string;
   minutes: number;
   name: Record<Locale, string>;
+  /* true: solo pulsanti Maps negli articoli, non nella sezione Distanze. */
+  blogOnly?: boolean;
 };
 
 const mapsUrl = (placeId: string) => `https://www.google.com/maps/place/?q=place_id:${placeId}`;
@@ -122,6 +142,51 @@ export const PLACES: PlaceInfo[] = [
     minutes: 6,
     name: { it: "Umbria Fiere", en: "Umbria Fiere", fr: "Umbria Fiere", de: "Umbria Fiere" },
   },
+  {
+    key: "santuarioSpogliazione",
+    placeId: "ChIJnTkX8zadLhMR1H0B5jqTKt8",
+    mapsUrl: mapsUrl("ChIJnTkX8zadLhMR1H0B5jqTKt8"),
+    km: "6,8",
+    minutes: 15,
+    name: { it: "Santuario della Spogliazione", en: "Sanctuary of Renunciation", fr: "Sanctuaire du Dépouillement", de: "Heiligtum der Entkleidung" },
+    blogOnly: true,
+  },
+  {
+    key: "rasiglia",
+    placeId: "ChIJ2Xe2FLp9LhMRsIUH23wLIsw",
+    mapsUrl: mapsUrl("ChIJ2Xe2FLp9LhMRsIUH23wLIsw"),
+    km: "36,5",
+    minutes: 37,
+    name: { it: "Cascate di Rasiglia", en: "Rasiglia waterfalls", fr: "Cascades de Rasiglia", de: "Wasserfälle von Rasiglia" },
+    blogOnly: true,
+  },
+  {
+    key: "gubbio",
+    placeId: "ChIJLQyi6Kc5LBMRoFkbAS95Xk0",
+    mapsUrl: mapsUrl("ChIJLQyi6Kc5LBMRoFkbAS95Xk0"),
+    km: "54,7",
+    minutes: 42,
+    name: { it: "Gubbio, Piazza dei Quaranta Martiri", en: "Gubbio, Piazza dei Quaranta Martiri", fr: "Gubbio, Piazza dei Quaranta Martiri", de: "Gubbio, Piazza dei Quaranta Martiri" },
+    blogOnly: true,
+  },
+  {
+    key: "alberoGubbio",
+    placeId: "ChIJfWJqL6Y5LBMRyjgdz_LlNGM",
+    mapsUrl: mapsUrl("ChIJfWJqL6Y5LBMRyjgdz_LlNGM"),
+    km: "61,0",
+    minutes: 51,
+    name: { it: "Albero di Natale di Gubbio", en: "Gubbio Christmas tree", fr: "Sapin de Noël de Gubbio", de: "Weihnachtsbaum von Gubbio" },
+    blogOnly: true,
+  },
+  {
+    key: "roccaDelLeone",
+    placeId: "ChIJtZQ7EgBVKRMR2uyQlzmS3fo",
+    mapsUrl: mapsUrl("ChIJtZQ7EgBVKRMR2uyQlzmS3fo"),
+    km: "64,3",
+    minutes: 50,
+    name: { it: "Rocca del Leone, Castiglione del Lago", en: "Rocca del Leone, Castiglione del Lago", fr: "Rocca del Leone, Castiglione del Lago", de: "Rocca del Leone, Castiglione del Lago" },
+    blogOnly: true,
+  },
 ];
 
 export function getPlace(key: PlaceKey): PlaceInfo {
@@ -146,6 +211,11 @@ const MENTION_PATTERNS: Record<PlaceKey, RegExp> = {
   spello: /Spello/i,
   aeroporto: /aeroporto|airport|aéroport|Flughafen|Sant'Egidio|S\. Egidio/i,
   umbriafiere: /Umbriafiere|Umbria Fiere/i,
+  santuarioSpogliazione: /Santuario della Spogliazione|Sanctuary of (the )?Renunciation|Sanctuaire du Dépouillement|Heiligtum der Entkleidung/i,
+  rasiglia: /Rasiglia/i,
+  gubbio: /Quaranta Martiri/i,
+  alberoGubbio: /albero di Natale di Gubbio|Gubbio Christmas tree|sapin de Noël de Gubbio|Weihnachtsbaum von Gubbio/i,
+  roccaDelLeone: /Rocca del Leone/i,
 };
 
 export function findMentionedPlaces(text: string): PlaceInfo[] {

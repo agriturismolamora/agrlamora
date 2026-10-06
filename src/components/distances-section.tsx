@@ -53,7 +53,9 @@ export function DistancesSection({ locale }: { locale: Locale }) {
         </Reveal>
 
         <ul className="mt-10 grid grid-cols-1 border-t border-ink/10 md:grid-cols-2 md:gap-x-12">
-          {PLACES.map((place, i) => (
+          {/* Solo i luoghi della sezione: quelli blogOnly (aggiunti per gli
+              articoli del blog) hanno solo il pulsante Maps negli articoli. */}
+          {PLACES.filter((place) => !place.blogOnly).map((place, i) => (
             <li key={place.key} className="border-b border-ink/10">
               <Reveal delay={(i % 2) * 60} className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 py-5">
                 <div className="min-w-0">
