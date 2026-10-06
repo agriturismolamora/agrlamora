@@ -1,0 +1,272 @@
+/* Tema "cioccolato": usato SOLO dall'articolo Eurochocolate (theme:
+   "chocolate" in blog-posts.ts) e dal popup Eurochocolate della home. CSS
+   module, quindi non entra nel CSS globale delle altre pagine.
+
+   Palette cacao / latte / caramello / crema. Contrasti verificati (WCAG AA):
+   crema su cacao ~14:1, caramello su cacao ~5.7:1, cacao su caramello
+   ~5.7:1, latte su crema ~6:1, ink su crema >12:1.
+
+   Solo animazioni di transform/opacity su elementi assoluti o decorativi:
+   nessun layout shift. Tutte spente con prefers-reduced-motion. */
+
+.root {
+  --cacao: #2b1a10;
+  --cacao-2: #3d2416;
+  --latte: #7b4a2e;
+  --caramello: #c98a3e;
+  --caramello-chiaro: #e2b277;
+  --crema: #f5e9d6;
+  --crema-2: #ecdcc3;
+}
+
+/* Fondo "cioccolato fuso": strati di gradienti radiali morbidi su base
+   cacao, come una superficie di cioccolato appena colato. */
+.melted {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--cacao);
+  background-image:
+    radial-gradient(120% 70% at 15% 0%, rgba(123, 74, 46, 0.55) 0%, rgba(123, 74, 46, 0) 60%),
+    radial-gradient(90% 60% at 90% 30%, rgba(201, 138, 62, 0.18) 0%, rgba(201, 138, 62, 0) 65%),
+    radial-gradient(140% 90% at 50% 120%, rgba(61, 36, 22, 0.9) 0%, rgba(43, 26, 16, 0) 70%),
+    linear-gradient(180deg, var(--cacao-2) 0%, var(--cacao) 100%);
+  color: var(--crema);
+}
+
+/* Corpo dell'articolo: crema calda con una velatura latte in alto, dove
+   arriva il gocciolamento. */
+.cream {
+  background-color: var(--crema);
+  background-image: linear-gradient(180deg, rgba(123, 74, 46, 0.08) 0%, rgba(123, 74, 46, 0) 260px);
+  color: #241f17;
+}
+
+/* Divisore a gocciolamento: SVG a larghezza piena e altezza fissa, così
+   occupa sempre lo stesso spazio (niente layout shift). */
+.drip {
+  display: block;
+  width: 100%;
+  height: 56px;
+  margin-top: -1px;
+  color: var(--cacao);
+}
+
+@media (min-width: 640px) {
+  .drip {
+    height: 80px;
+  }
+}
+
+/* Tavoletta a segmenti: ogni cella è un quadratino di cioccolato con
+   smusso (luce in alto a sinistra, ombra in basso a destra). */
+.tablet {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  padding: 6px;
+  border-radius: 10px;
+  background: #24150c;
+  box-shadow:
+    0 30px 60px -30px rgba(0, 0, 0, 0.7),
+    inset 0 0 0 1px rgba(226, 178, 119, 0.12);
+}
+
+@media (min-width: 640px) {
+  .tablet {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.segment {
+  border-radius: 6px;
+  padding: 16px 16px 18px;
+  background: linear-gradient(145deg, #4a2c1b 0%, #3a2214 55%, #321d11 100%);
+  box-shadow:
+    inset 2px 2px 0 rgba(226, 178, 119, 0.16),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* Variante chiara (cioccolato al latte) per i blocchi dentro il corpo
+   crema dell'articolo. */
+.tabletMilk {
+  background: #5e3822;
+}
+
+.tabletMilk .segment {
+  background: linear-gradient(145deg, #8a5636 0%, #7b4a2e 55%, #6d4128 100%);
+}
+
+.segmentLabel {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--caramello-chiaro);
+}
+
+.segmentValue {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-display), serif;
+  font-size: 19px;
+  line-height: 1.25;
+  color: var(--crema);
+}
+
+/* Scaglie di cacao: piccole forme irregolari che scendono lentamente.
+   Livello assoluto e aria-hidden, dietro al contenuto. */
+.particles {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  top: -24px;
+  left: var(--x);
+  width: var(--s);
+  height: calc(var(--s) * 0.62);
+  border-radius: 60% 40% 55% 45% / 55% 60% 40% 45%;
+  background: var(--c);
+  opacity: 0.55;
+  animation: cocoa-fall var(--d) linear var(--delay) infinite;
+  will-change: transform;
+}
+
+@keyframes cocoa-fall {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(14px, 52vh, 0) rotate(160deg);
+  }
+  100% {
+    transform: translate3d(-6px, 110vh, 0) rotate(320deg);
+  }
+}
+
+/* CTA principale: caramello con un riflesso che attraversa il pulsante. */
+.sheen {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #d79a4f 0%, var(--caramello) 100%);
+  color: var(--cacao);
+  box-shadow: 0 10px 24px -12px rgba(201, 138, 62, 0.8);
+}
+
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: -40% auto -40% -60%;
+  width: 45%;
+  transform: translateX(0) skewX(-20deg);
+  background: linear-gradient(90deg, rgba(255, 244, 225, 0) 0%, rgba(255, 244, 225, 0.55) 50%, rgba(255, 244, 225, 0) 100%);
+  animation: sheen-pass 4.5s ease-in-out 1.2s infinite;
+  pointer-events: none;
+}
+
+@keyframes sheen-pass {
+  0%,
+  55% {
+    transform: translateX(0) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(420%) skewX(-20deg);
+  }
+}
+
+.sheen:hover,
+.sheen:focus-visible {
+  background: linear-gradient(180deg, var(--caramello-chiaro) 0%, #d79a4f 100%);
+}
+
+.ghost {
+  border: 1px solid rgba(245, 233, 214, 0.45);
+  color: var(--crema);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.ghost:hover,
+.ghost:focus-visible {
+  border-color: var(--crema);
+  background-color: rgba(245, 233, 214, 0.08);
+}
+
+/* Box offerta: pannello cioccolato al latte con bordo caramello. */
+.offer {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(201, 138, 62, 0.22) 0%, rgba(201, 138, 62, 0) 55%),
+    linear-gradient(160deg, #5a3520 0%, #43271a 60%, #3a2216 100%);
+  color: var(--crema);
+  box-shadow:
+    0 30px 70px -35px rgba(0, 0, 0, 0.75),
+    inset 0 0 0 1px rgba(226, 178, 119, 0.28);
+}
+
+.offerBadge {
+  font-family: var(--font-display), serif;
+  /* Cifre allineate: con le cifre "old style" di Cormorant il 10 grande si
+     leggerebbe quasi come "IO". */
+  font-variant-numeric: lining-nums;
+  font-size: clamp(64px, 12vw, 96px);
+  line-height: 0.9;
+  color: var(--caramello-chiaro);
+}
+
+.check {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  border-radius: 999px;
+  background: var(--caramello);
+  color: var(--cacao);
+}
+
+/* Elenchi puntati: piccola fava di cacao al posto del pallino. */
+.bean {
+  flex: none;
+  width: 10px;
+  height: 6px;
+  margin-top: 10px;
+  border-radius: 50%;
+  background: var(--latte);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.faqItem {
+  border-radius: 8px;
+  border-left: 3px solid var(--caramello);
+  background: rgba(255, 255, 255, 0.45);
+  padding: 18px 20px;
+}
+
+.link {
+  color: var(--latte);
+  text-decoration: underline;
+  text-decoration-color: rgba(123, 74, 46, 0.35);
+  text-underline-offset: 4px;
+}
+
+.link:hover {
+  color: var(--cacao);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .particle,
+  .sheen::after {
+    animation: none;
+  }
+
+  .particle {
+    display: none;
+  }
+}

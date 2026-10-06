@@ -1,16 +1,37 @@
 "use client";
 
 import { WatermarkedImage } from "@/components/watermarked-image";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { HoverFill } from "@/components/hover-fill";
 import { StarRow } from "@/components/review-icons";
 import type { Locale } from "@/lib/i18n";
+import { withLocale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
 import { useConsent } from "@/lib/consent";
+import { getActivePopupPromo, type Promo } from "@/data/promo";
+import { ChocolateDrip, CocoaParticles } from "@/components/chocolate-decor";
+import choco from "@/components/chocolate-theme.module.css";
 
+/* Chiave del popup di prenotazione diretta: invariata, così finita una
+   promo a tempo il ritorno a questo popup rispetta ancora il suo cooldown. */
 const STORAGE_KEY = "lamora_promo_last_shown";
 const COOLDOWN_MS = 2 * 24 * 60 * 60 * 1000; // 2 giorni: non ripresentarlo ad ogni visita
 const SHOW_DELAY_MS = 3000;
+
+/* Chiave separata per ogni promo a tempo (legata al suo id): chi ha chiuso
+   il popup di prenotazione diretta negli ultimi 2 giorni vede comunque
+   quello della promo. Elencata in src/data/privacy-services.ts. */
+function promoStorageKey(promo: Promo): string {
+  return `${STORAGE_KEY}:${promo.id}`;
+}
+
+/* Popup già mostrati in questa sessione di navigazione (stessa scheda, nessun
+   ricaricamento): memoria in RAM, nessuno storage. Evita di ripresentarlo
+   tornando alla home con una navigazione interna, o quando l'utente dà il
+   consenso dopo averlo già visto (prima, senza consenso, non c'era nulla
+   che lo ricordasse). */
+const shownThisSession = new Set<string>();
 
 const TEXT: Record<
   Locale,
@@ -69,6 +90,39 @@ const TEXT: Record<
   },
 };
 
+/* Testi del popup Eurochocolate (titolo, -10%, date, CTA all'articolo).
+   Le condizioni complete stanno nell'articolo, non qui. */
+const EUROCHOCOLATE_TEXT: Record<Locale, { label: string; heading: string; dates: string; detail: string; cta: string }> = {
+  it: {
+    label: "Eurochocolate 2026 · Perugia",
+    heading: "Un soggiorno dolce come il cioccolato",
+    dates: "13–22 novembre 2026",
+    detail: "Sconto del 10% ad Agriturismo La Mora per tutta la durata dell'evento, a 21 km dal centro di Perugia.",
+    cta: "Scopri l'offerta",
+  },
+  en: {
+    label: "Eurochocolate 2026 · Perugia",
+    heading: "A stay as sweet as chocolate",
+    dates: "13–22 November 2026",
+    detail: "10% off at Agriturismo La Mora for the whole event, 21 km from central Perugia.",
+    cta: "See the offer",
+  },
+  fr: {
+    label: "Eurochocolate 2026 · Pérouse",
+    heading: "Un séjour doux comme le chocolat",
+    dates: "13–22 novembre 2026",
+    detail: "10 % de remise à l'Agriturismo La Mora pendant toute la durée de l'événement, à 21 km du centre de Pérouse.",
+    cta: "Voir l'offre",
+  },
+  de: {
+    label: "Eurochocolate 2026 · Perugia",
+    heading: "Ein Aufenthalt, süß wie Schokolade",
+    dates: "13.–22. November 2026",
+    detail: "10 % Rabatt im Agriturismo La Mora während der gesamten Veranstaltung, 21 km vom Zentrum Perugias.",
+    cta: "Zum Angebot",
+  },
+};
+
 function CloseIcon() {
   return (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
@@ -77,27 +131,45 @@ function CloseIcon() {
   );
 }
 
-/* Popup promo alla prima visita (o dopo 2 giorni di assenza): usa SOLO lo
-   sconto diretto reale già confermato altrove nel sito (10% da 7 notti),
-   mai un finto codice promo o una scadenza inventata. Il timestamp in
-   localStorage funge da "memoria" per non ripresentarlo ad ogni rientro —
-   ma quel salvataggio è tecnologia "Funzionale" (vedi
-   src/data/privacy-services.ts), quindi legge/scrive lamora_promo_last_shown
-   SOLO se l'utente ha già dato quel consenso. Senza consenso il popup può
-   ancora comparire (mostrarlo non richiede storage), ma non viene
-   ricordato tra una visita e l'altra: nessun dato persiste prima della
-   scelta dell'utente. */
+const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+/* Popup promo alla prima visita (o dopo 2 giorni di assenza). Due varianti:
+   - promo a tempo attiva (src/data/promo.ts, oggi Eurochocolate 2026, fino al
+     22/11/2026 ora italiana): popup a tema cioccolato che porta all'articolo;
+   - altrimenti, il popup di prenotazione diretta, con SOLO gli sconti diretti
+     reali già confermati altrove nel sito, mai un finto codice o una
+     scadenza inventata.
+   Quale variante mostrare si decide nel browser, dopo il mount (il sito è
+   statico): il popup compare comunque solo dopo un ritardo, quindi non c'è
+   alcun contenuto server da far combaciare.
+   Il timestamp in localStorage funge da "memoria" per non ripresentarlo ad
+   ogni rientro — ma quel salvataggio è tecnologia "Funzionale" (vedi
+   src/data/privacy-services.ts), quindi legge/scrive SOLO se l'utente ha già
+   dato quel consenso. Senza consenso il popup può ancora comparire
+   (mostrarlo non richiede storage), ma non viene ricordato tra una visita e
+   l'altra: nessun dato persiste prima della scelta dell'utente.
+   Accessibilità: focus portato sul pulsante di chiusura all'apertura, Tab
+   confinato nel dialogo, focus restituito all'elemento di prima alla
+   chiusura; chiusura con X, Esc o click sull'overlay. */
 export function PromoPopup({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
-  const text = TEXT[locale];
+  const [promo, setPromo] = useState<Promo | null>(null);
   const consent = useConsent();
   const functionalAllowed = consent?.categories.functional === true;
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
+    const activePromo = getActivePopupPromo(Date.now());
+    const sessionId = activePromo?.id ?? "direct";
+    if (shownThisSession.has(sessionId)) return;
+    const key = activePromo ? promoStorageKey(activePromo) : STORAGE_KEY;
+
     let lastShown = 0;
     if (functionalAllowed) {
       try {
-        lastShown = Number(window.localStorage.getItem(STORAGE_KEY)) || 0;
+        lastShown = Number(window.localStorage.getItem(key)) || 0;
       } catch {
         lastShown = 0;
       }
@@ -105,10 +177,13 @@ export function PromoPopup({ locale }: { locale: Locale }) {
     if (Date.now() - lastShown < COOLDOWN_MS) return;
 
     const timer = window.setTimeout(() => {
+      shownThisSession.add(sessionId);
+      previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      setPromo(activePromo);
       setOpen(true);
       if (functionalAllowed) {
         try {
-          window.localStorage.setItem(STORAGE_KEY, String(Date.now()));
+          window.localStorage.setItem(key, String(Date.now()));
         } catch {
           // storage non disponibile (es. navigazione privata): il popup
           // ricomparirà ad ogni visita in quel caso, nessun errore bloccante.
@@ -122,13 +197,31 @@ export function PromoPopup({ locale }: { locale: Locale }) {
   useEffect(() => {
     if (!open) return;
     document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== "Tab" || !dialogRef.current) return;
+      const focusables = Array.from(dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE));
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     }
     window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
+      previousFocusRef.current?.focus?.();
     };
   }, [open]);
 
@@ -139,6 +232,58 @@ export function PromoPopup({ locale }: { locale: Locale }) {
 
   if (!open) return null;
 
+  if (promo) {
+    const text = EUROCHOCOLATE_TEXT[locale];
+    return (
+      <div
+        className="fixed inset-0 z-[250] flex items-center justify-center overflow-y-auto p-4"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="promo-popup-heading"
+      >
+        <div onClick={() => setOpen(false)} aria-hidden="true" className="absolute inset-0 bg-[rgba(36,31,23,0.6)]" />
+        <div
+          ref={dialogRef}
+          className={`${choco.root} ${choco.melted} relative my-auto w-full max-w-[400px] rounded-[10px] shadow-[0_40px_90px_-30px_rgba(0,0,0,0.6)] sm:max-w-[460px]`}
+        >
+          <CocoaParticles count={6} />
+          <button
+            ref={closeRef}
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label={t("nav", "chiudi", locale)}
+            className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/25 text-[var(--crema)] transition-colors hover:bg-black/45"
+          >
+            <CloseIcon />
+          </button>
+
+          <div className="px-6 pb-2 pt-7 text-center sm:px-9 sm:pt-9">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--caramello-chiaro)]">{text.label}</span>
+            <h2
+              id="promo-popup-heading"
+              className="mx-auto mt-3 max-w-[320px] font-display text-[clamp(24px,6vw,30px)] font-normal leading-[1.15] text-[var(--crema)] [text-wrap:balance]"
+            >
+              {text.heading}
+            </h2>
+            <p className={`${choco.offerBadge} mt-4`}>-{promo.discountPercent}%</p>
+            <p className="mt-3 text-[13px] font-semibold uppercase tracking-[0.08em] text-[var(--crema)]">{text.dates}</p>
+            <p className="mx-auto mt-3 max-w-[340px] text-[13px] leading-[1.6] text-[var(--crema)]/85">{text.detail}</p>
+            <Link
+              href={withLocale(locale, `/blog/${promo.articleSlug}/`)}
+              onClick={() => setOpen(false)}
+              className={`${choco.sheen} mt-6 inline-flex min-h-[46px] items-center gap-2.5 rounded-lg px-7 font-sans text-[11px] font-semibold uppercase tracking-[0.08em]`}
+            >
+              {text.cta}
+              <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+          <ChocolateDrip className="!mt-4 rotate-180 rounded-b-[10px] text-[#24150c]" />
+        </div>
+      </div>
+    );
+  }
+
+  const text = TEXT[locale];
   return (
     <div
       className="fixed inset-0 z-[250] flex items-center justify-center overflow-y-auto p-4"
@@ -153,8 +298,12 @@ export function PromoPopup({ locale }: { locale: Locale }) {
         aria-hidden="true"
         className="absolute inset-0 bg-[rgba(36,31,23,0.6)]"
       />
-      <div className="relative my-auto flex w-full max-w-[920px] flex-col overflow-hidden rounded-[6px] bg-cream shadow-[0_40px_90px_-30px_rgba(0,0,0,0.6)] sm:flex-row">
+      <div
+        ref={dialogRef}
+        className="relative my-auto flex w-full max-w-[920px] flex-col overflow-hidden rounded-[6px] bg-cream shadow-[0_40px_90px_-30px_rgba(0,0,0,0.6)] sm:flex-row"
+      >
         <button
+          ref={closeRef}
           type="button"
           onClick={() => setOpen(false)}
           aria-label={t("nav", "chiudi", locale)}

@@ -7,6 +7,7 @@ import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { getPlace, type PlaceKey } from "@/data/places";
 import { MapsButton } from "@/components/maps-button";
+import { EUROCHOCOLATE_2026 } from "@/data/promo";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -111,6 +112,7 @@ const TEXT: Record<
     perugiaLabel: string;
     perugiaHeading: string;
     perugiaBody: string;
+    perugiaEvent: string;
     bridgePrefix: string;
     bridgeOttavo: string;
     bridgeMiddle: string;
@@ -132,6 +134,7 @@ const TEXT: Record<
     perugiaLabel: "Perugia",
     perugiaHeading: "Il capoluogo umbro, a mezz'ora d'auto.",
     perugiaBody: "Perugia ha un centro storico su un colle, l'Acquedotto medievale trasformato in passeggiata sospesa e una vita universitaria che la rende diversa, più mossa, rispetto ad Assisi. L'aeroporto dell'Umbria (Perugia San Francesco d'Assisi) è a circa 11 km dalla struttura, 11 minuti in auto.",
+    perugiaEvent: "Eurochocolate 2026 a Perugia (13–22 novembre): date, programma e dove dormire →",
     bridgePrefix: "Il 2026 aggiunge un motivo in più per visitare Assisi: leggi di più sull'",
     bridgeOttavo: "Ottavo Centenario di San Francesco",
     bridgeMiddle: ". E se tra una tappa e l'altra cercate qualcosa da fare senza uscire dalla struttura, trovate tutto nella pagina",
@@ -152,6 +155,7 @@ const TEXT: Record<
     perugiaLabel: "Perugia",
     perugiaHeading: "Umbria's capital, half an hour by car.",
     perugiaBody: "Perugia has a historic centre on a hill, the medieval aqueduct turned into a suspended walkway, and a university life that makes it different, livelier, than Assisi. Umbria airport (Perugia San Francesco d'Assisi) is about 11 km from the property, 11 minutes by car.",
+    perugiaEvent: "Eurochocolate 2026 in Perugia (13–22 November): dates, programme and where to stay →",
     bridgePrefix: "2026 adds one more reason to visit Assisi: read more about the ",
     bridgeOttavo: "8th Centenary of St. Francis",
     bridgeMiddle: ". And if between stops you're looking for something to do without leaving the property, you'll find it all on the",
@@ -172,6 +176,7 @@ const TEXT: Record<
     perugiaLabel: "Pérouse",
     perugiaHeading: "Le chef-lieu de l'Ombrie, à une demi-heure en voiture.",
     perugiaBody: "Pérouse a un centre historique sur une colline, l'aqueduc médiéval transformé en promenade suspendue et une vie universitaire qui la rend différente, plus animée, qu'Assise. L'aéroport d'Ombrie (Pérouse Saint-François-d'Assise) est à environ 11 km de la structure, à 11 minutes en voiture.",
+    perugiaEvent: "Eurochocolate 2026 à Pérouse (13–22 novembre) : dates, programme et où dormir →",
     bridgePrefix: "2026 offre une raison de plus de visiter Assise : lisez-en plus sur le ",
     bridgeOttavo: "8e Centenaire de Saint François",
     bridgeMiddle: ". Et si entre deux étapes vous cherchez quelque chose à faire sans quitter la structure, vous trouverez tout sur la page",
@@ -192,6 +197,7 @@ const TEXT: Record<
     perugiaLabel: "Perugia",
     perugiaHeading: "Die umbrische Hauptstadt, eine halbe Autostunde entfernt.",
     perugiaBody: "Perugia hat eine Altstadt auf einem Hügel, das mittelalterliche Aquädukt, das zu einem erhöhten Spazierweg umgebaut wurde, und ein Universitätsleben, das es anders, lebendiger als Assisi macht. Der Flughafen Umbrien (Perugia San Francesco d'Assisi) liegt etwa 11 km von der Unterkunft entfernt, 11 Autominuten.",
+    perugiaEvent: "Eurochocolate 2026 in Perugia (13.–22. November): Termine, Programm und Unterkunft →",
     bridgePrefix: "2026 bietet einen weiteren Grund, Assisi zu besuchen: lesen Sie mehr über den ",
     bridgeOttavo: "800. Todestag des Heiligen Franziskus",
     bridgeMiddle: ". Und wenn Sie zwischen den Ausflügen etwas unternehmen möchten, ohne die Unterkunft zu verlassen, finden Sie alles auf der Seite",
@@ -306,6 +312,14 @@ export function TerritorioPageView({ locale }: { locale: Locale }) {
               <MapsButton place={getPlace("perugia")} locale={locale} showName />
               <MapsButton place={getPlace("aeroporto")} locale={locale} showName />
             </div>
+            <p className="mt-5 max-w-[640px] text-[14px] leading-[1.75] text-ink-soft">
+              <Link
+                href={withLocale(locale, `/blog/${EUROCHOCOLATE_2026.articleSlug}/`)}
+                className="text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry"
+              >
+                {text.perugiaEvent}
+              </Link>
+            </p>
           </Reveal>
 
           <Reveal delay={80}>

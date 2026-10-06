@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n";
+import type { PromoId } from "@/data/promo";
 
 /* Contenuto editoriale del blog: non semplici paragrafi ma un piccolo
    sistema di blocchi (ContentBlock), per poter alternare titoli, immagini,
@@ -13,10 +14,20 @@ export type ContentBlock =
   | { type: "p"; text: string }
   | { type: "h2"; text: string }
   | { type: "h3"; text: string }
-  | { type: "image"; src: string; alt: string; caption?: string }
+  /* credit/creditUrl: obbligatori per foto di terzi (Wikimedia Commons),
+     mostrati sotto l'immagine come nella pagina Territorio. portrait: foto
+     verticale, mostrata in 4:5 invece del 3:2 di default. */
+  | { type: "image"; src: string; alt: string; caption?: string; credit?: string; creditUrl?: string; portrait?: boolean }
   | { type: "list"; items: string[] }
   | { type: "facts"; items: { label: string; value: string }[] }
-  | { type: "cta"; heading: string; body?: string; label: string; href: string };
+  /* href "#prenota": invece di un link, un pulsante che apre la modale di
+     prenotazione bed-and-breakfast.it (stessa di "Prenota ora"). */
+  | { type: "cta"; heading: string; body?: string; label: string; href: string }
+  /* Link interni (Alloggi, Offerte, Territorio...): path italiano, la
+     lingua la aggiunge withLocale() al render. */
+  | { type: "links"; heading: string; items: { label: string; href: string }[] };
+
+export const BOOKING_MODAL_HREF = "#prenota";
 
 export type BlogPost = {
   slug: string;
@@ -26,19 +37,692 @@ export type BlogPost = {
   metaDescription: string;
   image: string;
   alt: string;
+  /* Credito per un'immagine di copertina di terzi (mai per le foto nostre). */
+  imageCredit?: { text: string; url?: string };
+  /* Data reale di pubblicazione (YYYY-MM-DD), per il JSON-LD. Assente
+     negli articoli più vecchi, di cui non si conosce una data affidabile. */
+  datePublished?: string;
+  schemaType?: "Article" | "BlogPosting";
+  /* Blocco "In breve" iniziale: fatti estraibili (date, distanze, tempi). */
+  inBreve?: { heading: string; items: { label: string; value: string }[] };
   intro: string;
-  introCtaHeading: string;
-  introCtaLabel: string;
-  introCtaHref: string;
+  introCtaHeading?: string;
+  introCtaLabel?: string;
+  introCtaHref?: string;
   content: ContentBlock[];
+  /* FAQ visibili in fondo all'articolo, riprese nel JSON-LD FAQPage. */
+  faq?: { heading: string; items: { q: string; a: string }[] };
+  /* Box offerta di src/data/promo.ts, mostrato in alto e in fondo. */
+  offerBox?: PromoId;
+  /* Tema grafico dedicato: solo dove indicato esplicitamente. */
+  theme?: "chocolate";
+  /* Nota legale in fondo all'articolo (es. marchi di terzi). */
+  disclaimer?: string;
   finalCtaHeading: string;
   finalCtaBody: string;
   finalCtaLabel: string;
   finalCtaHref: string;
 };
 
+/* Eurochocolate 2026 (offerta del titolare, vedi src/data/promo.ts).
+   Fonti verificate il 06/10/2026:
+   - eurochocolate.com/perugia2026/ (date, tema, luoghi, ingresso, orari,
+     format annunciati) e /perugia2026/come-arrivare (parcheggi, treno);
+   - comunicato stampa Città del Cioccolato del 31/10/2025
+     (drive.cittadelcioccolato.it/comunicati-stampa/2025/CdC_20251031.pdf):
+     inaugurazione 30/10/2025, apertura ai turisti 1/11/2025; sito ufficiale
+     cittadelcioccolato.it per orari, superficie e storia dell'ex Mercato
+     Coperto (1931–1932);
+   - nestle.it, comunicato "Baci Perugina compie 100 anni" (1922, Luisa
+     Spagnoli, "Cazzotto", Giovanni Buitoni, Federico Seneca); perugina.com
+     per la fondazione nel 1907;
+   - distanze da src/data/places.ts (Google Maps).
+   "Chocolate Experience" e "Fabbrica del Cioccolato" NON compaiono sulla
+   pagina ufficiale 2026: omessi. Ospiti citati per nome omessi di proposito
+   (il programma può cambiare). */
+const EUROCHOCOLATE_HERO = "/images/colazione/colazione bio agriturismo la mora.webp";
+const EUROCHOCOLATE_COMMONS = {
+  src: "/images/territorio/perugia/eurochocolate 2024 piazza iv novembre perugia.jpg",
+  credit: "Flavia Ruffinelli, Wikimedia Commons (CC BY-SA 4.0)",
+  creditUrl: "https://commons.wikimedia.org/wiki/File:Eurochocolate_2024_a_Perugia.jpg",
+};
+const EUROCHOCOLATE_APARTMENT = "/images/alloggi/appartamento bilancia/foto orizzontale letto e sala intera orizzontale bilancia.jpeg";
+const EUROCHOCOLATE_OFFICIAL_URL = "https://www.eurochocolate.com/perugia2026/";
+
+const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
+  it: {
+    slug: "eurochocolate-2026-dove-dormire",
+    category: "Eventi",
+    title: "Eurochocolate 2026: dove dormire vicino a Perugia",
+    excerpt: "Date, programma e consigli pratici per Eurochocolate 2026 (Perugia, 13–22 novembre) e un -10% per chi soggiorna ad Agriturismo La Mora, a 21 km dal centro.",
+    metaDescription: "Eurochocolate 2026 a Perugia dal 13 al 22 novembre: date, orari, cosa vedere e dove dormire. Agriturismo La Mora è a 21 km dal centro, con il 10% di sconto.",
+    image: EUROCHOCOLATE_HERO,
+    alt: "Sala della colazione di Agriturismo La Mora con il camino acceso e la tavola apparecchiata",
+    datePublished: "2026-10-06",
+    schemaType: "BlogPosting",
+    theme: "chocolate",
+    offerBox: "eurochocolate-2026",
+    inBreve: {
+      heading: "In breve",
+      items: [
+        { label: "Date", value: "13–22 novembre 2026" },
+        { label: "Dove", value: "Centro storico di Perugia" },
+        { label: "Tema", value: "«Fate Dolci», 32ª edizione" },
+        { label: "Ingresso", value: "Libero" },
+        { label: "Da La Mora", value: "21,0 km · circa 23 min in auto" },
+        { label: "Offerta La Mora", value: "-10% durante l'evento" },
+      ],
+    },
+    intro:
+      "Dal 13 al 22 novembre 2026 il centro storico di Perugia ospita la 32ª edizione di Eurochocolate, il festival internazionale del cioccolato, quest'anno con il tema «Fate Dolci». Agriturismo La Mora è a 21,0 km dal centro di Perugia, circa 23 minuti in auto: una base in campagna, tra Perugia e Assisi, per vivere il festival di giorno e la sera rientrare in un appartamento tutto vostro.",
+    content: [
+      { type: "h2", text: "Quando e dove si svolge Eurochocolate 2026?" },
+      {
+        type: "p",
+        text: "Eurochocolate 2026 si tiene da venerdì 13 a domenica 22 novembre: dieci giornate nel centro storico di Perugia, tra Giardini Carducci, Piazza Italia, Corso Vannucci, Piazza della Repubblica, Via Mazzini, Via Fani e Piazza Matteotti. L'ingresso è libero, perché il festival si svolge lungo le vie e le piazze della città, e si tiene anche in caso di maltempo.",
+      },
+      {
+        type: "facts",
+        items: [
+          { label: "Lunedì–venerdì", value: "10:00–19:30" },
+          { label: "Sabato", value: "9:30–22:00" },
+          { label: "Domenica", value: "9:00–20:00" },
+        ],
+      },
+      {
+        type: "p",
+        text: "Sono gli orari degli stand pubblicati dagli organizzatori: prima di partire conviene ricontrollarli sulla pagina ufficiale del festival, insieme al programma aggiornato.",
+      },
+      { type: "h2", text: "Cosa vedere a Eurochocolate 2026?" },
+      {
+        type: "p",
+        text: "«Fate Dolci» invita a vivere il cioccolato in modo attivo: non solo assaggiarlo, ma sperimentarlo e condividerlo. Questi i format annunciati dagli organizzatori per l'edizione 2026:",
+      },
+      {
+        type: "list",
+        items: [
+          "Chocolate Show — la grande mostra-mercato del cioccolato all'aperto, con la novità dello spazio Eurochocolate Free From: prodotti senza zucchero, senza lattosio, senza glutine e vegan.",
+          "Eurochocolate World — l'area dei produttori bean to bar e tree to bar, con marchi da oltre 20 terre del cacao tra America Latina, Africa e Asia.",
+          "Spazio Fate Dolci — in piazza Matteotti, con i prodotti a tema dell'edizione e dolci a base di cacao.",
+          "ChocoLab — degustazioni e approfondimenti quotidiani al LAB – Luisa Annibale Base, in via Angusta.",
+          "Show cooking — dimostrazioni dal vivo con un maestro pasticcere.",
+          "Fate Lab — laboratorio didattico per bambini e famiglie all'ex Borsa Merci di via Mazzini.",
+          "Spettacoli itineranti — Choco Buskers, Chocoparade e Chocolieri per le vie del centro.",
+          "Regione Ospite — la Calabria è la prima protagonista del nuovo progetto «Regione Ospite».",
+        ],
+      },
+      {
+        type: "p",
+        text: "Il programma può cambiare durante l'edizione: per i singoli appuntamenti, gli orari dei laboratori e le novità dell'ultima ora fa fede la pagina ufficiale di Eurochocolate.",
+      },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_COMMONS.src,
+        alt: "Folla in piazza IV Novembre a Perugia, davanti alla Fontana Maggiore e alla Cattedrale di San Lorenzo, durante Eurochocolate 2024",
+        caption: "Piazza IV Novembre a Perugia durante Eurochocolate 2024.",
+        credit: EUROCHOCOLATE_COMMONS.credit,
+        creditUrl: EUROCHOCOLATE_COMMONS.creditUrl,
+        portrait: true,
+      },
+      { type: "h2", text: "Cos'è la Città del Cioccolato e quando ha aperto?" },
+      {
+        type: "p",
+        text: "La Città del Cioccolato è un museo esperienziale dedicato al cacao e al cioccolato: oltre 2.800 m² dentro l'ex Mercato Coperto di Perugia, l'edificio costruito tra il 1931 e il 1932. È stata inaugurata il 30 ottobre 2025 e ha aperto ai visitatori il 1° novembre 2025.",
+      },
+      {
+        type: "p",
+        text: "Secondo il sito ufficiale è aperta tutti i giorni dalle 10:00 alle 19:00, con biglietto d'ingresso. Per Eurochocolate 2026 gli organizzatori annunciano sconti sul biglietto del museo per chi acquista al Chocolate Show: tariffe e condizioni aggiornate sono su cittadelcioccolato.it.",
+      },
+      { type: "h2", text: "Perché Perugia è la città del cioccolato?" },
+      {
+        type: "p",
+        text: "Il legame nasce con la Perugina, fondata a Perugia nel 1907. Nel 1922 Luisa Spagnoli creò un cioccolatino con granella di nocciole che, per la forma simile alle nocche di un pugno, si chiamava «Cazzotto»: fu Giovanni Buitoni a ribattezzarlo Bacio. L'idea di avvolgere ogni Bacio in un messaggio d'amore venne invece a Federico Seneca, direttore artistico della Perugina.",
+      },
+      {
+        type: "p",
+        text: "Durante il festival i ChocoLab si tengono proprio nel locale storico di via Angusta, usato da Luisa e Annibale Spagnoli nei primi anni di attività della Perugina.",
+      },
+      {
+        type: "p",
+        text: "C'è anche un filo che porta ad Assisi: tra le novità annunciate per il 2026 c'è la tavoletta CioccolaTau, dedicata all'ottavo centenario della morte di San Francesco e realizzata con nocciole Tonda Francescana coltivate in Umbria.",
+      },
+      { type: "h2", text: "Come arrivare a Eurochocolate da Agriturismo La Mora?" },
+      {
+        type: "p",
+        text: "In auto, Agriturismo La Mora dista 21,0 km dal centro storico di Perugia: circa 23 minuti secondo Google Maps, traffico permettendo. Nei giorni del festival conviene lasciare l'auto in uno dei parcheggi indicati dagli organizzatori, collegati al centro da minimetrò, scale mobili o ascensori:",
+      },
+      {
+        type: "list",
+        items: [
+          "Parcheggio gratuito Porta Nova (Piazzale Umbria Jazz), con il minimetrò fino alla stazione Pincetto, in centro. Per chi arriva in auto, gli organizzatori indicano l'uscita Perugia – Madonna Alta e poi le indicazioni per lo stadio e il minimetrò.",
+          "Parcheggi custoditi a pagamento: Mercato Coperto (con ascensore), Piazzale Europa, Piazza Partigiani e Pellini (con scale mobili).",
+        ],
+      },
+      {
+        type: "p",
+        text: "In treno, la stazione di Perugia in piazza Vittorio Veneto è a circa 3 km dal centro, collegata dal minimetrò e dagli autobus urbani. Per orari e biglietti dei treni fa fede Trenitalia.",
+      },
+      { type: "h2", text: "Dove dormire per Eurochocolate 2026?" },
+      {
+        type: "p",
+        text: "Nei giorni del festival Perugia è molto richiesta. Agriturismo La Mora, in via Fonte Citerna 7 ad Assisi, ha cinque appartamenti indipendenti, ognuno con cucina attrezzata, Wi-Fi e aria condizionata, e il parcheggio gratuito all'interno della struttura: si parte la mattina per Perugia e la sera si torna in campagna, lontano dalla folla.",
+      },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_APARTMENT,
+        alt: "Letto matrimoniale e soggiorno dell'appartamento Bilancia di Agriturismo La Mora",
+        caption: "L'appartamento Bilancia, il più grande dei cinque.",
+      },
+      {
+        type: "p",
+        text: "Dalla stessa base, la Basilica di San Francesco ad Assisi è a 7,5 km, circa 18 minuti in auto: un weekend a Eurochocolate si abbina facilmente a una giornata ad Assisi. Gemelli e Sagittario, con giardino privato recintato, accolgono anche chi viaggia con animali.",
+      },
+      {
+        type: "links",
+        heading: "Organizza il soggiorno",
+        items: [
+          { label: "Gli appartamenti di La Mora", href: "/alloggi/" },
+          { label: "Le offerte per chi prenota diretto", href: "/offerte/" },
+          { label: "Il territorio intorno a La Mora", href: "/territorio/" },
+          { label: "Ottavo Centenario di San Francesco", href: "/ottavo-centenario-san-francesco/" },
+          { label: "Programma ufficiale di Eurochocolate 2026", href: EUROCHOCOLATE_OFFICIAL_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Domande frequenti su Eurochocolate 2026",
+      items: [
+        { q: "Quando si svolge Eurochocolate 2026?", a: "Da venerdì 13 a domenica 22 novembre 2026, nel centro storico di Perugia. È la 32ª edizione e il tema è «Fate Dolci»." },
+        { q: "Si paga l'ingresso a Eurochocolate?", a: "No: il festival si svolge lungo le vie e le piazze del centro storico e non è previsto un biglietto d'ingresso. Si pagano gli acquisti agli stand; la Città del Cioccolato, museo permanente, ha un biglietto a parte." },
+        { q: "Quali sono gli orari di Eurochocolate 2026?", a: "Secondo gli organizzatori, gli stand sono aperti dal lunedì al venerdì dalle 10:00 alle 19:30, il sabato dalle 9:30 alle 22:00 e la domenica dalle 9:00 alle 20:00." },
+        { q: "Quanto dista Agriturismo La Mora da Eurochocolate?", a: "Il centro storico di Perugia è a 21,0 km da Agriturismo La Mora, circa 23 minuti in auto secondo Google Maps." },
+        { q: "Dove parcheggiare per Eurochocolate?", a: "Gli organizzatori indicano il parcheggio gratuito Porta Nova (Piazzale Umbria Jazz), collegato al centro dal minimetrò fino alla stazione Pincetto, e alcuni parcheggi a pagamento collegati da scale mobili o ascensori, come Mercato Coperto, Piazzale Europa e Piazza Partigiani." },
+        { q: "Come funziona lo sconto del 10% di La Mora?", a: "Vale per tutta la durata dell'evento, dal 13 al 22 novembre 2026. Condizioni: mettere «Mi piace» alla pagina Facebook di Agriturismo La Mora e salvare il post dell'offerta oppure mostrare il biglietto di Eurochocolate al momento del pagamento. Disponibilità limitata nei giorni dell'evento." },
+        { q: "Quando ha aperto la Città del Cioccolato?", a: "È stata inaugurata il 30 ottobre 2025 e ha aperto ai visitatori il 1° novembre 2025, negli spazi dell'ex Mercato Coperto di Perugia." },
+      ],
+    },
+    disclaimer: "Eurochocolate è un marchio dei rispettivi titolari; Agriturismo La Mora non è affiliata all'evento.",
+    finalCtaHeading: "Dieci giorni di cioccolato, una base tranquilla in campagna.",
+    finalCtaBody: "Guarda gli appartamenti e scegli quello giusto per il tuo weekend a Eurochocolate.",
+    finalCtaLabel: "Scopri gli appartamenti",
+    finalCtaHref: "/alloggi/",
+  },
+  en: {
+    slug: "eurochocolate-2026-dove-dormire",
+    category: "Events",
+    title: "Eurochocolate 2026: where to stay near Perugia",
+    excerpt: "Dates, programme and practical tips for Eurochocolate 2026 (Perugia, 13–22 November), plus 10% off at Agriturismo La Mora, 21 km from the centre.",
+    metaDescription: "Eurochocolate 2026 in Perugia, 13–22 November: dates, opening hours, what to see and where to stay. Agriturismo La Mora is 21 km from the centre, with 10% off.",
+    image: EUROCHOCOLATE_HERO,
+    alt: "Breakfast room at Agriturismo La Mora with the fire lit and the table laid",
+    datePublished: "2026-10-06",
+    schemaType: "BlogPosting",
+    theme: "chocolate",
+    offerBox: "eurochocolate-2026",
+    inBreve: {
+      heading: "At a glance",
+      items: [
+        { label: "Dates", value: "13–22 November 2026" },
+        { label: "Where", value: "Perugia's historic centre" },
+        { label: "Theme", value: "“Fate Dolci”, 32nd edition" },
+        { label: "Entry", value: "Free" },
+        { label: "From La Mora", value: "21.0 km · about 23 min by car" },
+        { label: "La Mora offer", value: "10% off during the event" },
+      ],
+    },
+    intro:
+      "From 13 to 22 November 2026, Perugia's historic centre hosts the 32nd Eurochocolate, the international chocolate festival, this year themed “Fate Dolci” — a play on words meaning both “sweet fairies” and “make sweets”. Agriturismo La Mora is 21.0 km from central Perugia, about 23 minutes by car: a countryside base between Perugia and Assisi, so you can enjoy the festival by day and come back to an apartment of your own in the evening.",
+    content: [
+      { type: "h2", text: "When and where is Eurochocolate 2026?" },
+      {
+        type: "p",
+        text: "Eurochocolate 2026 runs from Friday 13 to Sunday 22 November: ten days across Perugia's historic centre, between Giardini Carducci, Piazza Italia, Corso Vannucci, Piazza della Repubblica, Via Mazzini, Via Fani and Piazza Matteotti. Entry is free, since the festival takes place in the city's streets and squares, and it goes ahead whatever the weather.",
+      },
+      {
+        type: "facts",
+        items: [
+          { label: "Monday–Friday", value: "10:00–19:30" },
+          { label: "Saturday", value: "9:30–22:00" },
+          { label: "Sunday", value: "9:00–20:00" },
+        ],
+      },
+      {
+        type: "p",
+        text: "These are the stall opening hours published by the organisers: double-check them on the festival's official page before you set off, together with the latest programme.",
+      },
+      { type: "h2", text: "What can you see at Eurochocolate 2026?" },
+      {
+        type: "p",
+        text: "“Fate Dolci” is an invitation to experience chocolate hands-on: not just tasting it, but making it and sharing it. These are the formats the organisers have announced for 2026:",
+      },
+      {
+        type: "list",
+        items: [
+          "Chocolate Show — the big open-air chocolate market, with the new Eurochocolate Free From area: sugar-free, lactose-free, gluten-free and vegan products.",
+          "Eurochocolate World — the area for bean-to-bar and tree-to-bar makers, with brands from more than 20 cocoa-growing countries across Latin America, Africa and Asia.",
+          "Spazio Fate Dolci — in Piazza Matteotti, with the edition's themed products and cocoa-based desserts.",
+          "ChocoLab — daily tastings and talks at the LAB – Luisa Annibale Base, in Via Angusta.",
+          "Show cooking — live demonstrations by a master pastry chef.",
+          "Fate Lab — a hands-on workshop for children and families at the former Borsa Merci in Via Mazzini.",
+          "Street shows — Choco Buskers, Chocoparade and Chocolieri around the old town.",
+          "Guest Region — Calabria is the first region featured in the new “Regione Ospite” project.",
+        ],
+      },
+      {
+        type: "p",
+        text: "The programme may change during the festival: for individual events, workshop times and last-minute news, the official Eurochocolate page is the reference.",
+      },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_COMMONS.src,
+        alt: "Crowds in Piazza IV Novembre, Perugia, in front of the Fontana Maggiore and the Cathedral of San Lorenzo during Eurochocolate 2024",
+        caption: "Piazza IV Novembre in Perugia during Eurochocolate 2024.",
+        credit: EUROCHOCOLATE_COMMONS.credit,
+        creditUrl: EUROCHOCOLATE_COMMONS.creditUrl,
+        portrait: true,
+      },
+      { type: "h2", text: "What is the Città del Cioccolato and when did it open?" },
+      {
+        type: "p",
+        text: "The Città del Cioccolato (“Chocolate City”) is an experiential museum devoted to cocoa and chocolate: more than 2,800 m² inside Perugia's former covered market, the Mercato Coperto, built between 1931 and 1932. It was inaugurated on 30 October 2025 and opened to visitors on 1 November 2025.",
+      },
+      {
+        type: "p",
+        text: "According to its official website it is open every day from 10:00 to 19:00, with paid admission. For Eurochocolate 2026 the organisers announce discounts on museum tickets for anyone buying at the Chocolate Show: current prices and conditions are on cittadelcioccolato.it.",
+      },
+      { type: "h2", text: "Why is Perugia Italy's chocolate city?" },
+      {
+        type: "p",
+        text: "It all started with Perugina, founded in Perugia in 1907. In 1922 Luisa Spagnoli created a chocolate with chopped hazelnuts that, because its shape resembled the knuckles of a fist, was called “Cazzotto” (“punch”): it was Giovanni Buitoni who renamed it Bacio (“kiss”). The idea of wrapping every Bacio in a love note came from Federico Seneca, Perugina's art director.",
+      },
+      {
+        type: "p",
+        text: "During the festival the ChocoLab sessions take place in the historic premises in Via Angusta, used by Luisa and Annibale Spagnoli in Perugina's early years.",
+      },
+      {
+        type: "p",
+        text: "There is a link with Assisi too: among the new products announced for 2026 is the CioccolaTau bar, dedicated to the eighth centenary of the death of Saint Francis and made with Tonda Francescana hazelnuts grown in Umbria.",
+      },
+      { type: "h2", text: "How do you get to Eurochocolate from Agriturismo La Mora?" },
+      {
+        type: "p",
+        text: "By car, Agriturismo La Mora is 21.0 km from Perugia's historic centre: about 23 minutes according to Google Maps, traffic permitting. During the festival it's best to leave the car in one of the car parks recommended by the organisers, linked to the centre by the Minimetrò, escalators or lifts:",
+      },
+      {
+        type: "list",
+        items: [
+          "Free Porta Nova car park (Piazzale Umbria Jazz), then the Minimetrò to Pincetto station in the centre. For drivers, the organisers point to the Perugia – Madonna Alta exit, then the signs for the stadium and the Minimetrò.",
+          "Paid, attended car parks: Mercato Coperto (with lift), Piazzale Europa, Piazza Partigiani and Pellini (with escalators).",
+        ],
+      },
+      {
+        type: "p",
+        text: "By train, Perugia station in Piazza Vittorio Veneto is about 3 km from the centre, connected by the Minimetrò and city buses. Check Trenitalia for train times and tickets.",
+      },
+      { type: "h2", text: "Where to stay for Eurochocolate 2026?" },
+      {
+        type: "p",
+        text: "Perugia is in high demand during the festival. Agriturismo La Mora, at Via Fonte Citerna 7 in Assisi, has five independent apartments, each with a fully equipped kitchen, Wi-Fi and air conditioning, plus free parking on site: head into Perugia in the morning and come back to the countryside in the evening, away from the crowds.",
+      },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_APARTMENT,
+        alt: "Double bed and living area of the Bilancia apartment at Agriturismo La Mora",
+        caption: "The Bilancia apartment, the largest of the five.",
+      },
+      {
+        type: "p",
+        text: "From the same base, the Basilica of San Francesco in Assisi is 7.5 km away, about 18 minutes by car: a Eurochocolate weekend pairs easily with a day in Assisi. Gemelli and Sagittario, with a private fenced garden, also welcome guests travelling with pets.",
+      },
+      {
+        type: "links",
+        heading: "Plan your stay",
+        items: [
+          { label: "La Mora's apartments", href: "/alloggi/" },
+          { label: "Offers for direct bookings", href: "/offerte/" },
+          { label: "The area around La Mora", href: "/territorio/" },
+          { label: "Eighth Centenary of Saint Francis", href: "/ottavo-centenario-san-francesco/" },
+          { label: "Official Eurochocolate 2026 programme", href: EUROCHOCOLATE_OFFICIAL_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Eurochocolate 2026: frequently asked questions",
+      items: [
+        { q: "When is Eurochocolate 2026?", a: "From Friday 13 to Sunday 22 November 2026, in Perugia's historic centre. It is the 32nd edition and the theme is “Fate Dolci”." },
+        { q: "Do you have to pay to enter Eurochocolate?", a: "No: the festival takes place in the streets and squares of the historic centre and there is no entry ticket. You pay for what you buy at the stalls; the Città del Cioccolato, a permanent museum, has its own ticket." },
+        { q: "What are the opening hours of Eurochocolate 2026?", a: "According to the organisers, stalls are open Monday to Friday from 10:00 to 19:30, Saturday from 9:30 to 22:00 and Sunday from 9:00 to 20:00." },
+        { q: "How far is Agriturismo La Mora from Eurochocolate?", a: "Perugia's historic centre is 21.0 km from Agriturismo La Mora, about 23 minutes by car according to Google Maps." },
+        { q: "Where can you park for Eurochocolate?", a: "The organisers recommend the free Porta Nova car park (Piazzale Umbria Jazz), linked to the centre by the Minimetrò to Pincetto station, as well as several paid car parks connected by escalators or lifts, such as Mercato Coperto, Piazzale Europa and Piazza Partigiani." },
+        { q: "How does La Mora's 10% discount work?", a: "It applies for the whole event, from 13 to 22 November 2026. Conditions: like the Agriturismo La Mora Facebook page, and save the offer post or show your Eurochocolate ticket when you pay. Limited availability on the days of the event." },
+        { q: "When did the Città del Cioccolato open?", a: "It was inaugurated on 30 October 2025 and opened to visitors on 1 November 2025, in the former Mercato Coperto in Perugia." },
+      ],
+    },
+    disclaimer: "Eurochocolate is a trademark of its respective owners; Agriturismo La Mora is not affiliated with the event.",
+    finalCtaHeading: "Ten days of chocolate, a quiet base in the countryside.",
+    finalCtaBody: "Browse the apartments and pick the right one for your Eurochocolate weekend.",
+    finalCtaLabel: "Discover the apartments",
+    finalCtaHref: "/alloggi/",
+  },
+  fr: {
+    slug: "eurochocolate-2026-dove-dormire",
+    category: "Événements",
+    title: "Eurochocolate 2026 : où dormir près de Pérouse",
+    excerpt: "Dates, programme et conseils pratiques pour Eurochocolate 2026 (Pérouse, 13–22 novembre), et -10 % pour un séjour à l'Agriturismo La Mora, à 21 km du centre.",
+    metaDescription: "Eurochocolate 2026 à Pérouse du 13 au 22 novembre : dates, horaires, que voir et où dormir. L'Agriturismo La Mora est à 21 km du centre, avec 10 % de remise.",
+    image: EUROCHOCOLATE_HERO,
+    alt: "Salle du petit-déjeuner de l'Agriturismo La Mora, feu allumé dans la cheminée et table dressée",
+    datePublished: "2026-10-06",
+    schemaType: "BlogPosting",
+    theme: "chocolate",
+    offerBox: "eurochocolate-2026",
+    inBreve: {
+      heading: "En bref",
+      items: [
+        { label: "Dates", value: "13–22 novembre 2026" },
+        { label: "Où", value: "Centre historique de Pérouse" },
+        { label: "Thème", value: "« Fate Dolci », 32e édition" },
+        { label: "Entrée", value: "Libre" },
+        { label: "Depuis La Mora", value: "21,0 km · env. 23 min en voiture" },
+        { label: "Offre La Mora", value: "-10 % pendant l'événement" },
+      ],
+    },
+    intro:
+      "Du 13 au 22 novembre 2026, le centre historique de Pérouse accueille la 32e édition d'Eurochocolate, le festival international du chocolat, cette année sur le thème « Fate Dolci » — un jeu de mots entre « fées douces » et « faites des douceurs ». L'Agriturismo La Mora est à 21,0 km du centre de Pérouse, environ 23 minutes en voiture : une base à la campagne, entre Pérouse et Assise, pour profiter du festival en journée et retrouver le soir un appartement rien qu'à vous.",
+    content: [
+      { type: "h2", text: "Quand et où a lieu Eurochocolate 2026 ?" },
+      {
+        type: "p",
+        text: "Eurochocolate 2026 se déroule du vendredi 13 au dimanche 22 novembre : dix jours dans le centre historique de Pérouse, entre les Giardini Carducci, la Piazza Italia, le Corso Vannucci, la Piazza della Repubblica, la Via Mazzini, la Via Fani et la Piazza Matteotti. L'entrée est libre, car le festival se tient dans les rues et sur les places de la ville, et il a lieu même par mauvais temps.",
+      },
+      {
+        type: "facts",
+        items: [
+          { label: "Lundi–vendredi", value: "10h00–19h30" },
+          { label: "Samedi", value: "9h30–22h00" },
+          { label: "Dimanche", value: "9h00–20h00" },
+        ],
+      },
+      {
+        type: "p",
+        text: "Ce sont les horaires des stands publiés par les organisateurs : vérifiez-les avant de partir sur la page officielle du festival, avec le programme à jour.",
+      },
+      { type: "h2", text: "Que voir à Eurochocolate 2026 ?" },
+      {
+        type: "p",
+        text: "« Fate Dolci » invite à vivre le chocolat de façon active : pas seulement le goûter, mais l'expérimenter et le partager. Voici les formats annoncés par les organisateurs pour 2026 :",
+      },
+      {
+        type: "list",
+        items: [
+          "Chocolate Show — le grand marché du chocolat en plein air, avec le nouvel espace Eurochocolate Free From : produits sans sucre, sans lactose, sans gluten et vegan.",
+          "Eurochocolate World — l'espace des chocolatiers bean to bar et tree to bar, avec des marques de plus de 20 pays producteurs de cacao d'Amérique latine, d'Afrique et d'Asie.",
+          "Spazio Fate Dolci — sur la Piazza Matteotti, avec les produits à thème de l'édition et des desserts au cacao.",
+          "ChocoLab — dégustations et rencontres quotidiennes au LAB – Luisa Annibale Base, Via Angusta.",
+          "Show cooking — démonstrations en direct par un maître pâtissier.",
+          "Fate Lab — atelier pédagogique pour enfants et familles dans l'ancienne Borsa Merci, Via Mazzini.",
+          "Spectacles de rue — Choco Buskers, Chocoparade et Chocolieri dans les rues du centre.",
+          "Région invitée — la Calabre est la première région à l'honneur du nouveau projet « Regione Ospite ».",
+        ],
+      },
+      {
+        type: "p",
+        text: "Le programme peut évoluer pendant le festival : pour chaque rendez-vous, les horaires des ateliers et les nouveautés de dernière minute, la page officielle d'Eurochocolate fait foi.",
+      },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_COMMONS.src,
+        alt: "Foule sur la Piazza IV Novembre à Pérouse, devant la Fontana Maggiore et la cathédrale San Lorenzo, pendant Eurochocolate 2024",
+        caption: "La Piazza IV Novembre à Pérouse pendant Eurochocolate 2024.",
+        credit: EUROCHOCOLATE_COMMONS.credit,
+        creditUrl: EUROCHOCOLATE_COMMONS.creditUrl,
+        portrait: true,
+      },
+      { type: "h2", text: "Qu'est-ce que la Città del Cioccolato et quand a-t-elle ouvert ?" },
+      {
+        type: "p",
+        text: "La Città del Cioccolato (« Cité du Chocolat ») est un musée expérientiel consacré au cacao et au chocolat : plus de 2 800 m² dans l'ancien marché couvert de Pérouse, le Mercato Coperto, construit entre 1931 et 1932. Elle a été inaugurée le 30 octobre 2025 et a ouvert au public le 1er novembre 2025.",
+      },
+      {
+        type: "p",
+        text: "D'après son site officiel, elle est ouverte tous les jours de 10h00 à 19h00, avec entrée payante. Pour Eurochocolate 2026, les organisateurs annoncent des réductions sur le billet du musée pour les achats effectués au Chocolate Show : tarifs et conditions à jour sur cittadelcioccolato.it.",
+      },
+      { type: "h2", text: "Pourquoi Pérouse est-elle la ville du chocolat ?" },
+      {
+        type: "p",
+        text: "Tout commence avec la Perugina, fondée à Pérouse en 1907. En 1922, Luisa Spagnoli crée un chocolat aux éclats de noisette qui, parce que sa forme rappelait les jointures d'un poing, s'appelait « Cazzotto » (« coup de poing ») : c'est Giovanni Buitoni qui le rebaptise Bacio (« baiser »). L'idée d'envelopper chaque Bacio d'un message d'amour revient à Federico Seneca, directeur artistique de la Perugina.",
+      },
+      {
+        type: "p",
+        text: "Pendant le festival, les ChocoLab ont lieu justement dans le local historique de la Via Angusta, utilisé par Luisa et Annibale Spagnoli dans les premières années de la Perugina.",
+      },
+      {
+        type: "p",
+        text: "Un fil mène aussi à Assise : parmi les nouveautés annoncées pour 2026 figure la tablette CioccolaTau, dédiée au huitième centenaire de la mort de saint François et réalisée avec des noisettes Tonda Francescana cultivées en Ombrie.",
+      },
+      { type: "h2", text: "Comment aller à Eurochocolate depuis l'Agriturismo La Mora ?" },
+      {
+        type: "p",
+        text: "En voiture, l'Agriturismo La Mora est à 21,0 km du centre historique de Pérouse : environ 23 minutes selon Google Maps, selon la circulation. Pendant le festival, mieux vaut laisser la voiture dans l'un des parkings indiqués par les organisateurs, reliés au centre par le Minimetrò, des escalators ou des ascenseurs :",
+      },
+      {
+        type: "list",
+        items: [
+          "Parking gratuit Porta Nova (Piazzale Umbria Jazz), puis le Minimetrò jusqu'à la station Pincetto, en centre-ville. Pour les automobilistes, les organisateurs indiquent la sortie Perugia – Madonna Alta, puis les panneaux du stade et du Minimetrò.",
+          "Parkings gardés payants : Mercato Coperto (avec ascenseur), Piazzale Europa, Piazza Partigiani et Pellini (avec escalators).",
+        ],
+      },
+      {
+        type: "p",
+        text: "En train, la gare de Pérouse, Piazza Vittorio Veneto, est à environ 3 km du centre, reliée par le Minimetrò et les bus urbains. Pour les horaires et les billets, consultez Trenitalia.",
+      },
+      { type: "h2", text: "Où dormir pour Eurochocolate 2026 ?" },
+      {
+        type: "p",
+        text: "Pendant le festival, Pérouse est très demandée. L'Agriturismo La Mora, Via Fonte Citerna 7 à Assise, propose cinq appartements indépendants, chacun avec cuisine équipée, Wi-Fi et climatisation, et un parking gratuit dans la propriété : on part le matin pour Pérouse et on rentre le soir à la campagne, loin de la foule.",
+      },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_APARTMENT,
+        alt: "Lit double et coin salon de l'appartement Bilancia à l'Agriturismo La Mora",
+        caption: "L'appartement Bilancia, le plus grand des cinq.",
+      },
+      {
+        type: "p",
+        text: "Depuis la même base, la basilique Saint-François d'Assise est à 7,5 km, environ 18 minutes en voiture : un week-end à Eurochocolate se combine facilement avec une journée à Assise. Gemelli et Sagittario, avec jardin privé clôturé, accueillent aussi les voyageurs avec leurs animaux.",
+      },
+      {
+        type: "links",
+        heading: "Organisez votre séjour",
+        items: [
+          { label: "Les appartements de La Mora", href: "/alloggi/" },
+          { label: "Les offres en réservation directe", href: "/offerte/" },
+          { label: "Les environs de La Mora", href: "/territorio/" },
+          { label: "Huitième centenaire de saint François", href: "/ottavo-centenario-san-francesco/" },
+          { label: "Programme officiel d'Eurochocolate 2026", href: EUROCHOCOLATE_OFFICIAL_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Eurochocolate 2026 : questions fréquentes",
+      items: [
+        { q: "Quand a lieu Eurochocolate 2026 ?", a: "Du vendredi 13 au dimanche 22 novembre 2026, dans le centre historique de Pérouse. C'est la 32e édition, sur le thème « Fate Dolci »." },
+        { q: "L'entrée d'Eurochocolate est-elle payante ?", a: "Non : le festival se déroule dans les rues et sur les places du centre historique, sans billet d'entrée. On paie ses achats aux stands ; la Città del Cioccolato, musée permanent, a son propre billet." },
+        { q: "Quels sont les horaires d'Eurochocolate 2026 ?", a: "Selon les organisateurs, les stands sont ouverts du lundi au vendredi de 10h00 à 19h30, le samedi de 9h30 à 22h00 et le dimanche de 9h00 à 20h00." },
+        { q: "À quelle distance l'Agriturismo La Mora se trouve-t-il d'Eurochocolate ?", a: "Le centre historique de Pérouse est à 21,0 km de l'Agriturismo La Mora, environ 23 minutes en voiture selon Google Maps." },
+        { q: "Où se garer pour Eurochocolate ?", a: "Les organisateurs indiquent le parking gratuit Porta Nova (Piazzale Umbria Jazz), relié au centre par le Minimetrò jusqu'à la station Pincetto, ainsi que plusieurs parkings payants reliés par escalators ou ascenseurs, comme Mercato Coperto, Piazzale Europa et Piazza Partigiani." },
+        { q: "Comment fonctionne la remise de 10 % de La Mora ?", a: "Elle est valable pendant toute la durée de l'événement, du 13 au 22 novembre 2026. Conditions : aimer la page Facebook de l'Agriturismo La Mora, et enregistrer la publication de l'offre ou présenter votre billet Eurochocolate au moment du paiement. Disponibilité limitée pendant les jours de l'événement." },
+        { q: "Quand la Città del Cioccolato a-t-elle ouvert ?", a: "Elle a été inaugurée le 30 octobre 2025 et a ouvert au public le 1er novembre 2025, dans l'ancien Mercato Coperto de Pérouse." },
+      ],
+    },
+    disclaimer: "Eurochocolate est une marque de ses titulaires respectifs ; l'Agriturismo La Mora n'est pas affilié à l'événement.",
+    finalCtaHeading: "Dix jours de chocolat, une base tranquille à la campagne.",
+    finalCtaBody: "Découvrez les appartements et choisissez celui qui convient à votre week-end Eurochocolate.",
+    finalCtaLabel: "Découvrir les appartements",
+    finalCtaHref: "/alloggi/",
+  },
+  de: {
+    slug: "eurochocolate-2026-dove-dormire",
+    category: "Veranstaltungen",
+    title: "Eurochocolate 2026: Übernachten in der Nähe von Perugia",
+    excerpt: "Termine, Programm und praktische Tipps zur Eurochocolate 2026 (Perugia, 13.–22. November) – dazu 10 % Rabatt im Agriturismo La Mora, 21 km vom Zentrum.",
+    metaDescription: "Eurochocolate 2026 in Perugia vom 13. bis 22. November: Termine, Öffnungszeiten, Programm und Unterkunft. Agriturismo La Mora liegt 21 km vom Zentrum, mit 10 % Rabatt.",
+    image: EUROCHOCOLATE_HERO,
+    alt: "Frühstücksraum des Agriturismo La Mora mit brennendem Kamin und gedecktem Tisch",
+    datePublished: "2026-10-06",
+    schemaType: "BlogPosting",
+    theme: "chocolate",
+    offerBox: "eurochocolate-2026",
+    inBreve: {
+      heading: "Auf einen Blick",
+      items: [
+        { label: "Termin", value: "13.–22. November 2026" },
+        { label: "Ort", value: "Altstadt von Perugia" },
+        { label: "Motto", value: "„Fate Dolci“, 32. Ausgabe" },
+        { label: "Eintritt", value: "Frei" },
+        { label: "Ab La Mora", value: "21,0 km · ca. 23 Min. mit dem Auto" },
+        { label: "Angebot La Mora", value: "-10 % während der Veranstaltung" },
+      ],
+    },
+    intro:
+      "Vom 13. bis 22. November 2026 findet in der Altstadt von Perugia die 32. Eurochocolate statt, das internationale Schokoladenfestival – in diesem Jahr unter dem Motto „Fate Dolci“, ein Wortspiel aus „süße Feen“ und „macht Süßes“. Das Agriturismo La Mora liegt 21,0 km vom Zentrum Perugias entfernt, rund 23 Minuten mit dem Auto: ein ländlicher Ausgangspunkt zwischen Perugia und Assisi, um tagsüber das Festival zu erleben und abends in die eigene Ferienwohnung zurückzukehren.",
+    content: [
+      { type: "h2", text: "Wann und wo findet die Eurochocolate 2026 statt?" },
+      {
+        type: "p",
+        text: "Die Eurochocolate 2026 läuft von Freitag, 13., bis Sonntag, 22. November: zehn Tage in der Altstadt von Perugia, zwischen den Giardini Carducci, der Piazza Italia, dem Corso Vannucci, der Piazza della Repubblica, der Via Mazzini, der Via Fani und der Piazza Matteotti. Der Eintritt ist frei, da das Festival auf den Straßen und Plätzen der Stadt stattfindet – und zwar bei jedem Wetter.",
+      },
+      {
+        type: "facts",
+        items: [
+          { label: "Montag–Freitag", value: "10:00–19:30" },
+          { label: "Samstag", value: "9:30–22:00" },
+          { label: "Sonntag", value: "9:00–20:00" },
+        ],
+      },
+      {
+        type: "p",
+        text: "Das sind die von den Veranstaltern veröffentlichten Öffnungszeiten der Stände: Prüfen Sie sie vor der Abfahrt auf der offiziellen Festivalseite, zusammen mit dem aktuellen Programm.",
+      },
+      { type: "h2", text: "Was gibt es bei der Eurochocolate 2026 zu sehen?" },
+      {
+        type: "p",
+        text: "„Fate Dolci“ lädt dazu ein, Schokolade aktiv zu erleben: nicht nur zu probieren, sondern selbst auszuprobieren und zu teilen. Diese Formate haben die Veranstalter für 2026 angekündigt:",
+      },
+      {
+        type: "list",
+        items: [
+          "Chocolate Show – der große Schokoladenmarkt unter freiem Himmel, neu mit dem Bereich Eurochocolate Free From: Produkte ohne Zucker, ohne Laktose, glutenfrei und vegan.",
+          "Eurochocolate World – der Bereich der Bean-to-Bar- und Tree-to-Bar-Hersteller, mit Marken aus mehr als 20 Kakaoanbauländern in Lateinamerika, Afrika und Asien.",
+          "Spazio Fate Dolci – auf der Piazza Matteotti, mit den Themenprodukten der Ausgabe und Desserts aus Kakao.",
+          "ChocoLab – tägliche Verkostungen und Vorträge im LAB – Luisa Annibale Base in der Via Angusta.",
+          "Show Cooking – Live-Vorführungen mit einem Konditormeister.",
+          "Fate Lab – eine Mitmachwerkstatt für Kinder und Familien in der ehemaligen Borsa Merci in der Via Mazzini.",
+          "Straßenshows – Choco Buskers, Chocoparade und Chocolieri in den Gassen der Altstadt.",
+          "Gastregion – Kalabrien ist die erste Region im neuen Projekt „Regione Ospite“.",
+        ],
+      },
+      {
+        type: "p",
+        text: "Das Programm kann sich während des Festivals ändern: Für einzelne Termine, Workshop-Zeiten und kurzfristige Neuigkeiten gilt die offizielle Seite der Eurochocolate.",
+      },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_COMMONS.src,
+        alt: "Menschenmenge auf der Piazza IV Novembre in Perugia vor der Fontana Maggiore und der Kathedrale San Lorenzo während der Eurochocolate 2024",
+        caption: "Die Piazza IV Novembre in Perugia während der Eurochocolate 2024.",
+        credit: EUROCHOCOLATE_COMMONS.credit,
+        creditUrl: EUROCHOCOLATE_COMMONS.creditUrl,
+        portrait: true,
+      },
+      { type: "h2", text: "Was ist die Città del Cioccolato und wann wurde sie eröffnet?" },
+      {
+        type: "p",
+        text: "Die Città del Cioccolato („Schokoladenstadt“) ist ein Erlebnismuseum rund um Kakao und Schokolade: mehr als 2.800 m² in der ehemaligen Markthalle von Perugia, dem Mercato Coperto, erbaut 1931–1932. Sie wurde am 30. Oktober 2025 eingeweiht und am 1. November 2025 für Besucher geöffnet.",
+      },
+      {
+        type: "p",
+        text: "Laut der offiziellen Website ist sie täglich von 10:00 bis 19:00 Uhr geöffnet, der Eintritt ist kostenpflichtig. Zur Eurochocolate 2026 kündigen die Veranstalter Ermäßigungen auf das Museumsticket für Einkäufe bei der Chocolate Show an: aktuelle Preise und Bedingungen auf cittadelcioccolato.it.",
+      },
+      { type: "h2", text: "Warum ist Perugia die Stadt der Schokolade?" },
+      {
+        type: "p",
+        text: "Alles begann mit der Perugina, 1907 in Perugia gegründet. 1922 schuf Luisa Spagnoli eine Praline mit gehackten Haselnüssen, die wegen ihrer Form – sie erinnerte an die Knöchel einer Faust – „Cazzotto“ („Faustschlag“) hieß: Giovanni Buitoni taufte sie in Bacio („Kuss“) um. Die Idee, jeden Bacio in eine Liebesbotschaft zu hüllen, stammte von Federico Seneca, dem künstlerischen Leiter der Perugina.",
+      },
+      {
+        type: "p",
+        text: "Während des Festivals finden die ChocoLab-Termine genau in den historischen Räumen in der Via Angusta statt, die Luisa und Annibale Spagnoli in den ersten Jahren der Perugina nutzten.",
+      },
+      {
+        type: "p",
+        text: "Auch nach Assisi führt ein Faden: Zu den für 2026 angekündigten Neuheiten gehört die Tafel CioccolaTau, gewidmet dem 800. Todestag des heiligen Franziskus und hergestellt mit Haselnüssen der Sorte Tonda Francescana aus Umbrien.",
+      },
+      { type: "h2", text: "Wie kommt man vom Agriturismo La Mora zur Eurochocolate?" },
+      {
+        type: "p",
+        text: "Mit dem Auto liegt das Agriturismo La Mora 21,0 km von der Altstadt Perugias entfernt: laut Google Maps rund 23 Minuten, je nach Verkehr. Während des Festivals parkt man am besten auf einem der von den Veranstaltern empfohlenen Parkplätze, die per Minimetrò, Rolltreppen oder Aufzügen mit dem Zentrum verbunden sind:",
+      },
+      {
+        type: "list",
+        items: [
+          "Kostenloser Parkplatz Porta Nova (Piazzale Umbria Jazz), dann mit dem Minimetrò bis zur Station Pincetto im Zentrum. Für Autofahrer nennen die Veranstalter die Ausfahrt Perugia – Madonna Alta und danach die Beschilderung zum Stadion und zum Minimetrò.",
+          "Bewachte, kostenpflichtige Parkplätze: Mercato Coperto (mit Aufzug), Piazzale Europa, Piazza Partigiani und Pellini (mit Rolltreppen).",
+        ],
+      },
+      {
+        type: "p",
+        text: "Mit dem Zug: Der Bahnhof Perugia an der Piazza Vittorio Veneto liegt etwa 3 km vom Zentrum entfernt und ist per Minimetrò und Stadtbus angebunden. Fahrpläne und Tickets bei Trenitalia.",
+      },
+      { type: "h2", text: "Wo übernachten zur Eurochocolate 2026?" },
+      {
+        type: "p",
+        text: "Während des Festivals ist Perugia sehr gefragt. Das Agriturismo La Mora in der Via Fonte Citerna 7 in Assisi bietet fünf unabhängige Ferienwohnungen, jede mit voll ausgestatteter Küche, WLAN und Klimaanlage, dazu kostenlose Parkplätze auf dem Gelände: morgens nach Perugia, abends zurück aufs Land, fern vom Trubel.",
+      },
+      {
+        type: "image",
+        src: EUROCHOCOLATE_APARTMENT,
+        alt: "Doppelbett und Wohnbereich der Ferienwohnung Bilancia im Agriturismo La Mora",
+        caption: "Die Ferienwohnung Bilancia, die größte der fünf.",
+      },
+      {
+        type: "p",
+        text: "Vom selben Ausgangspunkt ist die Basilika San Francesco in Assisi 7,5 km entfernt, rund 18 Minuten mit dem Auto: Ein Eurochocolate-Wochenende lässt sich leicht mit einem Tag in Assisi verbinden. Gemelli und Sagittario mit privatem, eingezäuntem Garten nehmen auch Gäste mit Haustieren auf.",
+      },
+      {
+        type: "links",
+        heading: "Planen Sie Ihren Aufenthalt",
+        items: [
+          { label: "Die Ferienwohnungen von La Mora", href: "/alloggi/" },
+          { label: "Angebote bei Direktbuchung", href: "/offerte/" },
+          { label: "Die Umgebung von La Mora", href: "/territorio/" },
+          { label: "800 Jahre heiliger Franziskus", href: "/ottavo-centenario-san-francesco/" },
+          { label: "Offizielles Programm der Eurochocolate 2026", href: EUROCHOCOLATE_OFFICIAL_URL },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Eurochocolate 2026: häufige Fragen",
+      items: [
+        { q: "Wann findet die Eurochocolate 2026 statt?", a: "Von Freitag, 13., bis Sonntag, 22. November 2026, in der Altstadt von Perugia. Es ist die 32. Ausgabe, das Motto lautet „Fate Dolci“." },
+        { q: "Kostet die Eurochocolate Eintritt?", a: "Nein: Das Festival findet auf den Straßen und Plätzen der Altstadt statt, ein Eintrittsticket gibt es nicht. Bezahlt werden die Einkäufe an den Ständen; die Città del Cioccolato, ein ständiges Museum, hat ein eigenes Ticket." },
+        { q: "Wie sind die Öffnungszeiten der Eurochocolate 2026?", a: "Laut den Veranstaltern sind die Stände montags bis freitags von 10:00 bis 19:30 Uhr, samstags von 9:30 bis 22:00 Uhr und sonntags von 9:00 bis 20:00 Uhr geöffnet." },
+        { q: "Wie weit ist das Agriturismo La Mora von der Eurochocolate entfernt?", a: "Die Altstadt von Perugia liegt 21,0 km vom Agriturismo La Mora entfernt, laut Google Maps rund 23 Minuten mit dem Auto." },
+        { q: "Wo parkt man zur Eurochocolate?", a: "Die Veranstalter empfehlen den kostenlosen Parkplatz Porta Nova (Piazzale Umbria Jazz), mit dem Minimetrò bis zur Station Pincetto mit dem Zentrum verbunden, sowie mehrere kostenpflichtige Parkplätze mit Rolltreppen oder Aufzügen, etwa Mercato Coperto, Piazzale Europa und Piazza Partigiani." },
+        { q: "Wie funktioniert der 10-%-Rabatt von La Mora?", a: "Er gilt während der gesamten Veranstaltung, vom 13. bis 22. November 2026. Bedingungen: der Facebook-Seite des Agriturismo La Mora ein „Gefällt mir“ geben und den Beitrag mit dem Angebot speichern oder beim Bezahlen das Eurochocolate-Ticket vorzeigen. Begrenzte Verfügbarkeit an den Veranstaltungstagen." },
+        { q: "Wann wurde die Città del Cioccolato eröffnet?", a: "Sie wurde am 30. Oktober 2025 eingeweiht und am 1. November 2025 für Besucher geöffnet, in der ehemaligen Markthalle Mercato Coperto in Perugia." },
+      ],
+    },
+    disclaimer: "Eurochocolate ist eine Marke der jeweiligen Inhaber; das Agriturismo La Mora ist mit der Veranstaltung nicht verbunden.",
+    finalCtaHeading: "Zehn Tage Schokolade, ein ruhiger Ausgangspunkt auf dem Land.",
+    finalCtaBody: "Sehen Sie sich die Ferienwohnungen an und wählen Sie die passende für Ihr Eurochocolate-Wochenende.",
+    finalCtaLabel: "Die Ferienwohnungen entdecken",
+    finalCtaHref: "/alloggi/",
+  },
+};
+
 const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
   it: [
+    EUROCHOCOLATE_POST.it,
     {
       slug: "basilica-santa-maria-degli-angeli",
       category: "Territorio",
@@ -478,6 +1162,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
     },
   ],
   en: [
+    EUROCHOCOLATE_POST.en,
     {
       slug: "basilica-santa-maria-degli-angeli",
       category: "Territory",
@@ -917,6 +1602,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
     },
   ],
   fr: [
+    EUROCHOCOLATE_POST.fr,
     {
       slug: "basilica-santa-maria-degli-angeli",
       category: "Territoire",
@@ -1356,6 +2042,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
     },
   ],
   de: [
+    EUROCHOCOLATE_POST.de,
     {
       slug: "basilica-santa-maria-degli-angeli",
       category: "Umgebung",

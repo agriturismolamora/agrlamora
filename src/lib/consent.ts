@@ -17,7 +17,7 @@ import { useSyncExternalStore } from "react";
    o cambia la struttura delle categorie (vedi src/data/privacy-services.ts).
    Un cookie con versione diversa da questa viene trattato come assente:
    il banner ricompare, come richiesto. */
-export const CONSENT_VERSION = "3";
+export const CONSENT_VERSION = "4";
 const COOKIE_NAME = "lamora_consent";
 const MAX_AGE_DAYS = 180; // 6 mesi
 
@@ -126,6 +126,10 @@ export function getServerConsentSnapshot(): ConsentRecord | null {
 export function clearNonEssentialFirstPartyStorage() {
   try {
     window.localStorage.removeItem("lamora_promo_last_shown");
+    // Chiavi per singola promo del popup (lamora_promo_last_shown:<id>).
+    for (const key of Object.keys(window.localStorage)) {
+      if (key.startsWith("lamora_promo_last_shown:")) window.localStorage.removeItem(key);
+    }
   } catch {
     // storage non disponibile (es. navigazione privata): nulla da pulire.
   }

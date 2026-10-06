@@ -2,38 +2,66 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getBlogPosts, getBlogPost } from "@/data/blog-posts";
+import { getBlogPosts, getBlogPost, BOOKING_MODAL_HREF } from "@/data/blog-posts";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import type { Locale } from "@/lib/i18n";
-import { withLocale } from "@/lib/i18n";
+import { LOCALES, withLocale } from "@/lib/i18n";
 import { findMentionedPlaces } from "@/data/places";
 import { MapsButton } from "@/components/maps-button";
+import { BookingModalButton } from "@/components/booking-modal-button";
+import { PromoOfferBox } from "@/components/promo-offer-box";
+import { ChocolateDrip, CocoaParticles } from "@/components/chocolate-decor";
+import choco from "@/components/chocolate-theme.module.css";
 import type { BlogPost } from "@/data/blog-posts";
 
 type Params = { slug: string };
+
+const SITE_URL = "https://www.lamoraassisi.com";
+
+/* URL assoluto sul dominio canonico; encodeURI per i nomi file con spazi
+   delle foto in public/. */
+function absoluteUrl(path: string): string {
+  return `${SITE_URL}${encodeURI(path)}`;
+}
+
+function articlePath(locale: Locale, slug: string): string {
+  return withLocale(locale, `/blog/${slug}/`);
+}
 
 export function blogArticleStaticParams(): Params[] {
   return getBlogPosts("it").map((p) => ({ slug: p.slug }));
 }
 
+/* Canonical e hreflang sempre su www.lamoraassisi.com. Le alternative
+   linguistiche vengono dichiarate solo per le lingue in cui l'articolo
+   esiste davvero (stesso criterio di sitemap.ts). */
 export async function blogArticleMetadata(locale: Locale, params: Promise<Params>): Promise<Metadata> {
   const { slug } = await params;
   const post = getBlogPost(locale, slug);
   if (!post) return {};
+  const languages = Object.fromEntries(
+    LOCALES.filter((l) => getBlogPost(l, slug)).map((l) => [l, absoluteUrl(articlePath(l, slug))])
+  );
   return {
     title: post.title,
     description: post.metaDescription,
-    alternates: { canonical: withLocale(locale, `/blog/${post.slug}/`) },
-    openGraph: { title: post.title, description: post.metaDescription, images: [post.image] },
+    alternates: { canonical: absoluteUrl(articlePath(locale, slug)), languages },
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.metaDescription,
+      images: [absoluteUrl(post.image)],
+      ...(post.datePublished ? { publishedTime: post.datePublished } : {}),
+    },
   };
 }
 
-const TEXT: Record<Locale, { allArticles: string; otherArticles: string; placesMentioned: string }> = {
-  it: { allArticles: "Tutti gli articoli", otherArticles: "Altri articoli", placesMentioned: "Luoghi citati nell'articolo" },
-  en: { allArticles: "All articles", otherArticles: "More articles", placesMentioned: "Places mentioned in this article" },
-  fr: { allArticles: "Tous les articles", otherArticles: "Autres articles", placesMentioned: "Lieux cités dans l'article" },
-  de: { allArticles: "Alle Artikel", otherArticles: "Weitere Artikel", placesMentioned: "Im Artikel erwähnte Orte" },
+const TEXT: Record<Locale, { allArticles: string; otherArticles: string; placesMentioned: string; photo: string }> = {
+  it: { allArticles: "Tutti gli articoli", otherArticles: "Altri articoli", placesMentioned: "Luoghi citati nell'articolo", photo: "Foto" },
+  en: { allArticles: "All articles", otherArticles: "More articles", placesMentioned: "Places mentioned in this article", photo: "Photo" },
+  fr: { allArticles: "Tous les articles", otherArticles: "Autres articles", placesMentioned: "Lieux cités dans l'article", photo: "Photo" },
+  de: { allArticles: "Alle Artikel", otherArticles: "Weitere Artikel", placesMentioned: "Im Artikel erwähnte Orte", photo: "Foto" },
 };
 
 /* Tutto il testo visibile dell'articolo, per riconoscere quali luoghi di
@@ -43,6 +71,7 @@ const TEXT: Record<Locale, { allArticles: string; otherArticles: string; placesM
    riceve da solo. */
 function articleText(post: BlogPost): string {
   const parts: string[] = [post.title, post.intro, post.finalCtaHeading, post.finalCtaBody];
+  if (post.inBreve) parts.push(...post.inBreve.items.flatMap((f) => [f.label, f.value]));
   for (const block of post.content) {
     if (block.type === "p" || block.type === "h2" || block.type === "h3") parts.push(block.text);
     else if (block.type === "list") parts.push(...block.items);
@@ -50,14 +79,22 @@ function articleText(post: BlogPost): string {
     else if (block.type === "image" && block.caption) parts.push(block.caption);
     else if (block.type === "cta") parts.push(block.heading, block.body ?? "");
   }
+  if (post.faq) parts.push(...post.faq.items.flatMap((f) => [f.q, f.a]));
   return parts.join(" · ");
+}
+
+function isExternalHref(href: string): boolean {
+  return href.startsWith("http") || href.startsWith("tel:");
 }
 
 /* Blocco CTA riusato per iniziale/centrale/finale: stesso componente,
    varianti solo di colore (oro per iniziale/centrale, raspberry per la
    finale, coerente con il resto del sito — es. price-comparison-section)
    così l'occhio la riconosce sempre come "momento commerciale" senza
-   sembrare tre banner diversi incollati nell'articolo. */
+   sembrare tre banner diversi incollati nell'articolo. La variante
+   "chocolate" esiste solo per gli articoli con theme: "chocolate".
+   href "#prenota" (BOOKING_MODAL_HREF): pulsante che apre la modale di
+   prenotazione invece di un link. */
 function ArticleCta({
   heading,
   body,
@@ -71,33 +108,122 @@ function ArticleCta({
   label: string;
   href: string;
   locale: Locale;
-  variant?: "gold" | "raspberry";
+  variant?: "gold" | "raspberry" | "chocolate";
 }) {
-  const isExternal = href.startsWith("http") || href.startsWith("tel:") || href.startsWith("https://wa.me");
-  const resolvedHref = isExternal ? href : withLocale(locale, href);
-  const linkProps = isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {};
+  const isChocolate = variant === "chocolate";
+  const buttonClass = isChocolate
+    ? `${choco.sheen} group relative mt-5 inline-flex items-center gap-2.5 overflow-hidden rounded-lg px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em]`
+    : `group relative mt-5 inline-flex items-center gap-2.5 overflow-hidden rounded-lg px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] ${
+        variant === "raspberry" ? "bg-raspberry text-cream" : "bg-gold text-[#1f180e]"
+      }`;
+  const inner = (
+    <>
+      {!isChocolate && <HoverFill color={variant === "raspberry" ? "#8a3844" : "#8f7330"} />}
+      <span className="relative z-10 inline-flex items-center gap-2.5">
+        {label}
+        <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+          →
+        </span>
+      </span>
+    </>
+  );
+
+  let button;
+  if (href === BOOKING_MODAL_HREF) {
+    button = <BookingModalButton className={buttonClass}>{inner}</BookingModalButton>;
+  } else {
+    const isExternal = isExternalHref(href);
+    const linkProps = isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {};
+    button = (
+      <Link href={isExternal ? href : withLocale(locale, href)} {...linkProps} className={buttonClass}>
+        {inner}
+      </Link>
+    );
+  }
+
   return (
-    <div className="my-10 rounded-[6px] bg-cream-dim px-6 py-7 text-center sm:px-8 sm:py-8">
-      <p className="font-display text-[19px] font-normal leading-[1.4] text-ink [text-wrap:balance] sm:text-[21px]">
-        {heading}
-      </p>
-      {body && <p className="mx-auto mt-2.5 max-w-[440px] text-[13.5px] leading-[1.7] text-ink-soft">{body}</p>}
-      <Link
-        href={resolvedHref}
-        {...linkProps}
-        className={`group relative mt-5 inline-flex items-center gap-2.5 overflow-hidden rounded-lg px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] ${
-          variant === "raspberry" ? "bg-raspberry text-cream" : "bg-gold text-[#1f180e]"
+    <div
+      className={`my-10 rounded-[6px] px-6 py-7 text-center sm:px-8 sm:py-8 ${
+        isChocolate ? `${choco.root} ${choco.melted}` : "bg-cream-dim"
+      }`}
+    >
+      <p
+        className={`font-display text-[19px] font-normal leading-[1.4] [text-wrap:balance] sm:text-[21px] ${
+          isChocolate ? "text-[var(--crema)]" : "text-ink"
         }`}
       >
-        <HoverFill color={variant === "raspberry" ? "#8a3844" : "#8f7330"} />
-        <span className="relative z-10 inline-flex items-center gap-2.5">
-          {label}
-          <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-            →
-          </span>
-        </span>
-      </Link>
+        {heading}
+      </p>
+      {body && (
+        <p
+          className={`mx-auto mt-2.5 max-w-[440px] text-[13.5px] leading-[1.7] ${
+            isChocolate ? "text-[var(--crema)]/85" : "text-ink-soft"
+          }`}
+        >
+          {body}
+        </p>
+      )}
+      {button}
     </div>
+  );
+}
+
+/* Classi del corpo articolo per tema: il tema cioccolato cambia solo
+   colori e decorazioni, mai la struttura (stessi blocchi, stesso ordine). */
+function themeClasses(isChocolate: boolean) {
+  return isChocolate
+    ? {
+        h2: "pt-4 font-display text-[24px] font-normal leading-[1.25] text-[#2b1a10] [text-wrap:balance] sm:text-[27px]",
+        h3: "pt-2 font-display text-[18px] font-normal leading-[1.3] text-[#2b1a10] [text-wrap:balance]",
+        p: "text-[15px] leading-[1.85] text-[#4a3526]",
+        li: "flex items-start gap-3 text-[15px] leading-[1.7] text-[#4a3526]",
+        bullet: choco.bean,
+        caption: "mt-2 block text-[11.5px] leading-[1.5] text-[#6b5442]",
+        link: choco.link,
+        label: "text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7b4a2e]",
+      }
+    : {
+        h2: "pt-4 font-display text-[24px] font-normal leading-[1.25] text-ink [text-wrap:balance] sm:text-[27px]",
+        h3: "pt-2 font-display text-[18px] font-normal leading-[1.3] text-ink [text-wrap:balance]",
+        p: "text-[15px] leading-[1.85] text-ink-soft",
+        li: "flex items-start gap-2.5 text-[15px] leading-[1.7] text-ink-soft",
+        bullet: "mt-2.5 h-1 w-1 shrink-0 rounded-full bg-raspberry",
+        caption: "mt-2 block text-[11.5px] leading-[1.5] text-ink-soft/70",
+        link: "text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry",
+        label: "text-[10px] font-semibold uppercase tracking-[0.18em] text-olive-950",
+      };
+}
+
+/* Fatti estraibili ("In breve", fatti pratici): sul tema cioccolato una
+   tavoletta a segmenti, altrimenti il riquadro crema del sito. */
+function FactsGrid({
+  items,
+  variant,
+}: {
+  items: { label: string; value: string }[];
+  variant: "default" | "chocolateDark" | "chocolateMilk";
+}) {
+  if (variant === "default") {
+    return (
+      <dl className="grid grid-cols-2 gap-x-6 gap-y-5 rounded-[6px] border border-ink/10 bg-cream-dim px-6 py-6 sm:grid-cols-3">
+        {items.map((f) => (
+          <div key={f.label}>
+            <dt className="text-[10px] font-semibold uppercase tracking-[0.08em] text-ink-soft">{f.label}</dt>
+            <dd className="mt-1 font-display text-[17px] leading-tight text-ink">{f.value}</dd>
+          </div>
+        ))}
+      </dl>
+    );
+  }
+  return (
+    <dl className={`${choco.root} ${choco.tablet} ${variant === "chocolateMilk" ? choco.tabletMilk : ""}`}>
+      {items.map((f) => (
+        <div key={f.label} className={choco.segment}>
+          <dt className={choco.segmentLabel}>{f.label}</dt>
+          <dd className={choco.segmentValue}>{f.value}</dd>
+        </div>
+      ))}
+    </dl>
   );
 }
 
@@ -110,25 +236,286 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
   const post = posts[index];
   const mentionedPlaces = findMentionedPlaces(articleText(post));
   const related = posts.filter((_, i) => i !== index).slice(0, 3);
+  const isChocolate = post.theme === "chocolate";
+  const c = themeClasses(isChocolate);
 
-  const jsonLd = {
+  const articleJsonLd = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": post.schemaType ?? "Article",
     headline: post.title,
     description: post.metaDescription,
-    image: post.image,
+    image: [absoluteUrl(post.image)],
+    inLanguage: locale,
+    mainEntityOfPage: absoluteUrl(articlePath(locale, post.slug)),
+    ...(post.datePublished ? { datePublished: post.datePublished } : {}),
+    author: { "@type": "Organization", name: "Agriturismo La Mora", url: SITE_URL },
+    publisher: {
+      "@type": "Organization",
+      name: "Agriturismo La Mora",
+      url: SITE_URL,
+      logo: { "@type": "ImageObject", url: absoluteUrl("/images/logo/logo agriturismo la mora.png") },
+    },
   };
+
+  /* FAQPage solo quando le FAQ sono anche visibili in pagina (sotto). */
+  const faqJsonLd = post.faq
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: post.faq.items.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }
+    : null;
+
+  const intro = (
+    <Reveal>
+      <p
+        className={`font-display text-[20px] font-normal leading-[1.55] [text-wrap:balance] sm:text-[22px] ${
+          isChocolate ? "text-[var(--crema)]" : "text-ink"
+        }`}
+      >
+        {post.intro}
+      </p>
+    </Reveal>
+  );
+
+  const inBreve = post.inBreve && (
+    <Reveal delay={60}>
+      <section aria-labelledby="in-breve-heading" className="mt-10">
+        <h2
+          id="in-breve-heading"
+          className={`mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] ${
+            isChocolate ? "text-[var(--caramello-chiaro)]" : "text-olive-950"
+          }`}
+        >
+          {post.inBreve.heading}
+        </h2>
+        <FactsGrid items={post.inBreve.items} variant={isChocolate ? "chocolateDark" : "default"} />
+      </section>
+    </Reveal>
+  );
+
+  const introCta = post.introCtaHeading && post.introCtaLabel && post.introCtaHref && (
+    <Reveal delay={80}>
+      <ArticleCta
+        heading={post.introCtaHeading}
+        label={post.introCtaLabel}
+        href={post.introCtaHref}
+        locale={locale}
+        variant={isChocolate ? "chocolate" : "gold"}
+      />
+    </Reveal>
+  );
+
+  const offerTop = post.offerBox && (
+    <Reveal delay={100}>
+      <div className="mt-10">
+        <PromoOfferBox promoId={post.offerBox} locale={locale} headingAs="h2" id="offerta" />
+      </div>
+    </Reveal>
+  );
+
+  const body = (
+    <>
+      <div className="mt-2 space-y-6">
+        {post.content.map((block, i) => {
+          switch (block.type) {
+            case "h2":
+              return (
+                <Reveal key={i}>
+                  <h2 className={c.h2}>{block.text}</h2>
+                </Reveal>
+              );
+            case "h3":
+              return (
+                <Reveal key={i}>
+                  <h3 className={c.h3}>{block.text}</h3>
+                </Reveal>
+              );
+            case "p":
+              return (
+                <Reveal key={i}>
+                  <p className={c.p}>{block.text}</p>
+                </Reveal>
+              );
+            case "list":
+              return (
+                <Reveal key={i}>
+                  <ul className="space-y-2.5">
+                    {block.items.map((item, j) => (
+                      <li key={j} className={c.li}>
+                        <span aria-hidden="true" className={c.bullet} />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </Reveal>
+              );
+            case "facts":
+              return (
+                <Reveal key={i}>
+                  <FactsGrid items={block.items} variant={isChocolate ? "chocolateMilk" : "default"} />
+                </Reveal>
+              );
+            case "image":
+              return (
+                <Reveal key={i} className="!mt-8">
+                  <figure>
+                    <div className={`relative overflow-hidden rounded-[4px] ${block.portrait ? "mx-auto aspect-[4/5] max-w-[520px]" : "aspect-[3/2]"}`}>
+                      <Image
+                        src={block.src}
+                        alt={block.alt}
+                        fill
+                        loading="lazy"
+                        sizes={block.portrait ? "(max-width: 640px) 100vw, 520px" : "(max-width: 640px) 100vw, 680px"}
+                        className="object-cover"
+                      />
+                    </div>
+                    {(block.caption || block.credit) && (
+                      <figcaption className={c.caption}>
+                        {block.caption}
+                        {block.credit && (
+                          <>
+                            {block.caption ? " " : ""}
+                            {text.photo}:{" "}
+                            {block.creditUrl ? (
+                              <a href={block.creditUrl} target="_blank" rel="noopener noreferrer" className={c.link}>
+                                {block.credit}
+                              </a>
+                            ) : (
+                              block.credit
+                            )}
+                          </>
+                        )}
+                      </figcaption>
+                    )}
+                  </figure>
+                </Reveal>
+              );
+            case "cta":
+              return (
+                <Reveal key={i}>
+                  <ArticleCta
+                    heading={block.heading}
+                    body={block.body}
+                    label={block.label}
+                    href={block.href}
+                    locale={locale}
+                    variant={isChocolate ? "chocolate" : "gold"}
+                  />
+                </Reveal>
+              );
+            case "links":
+              return (
+                <Reveal key={i}>
+                  <nav aria-label={block.heading} className="!mt-10">
+                    <span className={c.label}>{block.heading}</span>
+                    <ul className="mt-3 space-y-2">
+                      {block.items.map((item) => {
+                        const external = isExternalHref(item.href);
+                        return (
+                          <li key={item.href} className="text-[15px] leading-[1.6]">
+                            {external ? (
+                              <a href={item.href} target="_blank" rel="noopener noreferrer" className={c.link}>
+                                {item.label} ↗
+                              </a>
+                            ) : (
+                              <Link href={withLocale(locale, item.href)} className={c.link}>
+                                {item.label} →
+                              </Link>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </nav>
+                </Reveal>
+              );
+            default:
+              return null;
+          }
+        })}
+      </div>
+
+      {post.faq && (
+        <section aria-labelledby="faq-heading" className="mt-14">
+          <Reveal>
+            <h2 id="faq-heading" className={c.h2}>
+              {post.faq.heading}
+            </h2>
+          </Reveal>
+          <div className="mt-6 space-y-4">
+            {post.faq.items.map((f) => (
+              <Reveal key={f.q}>
+                <div className={isChocolate ? choco.faqItem : "rounded-[6px] border border-ink/10 bg-cream-dim px-5 py-4"}>
+                  <h3 className={`font-display text-[18px] font-normal leading-[1.35] ${isChocolate ? "text-[#2b1a10]" : "text-ink"}`}>
+                    {f.q}
+                  </h3>
+                  <p className={`mt-2 text-[14.5px] leading-[1.75] ${isChocolate ? "text-[#4a3526]" : "text-ink-soft"}`}>{f.a}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {mentionedPlaces.length > 0 && (
+        <Reveal>
+          <aside
+            aria-label={text.placesMentioned}
+            className={`mt-10 rounded-[6px] px-6 py-5 ${isChocolate ? "border border-[#7b4a2e]/20 bg-white/40" : "border border-ink/10 bg-cream-dim"}`}
+          >
+            <span className={c.label}>{text.placesMentioned}</span>
+            <div className="mt-3 flex flex-wrap gap-2.5">
+              {mentionedPlaces.map((place) => (
+                <MapsButton key={place.key} place={place} locale={locale} showName />
+              ))}
+            </div>
+          </aside>
+        </Reveal>
+      )}
+
+      {post.offerBox && (
+        <Reveal>
+          <div className="mt-12">
+            <PromoOfferBox promoId={post.offerBox} locale={locale} headingAs="p" />
+          </div>
+        </Reveal>
+      )}
+
+      <Reveal delay={80}>
+        <ArticleCta
+          heading={post.finalCtaHeading}
+          body={post.finalCtaBody}
+          label={post.finalCtaLabel}
+          href={post.finalCtaHref}
+          locale={locale}
+          variant={isChocolate ? "chocolate" : "raspberry"}
+        />
+      </Reveal>
+
+      {post.disclaimer && <p className={`mt-6 text-[12px] leading-[1.6] ${isChocolate ? "text-[#6b5442]" : "text-ink-soft/80"}`}>{post.disclaimer}</p>}
+    </>
+  );
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+      {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
 
       <section className="relative flex h-[56vh] min-h-[400px] items-end overflow-hidden">
         <Image src={post.image} alt={post.alt} fill priority sizes="100vw" className="object-cover" />
         <div
           aria-hidden="true"
           className="absolute inset-0"
-          style={{ background: "linear-gradient(180deg, rgba(20,14,7,.05) 0%, rgba(20,14,7,.78) 100%)" }}
+          style={{
+            background: isChocolate
+              ? "linear-gradient(180deg, rgba(43,26,16,.10) 0%, rgba(43,26,16,.55) 55%, rgba(43,26,16,.95) 100%)"
+              : "linear-gradient(180deg, rgba(20,14,7,.05) 0%, rgba(20,14,7,.78) 100%)",
+          }}
         />
         <div className="relative z-[1] mx-auto w-full max-w-[760px] px-6 pb-12 sm:px-10">
           <Link
@@ -137,144 +524,42 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
           >
             <span aria-hidden="true">←</span> {text.allArticles}
           </Link>
-          <span className="mt-5 block text-[10px] font-semibold uppercase tracking-[0.22em] text-gold">{post.category}</span>
+          <span className={`mt-5 block text-[10px] font-semibold uppercase tracking-[0.22em] ${isChocolate ? "text-[#e2b277]" : "text-gold"}`}>
+            {post.category}
+          </span>
           <h1 className="mt-3 font-display text-[clamp(28px,4.4vw,44px)] font-normal leading-[1.15] text-cream [text-wrap:balance]">
             {post.title}
           </h1>
         </div>
       </section>
 
-      <section className="bg-cream py-14 sm:py-16">
-        <div className="mx-auto max-w-[680px] px-6 sm:px-10">
-          <Reveal>
-            <p className="font-display text-[20px] font-normal leading-[1.55] text-ink [text-wrap:balance] sm:text-[22px]">
-              {post.intro}
-            </p>
-          </Reveal>
-
-          <Reveal delay={80}>
-            <ArticleCta
-              heading={post.introCtaHeading}
-              label={post.introCtaLabel}
-              href={post.introCtaHref}
-              locale={locale}
-              variant="gold"
-            />
-          </Reveal>
-
-          <div className="mt-2 space-y-6">
-            {post.content.map((block, i) => {
-              switch (block.type) {
-                case "h2":
-                  return (
-                    <Reveal key={i}>
-                      <h2 className="pt-4 font-display text-[24px] font-normal leading-[1.25] text-ink [text-wrap:balance] sm:text-[27px]">
-                        {block.text}
-                      </h2>
-                    </Reveal>
-                  );
-                case "h3":
-                  return (
-                    <Reveal key={i}>
-                      <h3 className="pt-2 font-display text-[18px] font-normal leading-[1.3] text-ink [text-wrap:balance]">
-                        {block.text}
-                      </h3>
-                    </Reveal>
-                  );
-                case "p":
-                  return (
-                    <Reveal key={i}>
-                      <p className="text-[15px] leading-[1.85] text-ink-soft">{block.text}</p>
-                    </Reveal>
-                  );
-                case "list":
-                  return (
-                    <Reveal key={i}>
-                      <ul className="space-y-2.5">
-                        {block.items.map((item, j) => (
-                          <li key={j} className="flex items-start gap-2.5 text-[15px] leading-[1.7] text-ink-soft">
-                            <span aria-hidden="true" className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-raspberry" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </Reveal>
-                  );
-                case "facts":
-                  return (
-                    <Reveal key={i}>
-                      <dl className="grid grid-cols-2 gap-x-6 gap-y-5 rounded-[6px] border border-ink/10 bg-cream-dim px-6 py-6 sm:grid-cols-3">
-                        {block.items.map((f) => (
-                          <div key={f.label}>
-                            <dt className="text-[10px] font-semibold uppercase tracking-[0.08em] text-ink-soft">{f.label}</dt>
-                            <dd className="mt-1 font-display text-[17px] leading-tight text-ink">{f.value}</dd>
-                          </div>
-                        ))}
-                      </dl>
-                    </Reveal>
-                  );
-                case "image":
-                  return (
-                    <Reveal key={i} className="!mt-8">
-                      <div className="relative aspect-[3/2] overflow-hidden rounded-[4px]">
-                        <Image
-                          src={block.src}
-                          alt={block.alt}
-                          fill
-                          loading="lazy"
-                          sizes="(max-width: 640px) 100vw, 680px"
-                          className="object-cover"
-                        />
-                      </div>
-                      {block.caption && (
-                        <span className="mt-2 block text-[11.5px] leading-[1.5] text-ink-soft/70">{block.caption}</span>
-                      )}
-                    </Reveal>
-                  );
-                case "cta":
-                  return (
-                    <Reveal key={i}>
-                      <ArticleCta
-                        heading={block.heading}
-                        body={block.body}
-                        label={block.label}
-                        href={block.href}
-                        locale={locale}
-                        variant="gold"
-                      />
-                    </Reveal>
-                  );
-                default:
-                  return null;
-              }
-            })}
+      {isChocolate ? (
+        <>
+          <section className={`${choco.root} ${choco.melted}`}>
+            <CocoaParticles />
+            <div className="mx-auto max-w-[760px] px-6 pb-14 pt-12 sm:px-10 sm:pb-16 sm:pt-14">
+              {intro}
+              {inBreve}
+              {offerTop}
+              {introCta}
+            </div>
+          </section>
+          <div className={`${choco.root} ${choco.cream}`}>
+            <ChocolateDrip />
+            <div className="mx-auto max-w-[680px] px-6 pb-14 pt-6 sm:px-10 sm:pb-16">{body}</div>
           </div>
-
-          {mentionedPlaces.length > 0 && (
-            <Reveal>
-              <aside aria-label={text.placesMentioned} className="mt-10 rounded-[6px] border border-ink/10 bg-cream-dim px-6 py-5">
-                <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-olive-950">{text.placesMentioned}</span>
-                <div className="mt-3 flex flex-wrap gap-2.5">
-                  {mentionedPlaces.map((place) => (
-                    <MapsButton key={place.key} place={place} locale={locale} showName />
-                  ))}
-                </div>
-              </aside>
-            </Reveal>
-          )}
-
-          <Reveal delay={80}>
-            <ArticleCta
-              heading={post.finalCtaHeading}
-              body={post.finalCtaBody}
-              label={post.finalCtaLabel}
-              href={post.finalCtaHref}
-              locale={locale}
-              variant="raspberry"
-            />
-          </Reveal>
-        </div>
-      </section>
+        </>
+      ) : (
+        <section className="bg-cream py-14 sm:py-16">
+          <div className="mx-auto max-w-[680px] px-6 sm:px-10">
+            {intro}
+            {inBreve}
+            {offerTop}
+            {introCta}
+            {body}
+          </div>
+        </section>
+      )}
 
       <section className="bg-cream-dim py-14 sm:py-16">
         <div className="mx-auto max-w-[1100px] px-6 sm:px-10">

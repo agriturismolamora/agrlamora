@@ -8,7 +8,9 @@ import type { Locale } from "@/lib/i18n";
    il widget richieste (sostituito dal nostro modulo che prepara un
    messaggio WhatsApp, nessun servizio terzo) e il widget punti di
    interesse; aggiunto lo script Octorate (vedi octorate-widget-script.tsx),
-   con CONSENT_VERSION portata a "3":
+   con CONSENT_VERSION portata a "3"; il 6 ottobre 2026 aggiunta la chiave
+   per singola promo del popup (lamora_promo_last_shown:<id-promo>, oggi
+   lamora_promo_last_shown:eurochocolate-2026), con CONSENT_VERSION "4":
    - package.json: nessuna dipendenza di analytics/marketing/tracking.
    - .env.local: solo GOOGLE_PLACES_API_KEY, GOOGLE_PLACE_ID,
      NEXT_PUBLIC_RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET_KEY.
@@ -87,13 +89,16 @@ export const PRIVACY_SERVICES: PrivacyService[] = [
     provider: "Agriturismo La Mora (prima parte)",
     category: "functional",
     thirdParty: false,
-    storage: [{ name: "lamora_promo_last_shown", type: "localStorage", duration: "fino a cancellazione manuale (rilevante per 2 giorni)", firstParty: true }],
+    storage: [
+      { name: "lamora_promo_last_shown", type: "localStorage", duration: "fino a cancellazione manuale (rilevante per 2 giorni)", firstParty: true },
+      { name: "lamora_promo_last_shown:eurochocolate-2026", type: "localStorage", duration: "fino a cancellazione manuale (rilevante per 2 giorni)", firstParty: true },
+    ],
     active: true,
     description: {
-      it: "Ricorda quando è stato mostrato l'ultima volta il popup con le condizioni di prenotazione diretta, per non riproporlo ad ogni pagina.",
-      en: "Remembers when the direct-booking conditions popup was last shown, so it isn't shown on every page.",
-      fr: "Se souvient de la dernière fois où la fenêtre des conditions de réservation directe a été affichée, pour ne pas la répéter à chaque page.",
-      de: "Merkt sich, wann das Popup mit den Direktbuchungskonditionen zuletzt angezeigt wurde, damit es nicht auf jeder Seite erscheint.",
+      it: "Ricorda quando è stato mostrato l'ultima volta il popup della home (condizioni di prenotazione diretta, oppure la promozione a tempo in corso, con una chiave per ogni promozione), per non riproporlo ad ogni pagina.",
+      en: "Remembers when the homepage popup was last shown (direct-booking conditions, or the current time-limited promotion, with one key per promotion), so it isn't shown on every page.",
+      fr: "Se souvient de la dernière fois où la fenêtre de la page d'accueil a été affichée (conditions de réservation directe, ou promotion temporaire en cours, avec une clé par promotion), pour ne pas la répéter à chaque page.",
+      de: "Merkt sich, wann das Popup der Startseite zuletzt angezeigt wurde (Direktbuchungskonditionen oder die laufende befristete Aktion, mit einem Schlüssel pro Aktion), damit es nicht auf jeder Seite erscheint.",
     },
     purpose: {
       it: "Solo comfort di navigazione: nessun dato personale, nessuna identificazione dell'utente, nessuna trasmissione a terzi.",

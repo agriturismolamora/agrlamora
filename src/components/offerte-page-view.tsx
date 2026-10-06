@@ -9,12 +9,48 @@ import { BbitWidgetCard } from "@/components/bbit-widget-card";
 import { bbitOfferteUrl } from "@/lib/bbit-widget-urls";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { EUROCHOCOLATE_2026 } from "@/data/promo";
 
 const OFFERS_WIDGET_TEXT: Record<Locale, { label: string; heading: string }> = {
   it: { label: "Offerte in corso", heading: "Le promozioni attive in questo momento" },
   en: { label: "Current offers", heading: "Promotions active right now" },
   fr: { label: "Offres en cours", heading: "Les promotions actives en ce moment" },
   de: { label: "Aktuelle Angebote", heading: "Derzeit aktive Aktionen" },
+};
+
+/* Card dell'offerta Eurochocolate 2026 (src/data/promo.ts): rimanda
+   all'articolo, dove stanno programma, distanze e condizioni complete. Stile
+   standard del sito: il tema cioccolato resta solo nell'articolo e nel
+   popup. La validità è un testo datato, vero anche a offerta conclusa. */
+const EUROCHOCOLATE_CARD_TEXT: Record<Locale, { label: string; heading: string; body: string; cta: string; alt: string }> = {
+  it: {
+    label: "Evento · Perugia",
+    heading: "Eurochocolate 2026: -10% per tutta la durata dell'evento",
+    body: "Dal 13 al 22 novembre 2026 Perugia ospita il festival internazionale del cioccolato, a 21 km da La Mora. Programma, come arrivare e condizioni dell'offerta sono nell'articolo dedicato.",
+    cta: "Leggi l'articolo e le condizioni",
+    alt: "Sala della colazione di Agriturismo La Mora con il camino acceso",
+  },
+  en: {
+    label: "Event · Perugia",
+    heading: "Eurochocolate 2026: 10% off for the whole event",
+    body: "From 13 to 22 November 2026 Perugia hosts the international chocolate festival, 21 km from La Mora. Programme, how to get there and the offer conditions are in our dedicated article.",
+    cta: "Read the article and conditions",
+    alt: "Breakfast room at Agriturismo La Mora with the fire lit",
+  },
+  fr: {
+    label: "Événement · Pérouse",
+    heading: "Eurochocolate 2026 : -10 % pendant toute la durée de l'événement",
+    body: "Du 13 au 22 novembre 2026, Pérouse accueille le festival international du chocolat, à 21 km de La Mora. Programme, accès et conditions de l'offre sont dans notre article dédié.",
+    cta: "Lire l'article et les conditions",
+    alt: "Salle du petit-déjeuner de l'Agriturismo La Mora, feu allumé dans la cheminée",
+  },
+  de: {
+    label: "Veranstaltung · Perugia",
+    heading: "Eurochocolate 2026: -10 % während der gesamten Veranstaltung",
+    body: "Vom 13. bis 22. November 2026 findet in Perugia das internationale Schokoladenfestival statt, 21 km von La Mora entfernt. Programm, Anreise und Angebotsbedingungen stehen in unserem Artikel.",
+    cta: "Artikel und Bedingungen lesen",
+    alt: "Frühstücksraum des Agriturismo La Mora mit brennendem Kamin",
+  },
 };
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
@@ -275,6 +311,41 @@ export function OffertePageView({ locale }: { locale: Locale }) {
             <p className="font-display text-[clamp(22px,3vw,30px)] font-normal leading-[1.5] text-ink [text-wrap:balance]">
               {text.introBody}
             </p>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="bg-cream pb-20 sm:pb-28">
+        <div className="mx-auto max-w-[1140px] px-6 sm:px-10">
+          <Reveal>
+            <Link
+              href={withLocale(locale, `/blog/${EUROCHOCOLATE_2026.articleSlug}/`)}
+              className="group grid grid-cols-1 overflow-hidden rounded-[6px] border border-ink/10 bg-cream-dim sm:grid-cols-[2fr_3fr]"
+            >
+              <div className="relative aspect-[16/10] sm:aspect-auto sm:min-h-[300px]">
+                <WatermarkedImage
+                  src="/images/colazione/colazione bio agriturismo la mora.webp"
+                  alt={EUROCHOCOLATE_CARD_TEXT[locale].alt}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 450px"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                />
+              </div>
+              <div className="flex flex-col justify-center px-7 py-8 sm:px-10 sm:py-10">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-raspberry">{EUROCHOCOLATE_CARD_TEXT[locale].label}</span>
+                <h2 className="mt-3 font-display text-[clamp(24px,2.8vw,32px)] font-normal leading-[1.2] text-ink [text-wrap:balance]">
+                  {EUROCHOCOLATE_CARD_TEXT[locale].heading}
+                </h2>
+                <p className="mt-2 text-[12px] font-semibold uppercase tracking-[0.06em] text-ink-soft">{EUROCHOCOLATE_2026.text[locale].validity}</p>
+                <p className="mt-4 max-w-[520px] text-[14px] leading-[1.75] text-ink-soft">{EUROCHOCOLATE_CARD_TEXT[locale].body}</p>
+                <span className="mt-6 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.06em] text-raspberry">
+                  {EUROCHOCOLATE_CARD_TEXT[locale].cta}
+                  <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+                    →
+                  </span>
+                </span>
+              </div>
+            </Link>
           </Reveal>
         </div>
       </section>
