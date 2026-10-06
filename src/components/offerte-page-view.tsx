@@ -2,6 +2,7 @@ import { WatermarkedImage } from "@/components/watermarked-image";
 import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
+import { BookingModalButton } from "@/components/booking-modal-button";
 import { LocationMap } from "@/components/location-map";
 import { NewsletterSection } from "@/components/newsletter-section";
 import { CertificationsMarquee } from "@/components/certifications-marquee";
@@ -108,7 +109,6 @@ const TEXT: Record<
     o1StatLabel: string;
     o1Body: string;
     o1Cta: string;
-    o1WaMsg: string;
     o2Heading: string;
     o2StatLabel: string;
     o2Body: string;
@@ -119,7 +119,6 @@ const TEXT: Record<
     o3Body: string;
     o3Warning: string;
     o3Cta: string;
-    o3WaMsg: string;
     altreLabel: string;
     altreHeading: string;
     diversoHeading: string;
@@ -140,18 +139,16 @@ const TEXT: Record<
     o1StatLabel: "Soggiorno minimo\n7 notti",
     o1Body: "Chi si ferma una settimana o più ha uno sconto diretto del 10% sul totale del soggiorno — nessuna richiesta particolare, si applica automaticamente a partire dalla settima notte.",
     o1Cta: "Verifica disponibilità",
-    o1WaMsg: "Ciao! Vorrei verificare la disponibilità per un soggiorno di 7 o più notti.",
     o2Heading: "Bentornati a La Mora.",
     o2StatLabel: "Per chi torna\nda noi",
     o2Body: "Dalla seconda prenotazione diretta in poi, chi è già stato nostro ospite ha un altro 10% di sconto. Basta scriverci ricordando il soggiorno precedente al momento della richiesta.",
-    o2Cta: "Torna a La Mora",
+    o2Cta: "Scrivici su WhatsApp",
     o2WaMsg: "Ciao! Sono già stato vostro ospite e vorrei prenotare di nuovo.",
     o3Heading: "Blocca ora la tua tariffa.",
     o3StatLabel: "Rispetto alla\ntariffa flessibile",
     o3Body: "Chi ha già le idee chiare sulle date può scegliere la tariffa non rimborsabile e risparmiare un altro 10%.",
     o3Warning: "Attenzione: questa tariffa non è rimborsabile in caso di cancellazione.",
-    o3Cta: "Scrivici per bloccarla",
-    o3WaMsg: "Ciao! Vorrei informazioni sulla tariffa non rimborsabile.",
+    o3Cta: "Prenota con questa tariffa",
     altreLabel: "Altre offerte",
     altreHeading: "Un regalo, o un cofanetto già in mano.",
     diversoHeading: "Cerchi qualcosa di diverso?",
@@ -175,18 +172,16 @@ const TEXT: Record<
     o1StatLabel: "Minimum stay\n7 nights",
     o1Body: "Those who stay a week or more get a direct 10% discount on the total stay — no special request needed, it applies automatically from the seventh night.",
     o1Cta: "Check availability",
-    o1WaMsg: "Hi! I'd like to check availability for a stay of 7 or more nights.",
     o2Heading: "Welcome back to La Mora.",
     o2StatLabel: "For returning\nguests",
     o2Body: "From the second direct booking onwards, past guests get another 10% discount. Just mention your previous stay when you write to us.",
-    o2Cta: "Come back to La Mora",
+    o2Cta: "Message us on WhatsApp",
     o2WaMsg: "Hi! I've already stayed with you and I'd like to book again.",
     o3Heading: "Lock in your rate now.",
     o3StatLabel: "Compared to the\nflexible rate",
     o3Body: "Those who already know their dates can choose the non-refundable rate and save another 10%.",
     o3Warning: "Please note: this rate is non-refundable in case of cancellation.",
-    o3Cta: "Write to lock it in",
-    o3WaMsg: "Hi! I'd like information about the non-refundable rate.",
+    o3Cta: "Book this rate",
     altreLabel: "Other offers",
     altreHeading: "A gift, or a voucher already in hand.",
     diversoHeading: "Looking for something different?",
@@ -210,18 +205,16 @@ const TEXT: Record<
     o1StatLabel: "Séjour minimum\n7 nuits",
     o1Body: "Ceux qui restent une semaine ou plus bénéficient d'une remise directe de 10% sur le total du séjour — aucune demande particulière, elle s'applique automatiquement à partir de la septième nuit.",
     o1Cta: "Vérifier la disponibilité",
-    o1WaMsg: "Bonjour ! Je voudrais vérifier la disponibilité pour un séjour de 7 nuits ou plus.",
     o2Heading: "Bon retour à La Mora.",
     o2StatLabel: "Pour les hôtes\nqui reviennent",
     o2Body: "Dès la deuxième réservation directe, ceux qui ont déjà été nos hôtes bénéficient d'une remise supplémentaire de 10%. Il suffit de mentionner votre séjour précédent au moment de la demande.",
-    o2Cta: "Revenir à La Mora",
+    o2Cta: "Écrivez-nous sur WhatsApp",
     o2WaMsg: "Bonjour ! J'ai déjà séjourné chez vous et je souhaiterais réserver à nouveau.",
     o3Heading: "Bloquez votre tarif dès maintenant.",
     o3StatLabel: "Par rapport au\ntarif flexible",
     o3Body: "Ceux qui connaissent déjà leurs dates peuvent choisir le tarif non remboursable et économiser encore 10%.",
     o3Warning: "Attention : ce tarif n'est pas remboursable en cas d'annulation.",
-    o3Cta: "Écrivez-nous pour le bloquer",
-    o3WaMsg: "Bonjour ! Je voudrais des informations sur le tarif non remboursable.",
+    o3Cta: "Réserver ce tarif",
     altreLabel: "Autres offres",
     altreHeading: "Un cadeau, ou un coffret déjà en main.",
     diversoHeading: "Vous cherchez autre chose ?",
@@ -245,18 +238,16 @@ const TEXT: Record<
     o1StatLabel: "Mindestaufenthalt\n7 Nächte",
     o1Body: "Wer eine Woche oder länger bleibt, erhält einen direkten Rabatt von 10% auf den Gesamtaufenthalt — keine besondere Anfrage nötig, er gilt automatisch ab der siebten Nacht.",
     o1Cta: "Verfügbarkeit prüfen",
-    o1WaMsg: "Hallo! Ich möchte die Verfügbarkeit für einen Aufenthalt von 7 oder mehr Nächten prüfen.",
     o2Heading: "Willkommen zurück bei La Mora.",
     o2StatLabel: "Für wiederkehrende\nGäste",
     o2Body: "Ab der zweiten Direktbuchung erhalten frühere Gäste weitere 10% Rabatt. Erwähnen Sie einfach Ihren vorherigen Aufenthalt bei der Anfrage.",
-    o2Cta: "Zurück zu La Mora",
+    o2Cta: "Schreiben Sie uns auf WhatsApp",
     o2WaMsg: "Hallo! Ich war bereits Ihr Gast und möchte erneut buchen.",
     o3Heading: "Sichern Sie sich jetzt Ihren Tarif.",
     o3StatLabel: "Im Vergleich zum\nflexiblen Tarif",
     o3Body: "Wer seine Daten bereits kennt, kann den nicht rückerstattbaren Tarif wählen und weitere 10% sparen.",
     o3Warning: "Achtung: dieser Tarif ist im Falle einer Stornierung nicht rückerstattbar.",
-    o3Cta: "Schreiben Sie uns zur Sicherung",
-    o3WaMsg: "Hallo! Ich hätte gerne Informationen zum nicht rückerstattbaren Tarif.",
+    o3Cta: "Diesen Tarif buchen",
     altreLabel: "Weitere Angebote",
     altreHeading: "Ein Geschenk, oder eine Box bereits in der Hand.",
     diversoHeading: "Suchen Sie etwas anderes?",
@@ -378,12 +369,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
               </span>
             </div>
             <p className="mt-6 max-w-[420px] text-[14px] leading-[1.8] text-ink-soft">{text.o1Body}</p>
-            <a
-              href={`https://wa.me/393934363917?text=${encodeURIComponent(text.o1WaMsg)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative mt-8 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
-            >
+            <BookingModalButton className="group relative mt-8 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream">
               <HoverFill color="#8a3844" />
               <span className="relative z-10 inline-flex items-center gap-2.5">
                 {text.o1Cta}
@@ -391,7 +377,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
                   →
                 </span>
               </span>
-            </a>
+            </BookingModalButton>
           </Reveal>
         </div>
       </section>
@@ -473,12 +459,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
             <p className="mt-3 max-w-[420px] rounded-[3px] border-l-2 border-gold bg-cream/60 px-4 py-3 text-[13px] font-semibold leading-[1.6] text-ink">
               {text.o3Warning}
             </p>
-            <a
-              href={`https://wa.me/393934363917?text=${encodeURIComponent(text.o3WaMsg)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative mt-8 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
-            >
+            <BookingModalButton className="group relative mt-8 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream">
               <HoverFill color="#8a3844" />
               <span className="relative z-10 inline-flex items-center gap-2.5">
                 {text.o3Cta}
@@ -486,7 +467,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
                   →
                 </span>
               </span>
-            </a>
+            </BookingModalButton>
           </Reveal>
         </div>
       </section>

@@ -3,6 +3,7 @@ import type { Apartment } from "@/data/apartments";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { PawIcon } from "@/components/amenity-icons";
+import { BookingModalButton } from "@/components/booking-modal-button";
 
 const WHATSAPP_URL = (name: string) =>
   `https://wa.me/393934363917?text=${encodeURIComponent(`Ciao! Vorrei informazioni sulla disponibilità dell'appartamento ${name}.`)}`;
@@ -88,8 +89,8 @@ const TEXT: Record<
 };
 
 /* Box disponibilità/prenotazione: "Prenota ora" apre la modale camere di
-   bed-and-breakfast.it (rrp-widget-open-modal, vedi root-shell.tsx /
-   rooms-widget-script.tsx) — non più un placeholder onesto in attesa di un
+   bed-and-breakfast.it (BookingModalButton: funziona anche quando la pagina
+   è raggiunta con una navigazione interna, vedi booking-modal-button.tsx) — non più un placeholder onesto in attesa di un
    booking engine proprietario, che il titolare ha deciso di abbandonare.
    WhatsApp e telefono restano come contatto diretto alternativo. Su
    desktop resta agganciato (sticky) mentre si scorre il racconto a fianco,
@@ -138,12 +139,9 @@ export function AvailabilityBox({ apt, locale }: { apt: Apartment; locale: Local
           </div>
         </dl>
 
-        <button
-          type="button"
-          className="rrp-widget-open-modal mt-6 w-full rounded-[3px] bg-raspberry py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
-        >
+        <BookingModalButton className="mt-6 w-full rounded-[3px] bg-raspberry py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]">
           {text.prenotaOra}
-        </button>
+        </BookingModalButton>
 
         <a
           href={WHATSAPP_URL(apt.name)}

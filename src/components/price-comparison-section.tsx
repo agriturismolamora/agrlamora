@@ -2,6 +2,7 @@ import { WatermarkedImage } from "@/components/watermarked-image";
 import { getGoogleReviews } from "@/lib/google-reviews";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
+import { BookingModalButton } from "@/components/booking-modal-button";
 import { StarRow } from "@/components/review-icons";
 import { OtherPricesDropdown } from "@/components/other-prices-dropdown";
 import type { Locale } from "@/lib/i18n";
@@ -315,10 +316,7 @@ export async function PriceComparisonSection({ locale }: { locale: Locale }) {
                     principale (prima era WhatsApp, mascherato dietro la
                     stessa grafica del bottone "PRENOTA DIRETTAMENTE").
                     WhatsApp resta come contatto diretto secondario. */}
-                <button
-                  type="button"
-                  className="rrp-widget-open-modal group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-7 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream"
-                >
+                <BookingModalButton className="group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-raspberry px-7 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-cream">
                   <HoverFill color="#8a3844" />
                   <span className="relative z-10 inline-flex items-center gap-2.5">
                     {text.prenotaDirettamente}
@@ -326,7 +324,7 @@ export async function PriceComparisonSection({ locale }: { locale: Locale }) {
                       →
                     </span>
                   </span>
-                </button>
+                </BookingModalButton>
 
                 <a
                   href={WHATSAPP_URL}

@@ -8,6 +8,7 @@ import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import { ZodiacMark } from "@/components/zodiac-mark";
 import { AvailabilityBox } from "@/components/availability-box";
+import { BookingModalButton } from "@/components/booking-modal-button";
 import { ApartmentGallery } from "@/components/apartment-gallery";
 import { AMENITY_ICON_BY_LABEL, MirrorIcon, PawIcon, WashingMachineIcon } from "@/components/amenity-icons";
 import { ScrollDog } from "@/components/scroll-dog";
@@ -83,11 +84,10 @@ const TEXT: Record<
     leAttivita: string;
     piscinaInclusa: string;
     verificaDisponibilitaPer: (name: string) => string;
-    scriviciDirettamente: string;
+    prenotaDirettamente: string;
     verificaDisponibilita: string;
     tornaATutti: string;
     scaricaBrochure: string;
-    whatsappQuote: (name: string) => string;
     metaTitle: (name: string) => string;
     metaDesc: (tagline: string, guests: number, sqm: number, feature: string) => string;
   }
@@ -108,11 +108,10 @@ const TEXT: Record<
     leAttivita: "le attività",
     piscinaInclusa: "disponibili in struttura, piscina inclusa.",
     verificaDisponibilitaPer: (name) => `Verifica la disponibilità per ${name}`,
-    scriviciDirettamente: "Scrivici direttamente: nessun intermediario, nessuna commissione.",
+    prenotaDirettamente: "Prenota direttamente: nessun intermediario, nessuna commissione.",
     verificaDisponibilita: "Verifica disponibilità",
     tornaATutti: "Torna a tutti gli appartamenti",
     scaricaBrochure: "Scarica la brochure di benvenuto (PDF)",
-    whatsappQuote: (name) => `Ciao! Vorrei informazioni sulla disponibilità dell'appartamento ${name}.`,
     metaTitle: (name) => `Appartamento ${name} ad Assisi`,
     metaDesc: (tagline, guests, sqm, feature) => `${tagline} Fino a ${guests} ospiti, ${sqm} m², ad Assisi (Umbria). ${feature}.`,
   },
@@ -132,11 +131,10 @@ const TEXT: Record<
     leAttivita: "the activities",
     piscinaInclusa: "available at the property, pool included.",
     verificaDisponibilitaPer: (name) => `Check availability for ${name}`,
-    scriviciDirettamente: "Write to us directly: no middlemen, no commission.",
+    prenotaDirettamente: "Book directly: no middlemen, no commission.",
     verificaDisponibilita: "Check availability",
     tornaATutti: "Back to all apartments",
     scaricaBrochure: "Download the welcome brochure (PDF)",
-    whatsappQuote: (name) => `Hi! I'd like information on the availability of the ${name} apartment.`,
     metaTitle: (name) => `${name} Apartment in Assisi`,
     metaDesc: (tagline, guests, sqm, feature) => `${tagline} Up to ${guests} guests, ${sqm} m², in Assisi (Umbria). ${feature}.`,
   },
@@ -156,11 +154,10 @@ const TEXT: Record<
     leAttivita: "les activités",
     piscinaInclusa: "disponibles dans la structure, piscine incluse.",
     verificaDisponibilitaPer: (name) => `Vérifiez la disponibilité pour ${name}`,
-    scriviciDirettamente: "Écrivez-nous directement : aucun intermédiaire, aucune commission.",
+    prenotaDirettamente: "Réservez directement : aucun intermédiaire, aucune commission.",
     verificaDisponibilita: "Vérifier la disponibilité",
     tornaATutti: "Retour à tous les appartements",
     scaricaBrochure: "Télécharger la brochure de bienvenue (PDF)",
-    whatsappQuote: (name) => `Bonjour ! Je voudrais des informations sur la disponibilité de l'appartement ${name}.`,
     metaTitle: (name) => `Appartement ${name} à Assise`,
     metaDesc: (tagline, guests, sqm, feature) => `${tagline} Jusqu'à ${guests} personnes, ${sqm} m², à Assise (Ombrie). ${feature}.`,
   },
@@ -180,11 +177,10 @@ const TEXT: Record<
     leAttivita: "die Aktivitäten",
     piscinaInclusa: "der Unterkunft, Pool inklusive.",
     verificaDisponibilitaPer: (name) => `Verfügbarkeit für ${name} prüfen`,
-    scriviciDirettamente: "Schreiben Sie uns direkt: kein Vermittler, keine Provision.",
+    prenotaDirettamente: "Buchen Sie direkt: kein Vermittler, keine Provision.",
     verificaDisponibilita: "Verfügbarkeit prüfen",
     tornaATutti: "Zurück zu allen Apartments",
     scaricaBrochure: "Willkommensbroschüre herunterladen (PDF)",
-    whatsappQuote: (name) => `Hallo! Ich hätte gerne Informationen zur Verfügbarkeit des Apartments ${name}.`,
     metaTitle: (name) => `Apartment ${name} in Assisi`,
     metaDesc: (tagline, guests, sqm, feature) => `${tagline} Bis zu ${guests} Gäste, ${sqm} m², in Assisi (Umbrien). ${feature}.`,
   },
@@ -432,15 +428,10 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
               {t.verificaDisponibilitaPer(apt.name)}
             </h2>
             <p className="mx-auto mt-4 max-w-[420px] text-[14px] leading-[1.7] text-cream/65">
-              {t.scriviciDirettamente}
+              {t.prenotaDirettamente}
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <a
-                href={`https://wa.me/393934363917?text=${encodeURIComponent(t.whatsappQuote(apt.name))}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-7 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]"
-              >
+              <BookingModalButton className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-7 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]">
                 <HoverFill color="#8f7330" />
                 <span className="relative z-10 inline-flex items-center gap-2.5">
                   {t.verificaDisponibilita}
@@ -448,7 +439,7 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
                     →
                   </span>
                 </span>
-              </a>
+              </BookingModalButton>
               <Link
                 href={withLocale(locale, "/alloggi/")}
                 className="text-[11px] font-semibold uppercase tracking-[0.06em] text-cream/70 underline decoration-cream/30 underline-offset-4 transition-colors hover:text-cream"

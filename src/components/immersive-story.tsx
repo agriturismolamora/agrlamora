@@ -7,7 +7,15 @@ import type { Locale } from "@/lib/i18n";
 /* Ripristinato: era stato rimosso ("semplificata la sezione foto di Assisi,
    testo scroll-reveal tolto su richiesta") ma la richiesta del titolare era
    di riportarlo, non di lasciarlo fuori — testo e comportamento identici a
-   prima della rimozione, stessa foto di sfondo già in uso.
+   prima della rimozione.
+
+   Ottobre 2026: la foto di Assisi sotto la hero resta PULITA (niente testo
+   né velatura scura sopra) ed è stata sostituita con una più luminosa, la
+   Basilica di San Francesco in pieno giorno (foto reale già in public/,
+   usata anche in Territorio). Il testo che si accende parola per parola è
+   stato spostato subito SOTTO la foto, in una sezione a sé su fondo verde
+   oliva scuro, con lo stesso effetto di prima. La vecchia foto al tramonto
+   resta invariata negli altri punti del sito in cui è usata.
 
    Copy originale, invariato in questo passaggio di visual polish — solo la
    granularità del reveal cambia (da frase a parola). Fatti verificati (5
@@ -50,6 +58,13 @@ const LABEL: Record<Locale, string> = {
   en: "Agriturismo in Assisi",
   fr: "Agriturismo à Assise",
   de: "Agriturismo in Assisi",
+};
+
+const PHOTO_ALT: Record<Locale, string> = {
+  it: "La Basilica di San Francesco ad Assisi in una giornata di sole, con il prato davanti e la valle umbra sullo sfondo",
+  en: "The Basilica of San Francesco in Assisi on a sunny day, with the lawn in front and the Umbrian valley behind",
+  fr: "La basilique Saint-François d'Assise par une journée ensoleillée, avec la pelouse devant et la vallée ombrienne au fond",
+  de: "Die Basilika San Francesco in Assisi an einem sonnigen Tag, mit der Wiese davor und dem umbrischen Tal im Hintergrund",
 };
 
 const DIM_ALPHA = 0.2;
@@ -131,80 +146,73 @@ export function ImmersiveStory({ locale }: { locale: Locale }) {
   let wordIndex = 0;
 
   return (
-    <section
-      ref={wrapperRef}
-      id="section-story"
-      data-snap-exempt="true"
-      /* Tratto di scroll "trattenuto" (sezione più alta della viewport +
-         contenuto sticky) SOLO da md in su: su telefono la sezione è alta
-         una schermata e scorre via normalmente, testo già tutto acceso (vedi
-         classe sulle parole) — richiesta esplicita del titolare, il blocco
-         temporaneo durante lo scroll su mobile era sgradevole. */
-      className={reducedMotion ? "relative max-md:mt-7" : "relative max-md:mt-7 md:min-h-[150vh]"}
-    >
-      <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
-        {/* Livello 0: fotografia. */}
+    <>
+      {/* Foto di Assisi a tutta larghezza, pulita: nessun testo, nessuna
+          velatura. Solo la filigrana del logo, come su tutte le foto reali. */}
+      <section className="relative h-[68svh] min-h-[380px] overflow-hidden max-md:mt-7 md:h-[100svh]">
         <WatermarkedImage
-          src="/images/territorio/assisi/assisi con tramonto.jpg"
-          alt="Assisi al tramonto, vista dalla campagna umbra intorno ad Agriturismo La Mora"
+          src="/images/territorio/assisi/basilica di assisi.jpg"
+          alt={PHOTO_ALT[locale]}
           fill
           sizes="100vw"
           className="object-cover"
         />
+      </section>
 
-        {/* Livello 1: overlay verde scuro — la fotografia deve restare leggibile. */}
-        <div
-          className="absolute inset-0 z-[1]"
-          aria-hidden="true"
-          style={{
-            background: "linear-gradient(180deg, rgba(8,17,13,.50) 0%, rgba(8,17,13,.62) 100%)",
-          }}
-        />
-
-        {/* Livello 2: contenuto narrativo. Centrato geometricamente, con una
-            leggera compensazione verso l'alto (non un padding enorme) per
-            restare a proprio agio sopra la booking bar fixed in fondo. */}
-        <div
-          className="relative z-[2] flex h-full w-full flex-col items-center justify-center px-8 text-center sm:px-10"
-          style={{ transform: "translateY(-25px)" }}
-        >
-          <div className="mx-auto flex max-w-[980px] flex-col items-center">
-            <span className="text-[11px] font-medium uppercase leading-none tracking-[0.32em] text-[#f1f1f1]">
-              {LABEL[locale]}
-            </span>
-            {/* Su mobile il testo pinnato (5 frasi) doveva stare per intero
-                dentro i 100svh della sezione sticky: al valore minimo del
-                clamp desktop (34px) superava l'altezza del viewport e le
-                ultime frasi finivano spinte sotto la booking bar fissa.
-                Sotto sm: dimensione fissa più piccola invece del clamp. */}
-            <div className="mt-6 font-display text-[21px] leading-[1.22] [text-wrap:balance] sm:mt-10 sm:text-[clamp(34px,2.4vw,46px)] sm:leading-[1.08]">
-              {WORDS_BY_SENTENCE.map((words, si) => (
-                <p key={si} className="my-[0.02em] sm:my-[0.06em]">
-                  {words.map((word, wi) => {
-                    const i = wordIndex++;
-                    return (
-                      <Fragment key={wi}>
-                        <span
-                          ref={(el) => {
-                            wordRefs.current[i] = el;
-                          }}
-                          // max-md + !important: su telefono sempre acceso,
-                          // anche sopra al colore inline scritto dallo scroll.
-                          className="max-md:text-[#f1f1f1]!"
-                          style={{ color: reducedMotion ? "#f1f1f1" : `rgba(241,241,241,${DIM_ALPHA})` }}
-                        >
-                          {word}
-                        </span>
-                        {wi < words.length - 1 ? " " : ""}
-                      </Fragment>
-                    );
-                  })}
-                </p>
-              ))}
+      <section
+        ref={wrapperRef}
+        id="section-story"
+        data-snap-exempt="true"
+        /* Tratto di scroll "trattenuto" (sezione più alta della viewport +
+           contenuto sticky) SOLO da md in su: su telefono la sezione scorre
+           via normalmente, testo già tutto acceso (vedi classe sulle parole) —
+           richiesta esplicita del titolare, il blocco temporaneo durante lo
+           scroll su mobile era sgradevole. */
+        className={reducedMotion ? "relative bg-olive-950" : "relative bg-olive-950 md:min-h-[150vh]"}
+      >
+        <div className="flex items-center justify-center overflow-hidden py-20 md:sticky md:top-0 md:h-[100svh] md:py-0">
+          {/* Contenuto narrativo. Centrato geometricamente, con una leggera
+              compensazione verso l'alto (non un padding enorme) per restare a
+              proprio agio sopra la booking bar fixed in fondo. */}
+          <div className="relative flex h-full w-full flex-col items-center justify-center px-8 text-center sm:px-10 md:-translate-y-[25px]">
+            <div className="mx-auto flex max-w-[980px] flex-col items-center">
+              <span className="text-[11px] font-medium uppercase leading-none tracking-[0.32em] text-[#f1f1f1]">
+                {LABEL[locale]}
+              </span>
+              {/* Su mobile il testo pinnato (5 frasi) doveva stare per intero
+                  dentro i 100svh della sezione sticky: al valore minimo del
+                  clamp desktop (34px) superava l'altezza del viewport e le
+                  ultime frasi finivano spinte sotto la booking bar fissa.
+                  Sotto sm: dimensione fissa più piccola invece del clamp. */}
+              <div className="mt-6 font-display text-[21px] leading-[1.22] [text-wrap:balance] sm:mt-10 sm:text-[clamp(34px,2.4vw,46px)] sm:leading-[1.08]">
+                {WORDS_BY_SENTENCE.map((words, si) => (
+                  <p key={si} className="my-[0.02em] sm:my-[0.06em]">
+                    {words.map((word, wi) => {
+                      const i = wordIndex++;
+                      return (
+                        <Fragment key={wi}>
+                          <span
+                            ref={(el) => {
+                              wordRefs.current[i] = el;
+                            }}
+                            // max-md + !important: su telefono sempre acceso,
+                            // anche sopra al colore inline scritto dallo scroll.
+                            className="max-md:text-[#f1f1f1]!"
+                            style={{ color: reducedMotion ? "#f1f1f1" : `rgba(241,241,241,${DIM_ALPHA})` }}
+                          >
+                            {word}
+                          </span>
+                          {wi < words.length - 1 ? " " : ""}
+                        </Fragment>
+                      );
+                    })}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
+import { BookingModalButton } from "@/components/booking-modal-button";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 
@@ -148,13 +149,9 @@ export function OttavoCentenarioPageView({ locale }: { locale: Locale }) {
               </p>
               <p className="mx-auto mt-3 max-w-[420px] text-[13px] leading-[1.7] text-ink-soft">{text.promoBody}</p>
               {/* Apre il modale di prenotazione di bed-and-breakfast.it come
-                  il resto del sito (classe rrp-widget-open-modal, vedi
-                  root-shell.tsx), non più WhatsApp: la promo vale proprio
-                  per chi prenota direttamente. */}
-              <button
-                type="button"
-                className="rrp-widget-open-modal group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]"
-              >
+                  il resto del sito (BookingModalButton), non più WhatsApp: la
+                  promo vale proprio per chi prenota direttamente. */}
+              <BookingModalButton className="group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]">
                 <HoverFill color="#8f7330" />
                 <span className="relative z-10 inline-flex items-center gap-2.5">
                   {text.promoCta}
@@ -162,7 +159,7 @@ export function OttavoCentenarioPageView({ locale }: { locale: Locale }) {
                     →
                   </span>
                 </span>
-              </button>
+              </BookingModalButton>
             </div>
           </Reveal>
 

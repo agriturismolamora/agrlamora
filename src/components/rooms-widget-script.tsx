@@ -16,12 +16,15 @@ function widgetSrc(struttura: string, locale: Locale) {
 }
 
 /* Sceglie lo script camere corretto (La Mora o Villa Relax) in base alla
-   pagina corrente, e lo ricarica se cambia lingua. Qualunque elemento con
-   classe "rrp-widget-open-modal" — sparso in tutto il sito, vedi
-   booking-bar.tsx, apartments-carousel.tsx, availability-box.tsx,
-   price-comparison-section.tsx, villa-booking-bar.tsx — apre la modale di
-   QUALUNQUE script sia attualmente caricato: non serve differenziare i
-   trigger, basta che sulla pagina giusta sia montato lo script giusto.
+   pagina corrente, e lo ricarica se cambia lingua. Tutti i CTA di
+   prenotazione del sito sono BookingModalButton (booking-modal-button.tsx),
+   che apre la modale di QUALUNQUE script sia attualmente caricato: non
+   serve differenziare i trigger, basta che sulla pagina giusta sia montato
+   lo script giusto. NB: lo script del fornitore aggancia da solo la classe
+   "rrp-widget-open-modal" solo agli elementi presenti al caricamento della
+   pagina (verificato leggendone il codice e riprodotto nel browser: dopo
+   una navigazione interna quei pulsanti non aprivano nulla), per questo
+   BookingModalButton chiama anche openRoomsWidget() direttamente.
 
    ATTENZIONE alla stabilità di questo componente: lo script del fornitore
    usa document.write() per iniettare markup (verificato caricandolo

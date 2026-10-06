@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { BookingModalButton } from "@/components/booking-modal-button";
 
 const WHATSAPP_HREF = "https://wa.me/393934363917";
 
@@ -14,7 +15,8 @@ function WhatsAppIcon() {
 
 /* Barra di prenotazione fissa in fondo allo schermo, condivisa da La Mora
    (booking-bar.tsx) e Villa Relax (villa-booking-bar.tsx): solo il CTA di
-   prenotazione + un pulsante WhatsApp, niente campi date/ospiti (richiesta
+   prenotazione (BookingModalButton, stessa modale di tutti gli altri CTA di
+   prenotazione del sito) + un pulsante WhatsApp, niente campi date/ospiti (richiesta
    esplicita del titolare — date e ospiti si scelgono direttamente nel
    modale di bed-and-breakfast.it che il CTA apre).
    Mobile: due pulsanti separati; da md in su: un'unica barra compatta.
@@ -24,12 +26,10 @@ function WhatsAppIcon() {
 export function StickyBookingCta({
   label,
   whatsappLabel,
-  onBook,
   night = false,
 }: {
   label: string;
   whatsappLabel: string;
-  onBook: () => void;
   night?: boolean;
 }) {
   const [nearFooter, setNearFooter] = useState(false);
@@ -67,15 +67,13 @@ export function StickyBookingCta({
           nearFooter ? "pointer-events-none" : "pointer-events-auto"
         }`}
       >
-        <button
-          type="button"
-          onClick={onBook}
+        <BookingModalButton
           className={`min-w-[200px] rounded-[3px] bg-raspberry px-7 py-4 font-sans text-[12.5px] font-semibold uppercase tracking-[0.04em] text-cream shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-colors duration-500 hover:bg-[#8a3844] md:min-w-[260px] md:rounded-none md:px-12 md:py-5 md:text-[12px] md:tracking-[0.05em] md:shadow-none ${
             night ? "md:bg-[#141a30] md:hover:bg-[#1c2440]" : ""
           }`}
         >
           {label}
-        </button>
+        </BookingModalButton>
         <a
           href={WHATSAPP_HREF}
           target="_blank"

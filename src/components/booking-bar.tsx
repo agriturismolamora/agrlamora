@@ -42,7 +42,6 @@ export function BookingBar({ locale }: { locale: Locale }) {
     <StickyBookingCta
       label={t("booking", "prenotaOra", locale)}
       whatsappLabel={t("booking", "whatsappAgriturismo", locale)}
-      onBook={() => openRoomsWidget()}
       night={inApartments}
     />
   );

@@ -3,7 +3,6 @@
 import { StickyBookingCta } from "@/components/sticky-booking-cta";
 import type { Locale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
-import { openRoomsWidget } from "@/lib/rrp-widget";
 
 /* Booking bar dedicata SOLO a Villa Relax — richiesta esplicita del
    titolare: non deve mai condividere stato, disponibilità o prenotazioni
@@ -18,7 +17,6 @@ export function VillaBookingBar({ locale }: { locale: Locale }) {
     <StickyBookingCta
       label={t("booking", "prenotaVilla", locale)}
       whatsappLabel={t("booking", "whatsappVilla", locale)}
-      onBook={() => openRoomsWidget()}
     />
   );
 }

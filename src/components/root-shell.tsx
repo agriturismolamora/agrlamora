@@ -93,10 +93,8 @@ export function RootShell({ locale, children }: { locale: Locale; children: Reac
             (verificato: "Hydration failed", root ri-renderizzato). */}
         <OctorateWidgetScript />
         {/* Widget camere di bed-and-breakfast.it: apre una modale di selezione
-            stanze/richiesta disponibilità quando si clicca un elemento con
-            classe "rrp-widget-open-modal" (vedi booking-bar.tsx,
-            availability-box.tsx, apartments-carousel.tsx,
-            price-comparison-section.tsx, villa-booking-bar.tsx). Deciso di
+            stanze/richiesta disponibilità dai CTA di prenotazione del sito
+            (BookingModalButton, vedi booking-modal-button.tsx). Deciso di
             abbandonare l'idea di un booking engine proprietario: bed-and-
             breakfast.it è ora il motore di prenotazione reale del sito,
             mascherato dietro la grafica de La Mora (vedi gli override in

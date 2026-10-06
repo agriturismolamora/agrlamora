@@ -773,7 +773,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           heading: "Prenota direttamente e organizza la visita senza pensieri.",
           body: "Scrivendoci parli con chi gestisce La Mora ogni giorno: nessun intermediario, condizioni migliori di quelle delle piattaforme.",
           label: "Vai alla prenotazione diretta",
-          href: "/#section-price-comparison",
+          href: BOOKING_MODAL_HREF,
         },
         { type: "h2", text: "Come arrivare da Agriturismo La Mora" },
         {
@@ -804,7 +804,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Tra Assisi e Santa Maria degli Angeli, un percorso naturalistico di circa 4 km attraversa uliveti secolari, bosco misto e il torrente Tescio — un modo diverso di vivere il territorio, lontano dalla pietra del centro storico.",
       introCtaHeading: "Vuoi camminare tra gli ulivi e tornare in piscina lo stesso pomeriggio?",
       introCtaLabel: "Verifica la disponibilità",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "Un bosco gestito dal FAI" },
         {
@@ -861,7 +861,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "A circa due chilometri a sud delle mura di Assisi, immerso negli ulivi, un piccolo santuario custodisce due delle storie più importanti del francescanesimo: la conversione di Francesco e la vita di Chiara.",
       introCtaHeading: "Un momento di silenzio dopo la Basilica: organizza il soggiorno.",
       introCtaLabel: "Verifica la disponibilità",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "‘Ripara la mia chiesa’" },
         {
@@ -948,7 +948,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           type: "cta",
           heading: "Organizza la gita con calma: prenota direttamente il tuo soggiorno.",
           label: "Verifica la disponibilità",
-          href: "/#section-price-comparison",
+          href: BOOKING_MODAL_HREF,
         },
         { type: "h2", text: "Da Agriturismo La Mora" },
         {
@@ -1039,7 +1039,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Ogni anno, generalmente a fine marzo, Umbriafiere a Bastia Umbra ospita Agriumbria: la mostra nazionale di agricoltura, zootecnia e alimentazione più importante della regione — a soli 3 km da Agriturismo La Mora.",
       introCtaHeading: "Stai organizzando il soggiorno per Agriumbria?",
       introCtaLabel: "Verifica la disponibilità",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "Cos'è Agriumbria" },
         {
@@ -1091,7 +1091,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
       finalCtaHeading: "Prenota il tuo soggiorno per Agriumbria.",
       finalCtaBody: "A 3 km da Umbriafiere, a 5 km da Assisi: la base comoda per la fiera.",
       finalCtaLabel: "Prenota direttamente",
-      finalCtaHref: "/#section-price-comparison",
+      finalCtaHref: BOOKING_MODAL_HREF,
     },
     {
       slug: "caccia-village-umbriafiere",
@@ -1105,7 +1105,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Ogni anno, generalmente a metà maggio, Umbriafiere a Bastia Umbra ospita Caccia Village: la fiera dedicata al mondo della caccia, tra Perugia e Assisi — a soli 3 km da Agriturismo La Mora.",
       introCtaHeading: "Stai organizzando il soggiorno per Caccia Village?",
       introCtaLabel: "Verifica la disponibilità",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "Cos'è Caccia Village" },
         {
@@ -1158,7 +1158,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
       finalCtaHeading: "Prenota il tuo soggiorno per Caccia Village.",
       finalCtaBody: "A 3 km da Umbriafiere, a 5 km da Assisi: la base comoda per la fiera.",
       finalCtaLabel: "Prenota direttamente",
-      finalCtaHref: "/#section-price-comparison",
+      finalCtaHref: BOOKING_MODAL_HREF,
     },
   ],
   en: [
@@ -1213,7 +1213,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           heading: "Book directly and plan your visit without a worry.",
           body: "By writing to us, you speak directly with the people who run La Mora every day: no middlemen, better terms than the platforms.",
           label: "Go to direct booking",
-          href: "/#section-price-comparison",
+          href: BOOKING_MODAL_HREF,
         },
         { type: "h2", text: "Getting there from Agriturismo La Mora" },
         {
@@ -1244,7 +1244,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Between Assisi and Santa Maria degli Angeli, a roughly 4 km nature trail crosses centuries-old olive groves, mixed woodland and the Tescio stream — a different way to experience the area, away from the stone of the historic centre.",
       introCtaHeading: "Want to walk among the olive trees and be back at the pool the same afternoon?",
       introCtaLabel: "Check availability",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "A wood cared for by the FAI" },
         {
@@ -1301,7 +1301,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "About two kilometres south of Assisi's walls, surrounded by olive trees, a small sanctuary holds two of the most important stories in Franciscan history: Francis's conversion and Clare's life.",
       introCtaHeading: "A moment of quiet after the Basilica: plan your stay.",
       introCtaLabel: "Check availability",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "‘Repair my church’" },
         {
@@ -1388,7 +1388,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           type: "cta",
           heading: "Plan the trip with no rush: book your stay directly.",
           label: "Check availability",
-          href: "/#section-price-comparison",
+          href: BOOKING_MODAL_HREF,
         },
         { type: "h2", text: "From Agriturismo La Mora" },
         {
@@ -1479,7 +1479,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Every year, generally in late March, Umbriafiere in Bastia Umbra hosts Agriumbria: the region's leading agriculture, livestock and food trade show — just 3 km from Agriturismo La Mora.",
       introCtaHeading: "Planning your stay for Agriumbria?",
       introCtaLabel: "Check availability",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "What is Agriumbria" },
         {
@@ -1531,7 +1531,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
       finalCtaHeading: "Book your stay for Agriumbria.",
       finalCtaBody: "3 km from Umbriafiere, 5 km from Assisi: the convenient base for the fair.",
       finalCtaLabel: "Book directly",
-      finalCtaHref: "/#section-price-comparison",
+      finalCtaHref: BOOKING_MODAL_HREF,
     },
     {
       slug: "caccia-village-umbriafiere",
@@ -1545,7 +1545,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Every year, generally in mid-May, Umbriafiere in Bastia Umbra hosts Caccia Village: the trade fair dedicated to the hunting world, between Perugia and Assisi — just 3 km from Agriturismo La Mora.",
       introCtaHeading: "Planning your stay for Caccia Village?",
       introCtaLabel: "Check availability",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "What is Caccia Village" },
         {
@@ -1598,7 +1598,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
       finalCtaHeading: "Book your stay for Caccia Village.",
       finalCtaBody: "3 km from Umbriafiere, 5 km from Assisi: the convenient base for the fair.",
       finalCtaLabel: "Book directly",
-      finalCtaHref: "/#section-price-comparison",
+      finalCtaHref: BOOKING_MODAL_HREF,
     },
   ],
   fr: [
@@ -1653,7 +1653,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           heading: "Réservez en direct et organisez votre visite sans souci.",
           body: "En nous écrivant, vous parlez directement à ceux qui gèrent La Mora au quotidien : aucun intermédiaire, de meilleures conditions que sur les plateformes.",
           label: "Aller à la réservation directe",
-          href: "/#section-price-comparison",
+          href: BOOKING_MODAL_HREF,
         },
         { type: "h2", text: "Comment y aller depuis Agriturismo La Mora" },
         {
@@ -1684,7 +1684,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Entre Assise et Santa Maria degli Angeli, un parcours naturaliste d'environ 4 km traverse des oliveraies séculaires, un bois mixte et le torrent Tescio — une autre façon de découvrir le territoire, loin de la pierre du centre historique.",
       introCtaHeading: "Envie de marcher parmi les oliviers et de retrouver la piscine le même après-midi ?",
       introCtaLabel: "Vérifier les disponibilités",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "Un bois géré par le FAI" },
         {
@@ -1741,7 +1741,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "À environ deux kilomètres au sud des remparts d'Assise, niché parmi les oliviers, un petit sanctuaire abrite deux des histoires les plus importantes du franciscanisme : la conversion de François et la vie de Claire.",
       introCtaHeading: "Un moment de calme après la basilique : organisez votre séjour.",
       introCtaLabel: "Vérifier les disponibilités",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "‘Répare mon église’" },
         {
@@ -1828,7 +1828,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           type: "cta",
           heading: "Organisez l'excursion tranquillement : réservez votre séjour en direct.",
           label: "Vérifier les disponibilités",
-          href: "/#section-price-comparison",
+          href: BOOKING_MODAL_HREF,
         },
         { type: "h2", text: "Depuis Agriturismo La Mora" },
         {
@@ -1919,7 +1919,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Chaque année, généralement fin mars, Umbriafiere à Bastia Umbra accueille Agriumbria : le plus grand salon régional de l'agriculture, de l'élevage et de l'alimentation — à seulement 3 km d'Agriturismo La Mora.",
       introCtaHeading: "Vous organisez votre séjour pour Agriumbria ?",
       introCtaLabel: "Vérifier les disponibilités",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "Qu'est-ce qu'Agriumbria" },
         {
@@ -1971,7 +1971,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
       finalCtaHeading: "Réservez votre séjour pour Agriumbria.",
       finalCtaBody: "À 3 km d'Umbriafiere, à 5 km d'Assise : la base pratique pour le salon.",
       finalCtaLabel: "Réserver en direct",
-      finalCtaHref: "/#section-price-comparison",
+      finalCtaHref: BOOKING_MODAL_HREF,
     },
     {
       slug: "caccia-village-umbriafiere",
@@ -1985,7 +1985,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Chaque année, généralement mi-mai, Umbriafiere à Bastia Umbra accueille Caccia Village : le salon dédié au monde de la chasse, entre Pérouse et Assise — à seulement 3 km d'Agriturismo La Mora.",
       introCtaHeading: "Vous organisez votre séjour pour Caccia Village ?",
       introCtaLabel: "Vérifier les disponibilités",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "Qu'est-ce que Caccia Village" },
         {
@@ -2038,7 +2038,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
       finalCtaHeading: "Réservez votre séjour pour Caccia Village.",
       finalCtaBody: "À 3 km d'Umbriafiere, à 5 km d'Assise : la base pratique pour le salon.",
       finalCtaLabel: "Réserver en direct",
-      finalCtaHref: "/#section-price-comparison",
+      finalCtaHref: BOOKING_MODAL_HREF,
     },
   ],
   de: [
@@ -2093,7 +2093,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           heading: "Buchen Sie direkt und planen Sie den Besuch ganz ohne Sorgen.",
           body: "Wenn Sie uns schreiben, sprechen Sie direkt mit denen, die La Mora jeden Tag führen: kein Vermittler, bessere Konditionen als auf den Plattformen.",
           label: "Zur Direktbuchung",
-          href: "/#section-price-comparison",
+          href: BOOKING_MODAL_HREF,
         },
         { type: "h2", text: "Anfahrt von Agriturismo La Mora" },
         {
@@ -2124,7 +2124,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Zwischen Assisi und Santa Maria degli Angeli führt ein etwa 4 km langer Naturpfad durch jahrhundertealte Olivenhaine, Mischwald und entlang des Bachs Tescio — eine andere Art, die Gegend zu erleben, fernab vom Stein der Altstadt.",
       introCtaHeading: "Lust, zwischen Olivenbäumen zu spazieren und am selben Nachmittag wieder am Pool zu sein?",
       introCtaLabel: "Verfügbarkeit prüfen",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "Ein vom FAI gepflegter Wald" },
         {
@@ -2181,7 +2181,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Etwa zwei Kilometer südlich der Mauern von Assisi, umgeben von Olivenbäumen, bewahrt ein kleines Heiligtum zwei der wichtigsten Geschichten des Franziskanertums: die Bekehrung des Franziskus und das Leben der Klara.",
       introCtaHeading: "Ein ruhiger Moment nach der Basilika: planen Sie den Aufenthalt.",
       introCtaLabel: "Verfügbarkeit prüfen",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "‘Stelle meine Kirche wieder her’" },
         {
@@ -2268,7 +2268,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           type: "cta",
           heading: "Planen Sie den Ausflug entspannt: buchen Sie Ihren Aufenthalt direkt.",
           label: "Verfügbarkeit prüfen",
-          href: "/#section-price-comparison",
+          href: BOOKING_MODAL_HREF,
         },
         { type: "h2", text: "Von Agriturismo La Mora aus" },
         {
@@ -2359,7 +2359,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Jedes Jahr, in der Regel Ende März, beherbergt die Umbriafiere in Bastia Umbra die Agriumbria: die wichtigste regionale Messe für Landwirtschaft, Viehzucht und Ernährung — nur 3 km von Agriturismo La Mora entfernt.",
       introCtaHeading: "Planen Sie den Aufenthalt für die Agriumbria?",
       introCtaLabel: "Verfügbarkeit prüfen",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "Was ist die Agriumbria" },
         {
@@ -2411,7 +2411,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
       finalCtaHeading: "Buchen Sie Ihren Aufenthalt für die Agriumbria.",
       finalCtaBody: "3 km von der Umbriafiere, 5 km von Assisi: der praktische Ausgangspunkt für die Messe.",
       finalCtaLabel: "Direkt buchen",
-      finalCtaHref: "/#section-price-comparison",
+      finalCtaHref: BOOKING_MODAL_HREF,
     },
     {
       slug: "caccia-village-umbriafiere",
@@ -2425,7 +2425,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         "Jedes Jahr, in der Regel Mitte Mai, beherbergt die Umbriafiere in Bastia Umbra das Caccia Village: die Messe für die Welt der Jagd, zwischen Perugia und Assisi — nur 3 km von Agriturismo La Mora entfernt.",
       introCtaHeading: "Planen Sie den Aufenthalt für Caccia Village?",
       introCtaLabel: "Verfügbarkeit prüfen",
-      introCtaHref: "/#section-price-comparison",
+      introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "Was ist Caccia Village" },
         {
@@ -2478,7 +2478,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
       finalCtaHeading: "Buchen Sie Ihren Aufenthalt für Caccia Village.",
       finalCtaBody: "3 km von der Umbriafiere, 5 km von Assisi: der praktische Ausgangspunkt für die Messe.",
       finalCtaLabel: "Direkt buchen",
-      finalCtaHref: "/#section-price-comparison",
+      finalCtaHref: BOOKING_MODAL_HREF,
     },
   ],
 };
