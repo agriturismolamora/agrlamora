@@ -2,15 +2,14 @@ import type { Locale } from "@/lib/i18n";
 import type { PromoId } from "@/data/promo";
 import {
   EUROCHOCOLATE_2024_PHOTO,
-  CIOCCOLATO_FUSO_PHOTO,
+  CIOCCOLATO_FONDENTE_PHOTO,
   SPOGLIAZIONE_FACCIATA_PHOTO,
   SPOGLIAZIONE_ROSONE_PHOTO,
   SPOGLIAZIONE_VEDUTA_PHOTO,
-  ALBERO_GUBBIO_PHOTO,
   GUBBIO_NATALE_PIAZZA_PHOTO,
   ALBERO_TRASIMENO_PHOTO,
   ROCCA_DEL_LEONE_PHOTO,
-  TRASIMENO_VISTA_PHOTO,
+  TRASIMENO_VELE_PHOTO,
   RASIGLIA_BORGO_PHOTO,
   RASIGLIA_MULINO_PHOTO,
   RASIGLIA_TELAIO_PHOTO,
@@ -107,8 +106,14 @@ export type BlogPost = {
    Eurochocolate 2024 da Wikimedia Commons (vedi src/data/photo-credits.ts);
    nel testo, alternate a foto nostre ("il festival di giorno, la sera in
    campagna"). Foto CC di Eurochocolate valide trovate: una sola (vedi
-   photo-credits.ts per i criteri). */
-const EUROCHOCOLATE_CAMINO = "/images/colazione/colazione bio agriturismo la mora.webp";
+   photo-credits.ts per i criteri).
+   07/10/2026 (soglia: copertine >= 2400 px, interne >= 1600 px): copertina
+   riesportata a 2400 px; foto Flickr del cioccolato sostituita con una foto
+   Commons illustrativa; il camino (1200×900) sostituito dall'esterno HD (qui)
+   e dal soggiorno di Gemelli (articolo sui mercatini). Il parco giochi resta
+   a 800×531: non esiste una foto nostra HD, va scattata. */
+const LAMORA_ESTERNO = "/images/home/esterno agriturismo la mora carretto e agriturismo.webp";
+const LAMORA_SALOTTO_GEMELLI = "/images/alloggi/appartamento gemelli/salotto gemelli.jpeg";
 const EUROCHOCOLATE_PARCO = "/images/piscina/esterno parco agriturismo con scivolo per bambini.jpg";
 const EUROCHOCOLATE_APARTMENT = "/images/alloggi/appartamento bilancia/foto orizzontale letto e sala intera orizzontale bilancia.jpeg";
 const EUROCHOCOLATE_OFFICIAL_URL = "https://www.eurochocolate.com/perugia2026/";
@@ -193,10 +198,10 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
-        src: CIOCCOLATO_FUSO_PHOTO.src,
-        alt: CIOCCOLATO_FUSO_PHOTO.alt.it,
-        caption: CIOCCOLATO_FUSO_PHOTO.caption.it,
-        credit: CIOCCOLATO_FUSO_PHOTO.credit,
+        src: CIOCCOLATO_FONDENTE_PHOTO.src,
+        alt: CIOCCOLATO_FONDENTE_PHOTO.alt.it,
+        caption: CIOCCOLATO_FONDENTE_PHOTO.caption.it,
+        credit: CIOCCOLATO_FONDENTE_PHOTO.credit,
       },
       { type: "h2", text: "Perché Perugia è la città del cioccolato?" },
       {
@@ -234,9 +239,9 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
-        src: EUROCHOCOLATE_CAMINO,
-        alt: "Sala della colazione di Agriturismo La Mora con il camino acceso e la tavola apparecchiata",
-        caption: "La sala della colazione di Agriturismo La Mora, con il camino acceso.",
+        src: LAMORA_ESTERNO,
+        alt: "Esterno di Agriturismo La Mora: un vecchio carretto agricolo tra i fiori, davanti alla casa e a un grande olivo",
+        caption: "Agriturismo La Mora, nella campagna di Assisi.",
       },
       {
         type: "image",
@@ -364,10 +369,10 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
-        src: CIOCCOLATO_FUSO_PHOTO.src,
-        alt: CIOCCOLATO_FUSO_PHOTO.alt.en,
-        caption: CIOCCOLATO_FUSO_PHOTO.caption.en,
-        credit: CIOCCOLATO_FUSO_PHOTO.credit,
+        src: CIOCCOLATO_FONDENTE_PHOTO.src,
+        alt: CIOCCOLATO_FONDENTE_PHOTO.alt.en,
+        caption: CIOCCOLATO_FONDENTE_PHOTO.caption.en,
+        credit: CIOCCOLATO_FONDENTE_PHOTO.credit,
       },
       { type: "h2", text: "Why is Perugia Italy's chocolate city?" },
       {
@@ -405,9 +410,9 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
-        src: EUROCHOCOLATE_CAMINO,
-        alt: "Breakfast room at Agriturismo La Mora with the fire lit and the table laid",
-        caption: "The breakfast room at Agriturismo La Mora, with the fire lit.",
+        src: LAMORA_ESTERNO,
+        alt: "Outside Agriturismo La Mora: an old farm cart among the flowers, in front of the house and a large olive tree",
+        caption: "Agriturismo La Mora, in the countryside outside Assisi.",
       },
       {
         type: "image",
@@ -535,10 +540,10 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
-        src: CIOCCOLATO_FUSO_PHOTO.src,
-        alt: CIOCCOLATO_FUSO_PHOTO.alt.fr,
-        caption: CIOCCOLATO_FUSO_PHOTO.caption.fr,
-        credit: CIOCCOLATO_FUSO_PHOTO.credit,
+        src: CIOCCOLATO_FONDENTE_PHOTO.src,
+        alt: CIOCCOLATO_FONDENTE_PHOTO.alt.fr,
+        caption: CIOCCOLATO_FONDENTE_PHOTO.caption.fr,
+        credit: CIOCCOLATO_FONDENTE_PHOTO.credit,
       },
       { type: "h2", text: "Pourquoi Pérouse est-elle la ville du chocolat ?" },
       {
@@ -576,9 +581,9 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
-        src: EUROCHOCOLATE_CAMINO,
-        alt: "Salle du petit-déjeuner de l'Agriturismo La Mora, feu allumé dans la cheminée et table dressée",
-        caption: "La salle du petit-déjeuner de l'Agriturismo La Mora, feu allumé dans la cheminée.",
+        src: LAMORA_ESTERNO,
+        alt: "L'extérieur de l'Agriturismo La Mora : une ancienne charrette agricole parmi les fleurs, devant la maison et un grand olivier",
+        caption: "L'Agriturismo La Mora, dans la campagne d'Assise.",
       },
       {
         type: "image",
@@ -706,10 +711,10 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
-        src: CIOCCOLATO_FUSO_PHOTO.src,
-        alt: CIOCCOLATO_FUSO_PHOTO.alt.de,
-        caption: CIOCCOLATO_FUSO_PHOTO.caption.de,
-        credit: CIOCCOLATO_FUSO_PHOTO.credit,
+        src: CIOCCOLATO_FONDENTE_PHOTO.src,
+        alt: CIOCCOLATO_FONDENTE_PHOTO.alt.de,
+        caption: CIOCCOLATO_FONDENTE_PHOTO.caption.de,
+        credit: CIOCCOLATO_FONDENTE_PHOTO.credit,
       },
       { type: "h2", text: "Warum ist Perugia die Stadt der Schokolade?" },
       {
@@ -747,9 +752,9 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
-        src: EUROCHOCOLATE_CAMINO,
-        alt: "Frühstücksraum des Agriturismo La Mora mit brennendem Kamin und gedecktem Tisch",
-        caption: "Der Frühstücksraum des Agriturismo La Mora mit brennendem Kamin.",
+        src: LAMORA_ESTERNO,
+        alt: "Außenbereich des Agriturismo La Mora: ein alter Bauernkarren zwischen Blumen vor dem Haus und einem großen Olivenbaum",
+        caption: "Das Agriturismo La Mora auf dem Land bei Assisi.",
       },
       {
         type: "image",
@@ -820,7 +825,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
 const LAMORA_BASILICA = "/images/territorio/assisi/basilica di assisi.jpg";
 const LAMORA_ACQUARIO = "/images/alloggi/appartamento acquario/orizzontale letto acquario.jpeg";
 const LAMORA_DALL_ALTO = "/images/home/foto dell agriturismo dall alto.webp";
-const LAMORA_PISCINA = "/images/piscina/piscina agriturismo la mora.webp";
+const LAMORA_PISCINA = "/images/piscina/foto piscina di giorno.webp";
 
 /* Copertina e blocchi immagine da una foto con licenza (photo-credits.ts):
    alt, didascalia con l'anno reale e credito sempre insieme. */
@@ -1547,8 +1552,7 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
     title: "Mercatini di Natale in Umbria: Perugia, Gubbio e il Trasimeno",
     excerpt: "Mercatini e luci di Natale in Umbria: Perugia, l'albero di Gubbio, l'albero sull'acqua del Trasimeno e il presepe vivente di Rasiglia, con date e distanze da Assisi.",
     metaDescription: "Mercatini di Natale in Umbria: Perugia, Gubbio e il suo albero da record, l'albero sul lago Trasimeno e il presepe di Rasiglia. Date, distanze e consigli.",
-    ...cover(ALBERO_GUBBIO_PHOTO, "it"),
-    imagePosition: "30% 50%",
+    ...cover(GUBBIO_NATALE_PIAZZA_PHOTO, "it"),
     datePublished: "2026-10-06",
     inBreve: {
       heading: "In breve",
@@ -1586,7 +1590,6 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "A Gubbio. Dal 1981, sulle pendici del Monte Ingino, sopra la città, oltre 300 luci disegnano un albero alto 750 metri, con una base di 450 metri; nel 1991 l'albero di Natale di Gubbio è entrato nel Guinness dei primati come il più grande del mondo. Per tradizione si accende il 7 dicembre, vigilia dell'Immacolata, e resta acceso ogni sera fino a tarda notte: nell'edizione 2025/26, secondo Umbria Tourism, dal 7 dicembre all'11 gennaio, dalle 17:00.",
       },
-      credited(GUBBIO_NATALE_PIAZZA_PHOTO, "it"),
       {
         type: "p",
         text: "Da fine novembre la grande Piazza dei Quaranta Martiri ospita i mercatini di Natale, con bancarelle in stile tirolese: artigianato, decorazioni e specialità gastronomiche. Gubbio è a 54,7 km da La Mora, circa 42 minuti in auto lungo la SS318.",
@@ -1627,9 +1630,9 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
-        src: EUROCHOCOLATE_CAMINO,
-        alt: "Sala della colazione di Agriturismo La Mora con il camino acceso e la tavola apparecchiata",
-        caption: "La sala della colazione di Agriturismo La Mora, con il camino acceso.",
+        src: LAMORA_SALOTTO_GEMELLI,
+        alt: "Soggiorno con angolo cottura dell'appartamento Gemelli di Agriturismo La Mora: divano, tavolo con tovaglia a quadri e finestra sul verde",
+        caption: "Il soggiorno con angolo cottura dell'appartamento Gemelli.",
       },
       {
         type: "links",
@@ -1669,8 +1672,7 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
     title: "Christmas markets in Umbria: Perugia, Gubbio and Lake Trasimeno",
     excerpt: "Christmas markets and lights in Umbria: Perugia, the Gubbio tree, the tree drawn on Lake Trasimeno and the living nativity of Rasiglia, with dates and distances from Assisi.",
     metaDescription: "Christmas markets in Umbria: Perugia, Gubbio and its record-breaking tree, the tree on Lake Trasimeno and Rasiglia's nativity. Dates, distances and tips.",
-    ...cover(ALBERO_GUBBIO_PHOTO, "en"),
-    imagePosition: "30% 50%",
+    ...cover(GUBBIO_NATALE_PIAZZA_PHOTO, "en"),
     datePublished: "2026-10-06",
     inBreve: {
       heading: "At a glance",
@@ -1708,7 +1710,6 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "In Gubbio. Since 1981, on the slopes of Monte Ingino above the town, more than 300 lights have drawn a tree 750 metres high with a 450-metre base; in 1991 the Gubbio Christmas tree entered the Guinness World Records as the largest in the world. It is traditionally lit on 7 December, the eve of the Immaculate Conception, and stays lit every evening until late at night: in the 2025/26 edition, according to Umbria Tourism, from 7 December to 11 January, from 17:00.",
       },
-      credited(GUBBIO_NATALE_PIAZZA_PHOTO, "en"),
       {
         type: "p",
         text: "From late November the large Piazza dei Quaranta Martiri hosts the Christmas markets, with Tyrolean-style stalls selling crafts, decorations and food specialities. Gubbio is 54.7 km from La Mora, about 42 minutes by car along the SS318.",
@@ -1749,9 +1750,9 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
-        src: EUROCHOCOLATE_CAMINO,
-        alt: "Breakfast room at Agriturismo La Mora with the fire lit and the table laid",
-        caption: "The breakfast room at Agriturismo La Mora, with the fire lit.",
+        src: LAMORA_SALOTTO_GEMELLI,
+        alt: "Living room with kitchenette in the Gemelli apartment at Agriturismo La Mora: sofa, table with a checked tablecloth and a window onto the greenery",
+        caption: "The living room and kitchenette of the Gemelli apartment.",
       },
       {
         type: "links",
@@ -1791,8 +1792,7 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
     title: "Marchés de Noël en Ombrie : Pérouse, Gubbio et le lac Trasimène",
     excerpt: "Marchés et lumières de Noël en Ombrie : Pérouse, le sapin de Gubbio, le sapin dessiné sur le lac Trasimène et la crèche vivante de Rasiglia, avec dates et distances depuis Assise.",
     metaDescription: "Marchés de Noël en Ombrie : Pérouse, Gubbio et son sapin record, le sapin sur le lac Trasimène et la crèche de Rasiglia. Dates, distances et conseils.",
-    ...cover(ALBERO_GUBBIO_PHOTO, "fr"),
-    imagePosition: "30% 50%",
+    ...cover(GUBBIO_NATALE_PIAZZA_PHOTO, "fr"),
     datePublished: "2026-10-06",
     inBreve: {
       heading: "En bref",
@@ -1830,7 +1830,6 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "À Gubbio. Depuis 1981, sur les pentes du Monte Ingino au-dessus de la ville, plus de 300 lumières dessinent un sapin haut de 750 mètres, avec une base de 450 mètres ; en 1991, le sapin de Noël de Gubbio est entré au Guinness des records comme le plus grand du monde. Il s'allume traditionnellement le 7 décembre, veille de l'Immaculée Conception, et reste allumé chaque soir jusque tard dans la nuit : lors de l'édition 2025/26, selon Umbria Tourism, du 7 décembre au 11 janvier, à partir de 17h00.",
       },
-      credited(GUBBIO_NATALE_PIAZZA_PHOTO, "fr"),
       {
         type: "p",
         text: "Dès la fin novembre, la grande Piazza dei Quaranta Martiri accueille les marchés de Noël, avec des stands de style tyrolien : artisanat, décorations et spécialités gastronomiques. Gubbio est à 54,7 km de La Mora, environ 42 minutes en voiture par la SS318.",
@@ -1871,9 +1870,9 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
-        src: EUROCHOCOLATE_CAMINO,
-        alt: "Salle du petit-déjeuner de l'Agriturismo La Mora, feu allumé dans la cheminée et table dressée",
-        caption: "La salle du petit-déjeuner de l'Agriturismo La Mora, feu allumé dans la cheminée.",
+        src: LAMORA_SALOTTO_GEMELLI,
+        alt: "Séjour avec coin cuisine de l'appartement Gemelli à l'Agriturismo La Mora : canapé, table à nappe à carreaux et fenêtre sur la verdure",
+        caption: "Le séjour avec coin cuisine de l'appartement Gemelli.",
       },
       {
         type: "links",
@@ -1913,8 +1912,7 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
     title: "Weihnachtsmärkte in Umbrien: Perugia, Gubbio und der Trasimenische See",
     excerpt: "Weihnachtsmärkte und Lichter in Umbrien: Perugia, der Baum von Gubbio, der auf den Trasimenischen See gezeichnete Baum und die lebende Krippe von Rasiglia – mit Terminen und Entfernungen ab Assisi.",
     metaDescription: "Weihnachtsmärkte in Umbrien: Perugia, Gubbio mit seinem Rekordbaum, der Baum auf dem Trasimenischen See und die Krippe von Rasiglia. Termine und Tipps.",
-    ...cover(ALBERO_GUBBIO_PHOTO, "de"),
-    imagePosition: "30% 50%",
+    ...cover(GUBBIO_NATALE_PIAZZA_PHOTO, "de"),
     datePublished: "2026-10-06",
     inBreve: {
       heading: "Auf einen Blick",
@@ -1952,7 +1950,6 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "In Gubbio. Seit 1981 zeichnen an den Hängen des Monte Ingino oberhalb der Stadt mehr als 300 Lichter einen 750 Meter hohen Baum mit 450 Metern Basis; 1991 kam der Weihnachtsbaum von Gubbio als größter der Welt ins Guinness-Buch der Rekorde. Traditionell wird er am 7. Dezember angezündet, am Vorabend von Mariä Empfängnis, und leuchtet jeden Abend bis spät in die Nacht: in der Ausgabe 2025/26 laut Umbria Tourism vom 7. Dezember bis 11. Januar, ab 17:00 Uhr.",
       },
-      credited(GUBBIO_NATALE_PIAZZA_PHOTO, "de"),
       {
         type: "p",
         text: "Ab Ende November finden auf der großen Piazza dei Quaranta Martiri die Weihnachtsmärkte statt, mit Ständen im Tiroler Stil: Kunsthandwerk, Dekoration und kulinarische Spezialitäten. Gubbio liegt 54,7 km von La Mora entfernt, rund 42 Minuten mit dem Auto über die SS318.",
@@ -1993,9 +1990,9 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "image",
-        src: EUROCHOCOLATE_CAMINO,
-        alt: "Frühstücksraum des Agriturismo La Mora mit brennendem Kamin und gedecktem Tisch",
-        caption: "Der Frühstücksraum des Agriturismo La Mora mit brennendem Kamin.",
+        src: LAMORA_SALOTTO_GEMELLI,
+        alt: "Wohnraum mit Kochecke der Ferienwohnung Gemelli im Agriturismo La Mora: Sofa, Tisch mit karierter Tischdecke und Fenster ins Grüne",
+        caption: "Wohnraum mit Kochecke der Ferienwohnung Gemelli.",
       },
       {
         type: "links",
@@ -2041,7 +2038,6 @@ const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
     excerpt: "A Castiglione del Lago un albero di Natale di luci lungo 1.080 metri disegnato sull'acqua del Trasimeno: date 2026/27, biglietti, da dove si vede e come arrivare da Assisi.",
     metaDescription: "L'albero di Natale sul lago Trasimeno a Castiglione del Lago: date 2026/27, orari, biglietti, da dove si vede e come arrivare da Assisi in circa 50 minuti.",
     ...cover(ALBERO_TRASIMENO_PHOTO, "it"),
-    imagePosition: "50% 0%",
     datePublished: "2026-10-06",
     inBreve: {
       heading: "In breve",
@@ -2096,7 +2092,7 @@ const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "Lungo via Belvedere ci sono le Casette del Natale, con artigianato e prodotti tipici, e la pista di pattinaggio del Ghiaccio Park; il programma 2026 comprende anche la mostra di mattoncini «Castiglione del Lego». Di giorno vale la pena passeggiare nel centro storico di Castiglione del Lago, sul promontorio affacciato sul lago.",
       },
-      credited(TRASIMENO_VISTA_PHOTO, "it"),
+      credited(TRASIMENO_VELE_PHOTO, "it"),
       { type: "h2", text: "Come arrivare a Castiglione del Lago da Assisi?" },
       {
         type: "p",
@@ -2153,7 +2149,6 @@ const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
     excerpt: "At Castiglione del Lago, a Christmas tree of lights 1,080 metres long drawn on the water of Lake Trasimeno: 2026/27 dates, tickets, where to see it from and how to get there from Assisi.",
     metaDescription: "The Christmas tree on Lake Trasimeno at Castiglione del Lago: 2026/27 dates, opening hours, tickets, where to see it and how to get there from Assisi.",
     ...cover(ALBERO_TRASIMENO_PHOTO, "en"),
-    imagePosition: "50% 0%",
     datePublished: "2026-10-06",
     inBreve: {
       heading: "At a glance",
@@ -2208,7 +2203,7 @@ const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "Along Via Belvedere you'll find the Casette del Natale, little Christmas huts selling crafts and local products, and the Ghiaccio Park ice rink; the 2026 programme also includes “Castiglione del Lego”, an exhibition of building bricks. By day it's worth strolling through the historic centre of Castiglione del Lago, on its promontory overlooking the lake.",
       },
-      credited(TRASIMENO_VISTA_PHOTO, "en"),
+      credited(TRASIMENO_VELE_PHOTO, "en"),
       { type: "h2", text: "How do you get to Castiglione del Lago from Assisi?" },
       {
         type: "p",
@@ -2265,7 +2260,6 @@ const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
     excerpt: "À Castiglione del Lago, un sapin de Noël de lumières long de 1 080 mètres dessiné sur l'eau du lac Trasimène : dates 2026/27, billets, d'où le voir et comment venir depuis Assise.",
     metaDescription: "Le sapin de Noël sur le lac Trasimène à Castiglione del Lago : dates 2026/27, horaires, billets, d'où le voir et comment s'y rendre depuis Assise.",
     ...cover(ALBERO_TRASIMENO_PHOTO, "fr"),
-    imagePosition: "50% 0%",
     datePublished: "2026-10-06",
     inBreve: {
       heading: "En bref",
@@ -2320,7 +2314,7 @@ const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "Le long de la via Belvedere, on trouve les Casette del Natale, des chalets d'artisanat et de produits typiques, et la patinoire du Ghiaccio Park ; le programme 2026 comprend aussi « Castiglione del Lego », une exposition de briques de construction. Le jour, une promenade dans le centre historique de Castiglione del Lago, sur son promontoire au-dessus du lac, vaut le détour.",
       },
-      credited(TRASIMENO_VISTA_PHOTO, "fr"),
+      credited(TRASIMENO_VELE_PHOTO, "fr"),
       { type: "h2", text: "Comment aller à Castiglione del Lago depuis Assise ?" },
       {
         type: "p",
@@ -2377,7 +2371,6 @@ const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
     excerpt: "In Castiglione del Lago ein 1.080 Meter langer Weihnachtsbaum aus Lichtern auf dem Wasser des Trasimenischen Sees: Termine 2026/27, Tickets, von wo man ihn sieht und Anreise ab Assisi.",
     metaDescription: "Der Weihnachtsbaum auf dem Trasimenischen See in Castiglione del Lago: Termine 2026/27, Öffnungszeiten, Tickets, beste Sicht und Anreise ab Assisi.",
     ...cover(ALBERO_TRASIMENO_PHOTO, "de"),
-    imagePosition: "50% 0%",
     datePublished: "2026-10-06",
     inBreve: {
       heading: "Auf einen Blick",
@@ -2432,7 +2425,7 @@ const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "Entlang der Via Belvedere stehen die Casette del Natale, Weihnachtshütten mit Kunsthandwerk und regionalen Produkten, und die Eisbahn des Ghiaccio Park; zum Programm 2026 gehört auch „Castiglione del Lego“, eine Ausstellung mit Bausteinen. Tagsüber lohnt ein Spaziergang durch die Altstadt von Castiglione del Lago, auf einem Vorgebirge über dem See.",
       },
-      credited(TRASIMENO_VISTA_PHOTO, "de"),
+      credited(TRASIMENO_VELE_PHOTO, "de"),
       { type: "h2", text: "Wie kommt man von Assisi nach Castiglione del Lago?" },
       {
         type: "p",
@@ -2586,8 +2579,8 @@ const RASIGLIA_POST: Record<Locale, BlogPost> = {
       {
         type: "image",
         src: LAMORA_PISCINA,
-        alt: "La piscina di Agriturismo La Mora illuminata di sera",
-        caption: "La piscina di La Mora, illuminata la sera.",
+        alt: "La piscina di Agriturismo La Mora in una giornata di sole, con l'acqua azzurra, il prato e le siepi intorno",
+        caption: "La piscina di La Mora in una giornata di sole.",
       },
       {
         type: "links",
@@ -2718,8 +2711,8 @@ const RASIGLIA_POST: Record<Locale, BlogPost> = {
       {
         type: "image",
         src: LAMORA_PISCINA,
-        alt: "The swimming pool at Agriturismo La Mora lit up in the evening",
-        caption: "La Mora's pool, lit up in the evening.",
+        alt: "The swimming pool at Agriturismo La Mora on a sunny day, with blue water, the lawn and hedges around",
+        caption: "La Mora's pool on a sunny day.",
       },
       {
         type: "links",
@@ -2850,8 +2843,8 @@ const RASIGLIA_POST: Record<Locale, BlogPost> = {
       {
         type: "image",
         src: LAMORA_PISCINA,
-        alt: "La piscine de l'Agriturismo La Mora illuminée le soir",
-        caption: "La piscine de La Mora, illuminée le soir.",
+        alt: "La piscine de l'Agriturismo La Mora par une journée ensoleillée, avec l'eau bleue, la pelouse et les haies autour",
+        caption: "La piscine de La Mora par une journée ensoleillée.",
       },
       {
         type: "links",
@@ -2982,8 +2975,8 @@ const RASIGLIA_POST: Record<Locale, BlogPost> = {
       {
         type: "image",
         src: LAMORA_PISCINA,
-        alt: "Der Pool des Agriturismo La Mora, abends beleuchtet",
-        caption: "Der Pool von La Mora, abends beleuchtet.",
+        alt: "Der Pool des Agriturismo La Mora an einem sonnigen Tag, mit blauem Wasser, Rasen und Hecken ringsum",
+        caption: "Der Pool von La Mora an einem sonnigen Tag.",
       },
       {
         type: "links",

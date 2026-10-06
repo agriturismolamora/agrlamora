@@ -3,8 +3,14 @@ import type { Locale } from "@/lib/i18n";
 /* Foto di terzi con licenza libera usate nel sito: UNICA fonte per file,
    autore, licenza e pagina d'origine, così l'attribuzione è identica in
    articolo, card e popup. Licenze verificate sulla pagina di ogni foto il
-   06/10/2026 (Wikimedia Commons: API extmetadata; Flickr: pagina della foto
-   e oEmbed). Solo CC0, CC BY, CC BY-SA. Mai la filigrana del logo La Mora su
+   06/10/2026 e il 07/10/2026 (Wikimedia Commons: API extmetadata, pagina
+   del file e richieste di cancellazione). Solo CC0, CC BY, CC BY-SA, solo
+   Wikimedia Commons (dal 07/10/2026 niente più Flickr).
+
+   Soglia di qualità (ottobre 2026): copertine >= 2400 px sul lato lungo,
+   foto interne >= 1600 px, mai ingrandite oltre la risoluzione nativa del
+   ritaglio. File HD con nomi nuovi (es. "-2400"), così la CDN non serve
+   versioni vecchie. Mai la filigrana del logo La Mora su
    queste foto (vedi watermarked-image.tsx). */
 
 export type PhotoCredit = {
@@ -31,11 +37,11 @@ export type CreditedPhoto = {
 /* Eurochocolate 2024 (scattata il 16/11/2024), Piazza IV Novembre.
    Originale 5504×6880 verticale: pubblicato un ritaglio orizzontale 16:9
    (fascia dal 30% al 75% dell'altezza, senza le persone in primo piano),
-   2000×1125, webp. */
+   2400×1350, webp (stessa inquadratura della versione 2000×1125). */
 export const EUROCHOCOLATE_2024_PHOTO: CreditedPhoto = {
-  src: "/images/blog/eurochocolate/eurochocolate-2024-piazza-iv-novembre-perugia.webp",
-  width: 2000,
-  height: 1125,
+  src: "/images/blog/eurochocolate/eurochocolate-2024-piazza-iv-novembre-perugia-2400.webp",
+  width: 2400,
+  height: 1350,
   alt: {
     it: "Folla in piazza IV Novembre a Perugia durante Eurochocolate 2024, con la Fontana Maggiore e il fianco della Cattedrale di San Lorenzo",
     en: "Crowds in Piazza IV Novembre, Perugia, during Eurochocolate 2024, with the Fontana Maggiore and the side of the Cathedral of San Lorenzo",
@@ -58,31 +64,33 @@ export const EUROCHOCOLATE_2024_PHOTO: CreditedPhoto = {
   },
 };
 
-/* Città del Cioccolato, Perugia (scattata il 19/05/2026): NON è una foto di
-   Eurochocolate, va sempre presentata come tale. Originale 3648×2736,
-   pubblicato intero ridimensionato a 1600×1200, webp. */
-export const CIOCCOLATO_FUSO_PHOTO: CreditedPhoto = {
-  src: "/images/blog/eurochocolate/cioccolato-fuso-citta-del-cioccolato-perugia-2026.webp",
-  width: 1600,
-  height: 1200,
+/* Cioccolato fondente fuso (Wikimedia Commons, 10/02/2013): foto
+   ILLUSTRATIVA, non di Eurochocolate né di Perugia — va sempre presentata
+   così. Sostituisce la foto Flickr della Città del Cioccolato (dal
+   07/10/2026 Flickr non è più una fonte ammessa). Originale 4000×3000,
+   pubblicato intero a 2000×1500, webp. */
+export const CIOCCOLATO_FONDENTE_PHOTO: CreditedPhoto = {
+  src: "/images/blog/eurochocolate/cioccolato-fondente-fuso.webp",
+  width: 2000,
+  height: 1500,
   alt: {
-    it: "Cioccolato fuso che scende in una vasca di lavorazione in acciaio alla Città del Cioccolato di Perugia",
-    en: "Melted chocolate pouring into a steel processing tank at the Città del Cioccolato in Perugia",
-    fr: "Chocolat fondu coulant dans une cuve de travail en acier à la Città del Cioccolato de Pérouse",
-    de: "Geschmolzene Schokolade fließt in ein Verarbeitungsbecken aus Stahl in der Città del Cioccolato in Perugia",
+    it: "Cioccolato fondente fuso raccolto con una spatola di legno da una ciotola bianca",
+    en: "Melted dark chocolate scooped with a wooden spatula from a white bowl",
+    fr: "Chocolat noir fondu prélevé à la spatule en bois dans un bol blanc",
+    de: "Geschmolzene Zartbitterschokolade auf einem Holzspatel über einer weißen Schüssel",
   },
   caption: {
-    it: "Cioccolato fuso alla Città del Cioccolato di Perugia, maggio 2026 (foto scattata al museo, non durante Eurochocolate).",
-    en: "Melted chocolate at the Città del Cioccolato in Perugia, May 2026 (taken at the museum, not during Eurochocolate).",
-    fr: "Chocolat fondu à la Città del Cioccolato de Pérouse, mai 2026 (photo prise au musée, pas pendant Eurochocolate).",
-    de: "Geschmolzene Schokolade in der Città del Cioccolato in Perugia, Mai 2026 (im Museum aufgenommen, nicht während der Eurochocolate).",
+    it: "Cioccolato fondente fuso: foto illustrativa, non scattata a Eurochocolate (2013).",
+    en: "Melted dark chocolate: illustrative photo, not taken at Eurochocolate (2013).",
+    fr: "Chocolat noir fondu : photo d'illustration, non prise à Eurochocolate (2013).",
+    de: "Geschmolzene Zartbitterschokolade: Symbolfoto, nicht bei der Eurochocolate aufgenommen (2013).",
   },
   credit: {
-    author: "Tery14",
-    license: "CC BY-SA 4.0",
-    licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
-    source: "Flickr",
-    sourceUrl: "https://www.flickr.com/photos/90533773@N06/55440515180/",
+    author: "Andrea Pavanello",
+    license: "CC BY-SA 3.0 IT",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/it/",
+    source: "Wikimedia Commons",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:%22_13_ITALY_Chocolate_melted_-_italian_premium_chocolate_top_quality.JPG",
   },
 };
 
@@ -97,9 +105,9 @@ const CC0 = "https://creativecommons.org/publicdomain/zero/1.0/";
 const commons = (file: string) => `https://commons.wikimedia.org/wiki/File:${file}`;
 
 export const SPOGLIAZIONE_FACCIATA_PHOTO: CreditedPhoto = {
-  src: "/images/blog/carlo-acutis/santuario-spogliazione-santa-maria-maggiore-assisi.webp",
-  width: 2000,
-  height: 1500,
+  src: "/images/blog/carlo-acutis/santuario-spogliazione-santa-maria-maggiore-assisi-2400.webp",
+  width: 2400,
+  height: 1800,
   alt: {
     it: "Facciata in pietra della chiesa di Santa Maria Maggiore ad Assisi, sede del Santuario della Spogliazione, con il rosone",
     en: "Stone façade of the church of Santa Maria Maggiore in Assisi, home of the Sanctuary of Renunciation, with its rose window",
@@ -153,48 +161,29 @@ export const SPOGLIAZIONE_VEDUTA_PHOTO: CreditedPhoto = {
   credit: { author: "Bbruno", license: "CC BY-SA 3.0", licenseUrl: CC_BY_SA_3, source: "Wikimedia Commons", sourceUrl: commons("Assisi_S_Maria_Maggiore.JPG") },
 };
 
-export const ALBERO_GUBBIO_PHOTO: CreditedPhoto = {
-  src: "/images/blog/natale-umbria/albero-di-natale-gubbio-2014.webp",
-  width: 2200,
-  height: 885,
-  alt: {
-    it: "L'albero di Natale di Gubbio illuminato di notte sulle pendici del Monte Ingino, sopra le mura della città",
-    en: "The Gubbio Christmas tree lit up at night on the slopes of Monte Ingino, above the town walls",
-    fr: "Le sapin de Noël de Gubbio illuminé la nuit sur les pentes du Monte Ingino, au-dessus des remparts",
-    de: "Der Weihnachtsbaum von Gubbio, nachts beleuchtet an den Hängen des Monte Ingino über der Stadtmauer",
-  },
-  caption: {
-    it: "L'albero di Natale di Gubbio sul Monte Ingino (foto del dicembre 2014).",
-    en: "The Gubbio Christmas tree on Monte Ingino (photo from December 2014).",
-    fr: "Le sapin de Noël de Gubbio sur le Monte Ingino (photo de décembre 2014).",
-    de: "Der Weihnachtsbaum von Gubbio am Monte Ingino (Foto von Dezember 2014).",
-  },
-  credit: { author: "Adri08", license: "CC BY-SA 3.0", licenseUrl: CC_BY_SA_3, source: "Wikimedia Commons", sourceUrl: commons("Sapin_Noel_Geant_Gubbio_2014.jpg") },
-};
-
 export const GUBBIO_NATALE_PIAZZA_PHOTO: CreditedPhoto = {
-  src: "/images/blog/natale-umbria/gubbio-piazza-san-giovanni-natale-2025.webp",
-  width: 1600,
-  height: 1200,
+  src: "/images/blog/natale-umbria/gubbio-piazza-san-giovanni-natale-2025-2400.webp",
+  width: 2400,
+  height: 1800,
   alt: {
-    it: "Piazza San Giovanni a Gubbio con le luci di Natale, di sera",
-    en: "Piazza San Giovanni in Gubbio with Christmas lights in the evening",
-    fr: "La Piazza San Giovanni à Gubbio avec les illuminations de Noël, le soir",
-    de: "Die Piazza San Giovanni in Gubbio mit Weihnachtsbeleuchtung am Abend",
+    it: "Piazza San Giovanni a Gubbio di sera, con la chiesa illuminata, luci colorate a terra e decorazioni di Natale",
+    en: "Piazza San Giovanni in Gubbio in the evening, with the church lit up, coloured lights on the ground and Christmas decorations",
+    fr: "La Piazza San Giovanni à Gubbio le soir, avec l'église illuminée, des lumières colorées au sol et des décorations de Noël",
+    de: "Die Piazza San Giovanni in Gubbio am Abend, mit beleuchteter Kirche, bunten Lichtern am Boden und Weihnachtsdekoration",
   },
   caption: {
-    it: "Gubbio, piazza San Giovanni durante le feste (foto del dicembre 2025).",
-    en: "Gubbio, Piazza San Giovanni during the festive season (photo from December 2025).",
-    fr: "Gubbio, la Piazza San Giovanni pendant les fêtes (photo de décembre 2025).",
-    de: "Gubbio, Piazza San Giovanni in der Weihnachtszeit (Foto von Dezember 2025).",
+    it: "Gubbio durante le feste: piazza San Giovanni con le decorazioni di Natale (foto del dicembre 2025).",
+    en: "Gubbio during the festive season: Piazza San Giovanni with its Christmas decorations (photo from December 2025).",
+    fr: "Gubbio pendant les fêtes : la Piazza San Giovanni et ses décorations de Noël (photo de décembre 2025).",
+    de: "Gubbio in der Weihnachtszeit: die Piazza San Giovanni mit Weihnachtsdekoration (Foto von Dezember 2025).",
   },
   credit: { author: "Bultro", license: "CC BY-SA 4.0", licenseUrl: CC_BY_SA_4, source: "Wikimedia Commons", sourceUrl: commons("Gubbio_-_Piazza_S._Giovanni_a_Natale.jpg") },
 };
 
 export const ALBERO_TRASIMENO_PHOTO: CreditedPhoto = {
-  src: "/images/blog/albero-natale-trasimeno/albero-di-natale-sul-lago-castiglione-2019.webp",
-  width: 1800,
-  height: 1012,
+  src: "/images/blog/albero-natale-trasimeno/albero-di-natale-sul-lago-castiglione-2019-2400.webp",
+  width: 2400,
+  height: 1350,
   alt: {
     it: "L'albero di Natale di luci disegnato sull'acqua del lago Trasimeno a Castiglione del Lago, di notte",
     en: "The Christmas tree drawn in lights on the water of Lake Trasimeno at Castiglione del Lago, at night",
@@ -229,29 +218,29 @@ export const ROCCA_DEL_LEONE_PHOTO: CreditedPhoto = {
   credit: { author: "Diego Baglieri", license: "CC BY-SA 4.0", licenseUrl: CC_BY_SA_4, source: "Wikimedia Commons", sourceUrl: commons("Rocca_del_Leone_-_Castiglione_del_Lago_04.jpg") },
 };
 
-export const TRASIMENO_VISTA_PHOTO: CreditedPhoto = {
-  src: "/images/blog/albero-natale-trasimeno/lago-trasimeno-da-castiglione-del-lago.webp",
-  width: 1600,
-  height: 1067,
+export const TRASIMENO_VELE_PHOTO: CreditedPhoto = {
+  src: "/images/blog/albero-natale-trasimeno/lago-trasimeno-vele-castiglione-del-lago.webp",
+  width: 2000,
+  height: 1500,
   alt: {
-    it: "Il lago Trasimeno visto dalle mura di Castiglione del Lago, con le torri della rocca",
-    en: "Lake Trasimeno seen from the walls of Castiglione del Lago, with the fortress towers",
-    fr: "Le lac Trasimène vu des remparts de Castiglione del Lago, avec les tours de la forteresse",
-    de: "Der Trasimenische See von der Stadtmauer von Castiglione del Lago aus, mit den Türmen der Festung",
+    it: "Barche a vela sul lago Trasimeno a Castiglione del Lago, con le colline sullo sfondo e il prato in primo piano",
+    en: "Sailing boats on Lake Trasimeno at Castiglione del Lago, with hills behind and a lawn in the foreground",
+    fr: "Voiliers sur le lac Trasimène à Castiglione del Lago, avec les collines en arrière-plan et une pelouse au premier plan",
+    de: "Segelboote auf dem Trasimenischen See bei Castiglione del Lago, mit Hügeln im Hintergrund und Rasen im Vordergrund",
   },
   caption: {
-    it: "Il lago Trasimeno visto da Castiglione del Lago (foto del 2018).",
-    en: "Lake Trasimeno seen from Castiglione del Lago (photo from 2018).",
-    fr: "Le lac Trasimène vu de Castiglione del Lago (photo de 2018).",
-    de: "Der Trasimenische See, gesehen von Castiglione del Lago (Foto von 2018).",
+    it: "Vele sul Trasimeno a Castiglione del Lago (foto del 2017).",
+    en: "Sails on Lake Trasimeno at Castiglione del Lago (photo from 2017).",
+    fr: "Voiles sur le lac Trasimène à Castiglione del Lago (photo de 2017).",
+    de: "Segel auf dem Trasimenischen See bei Castiglione del Lago (Foto von 2017).",
   },
-  credit: { author: "Federica Cidale", license: "CC BY-SA 4.0", licenseUrl: CC_BY_SA_4, source: "Wikimedia Commons", sourceUrl: commons("Lago_Trasimen_visto_da_Castiglione_del_Lago.jpg") },
+  credit: { author: "Wolfgang Sauber", license: "CC BY-SA 4.0", licenseUrl: CC_BY_SA_4, source: "Wikimedia Commons", sourceUrl: commons("Castiglione_del_Lago_-_Lago_Trasimeno_2.jpg") },
 };
 
 export const RASIGLIA_BORGO_PHOTO: CreditedPhoto = {
-  src: "/images/blog/rasiglia/rasiglia-ponticello-cascata.webp",
-  width: 2000,
-  height: 1240,
+  src: "/images/blog/rasiglia/rasiglia-ponticello-cascata-2400.webp",
+  width: 2400,
+  height: 1488,
   alt: {
     it: "Case in pietra, un ponticello di legno e una cascatella tra i canali di Rasiglia",
     en: "Stone houses, a small wooden bridge and a little waterfall among the channels of Rasiglia",
