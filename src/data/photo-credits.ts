@@ -180,23 +180,49 @@ export const GUBBIO_NATALE_PIAZZA_PHOTO: CreditedPhoto = {
   credit: { author: "Bultro", license: "CC BY-SA 4.0", licenseUrl: CC_BY_SA_4, source: "Wikimedia Commons", sourceUrl: commons("Gubbio_-_Piazza_S._Giovanni_a_Natale.jpg") },
 };
 
-export const ALBERO_TRASIMENO_PHOTO: CreditedPhoto = {
-  src: "/images/blog/albero-natale-trasimeno/albero-di-natale-sul-lago-castiglione-2019-2400.webp",
+/* Albero di Natale sul Trasimeno: dal 07/10/2026 nessuna foto dell'albero.
+   L'unica su Commons (Walter Giannetti, 2019) è stata tolta su richiesta
+   del titolare e non esistono altre foto HD dell'albero con licenza
+   valida. Copertina dell'articolo: il lago d'inverno al tramonto, con
+   didascalia che non suggerisce di mostrare l'albero. */
+export const TRASIMENO_TRAMONTO_PHOTO: CreditedPhoto = {
+  src: "/images/blog/albero-natale-trasimeno/lago-trasimeno-tramonto-isola-polvese-2400.webp",
   width: 2400,
-  height: 1350,
+  height: 1601,
   alt: {
-    it: "L'albero di Natale di luci disegnato sull'acqua del lago Trasimeno a Castiglione del Lago, di notte",
-    en: "The Christmas tree drawn in lights on the water of Lake Trasimeno at Castiglione del Lago, at night",
-    fr: "Le sapin de Noël dessiné en lumières sur l'eau du lac Trasimène à Castiglione del Lago, la nuit",
-    de: "Der aus Lichtern auf das Wasser des Trasimenischen Sees gezeichnete Weihnachtsbaum bei Castiglione del Lago, nachts",
+    it: "Il lago Trasimeno al tramonto d'inverno, con l'Isola Polvese all'orizzonte e due pescatori sul molo",
+    en: "Lake Trasimeno at sunset in winter, with Isola Polvese on the horizon and two people fishing from the jetty",
+    fr: "Le lac Trasimène au coucher du soleil en hiver, avec l'île Polvese à l'horizon et deux pêcheurs sur la jetée",
+    de: "Der Trasimenische See bei Sonnenuntergang im Winter, mit der Isola Polvese am Horizont und zwei Anglern auf dem Steg",
   },
   caption: {
-    it: "L'albero di Natale sull'acqua del Trasimeno (foto del dicembre 2019).",
-    en: "The Christmas tree on the water of Lake Trasimeno (photo from December 2019).",
-    fr: "Le sapin de Noël sur l'eau du lac Trasimène (photo de décembre 2019).",
-    de: "Der Weihnachtsbaum auf dem Wasser des Trasimenischen Sees (Foto von Dezember 2019).",
+    it: "Il lago Trasimeno al tramonto visto da San Feliciano, con l'Isola Polvese (foto del gennaio 2020).",
+    en: "Lake Trasimeno at sunset from San Feliciano, with Isola Polvese (photo from January 2020).",
+    fr: "Le lac Trasimène au coucher du soleil depuis San Feliciano, avec l'île Polvese (photo de janvier 2020).",
+    de: "Der Trasimenische See bei Sonnenuntergang, von San Feliciano aus, mit der Isola Polvese (Foto von Januar 2020).",
   },
-  credit: { author: "Walter Giannetti", license: "CC BY-SA 4.0", licenseUrl: CC_BY_SA_4, source: "Wikimedia Commons", sourceUrl: commons("Albero_di_Natale_sul_lago_(Castiglione_del_Lago).jpg"), cropped: true },
+  credit: { author: "Repuli", license: "CC BY-SA 4.0", licenseUrl: CC_BY_SA_4, source: "Wikimedia Commons", sourceUrl: commons("Isola_Polvese_al_tramonto.jpg") },
+};
+
+/* Castiglione del Lago d'inverno, nell'articolo sui mercatini al posto
+   della foto dell'albero. Originale 6720×4480, pubblicato intero a 2000 px. */
+export const CASTIGLIONE_INVERNO_PHOTO: CreditedPhoto = {
+  src: "/images/blog/natale-umbria/castiglione-del-lago-inverno-2000.webp",
+  width: 2000,
+  height: 1333,
+  alt: {
+    it: "I tetti di Castiglione del Lago visti dall'alto in una giornata d'inverno, con un campanile, una cupola e la campagna sullo sfondo",
+    en: "The rooftops of Castiglione del Lago seen from above on a winter day, with a bell tower, a dome and the countryside behind",
+    fr: "Les toits de Castiglione del Lago vus d'en haut par une journée d'hiver, avec un clocher, une coupole et la campagne en arrière-plan",
+    de: "Die Dächer von Castiglione del Lago von oben an einem Wintertag, mit Glockenturm, Kuppel und Landschaft im Hintergrund",
+  },
+  caption: {
+    it: "Castiglione del Lago d'inverno, vista dall'alto (foto del gennaio 2020).",
+    en: "Castiglione del Lago in winter, seen from above (photo from January 2020).",
+    fr: "Castiglione del Lago en hiver, vue d'en haut (photo de janvier 2020).",
+    de: "Castiglione del Lago im Winter, von oben gesehen (Foto von Januar 2020).",
+  },
+  credit: { author: "Maurizio Moro5153", license: "CC BY-SA 4.0", licenseUrl: CC_BY_SA_4, source: "Wikimedia Commons", sourceUrl: commons("Castiglione_del_Lago_Giorno.jpg") },
 };
 
 export const ROCCA_DEL_LEONE_PHOTO: CreditedPhoto = {

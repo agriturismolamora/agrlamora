@@ -7,7 +7,8 @@ import {
   SPOGLIAZIONE_ROSONE_PHOTO,
   SPOGLIAZIONE_VEDUTA_PHOTO,
   GUBBIO_NATALE_PIAZZA_PHOTO,
-  ALBERO_TRASIMENO_PHOTO,
+  TRASIMENO_TRAMONTO_PHOTO,
+  CASTIGLIONE_INVERNO_PHOTO,
   ROCCA_DEL_LEONE_PHOTO,
   TRASIMENO_VELE_PHOTO,
   RASIGLIA_BORGO_PHOTO,
@@ -119,11 +120,11 @@ export type BlogPost = {
    07/10/2026 (soglia: copertine >= 2400 px, interne >= 1600 px): copertina
    riesportata a 2400 px; foto Flickr del cioccolato sostituita con una foto
    Commons illustrativa; il camino (1200×900) sostituito dall'esterno HD (qui)
-   e dal soggiorno di Gemelli (articolo sui mercatini). Il parco giochi resta
-   a 800×531: non esiste una foto nostra HD, va scattata. */
+   e dal soggiorno di Gemelli (articolo sui mercatini). La foto del parco
+   giochi (800×531) è stata tolta dall'articolo: non esiste una foto nostra
+   HD, va scattata. */
 const LAMORA_ESTERNO = "/images/home/esterno agriturismo la mora carretto e agriturismo.webp";
 const LAMORA_SALOTTO_GEMELLI = "/images/alloggi/appartamento gemelli/salotto gemelli.jpeg";
-const EUROCHOCOLATE_PARCO = "/images/piscina/esterno parco agriturismo con scivolo per bambini.jpg";
 const EUROCHOCOLATE_APARTMENT = "/images/alloggi/appartamento bilancia/foto orizzontale letto e sala intera orizzontale bilancia.jpeg";
 const EUROCHOCOLATE_OFFICIAL_URL = "https://www.eurochocolate.com/perugia2026/";
 
@@ -263,12 +264,6 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
         text: "Dalla stessa base, la Basilica di San Francesco ad Assisi è a 7,5 km, circa 18 minuti in auto: un weekend a Eurochocolate si abbina facilmente a una giornata ad Assisi. Gemelli e Sagittario, con giardino privato recintato, accolgono anche chi viaggia con animali.",
       },
       { type: "p", text: "Per chi arriva con i bambini, magari reduci dal Fate Lab, nel giardino c'è un parco giochi con scivolo e giostrina." },
-      {
-        type: "image",
-        src: EUROCHOCOLATE_PARCO,
-        alt: "Parco giochi con scivolo giallo e giostrina nel giardino di Agriturismo La Mora",
-        caption: "Il parco giochi nel giardino di La Mora.",
-      },
       {
         type: "links",
         heading: "Organizza il soggiorno",
@@ -435,12 +430,6 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       { type: "p", text: "If you're travelling with children, perhaps fresh from the Fate Lab, there's a playground with a slide and a small roundabout in the garden." },
       {
-        type: "image",
-        src: EUROCHOCOLATE_PARCO,
-        alt: "Playground with a yellow slide and a small roundabout in the garden of Agriturismo La Mora",
-        caption: "The playground in La Mora's garden.",
-      },
-      {
         type: "links",
         heading: "Plan your stay",
         items: [
@@ -606,12 +595,6 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       { type: "p", text: "Pour ceux qui voyagent avec des enfants, peut-être tout juste sortis du Fate Lab, le jardin a une aire de jeux avec toboggan et petit manège." },
       {
-        type: "image",
-        src: EUROCHOCOLATE_PARCO,
-        alt: "Aire de jeux avec toboggan jaune et petit manège dans le jardin de l'Agriturismo La Mora",
-        caption: "L'aire de jeux dans le jardin de La Mora.",
-      },
-      {
         type: "links",
         heading: "Organisez votre séjour",
         items: [
@@ -776,12 +759,6 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
         text: "Vom selben Ausgangspunkt ist die Basilika San Francesco in Assisi 7,5 km entfernt, rund 18 Minuten mit dem Auto: Ein Eurochocolate-Wochenende lässt sich leicht mit einem Tag in Assisi verbinden. Gemelli und Sagittario mit privatem, eingezäuntem Garten nehmen auch Gäste mit Haustieren auf.",
       },
       { type: "p", text: "Für Familien mit Kindern, vielleicht frisch aus dem Fate Lab, gibt es im Garten einen Spielplatz mit Rutsche und kleinem Karussell." },
-      {
-        type: "image",
-        src: EUROCHOCOLATE_PARCO,
-        alt: "Spielplatz mit gelber Rutsche und kleinem Karussell im Garten des Agriturismo La Mora",
-        caption: "Der Spielplatz im Garten von La Mora.",
-      },
       {
         type: "links",
         heading: "Planen Sie Ihren Aufenthalt",
@@ -1608,7 +1585,7 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "A Castiglione del Lago, dal 2019, le luci disegnano un albero di Natale sull'acqua del Trasimeno: 1.080 metri di lunghezza e 50 di larghezza, con 2.400 luci perimetrali alimentate da energia rinnovabile. È il cuore di «Luci sul Trasimeno», che nel 2026/27 si visita tutti i giorni dal 5 dicembre al 6 gennaio, dalle 17:00 alle 23:00. Secondo gli organizzatori, nelle sue proporzioni l'albero si vede solo dal «Percorso dell'Albero», a pagamento, sotto le mura della Rocca del Leone.",
       },
-      credited(ALBERO_TRASIMENO_PHOTO, "it"),
+      credited(CASTIGLIONE_INVERNO_PHOTO, "it"),
       {
         type: "p",
         text: "Biglietti, parcheggi e cosa c'è intorno: trovi tutto nella nostra guida all'albero di Natale sul lago Trasimeno. Castiglione del Lago è a 64,3 km da La Mora, circa 50 minuti.",
@@ -1728,7 +1705,7 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "At Castiglione del Lago, since 2019, lights have drawn a Christmas tree on the water of Lake Trasimeno: 1,080 metres long and 50 metres wide, with 2,400 perimeter lights powered by renewable energy. It is the heart of “Luci sul Trasimeno”, which in 2026/27 is open every day from 5 December to 6 January, from 17:00 to 23:00. According to the organisers, the tree can only be seen in its proper proportions from the paid “Percorso dell'Albero” (Tree Path), below the walls of the Rocca del Leone.",
       },
-      credited(ALBERO_TRASIMENO_PHOTO, "en"),
+      credited(CASTIGLIONE_INVERNO_PHOTO, "en"),
       {
         type: "p",
         text: "Tickets, parking and what else is on: it's all in our guide to the Christmas tree on Lake Trasimeno. Castiglione del Lago is 64.3 km from La Mora, about 50 minutes.",
@@ -1848,7 +1825,7 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "À Castiglione del Lago, depuis 2019, des lumières dessinent un sapin de Noël sur l'eau du lac Trasimène : 1 080 mètres de long et 50 de large, avec 2 400 lumières périmétriques alimentées par des énergies renouvelables. C'est le cœur de « Luci sul Trasimeno », ouvert en 2026/27 tous les jours du 5 décembre au 6 janvier, de 17h00 à 23h00. Selon les organisateurs, on ne voit le sapin dans ses justes proportions que depuis le « Percorso dell'Albero » (le parcours du sapin), payant, sous les remparts de la Rocca del Leone.",
       },
-      credited(ALBERO_TRASIMENO_PHOTO, "fr"),
+      credited(CASTIGLIONE_INVERNO_PHOTO, "fr"),
       {
         type: "p",
         text: "Billets, parkings et animations : tout est dans notre guide du sapin de Noël sur le lac Trasimène. Castiglione del Lago est à 64,3 km de La Mora, environ 50 minutes.",
@@ -1968,7 +1945,7 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
         type: "p",
         text: "In Castiglione del Lago zeichnen Lichter seit 2019 einen Weihnachtsbaum auf das Wasser des Trasimenischen Sees: 1.080 Meter lang und 50 Meter breit, mit 2.400 Umrisslichtern, die mit erneuerbarer Energie betrieben werden. Er ist das Herzstück von „Luci sul Trasimeno“, 2026/27 täglich vom 5. Dezember bis 6. Januar von 17:00 bis 23:00 Uhr geöffnet. Laut den Veranstaltern ist der Baum in seinen richtigen Proportionen nur vom kostenpflichtigen „Percorso dell'Albero“ (Baumweg) unterhalb der Mauern der Rocca del Leone zu sehen.",
       },
-      credited(ALBERO_TRASIMENO_PHOTO, "de"),
+      credited(CASTIGLIONE_INVERNO_PHOTO, "de"),
       {
         type: "p",
         text: "Tickets, Parken und Rahmenprogramm: Alles steht in unserem Leitfaden zum Weihnachtsbaum auf dem Trasimenischen See. Castiglione del Lago liegt 64,3 km von La Mora entfernt, rund 50 Minuten.",
@@ -2046,7 +2023,7 @@ const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
     title: "Albero di Natale sul lago Trasimeno: date, biglietti e come vederlo",
     excerpt: "A Castiglione del Lago un albero di Natale di luci lungo 1.080 metri disegnato sull'acqua del Trasimeno: date 2026/27, biglietti, da dove si vede e come arrivare da Assisi.",
     metaDescription: "L'albero di Natale sul lago Trasimeno a Castiglione del Lago: date 2026/27, orari, biglietti, da dove si vede e come arrivare da Assisi in circa 50 minuti.",
-    ...cover(ALBERO_TRASIMENO_PHOTO, "it"),
+    ...cover(TRASIMENO_TRAMONTO_PHOTO, "it"),
     datePublished: "2026-10-06",
     inBreve: {
       heading: "In breve",
@@ -2157,7 +2134,7 @@ const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
     title: "Christmas tree on Lake Trasimeno: dates, tickets and how to see it",
     excerpt: "At Castiglione del Lago, a Christmas tree of lights 1,080 metres long drawn on the water of Lake Trasimeno: 2026/27 dates, tickets, where to see it from and how to get there from Assisi.",
     metaDescription: "The Christmas tree on Lake Trasimeno at Castiglione del Lago: 2026/27 dates, opening hours, tickets, where to see it and how to get there from Assisi.",
-    ...cover(ALBERO_TRASIMENO_PHOTO, "en"),
+    ...cover(TRASIMENO_TRAMONTO_PHOTO, "en"),
     datePublished: "2026-10-06",
     inBreve: {
       heading: "At a glance",
@@ -2268,7 +2245,7 @@ const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
     title: "Sapin de Noël sur le lac Trasimène : dates, billets et où le voir",
     excerpt: "À Castiglione del Lago, un sapin de Noël de lumières long de 1 080 mètres dessiné sur l'eau du lac Trasimène : dates 2026/27, billets, d'où le voir et comment venir depuis Assise.",
     metaDescription: "Le sapin de Noël sur le lac Trasimène à Castiglione del Lago : dates 2026/27, horaires, billets, d'où le voir et comment s'y rendre depuis Assise.",
-    ...cover(ALBERO_TRASIMENO_PHOTO, "fr"),
+    ...cover(TRASIMENO_TRAMONTO_PHOTO, "fr"),
     datePublished: "2026-10-06",
     inBreve: {
       heading: "En bref",
@@ -2379,7 +2356,7 @@ const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
     title: "Weihnachtsbaum auf dem Trasimenischen See: Termine, Tickets und Aussicht",
     excerpt: "In Castiglione del Lago ein 1.080 Meter langer Weihnachtsbaum aus Lichtern auf dem Wasser des Trasimenischen Sees: Termine 2026/27, Tickets, von wo man ihn sieht und Anreise ab Assisi.",
     metaDescription: "Der Weihnachtsbaum auf dem Trasimenischen See in Castiglione del Lago: Termine 2026/27, Öffnungszeiten, Tickets, beste Sicht und Anreise ab Assisi.",
-    ...cover(ALBERO_TRASIMENO_PHOTO, "de"),
+    ...cover(TRASIMENO_TRAMONTO_PHOTO, "de"),
     datePublished: "2026-10-06",
     inBreve: {
       heading: "Auf einen Blick",
