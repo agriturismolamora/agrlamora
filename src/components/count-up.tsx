@@ -2,11 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/* Conteggio animato da 0 al valore finale, innescato la prima volta che
-   l'elemento entra in viewport (stessa logica one-shot di scroll-reveal.tsx,
-   IntersectionObserver + niente stato "in corso" da poter rivedere due
-   volte). Rispetta prefers-reduced-motion mostrando subito il valore
-   finale, come Reveal. */
+/* Conteggio animato fino al valore finale (es. "Su 38 agriturismi").
+   Il render server contiene già il valore FINALE: l'HTML è corretto anche
+   senza JavaScript e per chi legge il testo della pagina (motori di ricerca,
+   lettori di schermo) — prima partiva da 0 e l'HTML diceva "Su 0".
+   L'animazione è solo un abbellimento successivo: se all'idratazione il
+   numero è già in vista resta fermo sul valore finale; se è fuori dallo
+   schermo viene azzerato lì (invisibile) e conta fino al valore quando entra
+   in viewport. Con prefers-reduced-motion resta sempre il valore finale.
+   setState solo nei callback di IntersectionObserver/requestAnimationFrame,
+   mai in modo sincrono nell'effetto. */
 export function CountUp({
   to,
   duration = 1200,
@@ -16,40 +21,46 @@ export function CountUp({
   duration?: number;
   className?: string;
 }) {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(to);
   const ref = useRef<HTMLSpanElement>(null);
-  const startedRef = useRef(false);
 
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) {
-      setValue(to);
-      return;
-    }
     const el = ref.current;
-    if (!el || typeof IntersectionObserver === "undefined") {
-      setValue(to);
-      return;
-    }
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let armed = false;
+    let raf = 0;
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !startedRef.current) {
-          startedRef.current = true;
-          const start = performance.now();
-          function tick(now: number) {
-            const t = Math.min(1, (now - start) / duration);
-            const eased = 1 - Math.pow(1 - t, 3);
-            setValue(Math.round(eased * to));
-            if (t < 1) requestAnimationFrame(tick);
+        if (!armed) {
+          // Primo callback = stato iniziale: se è già visibile non si anima.
+          if (entry.intersectionRatio > 0) {
+            io.disconnect();
+            return;
           }
-          requestAnimationFrame(tick);
+          armed = true;
+          setValue(0);
+          return;
+        }
+        if (entry.intersectionRatio >= 0.4) {
           io.disconnect();
+          const start = performance.now();
+          const tick = (now: number) => {
+            const t = Math.min(1, (now - start) / duration);
+            setValue(Math.round((1 - Math.pow(1 - t, 3)) * to));
+            if (t < 1) raf = requestAnimationFrame(tick);
+          };
+          raf = requestAnimationFrame(tick);
         }
       },
-      { threshold: 0.4 }
+      { threshold: [0, 0.4] }
     );
     io.observe(el);
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(raf);
+    };
   }, [to, duration]);
 
   return (

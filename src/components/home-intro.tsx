@@ -35,13 +35,15 @@ export function HomeIntro() {
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const mobile = window.matchMedia("(max-width: 640px)").matches;
-    setReducedMotion(reduced);
 
     document.body.style.overflow = "hidden";
     const timers: number[] = [];
     const at = (ms: number, fn: () => void) => timers.push(window.setTimeout(fn, ms));
 
     if (reduced) {
+      // Nel timer, non in modo sincrono nell'effetto (react-hooks/set-state-in-effect):
+      // il render server resta quello di default, la variante ridotta subentra subito dopo.
+      at(0, () => setReducedMotion(true));
       at(REDUCED_TIMING.text, () => setPhase(3));
       at(REDUCED_TIMING.open, () => setPhase(5));
       at(REDUCED_TIMING.done, () => setPhase(6));
