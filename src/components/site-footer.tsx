@@ -20,7 +20,6 @@ const WHATSAPP_URL = "https://wa.me/393934363917";
 const WHATSAPP_DISPLAY = "WhatsApp 393 4363917";
 const EMAIL = "agriturismolamora@gmail.com";
 const FACEBOOK_URL = "https://www.facebook.com/p/Agriturismo-la-Mora-di-Assisi-100066662774182/";
-const INSTAGRAM_URL = "https://www.instagram.com/paolo.720/";
 
 function getNav(locale: Locale) {
   return [
@@ -78,13 +77,6 @@ const WhatsAppIcon = () => (
 const FacebookIcon = () => (
   <Icon fill>
     <path d="M14 9.5V7.8c0-.8.5-1 .9-1H16V4h-2.2C11.6 4 11 5.8 11 7.3v2.2H9v3h2v8h3v-8h2.2l.3-3H14Z" />
-  </Icon>
-);
-const InstagramIcon = () => (
-  <Icon>
-    <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
-    <circle cx="12" cy="12" r="3.6" />
-    <circle cx="16.9" cy="7.1" r="0.6" fill="currentColor" />
   </Icon>
 );
 const ArrowUpIcon = () => (
@@ -148,9 +140,6 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             <div className="mt-3 flex gap-3">
               <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook Agriturismo La Mora" className={SOCIAL}>
                 <FacebookIcon />
-              </a>
-              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram Agriturismo La Mora" className={SOCIAL}>
-                <InstagramIcon />
               </a>
             </div>
           </div>

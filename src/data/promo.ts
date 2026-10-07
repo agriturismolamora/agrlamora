@@ -27,7 +27,9 @@ export type PromoText = {
   bookCta: string;
   whatsappCta: string;
   whatsappMessage: string;
+  /* Link alla pagina Facebook ("Mi piace") e al post dell'offerta ("Salva"). */
   facebookCta: string;
+  facebookPostCta: string;
   ended: string;
 };
 
@@ -46,9 +48,11 @@ export type Promo = {
 
 export const FACEBOOK_PAGE_URL = "https://www.facebook.com/p/Agriturismo-la-Mora-di-Assisi-100066662774182/";
 
-/* URL del post Facebook con l'offerta: non ancora disponibile. Finché resta
-   vuoto, il link "Mi piace" porta alla pagina Facebook della struttura. */
-export const FACEBOOK_POST_URL = "";
+/* Post Facebook dell'offerta Eurochocolate (fornito dal titolare il
+   07/10/2026): è il link di "Salva il post dell'offerta". Se tornasse vuoto,
+   facebookOfferUrl() ripiega sulla pagina Facebook. */
+export const FACEBOOK_POST_URL =
+  "https://www.facebook.com/story.php?story_fbid=pfbid0c7CRt6fxW6bHasJwNmYKb4jep2ZWhrK6M3oRJsCUvhWar5GnE8KDKhJQiw8LYgDkl&id=100066662774182";
 
 export function facebookOfferUrl(): string {
   return FACEBOOK_POST_URL || FACEBOOK_PAGE_URL;
@@ -97,7 +101,8 @@ export const EUROCHOCOLATE_2026: Promo = {
       bookCta: "Prenota",
       whatsappCta: "Scrivici su WhatsApp",
       whatsappMessage: "Ciao! Vorrei soggiornare a La Mora durante Eurochocolate 2026 con l'offerta -10%. Le mie date sono: ",
-      facebookCta: "Vai alla pagina Facebook",
+      facebookCta: "Metti Mi piace alla pagina Facebook",
+      facebookPostCta: "Salva il post dell'offerta",
       ended: "Offerta conclusa",
     },
     en: {
@@ -112,7 +117,8 @@ export const EUROCHOCOLATE_2026: Promo = {
       bookCta: "Book",
       whatsappCta: "Message us on WhatsApp",
       whatsappMessage: "Hi! I'd like to stay at La Mora during Eurochocolate 2026 with the 10% offer. My dates are: ",
-      facebookCta: "Go to the Facebook page",
+      facebookCta: "Like our Facebook page",
+      facebookPostCta: "Save the offer post",
       ended: "Offer ended",
     },
     fr: {
@@ -127,7 +133,8 @@ export const EUROCHOCOLATE_2026: Promo = {
       bookCta: "Réserver",
       whatsappCta: "Écrivez-nous sur WhatsApp",
       whatsappMessage: "Bonjour ! Je voudrais séjourner à La Mora pendant Eurochocolate 2026 avec l'offre -10%. Mes dates sont : ",
-      facebookCta: "Aller sur la page Facebook",
+      facebookCta: "Aimer notre page Facebook",
+      facebookPostCta: "Enregistrer la publication de l'offre",
       ended: "Offre terminée",
     },
     de: {
@@ -142,7 +149,8 @@ export const EUROCHOCOLATE_2026: Promo = {
       bookCta: "Buchen",
       whatsappCta: "Schreiben Sie uns auf WhatsApp",
       whatsappMessage: "Hallo! Ich möchte während der Eurochocolate 2026 mit dem Angebot -10% bei La Mora übernachten. Meine Daten sind: ",
-      facebookCta: "Zur Facebook-Seite",
+      facebookCta: "Unsere Facebook-Seite liken",
+      facebookPostCta: "Den Angebotsbeitrag speichern",
       ended: "Angebot beendet",
     },
   },

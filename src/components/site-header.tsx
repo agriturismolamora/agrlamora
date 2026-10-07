@@ -200,19 +200,11 @@ function MenuGlyph({ open }: { open: boolean }) {
   );
 }
 
-function SocialIcon({ kind }: { kind: "facebook" | "instagram" }) {
-  if (kind === "facebook") {
-    return (
-      <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true">
-        <path d="M14 9.5V7.8c0-.8.5-1 .9-1H16V4h-2.2C11.6 4 11 5.8 11 7.3v2.2H9v3h2v8h3v-8h2.2l.3-3H14Z" />
-      </svg>
-    );
-  }
+/* Unico social della struttura: la pagina Facebook. */
+function FacebookIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true">
-      <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="12" cy="12" r="3.6" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="16.9" cy="7.1" r="1" fill="currentColor" />
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true">
+      <path d="M14 9.5V7.8c0-.8.5-1 .9-1H16V4h-2.2C11.6 4 11 5.8 11 7.3v2.2H9v3h2v8h3v-8h2.2l.3-3H14Z" />
     </svg>
   );
 }
@@ -342,16 +334,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
               aria-label="Facebook Agriturismo La Mora"
               className="opacity-75 transition-opacity hover:opacity-100"
             >
-              <SocialIcon kind="facebook" />
-            </a>
-            <a
-              href="https://www.instagram.com/paolo.720/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram Agriturismo La Mora"
-              className="opacity-75 transition-opacity hover:opacity-100"
-            >
-              <SocialIcon kind="instagram" />
+              <FacebookIcon />
             </a>
           </div>
           <div className="flex min-w-0 items-center justify-end gap-4 font-medium uppercase tracking-[0.02em] sm:tracking-[0.04em]">
@@ -648,16 +631,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
                     aria-label="Facebook Agriturismo La Mora"
                     className="flex h-9 w-9 items-center justify-center rounded-full border border-cream/25 text-cream/85 transition-colors hover:border-gold hover:text-gold"
                   >
-                    <SocialIcon kind="facebook" />
-                  </a>
-                  <a
-                    href="https://www.instagram.com/paolo.720/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Instagram Agriturismo La Mora"
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-cream/25 text-cream/85 transition-colors hover:border-gold hover:text-gold"
-                  >
-                    <SocialIcon kind="instagram" />
+                    <FacebookIcon />
                   </a>
                 </div>
               </div>

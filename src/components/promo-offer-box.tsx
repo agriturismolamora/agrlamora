@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "@/components/chocolate-theme.module.css";
-import { PROMOS, facebookOfferUrl, isPromoActive, promoWhatsappUrl, type PromoId } from "@/data/promo";
+import { PROMOS, FACEBOOK_PAGE_URL, facebookOfferUrl, isPromoActive, promoWhatsappUrl, type PromoId } from "@/data/promo";
 import { BookingModalButton } from "@/components/booking-modal-button";
 import type { Locale } from "@/lib/i18n";
 
@@ -95,14 +95,26 @@ export function PromoOfferBox({
             )}
           </div>
 
-          <a
-            href={facebookOfferUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-5 inline-block text-[12px] font-semibold text-[var(--caramello-chiaro)] underline decoration-[var(--caramello-chiaro)]/40 underline-offset-4 hover:text-[var(--crema)]"
-          >
-            {text.facebookCta} →
-          </a>
+          {/* Le due azioni Facebook dell'offerta: "Mi piace" alla pagina e
+              "Salva" sul post dell'offerta, entrambe in una nuova scheda. */}
+          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
+            <a
+              href={FACEBOOK_PAGE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-[12px] font-semibold text-[var(--caramello-chiaro)] underline decoration-[var(--caramello-chiaro)]/40 underline-offset-4 hover:text-[var(--crema)]"
+            >
+              {text.facebookCta} →
+            </a>
+            <a
+              href={facebookOfferUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-[12px] font-semibold text-[var(--caramello-chiaro)] underline decoration-[var(--caramello-chiaro)]/40 underline-offset-4 hover:text-[var(--crema)]"
+            >
+              {text.facebookPostCta} →
+            </a>
+          </div>
         </div>
       </div>
     </section>
