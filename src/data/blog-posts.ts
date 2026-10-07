@@ -21,9 +21,10 @@ import {
 /* Contenuto editoriale del blog: non semplici paragrafi ma un piccolo
    sistema di blocchi (ContentBlock), per poter alternare titoli, immagini,
    liste e box informativi come in un vero articolo — non un unico muro di
-   testo. intro/introCta* e finalCta* sono fissi (aprono e chiudono ogni
-   articolo con lo stesso ritmo), il resto vive nell'array `content`, dove
-   può comparire anche un singolo blocco `cta` di tipo "centrale".
+   testo. Le CTA di prenotazione sono tre e uguali in ogni articolo
+   (src/components/blog-booking-cta.tsx, testi in src/data/blog-ctas.ts):
+   A dopo l'intro e "In breve", B a metà (al posto dell'eventuale blocco
+   `cta` di `content`), C in chiusura con il titolo finalCtaHeading.
    Le CTA che puntano a pagine interne usano un path semplice (es.
    "/alloggi/"): withLocale() lo risolve nella lingua giusta al momento del
    render, qui non va mai scritto già completo di prefisso lingua. */
@@ -37,7 +38,9 @@ export type ContentBlock =
   | { type: "image"; src: string; alt: string; caption?: string; credit?: PhotoCredit; portrait?: boolean }
   | { type: "list"; items: string[] }
   | { type: "facts"; items: { label: string; value: string }[] }
-  /* href "#prenota": invece di un link, un pulsante che apre la modale di
+  /* Vecchio CTA centrale: non viene più mostrato, la sua posizione è
+     quella della CTA B ("Dormi a X km", blog-booking-cta.tsx). href
+     "#prenota": pulsante che apre la modale di
      prenotazione bed-and-breakfast.it (stessa di "Prenota ora"). */
   | { type: "cta"; heading: string; body?: string; label: string; href: string }
   /* Link interni (Alloggi, Offerte, Territorio...): path italiano, la
@@ -68,6 +71,9 @@ export type BlogPost = {
   /* Blocco "In breve" iniziale: fatti estraibili (date, distanze, tempi). */
   inBreve?: { heading: string; items: { label: string; value: string }[] };
   intro: string;
+  /* introCtaHeading: riga della CTA A solo se l'articolo non ha testi in
+     src/data/blog-ctas.ts; label/href non sono più mostrati (la CTA A ha
+     sempre "Prenota" e "Vedi gli appartamenti"). */
   introCtaHeading?: string;
   introCtaLabel?: string;
   introCtaHref?: string;
@@ -80,6 +86,9 @@ export type BlogPost = {
   theme?: "chocolate";
   /* Nota legale in fondo all'articolo (es. marchi di terzi). */
   disclaimer?: string;
+  /* finalCtaHeading: titolo della CTA C (chiusura). Body, label e href
+     restano per compatibilità ma non sono più mostrati: la CTA C ha i
+     vantaggi della prenotazione diretta, Prenota, WhatsApp e /offerte/. */
   finalCtaHeading: string;
   finalCtaBody: string;
   finalCtaLabel: string;

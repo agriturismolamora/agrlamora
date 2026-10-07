@@ -1,15 +1,16 @@
 import Image from "next/image";
+import { Fragment } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getBlogPosts, getBlogPost, BOOKING_MODAL_HREF } from "@/data/blog-posts";
+import { getBlogPosts, getBlogPost } from "@/data/blog-posts";
 import { Reveal } from "@/components/scroll-reveal";
-import { HoverFill } from "@/components/hover-fill";
 import type { Locale } from "@/lib/i18n";
 import { LOCALES, withLocale } from "@/lib/i18n";
 import { findMentionedPlaces } from "@/data/places";
 import { MapsButton } from "@/components/maps-button";
-import { BookingModalButton } from "@/components/booking-modal-button";
+import { BlogBookingCta } from "@/components/blog-booking-cta";
+import { getBlogCta, DEFAULT_BLOG_CTA } from "@/data/blog-ctas";
 import { PromoOfferBox } from "@/components/promo-offer-box";
 import { PhotoCreditLine } from "@/components/photo-credit";
 import { ChocolateDrip, CocoaParticles } from "@/components/chocolate-decor";
@@ -86,87 +87,6 @@ function articleText(post: BlogPost): string {
 
 function isExternalHref(href: string): boolean {
   return href.startsWith("http") || href.startsWith("tel:");
-}
-
-/* Blocco CTA riusato per iniziale/centrale/finale: stesso componente,
-   varianti solo di colore (oro per iniziale/centrale, raspberry per la
-   finale, coerente con il resto del sito — es. price-comparison-section)
-   così l'occhio la riconosce sempre come "momento commerciale" senza
-   sembrare tre banner diversi incollati nell'articolo. La variante
-   "chocolate" esiste solo per gli articoli con theme: "chocolate".
-   href "#prenota" (BOOKING_MODAL_HREF): pulsante che apre la modale di
-   prenotazione invece di un link. */
-function ArticleCta({
-  heading,
-  body,
-  label,
-  href,
-  locale,
-  variant = "gold",
-}: {
-  heading: string;
-  body?: string;
-  label: string;
-  href: string;
-  locale: Locale;
-  variant?: "gold" | "raspberry" | "chocolate";
-}) {
-  const isChocolate = variant === "chocolate";
-  const buttonClass = isChocolate
-    ? `${choco.sheen} group relative mt-5 inline-flex items-center gap-2.5 overflow-hidden rounded-lg px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em]`
-    : `group relative mt-5 inline-flex items-center gap-2.5 overflow-hidden rounded-lg px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] ${
-        variant === "raspberry" ? "bg-raspberry text-cream" : "bg-gold text-[#1f180e]"
-      }`;
-  const inner = (
-    <>
-      {!isChocolate && <HoverFill color={variant === "raspberry" ? "#8a3844" : "#8f7330"} />}
-      <span className="relative z-10 inline-flex items-center gap-2.5">
-        {label}
-        <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-          →
-        </span>
-      </span>
-    </>
-  );
-
-  let button;
-  if (href === BOOKING_MODAL_HREF) {
-    button = <BookingModalButton className={buttonClass}>{inner}</BookingModalButton>;
-  } else {
-    const isExternal = isExternalHref(href);
-    const linkProps = isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {};
-    button = (
-      <Link href={isExternal ? href : withLocale(locale, href)} {...linkProps} className={buttonClass}>
-        {inner}
-      </Link>
-    );
-  }
-
-  return (
-    <div
-      className={`my-10 rounded-[6px] px-6 py-7 text-center sm:px-8 sm:py-8 ${
-        isChocolate ? `${choco.root} ${choco.melted}` : "bg-cream-dim"
-      }`}
-    >
-      <p
-        className={`font-display text-[19px] font-normal leading-[1.4] [text-wrap:balance] sm:text-[21px] ${
-          isChocolate ? "text-[var(--crema)]" : "text-ink"
-        }`}
-      >
-        {heading}
-      </p>
-      {body && (
-        <p
-          className={`mx-auto mt-2.5 max-w-[440px] text-[13.5px] leading-[1.7] ${
-            isChocolate ? "text-[var(--crema)]/85" : "text-ink-soft"
-          }`}
-        >
-          {body}
-        </p>
-      )}
-      {button}
-    </div>
-  );
 }
 
 /* Classi del corpo articolo per tema: il tema cioccolato cambia solo
@@ -299,15 +219,33 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
     </Reveal>
   );
 
-  const introCta = post.introCtaHeading && post.introCtaLabel && post.introCtaHref && (
+  /* CTA di prenotazione (src/components/blog-booking-cta.tsx): A dopo
+     l'intro e "In breve", B a metà articolo, C in chiusura dopo le FAQ.
+     Testi per articolo in src/data/blog-ctas.ts; per gli articoli senza voce
+     la riga della CTA A è l'introCtaHeading dell'articolo. */
+  const ctaCopy = getBlogCta(post.slug);
+  const ctaTheme = isChocolate ? "chocolate" : "default";
+  const introLine = ctaCopy?.intro[locale] ?? post.introCtaHeading ?? DEFAULT_BLOG_CTA.intro[locale];
+  const distance = (ctaCopy ?? DEFAULT_BLOG_CTA).distance;
+  /* Posizione della CTA B: al posto del vecchio blocco "cta" centrale, se
+     l'articolo ne ha uno; altrimenti prima del titolo H2 più vicino a metà
+     del contenuto (mai il primo H2, mai dopo l'ultimo blocco). */
+  const legacyCtaIndex = post.content.findIndex((block) => block.type === "cta");
+  const h2Indexes = post.content.flatMap((block, i) => (block.type === "h2" && i > 0 ? [i] : []));
+  const half = post.content.length / 2;
+  const midIndex =
+    legacyCtaIndex >= 0
+      ? legacyCtaIndex
+      : h2Indexes.reduce((best, i) => (Math.abs(i - half) < Math.abs(best - half) ? i : best), h2Indexes[0] ?? -1);
+
+  const introCta = (
     <Reveal delay={80}>
-      <ArticleCta
-        heading={post.introCtaHeading}
-        label={post.introCtaLabel}
-        href={post.introCtaHref}
-        locale={locale}
-        variant={isChocolate ? "chocolate" : "gold"}
-      />
+      <BlogBookingCta variant="intro" locale={locale} theme={ctaTheme} line={introLine} />
+    </Reveal>
+  );
+  const midCta = (
+    <Reveal>
+      <BlogBookingCta variant="distance" locale={locale} theme={ctaTheme} distance={distance} />
     </Reveal>
   );
 
@@ -319,116 +257,116 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
     </Reveal>
   );
 
+  function renderBlock(block: (typeof post.content)[number], i: number) {
+    switch (block.type) {
+      case "h2":
+        return (
+          <Reveal key={i}>
+            <h2 className={c.h2}>{block.text}</h2>
+          </Reveal>
+        );
+      case "h3":
+        return (
+          <Reveal key={i}>
+            <h3 className={c.h3}>{block.text}</h3>
+          </Reveal>
+        );
+      case "p":
+        return (
+          <Reveal key={i}>
+            <p className={c.p}>{block.text}</p>
+          </Reveal>
+        );
+      case "list":
+        return (
+          <Reveal key={i}>
+            <ul className="space-y-2.5">
+              {block.items.map((item, j) => (
+                <li key={j} className={c.li}>
+                  <span aria-hidden="true" className={c.bullet} />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        );
+      case "facts":
+        return (
+          <Reveal key={i}>
+            <FactsGrid items={block.items} variant={isChocolate ? "chocolateMilk" : "default"} />
+          </Reveal>
+        );
+      case "image":
+        return (
+          <Reveal key={i} className="!mt-8">
+            <figure>
+              <div className={`relative overflow-hidden rounded-[4px] ${block.portrait ? "mx-auto aspect-[4/5] max-w-[520px]" : "aspect-[3/2]"}`}>
+                <Image
+                  src={block.src}
+                  alt={block.alt}
+                  fill
+                  loading="lazy"
+                  sizes={block.portrait ? "(max-width: 640px) 100vw, 520px" : "(max-width: 640px) 100vw, 680px"}
+                  className="object-cover"
+                />
+              </div>
+              {(block.caption || block.credit) && (
+                <figcaption className={c.caption}>
+                  {block.credit ? (
+                    <PhotoCreditLine credit={block.credit} locale={locale} prefix={block.caption} linkClassName={c.link} />
+                  ) : (
+                    block.caption
+                  )}
+                </figcaption>
+              )}
+            </figure>
+          </Reveal>
+        );
+      case "links":
+        return (
+          <Reveal key={i}>
+            <nav aria-label={block.heading} className="!mt-10">
+              <span className={c.label}>{block.heading}</span>
+              <ul className="mt-3 space-y-2">
+                {block.items.map((item) => {
+                  const external = isExternalHref(item.href);
+                  return (
+                    <li key={item.href} className="text-[15px] leading-[1.6]">
+                      {external ? (
+                        <a href={item.href} target="_blank" rel="noopener noreferrer" className={c.link}>
+                          {item.label} ↗
+                        </a>
+                      ) : (
+                        <Link href={withLocale(locale, item.href)} className={c.link}>
+                          {item.label} →
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </Reveal>
+        );
+      default:
+        return null;
+    }
+  }
+
   const body = (
     <>
       <div className="mt-2 space-y-6">
         {post.content.map((block, i) => {
-          switch (block.type) {
-            case "h2":
-              return (
-                <Reveal key={i}>
-                  <h2 className={c.h2}>{block.text}</h2>
-                </Reveal>
-              );
-            case "h3":
-              return (
-                <Reveal key={i}>
-                  <h3 className={c.h3}>{block.text}</h3>
-                </Reveal>
-              );
-            case "p":
-              return (
-                <Reveal key={i}>
-                  <p className={c.p}>{block.text}</p>
-                </Reveal>
-              );
-            case "list":
-              return (
-                <Reveal key={i}>
-                  <ul className="space-y-2.5">
-                    {block.items.map((item, j) => (
-                      <li key={j} className={c.li}>
-                        <span aria-hidden="true" className={c.bullet} />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </Reveal>
-              );
-            case "facts":
-              return (
-                <Reveal key={i}>
-                  <FactsGrid items={block.items} variant={isChocolate ? "chocolateMilk" : "default"} />
-                </Reveal>
-              );
-            case "image":
-              return (
-                <Reveal key={i} className="!mt-8">
-                  <figure>
-                    <div className={`relative overflow-hidden rounded-[4px] ${block.portrait ? "mx-auto aspect-[4/5] max-w-[520px]" : "aspect-[3/2]"}`}>
-                      <Image
-                        src={block.src}
-                        alt={block.alt}
-                        fill
-                        loading="lazy"
-                        sizes={block.portrait ? "(max-width: 640px) 100vw, 520px" : "(max-width: 640px) 100vw, 680px"}
-                        className="object-cover"
-                      />
-                    </div>
-                    {(block.caption || block.credit) && (
-                      <figcaption className={c.caption}>
-                        {block.credit ? (
-                          <PhotoCreditLine credit={block.credit} locale={locale} prefix={block.caption} linkClassName={c.link} />
-                        ) : (
-                          block.caption
-                        )}
-                      </figcaption>
-                    )}
-                  </figure>
-                </Reveal>
-              );
-            case "cta":
-              return (
-                <Reveal key={i}>
-                  <ArticleCta
-                    heading={block.heading}
-                    body={block.body}
-                    label={block.label}
-                    href={block.href}
-                    locale={locale}
-                    variant={isChocolate ? "chocolate" : "gold"}
-                  />
-                </Reveal>
-              );
-            case "links":
-              return (
-                <Reveal key={i}>
-                  <nav aria-label={block.heading} className="!mt-10">
-                    <span className={c.label}>{block.heading}</span>
-                    <ul className="mt-3 space-y-2">
-                      {block.items.map((item) => {
-                        const external = isExternalHref(item.href);
-                        return (
-                          <li key={item.href} className="text-[15px] leading-[1.6]">
-                            {external ? (
-                              <a href={item.href} target="_blank" rel="noopener noreferrer" className={c.link}>
-                                {item.label} ↗
-                              </a>
-                            ) : (
-                              <Link href={withLocale(locale, item.href)} className={c.link}>
-                                {item.label} →
-                              </Link>
-                            )}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </nav>
-                </Reveal>
-              );
-            default:
-              return null;
-          }
+          if (block.type === "cta") return i === midIndex ? <Fragment key={i}>{midCta}</Fragment> : null;
+          const rendered = renderBlock(block, i);
+          return i === midIndex ? (
+            <Fragment key={i}>
+              {midCta}
+              {rendered}
+            </Fragment>
+          ) : (
+            rendered
+          );
         })}
       </div>
 
@@ -479,14 +417,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
       )}
 
       <Reveal delay={80}>
-        <ArticleCta
-          heading={post.finalCtaHeading}
-          body={post.finalCtaBody}
-          label={post.finalCtaLabel}
-          href={post.finalCtaHref}
-          locale={locale}
-          variant={isChocolate ? "chocolate" : "raspberry"}
-        />
+        <BlogBookingCta variant="direct" locale={locale} theme={ctaTheme} heading={post.finalCtaHeading} articleTitle={post.title} />
       </Reveal>
 
       {post.disclaimer && <p className={`mt-6 text-[12px] leading-[1.6] ${isChocolate ? "text-[#6b5442]" : "text-ink-soft/80"}`}>{post.disclaimer}</p>}
