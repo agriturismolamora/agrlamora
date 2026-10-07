@@ -10,6 +10,7 @@ import { t } from "@/lib/dictionary";
 import { CONSENT_TEXT } from "@/data/consent-text";
 import { openCookiePreferences } from "@/lib/consent";
 import { RecensioniBadge } from "@/components/recensioni-badge";
+import { VillaLogoLink } from "@/components/villa-logo-link";
 
 const ADDRESS = "Via Fonte Citerna, 7 — 06081 Assisi (PG)";
 const MAPS_URL =
@@ -21,12 +22,15 @@ const WHATSAPP_DISPLAY = "WhatsApp 393 4363917";
 const EMAIL = "agriturismolamora@gmail.com";
 const FACEBOOK_URL = "https://www.facebook.com/p/Agriturismo-la-Mora-di-Assisi-100066662774182/";
 
+/* Stesso ordine della nav dell'header (site-header.tsx): La Mora, Alloggi,
+   Territorio, Esperienze, Villa Relax, poi le altre voci. */
 function getNav(locale: Locale) {
   return [
+    { label: t("nav", "laMora", locale), href: withLocale(locale, "/chi-siamo/") },
     { label: t("nav", "alloggi", locale), href: withLocale(locale, "/alloggi/") },
-    { label: t("nav", "villaRelax", locale), href: withLocale(locale, "/villa-relax-assisi/") },
-    { label: t("nav", "chiSiamo", locale), href: withLocale(locale, "/chi-siamo/") },
     { label: t("nav", "territorio", locale), href: withLocale(locale, "/territorio/") },
+    { label: t("nav", "esperienze", locale), href: withLocale(locale, "/agriturismo-famiglie-ad-assisi-e-dintorni/") },
+    { label: t("nav", "villaRelax", locale), href: withLocale(locale, "/villa-relax-assisi/") },
     { label: t("nav", "blog", locale), href: withLocale(locale, "/blog/") },
     { label: t("nav", "offerte", locale), href: withLocale(locale, "/offerte/") },
     { label: t("nav", "recensioni", locale), href: withLocale(locale, "/#section-reviews") },
@@ -127,10 +131,15 @@ export function SiteFooter({ locale }: { locale: Locale }) {
         <div className="grid gap-x-12 gap-y-11 sm:grid-cols-2 lg:grid-cols-[1.1fr_1fr_1.1fr]">
           {/* Marchio + social */}
           <div className="sm:col-span-2 lg:col-span-1">
+            {/* Pagine Villa: logo Villa Relax al posto di quello di La Mora. */}
             {onVillaPage ? (
-              <a href={withLocale(locale, "/")} aria-label={logoLabel} className="inline-block">
-                {logo}
-              </a>
+              <VillaLogoLink
+                href={withLocale(locale, "/villa-relax-assisi/")}
+                width={120}
+                height={99}
+                className="inline-block"
+                imgClassName="h-auto w-[104px] sm:w-[120px]"
+              />
             ) : (
               <Link href={withLocale(locale, "/")} aria-label={logoLabel} className="inline-block">
                 {logo}

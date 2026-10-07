@@ -16,6 +16,15 @@ export const VILLA_ADDRESS = "Via Di Bassano, 19 — 06081 Assisi (PG)";
 export const VILLA_HOST_NAME = "Paolo";
 export const VILLA_HOST_IMAGE = "/images/villa/paologestoreagriturismolamora.webp";
 
+/* Logo di Villa Relax, SOLO sulle pagine Villa (il resto del sito usa quello
+   di La Mora): scritte bianche su sfondi scuri e foto (hero, header sticky,
+   pannello MENU, footer, filigrana), scritte nere su sfondi chiari (modulo
+   richieste, JSON-LD). PNG trasparenti 800 px, ritagliati dai file del
+   titolare e ridotti a 256 colori. */
+export const VILLA_LOGO_ALT = "Villa Relax di Assisi";
+export const VILLA_LOGO_WHITE = { src: "/images/villa/logo-villa-relax-assisi-scritte-bianche.png", width: 800, height: 659 };
+export const VILLA_LOGO_BLACK = { src: "/images/villa/logo-villa-relax-assisi-scritte-nere.png", width: 800, height: 658 };
+
 const VILLA_RATING_LABEL: Record<Locale, string> = {
   it: "Certificato di eccellenza 2026",
   en: "Certificate of Excellence 2026",

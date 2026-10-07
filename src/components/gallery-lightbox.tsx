@@ -1,6 +1,6 @@
 "use client";
 
-import { WatermarkedImage } from "@/components/watermarked-image";
+import { WatermarkedImage, type WatermarkMark } from "@/components/watermarked-image";
 import { useCallback, useEffect, useState } from "react";
 import type { GalleryImage } from "@/data/apartment-details";
 import type { Locale } from "@/lib/i18n";
@@ -23,7 +23,7 @@ const TEXT: Record<Locale, { dialogLabel: string; close: string; prev: string; n
    passandogli solo `open(index)` da agganciare all'onClick di ogni foto.
    <Lightbox /> va renderizzato una sola volta in fondo alla pagina.
    Nessuna libreria esterna, stesso principio del resto del progetto. */
-export function useLightbox(images: GalleryImage[], locale: Locale) {
+export function useLightbox(images: GalleryImage[], locale: Locale, mark: WatermarkMark = "lamora") {
   const text = TEXT[locale];
   const [index, setIndex] = useState<number | null>(null);
 
@@ -108,7 +108,7 @@ export function useLightbox(images: GalleryImage[], locale: Locale) {
         )}
 
         <div className="relative h-[80vh] w-full max-w-[1100px]" onClick={(e) => e.stopPropagation()}>
-          <WatermarkedImage src={images[index].src} alt={images[index].alt} fill sizes="100vw" className="object-contain" priority />
+          <WatermarkedImage mark={mark} src={images[index].src} alt={images[index].alt} fill sizes="100vw" className="object-contain" priority />
         </div>
 
         <span className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[12px] uppercase tracking-[0.1em] text-cream/50">

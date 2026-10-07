@@ -19,6 +19,9 @@ import {
   VILLA_CIN,
   VILLA_MAX_GUESTS,
   VILLA_GALLERY,
+  VILLA_LOGO_ALT,
+  VILLA_LOGO_BLACK,
+  VILLA_LOGO_WHITE,
   VILLA_WHATSAPP_NUMBER,
   getVillaRating,
   getVillaConfigurations,
@@ -28,7 +31,7 @@ import {
 } from "@/data/villa";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
-import { pageMetadata } from "@/lib/seo";
+import { absoluteUrl, pageMetadata } from "@/lib/seo";
 
 const VILLA_OFFERS_WIDGET_TEXT: Record<Locale, { label: string; heading: string }> = {
   it: { label: "Offerte in corso", heading: "Le promozioni attive per Villa Relax" },
@@ -148,6 +151,8 @@ const jsonLd = (locale: Locale, maxGuests: number) => ({
   name: "Villa Relax",
   description: "Villa indipendente con piscina privata ad Assisi, fino a 16 ospiti su 6 camere da letto.",
   image: "https://www.lamoraassisi.com/images/villa/villa%20esterna.webp",
+  // Logo della Villa (scritte nere: Google lo mostra su fondo chiaro).
+  logo: { "@type": "ImageObject", url: absoluteUrl(VILLA_LOGO_BLACK.src), width: VILLA_LOGO_BLACK.width, height: VILLA_LOGO_BLACK.height },
   url: `https://www.lamoraassisi.com${withLocale(locale, "/villa-relax-assisi/")}`,
   telephone: "+39 393 4363917",
   email: "agriturismolamora@gmail.com",
@@ -373,8 +378,12 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd(locale, VILLA_MAX_GUESTS)) }} />
 
-      <section className="relative flex h-[90vh] min-h-[580px] items-end overflow-hidden">
+      {/* Altezza minima, non fissa, e spazio in alto per l'header: sugli
+          schermi bassi logo e testo non finiscono sotto l'header, è la
+          hero ad allungarsi. */}
+      <section className="relative flex min-h-[max(90vh,580px)] items-end overflow-hidden">
         <WatermarkedImage
+          mark="villa"
           src="/images/villa/vista esterno della villa.webp"
           alt="Villa Relax, villa indipendente nella campagna di Assisi"
           fill
@@ -387,8 +396,26 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
           className="absolute inset-0"
           style={{ background: "linear-gradient(180deg, rgba(20,14,7,.08) 0%, rgba(20,14,7,.4) 55%, rgba(20,14,7,.82) 100%)" }}
         />
-        <div className="relative z-[1] mx-auto w-full max-w-[960px] px-6 pb-16 text-center sm:px-10 sm:pb-20">
+        <div className="relative z-[1] mx-auto w-full max-w-[960px] px-6 pb-16 pt-28 text-center sm:px-10 sm:pb-20 sm:pt-32">
           <Reveal>
+            {/* Logo Villa Relax (scritte bianche), solo sulle pagine Villa,
+                sopra il titolo. Dietro, una velatura radiale scura (non un
+                filtro CSS): la scritta ad arco resta leggibile anche sulla
+                pietra chiara della facciata. */}
+            <span className="relative mx-auto mb-7 block w-[132px] sm:w-[168px]">
+              <span
+                aria-hidden="true"
+                className="absolute -inset-x-[40%] -inset-y-[28%] rounded-full bg-[radial-gradient(closest-side,rgba(20,14,7,0.5),rgba(20,14,7,0))]"
+              />
+              <Image
+                src={VILLA_LOGO_WHITE.src}
+                alt={VILLA_LOGO_ALT}
+                width={168}
+                height={138}
+                loading="eager"
+                className="relative h-auto w-full"
+              />
+            </span>
             {/* Badge "Locazione esclusiva": richiesta esplicita del titolare
                 di rendere questo concetto immediatamente riconoscibile, non
                 solo implicito nel testo — stesso stile pillola oro già
@@ -411,6 +438,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
             <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2 sm:gap-16">
               <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-[3px] sm:aspect-[16/11]">
                 <WatermarkedImage
+                  mark="villa"
                   src="/images/villa/villa esterno.webp"
                   alt="Esterno di Villa Relax, arredata in stile classico"
                   fill
@@ -439,6 +467,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
               </div>
               <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-[3px] sm:order-2 sm:aspect-[16/11]">
                 <WatermarkedImage
+                  mark="villa"
                   src="/images/villa/sala da pranzo villa interno.webp"
                   alt="Sala da pranzo interna di Villa Relax"
                   fill
@@ -486,7 +515,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
             </h2>
           </Reveal>
           <div className="mt-8">
-            <ApartmentGallery images={VILLA_GALLERY} locale={locale} />
+            <ApartmentGallery images={VILLA_GALLERY} locale={locale} mark="villa" />
           </div>
         </div>
       </section>
@@ -530,6 +559,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
           <Reveal>
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
               <WatermarkedImage
+                mark="villa"
                 src="/images/villa/piscina esterna della villa.webp"
                 alt="Piscina privata di Villa Relax"
                 fill

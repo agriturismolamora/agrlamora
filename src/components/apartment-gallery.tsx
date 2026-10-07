@@ -1,6 +1,6 @@
 "use client";
 
-import { WatermarkedImage } from "@/components/watermarked-image";
+import { WatermarkedImage, type WatermarkMark } from "@/components/watermarked-image";
 import { useCallback, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { useLightbox } from "@/components/gallery-lightbox";
 import type { GalleryImage } from "@/data/apartment-details";
@@ -31,10 +31,10 @@ function pad(n: number) {
   return String(n + 1).padStart(2, "0");
 }
 
-export function ApartmentGallery({ images, locale }: { images: GalleryImage[]; locale: Locale }) {
+export function ApartmentGallery({ images, locale, mark = "lamora" }: { images: GalleryImage[]; locale: Locale; mark?: WatermarkMark }) {
   const text = TEXT[locale];
   const [current, setCurrent] = useState(0);
-  const { open, Lightbox } = useLightbox(images, locale);
+  const { open, Lightbox } = useLightbox(images, locale, mark);
   const dragStartX = useRef<number | null>(null);
 
   const goTo = useCallback(
@@ -92,6 +92,7 @@ export function ApartmentGallery({ images, locale }: { images: GalleryImage[]; l
               className="relative h-full w-full shrink-0"
             >
               <WatermarkedImage
+                mark={mark}
                 src={img.src}
                 alt={img.alt}
                 fill

@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Locale } from "@/lib/i18n";
 import { withLocale, splitLocaleFromPath } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
+import { VillaLogoLink } from "@/components/villa-logo-link";
 
 type NavChild = {
   label: string;
@@ -31,10 +32,22 @@ const APARTMENT_WORD: Record<Locale, string> = { it: "Appartamento", en: "Apartm
    Costruita da una funzione (non un array statico) perché label/href
    dipendono dalla lingua corrente — `id` resta stabile tra le lingue per
    poter identificare le voci (es. NAV_LEFT_TABLET) senza dipendere dal
-   testo visibile. */
+   testo visibile.
+   Ordine (richiesta del titolare, ottobre 2026), uguale in nav desktop,
+   pannello MENU e footer: La Mora, Alloggi, Territorio, Esperienze, Villa
+   Relax, Offerte; poi Recensioni e Contatti (getNavRight). */
 function getNavLeft(locale: Locale): NavItem[] {
   const apt = APARTMENT_WORD[locale];
   return [
+    {
+      id: "la-mora",
+      label: t("nav", "laMora", locale),
+      href: withLocale(locale, "/chi-siamo/"),
+      children: [
+        { label: t("nav", "chiSiamo", locale), href: withLocale(locale, "/chi-siamo/") },
+        { label: t("nav", "colazioneBio", locale), href: withLocale(locale, "/agriturismo-con-colazione-inclusa-assisi/") },
+      ],
+    },
     {
       id: "alloggi",
       label: t("nav", "alloggi", locale),
@@ -45,21 +58,6 @@ function getNavLeft(locale: Locale): NavItem[] {
         { label: `${apt} Sagittario`, href: withLocale(locale, "/alloggi/sagittario/") },
         { label: `${apt} Gemelli`, href: withLocale(locale, "/alloggi/gemelli/") },
         { label: `${apt} Bilancia`, href: withLocale(locale, "/alloggi/bilancia/") },
-      ],
-    },
-    {
-      id: "villa-relax",
-      label: t("nav", "villaRelax", locale),
-      href: withLocale(locale, "/villa-relax-assisi/"),
-      children: [{ label: t("nav", "villaIndipendente", locale), href: withLocale(locale, "/villa-relax-assisi/") }],
-    },
-    {
-      id: "la-mora",
-      label: t("nav", "laMora", locale),
-      href: withLocale(locale, "/chi-siamo/"),
-      children: [
-        { label: t("nav", "chiSiamo", locale), href: withLocale(locale, "/chi-siamo/") },
-        { label: t("nav", "colazioneBio", locale), href: withLocale(locale, "/agriturismo-con-colazione-inclusa-assisi/") },
       ],
     },
     {
@@ -76,6 +74,12 @@ function getNavLeft(locale: Locale): NavItem[] {
       label: t("nav", "esperienze", locale),
       href: withLocale(locale, "/agriturismo-famiglie-ad-assisi-e-dintorni/"),
       children: [{ label: t("nav", "attivita", locale), href: withLocale(locale, "/agriturismo-famiglie-ad-assisi-e-dintorni/") }],
+    },
+    {
+      id: "villa-relax",
+      label: t("nav", "villaRelax", locale),
+      href: withLocale(locale, "/villa-relax-assisi/"),
+      children: [{ label: t("nav", "villaIndipendente", locale), href: withLocale(locale, "/villa-relax-assisi/") }],
     },
     {
       id: "offerte",
@@ -379,20 +383,16 @@ export function SiteHeader({ locale }: { locale: Locale }) {
                 superare i 90px di altezza e sforare l'header. */}
             {sticky && (
               <>
+                {/* Pagine Villa: logo Villa Relax, un po' più alto di quello
+                    di La Mora perché è più stretto (stessa area visiva). */}
                 {onVillaPage ? (
-                  <a
-                    href={withLocale(locale, "/")}
-                    aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`}
+                  <VillaLogoLink
+                    href={withLocale(locale, "/villa-relax-assisi/")}
+                    width={70}
+                    height={58}
                     className="flex shrink-0 items-center"
-                  >
-                    <Image
-                      src="/images/logo/logo-bianco-agriturismo-la-mora.png"
-                      alt="Agriturismo La Mora, Assisi - Perugia (Umbria)"
-                      width={140}
-                      height={105}
-                      className="h-12 w-auto sm:h-[52px]"
-                    />
-                  </a>
+                    imgClassName="h-[52px] w-auto sm:h-[58px]"
+                  />
                 ) : (
                   <Link
                     href={withLocale(locale, "/")}
@@ -515,20 +515,14 @@ export function SiteHeader({ locale }: { locale: Locale }) {
         <div className="mx-auto flex min-h-full w-full max-w-[1600px] flex-col px-6 pb-10 pt-6 sm:px-10">
           <div className="flex items-center justify-between pb-6">
             {onVillaPage ? (
-              <a
-                href={withLocale(locale, "/")}
-                onClick={() => setMenuOpen(false)}
-                aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`}
+              <VillaLogoLink
+                href={withLocale(locale, "/villa-relax-assisi/")}
+                onNavigate={() => setMenuOpen(false)}
+                width={92}
+                height={76}
                 className="flex items-center"
-              >
-                <Image
-                  src="/images/logo/logo-bianco-agriturismo-la-mora.png"
-                  alt="Agriturismo La Mora, Assisi - Perugia (Umbria)"
-                  width={148}
-                  height={111}
-                  className="h-14 w-auto sm:h-16"
-                />
-              </a>
+                imgClassName="h-16 w-auto sm:h-[76px]"
+              />
             ) : (
               <Link
                 href={withLocale(locale, "/")}
