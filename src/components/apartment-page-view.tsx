@@ -14,6 +14,7 @@ import { AMENITY_ICON_BY_LABEL, MirrorIcon, PawIcon, WashingMachineIcon } from "
 import { ScrollDog } from "@/components/scroll-dog";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { pageMetadata } from "@/lib/seo";
 
 function WhatsAppIcon() {
   return (
@@ -200,12 +201,8 @@ export async function apartmentMetadata(locale: Locale, params: Promise<Params>)
   const title = t.metaTitle(apt.name);
   const description = t.metaDesc(detail.tagline, apt.maxGuests, apt.sqm, detail.distinctiveFeature);
 
-  return {
-    title,
-    description,
-    alternates: { canonical: withLocale(locale, apt.href) },
-    openGraph: { title, description, images: [detail.gallery[0].src] },
-  };
+  const cover = detail.gallery[0];
+  return pageMetadata({ locale, path: apt.href, title, description, image: { src: cover.src, alt: cover.alt } });
 }
 
 export async function ApartmentPageView({ locale, params }: { locale: Locale; params: Promise<Params> }) {

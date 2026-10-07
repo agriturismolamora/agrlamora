@@ -3,7 +3,7 @@ import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import { BookingModalButton } from "@/components/booking-modal-button";
 import type { Locale } from "@/lib/i18n";
-import { withLocale } from "@/lib/i18n";
+import { pageMetadata } from "@/lib/seo";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -26,7 +26,7 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
 
 export function getOttavoCentenarioMetadata(locale: Locale) {
   const m = METADATA_TEXT[locale];
-  return { title: m.title, description: m.description, alternates: { canonical: withLocale(locale, "/ottavo-centenario-san-francesco/") } };
+  return pageMetadata({ locale, path: "/ottavo-centenario-san-francesco/", title: m.title, description: m.description });
 }
 
 const TEXT: Record<

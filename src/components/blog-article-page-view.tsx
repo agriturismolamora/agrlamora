@@ -16,6 +16,7 @@ import { PhotoCreditLine } from "@/components/photo-credit";
 import { ChocolateDrip, CocoaParticles } from "@/components/chocolate-decor";
 import choco from "@/components/chocolate-theme.module.css";
 import type { BlogPost } from "@/data/blog-posts";
+import { pageMetadata } from "@/lib/seo";
 
 type Params = { slug: string };
 
@@ -42,21 +43,16 @@ export async function blogArticleMetadata(locale: Locale, params: Promise<Params
   const { slug } = await params;
   const post = getBlogPost(locale, slug);
   if (!post) return {};
-  const languages = Object.fromEntries(
-    LOCALES.filter((l) => getBlogPost(l, slug)).map((l) => [l, absoluteUrl(articlePath(l, slug))])
-  );
-  return {
+  return pageMetadata({
+    locale,
+    path: `/blog/${slug}/`,
     title: post.title,
     description: post.metaDescription,
-    alternates: { canonical: absoluteUrl(articlePath(locale, slug)), languages },
-    openGraph: {
-      type: "article",
-      title: post.title,
-      description: post.metaDescription,
-      images: [absoluteUrl(post.image)],
-      ...(post.datePublished ? { publishedTime: post.datePublished } : {}),
-    },
-  };
+    image: { src: post.image, alt: post.alt },
+    type: "article",
+    locales: LOCALES.filter((l) => getBlogPost(l, slug)),
+    publishedTime: post.datePublished,
+  });
 }
 
 const TEXT: Record<Locale, { allArticles: string; otherArticles: string; placesMentioned: string }> = {

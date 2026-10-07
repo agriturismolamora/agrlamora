@@ -5,29 +5,30 @@ import { getBlogPosts } from "@/data/blog-posts";
 import { Reveal } from "@/components/scroll-reveal";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { pageMetadata } from "@/lib/seo";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
-    title: "Blog",
+    title: "Blog: cosa vedere ad Assisi e in Umbria",
     description: "Storie, luoghi e consigli per vivere Assisi e l'Umbria con calma: la Basilica di San Damiano, il Bosco di San Francesco, le Cascate delle Marmore e altro, dal blog di Agriturismo La Mora.",
   },
   en: {
-    title: "Blog",
+    title: "Blog: things to see in Assisi and Umbria",
     description: "Stories, places and tips for experiencing Assisi and Umbria at an easy pace: the Sanctuary of San Damiano, the Bosco di San Francesco, the Marmore Falls and more, from the Agriturismo La Mora blog.",
   },
   fr: {
-    title: "Blog",
+    title: "Blog : que voir à Assise et en Ombrie",
     description: "Histoires, lieux et conseils pour vivre Assise et l'Ombrie tranquillement : le sanctuaire de San Damiano, le Bosco di San Francesco, les Cascate delle Marmore et plus encore, sur le blog d'Agriturismo La Mora.",
   },
   de: {
-    title: "Blog",
+    title: "Blog: Sehenswertes in Assisi und Umbrien",
     description: "Geschichten, Orte und Tipps, um Assisi und Umbrien in Ruhe zu erleben: die Wallfahrtskirche San Damiano, der Bosco di San Francesco, die Wasserfälle von Marmore und mehr, im Blog von Agriturismo La Mora.",
   },
 };
 
 export function getBlogIndexMetadata(locale: Locale) {
   const m = METADATA_TEXT[locale];
-  return { title: m.title, description: m.description, alternates: { canonical: withLocale(locale, "/blog/") } };
+  return pageMetadata({ locale, path: "/blog/", title: m.title, description: m.description });
 }
 
 const TEXT: Record<Locale, { label: string; heading: string; readMore: string }> = {

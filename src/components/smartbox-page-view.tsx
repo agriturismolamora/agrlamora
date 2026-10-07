@@ -2,30 +2,30 @@ import { WatermarkedImage } from "@/components/watermarked-image";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import type { Locale } from "@/lib/i18n";
-import { withLocale } from "@/lib/i18n";
+import { pageMetadata } from "@/lib/seo";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
-    title: "Smartbox",
+    title: "Smartbox: come prenotare il soggiorno",
     description: "Hai un cofanetto Smartbox valido per Agriturismo La Mora? Ecco come registrarlo e prenotare il tuo soggiorno.",
   },
   en: {
-    title: "Smartbox",
+    title: "Smartbox: how to book your stay",
     description: "Do you have a Smartbox voucher valid for Agriturismo La Mora? Here's how to register it and book your stay.",
   },
   fr: {
-    title: "Smartbox",
+    title: "Smartbox : comment réserver votre séjour",
     description: "Vous avez un coffret Smartbox valable pour Agriturismo La Mora ? Voici comment l'enregistrer et réserver votre séjour.",
   },
   de: {
-    title: "Smartbox",
+    title: "Smartbox: so buchen Sie Ihren Aufenthalt",
     description: "Haben Sie eine für Agriturismo La Mora gültige Smartbox? So registrieren Sie sie und buchen Ihren Aufenthalt.",
   },
 };
 
 export function getSmartboxMetadata(locale: Locale) {
   const m = METADATA_TEXT[locale];
-  return { title: m.title, description: m.description, alternates: { canonical: withLocale(locale, "/offerte/smartbox/") } };
+  return pageMetadata({ locale, path: "/offerte/smartbox/", title: m.title, description: m.description });
 }
 
 const SMARTBOX_URL = "https://myaccount.smartbox.com/it/voucher/register/";

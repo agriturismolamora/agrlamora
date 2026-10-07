@@ -34,7 +34,11 @@ export function withLocale(locale: Locale, path: string): string {
    restituendo sia la lingua rilevata che il path italiano "nudo" — usato
    dal selettore lingua per passare da una lingua all'altra restando sulla
    STESSA pagina, non tornando sempre alla home. */
-export function splitLocaleFromPath(pathname: string): { locale: Locale; path: string } {
+export function splitLocaleFromPath(rawPathname: string): { locale: Locale; path: string } {
+  /* Durante la pre-generazione su Vercel usePathname() della home vale
+     "/index" (o "/en/index"...): è la home. Senza questa normalizzazione il
+     selettore lingua linkava /index/, /en/index/, /fr/index/, /de/index/. */
+  const pathname = rawPathname.replace(/\/index\/?$/, "/");
   for (const locale of LOCALES) {
     if (locale === DEFAULT_LOCALE) continue;
     const prefix = `/${locale}`;

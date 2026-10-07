@@ -9,6 +9,7 @@ import { NewsletterSection } from "@/components/newsletter-section";
 import { CertificationsMarquee } from "@/components/certifications-marquee";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { pageMetadata } from "@/lib/seo";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -31,7 +32,7 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
 
 export function getColazioneMetadata(locale: Locale) {
   const m = METADATA_TEXT[locale];
-  return { title: m.title, description: m.description, alternates: { canonical: withLocale(locale, "/agriturismo-con-colazione-inclusa-assisi/") } };
+  return pageMetadata({ locale, path: "/agriturismo-con-colazione-inclusa-assisi/", title: m.title, description: m.description });
 }
 
 function getFaqItems(locale: Locale): FaqItem[] {

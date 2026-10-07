@@ -28,6 +28,12 @@ const nextConfig: NextConfig = {
       { source: "/appartamento-bilancia/", destination: "/alloggi/bilancia/", permanent: true },
       { source: "/recensioni/", destination: "/#section-reviews", permanent: true },
       { source: "/contatti/", destination: "/#section-map", permanent: true },
+      // /index/ non è una pagina: la home si chiama "index" solo nei file
+      // generati. Rispondeva 200 con una copia della home senza canonical.
+      { source: "/index/", destination: "/", permanent: true },
+      { source: "/en/index/", destination: "/en/", permanent: true },
+      { source: "/fr/index/", destination: "/fr/", permanent: true },
+      { source: "/de/index/", destination: "/de/", permanent: true },
     ];
   },
   images: {

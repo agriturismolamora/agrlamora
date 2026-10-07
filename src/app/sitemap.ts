@@ -2,13 +2,15 @@ import type { MetadataRoute } from "next";
 import { APARTMENTS } from "@/data/apartments";
 import { getBlogPosts } from "@/data/blog-posts";
 import { LOCALES, withLocale, type Locale } from "@/lib/i18n";
+import { hreflangLanguages } from "@/lib/seo";
 
 /* Sitemap su dominio canonico www.lamoraassisi.com (servita su
    /sitemap.xml). Solo pagine reali: le statiche sono quelle presenti in
    src/app per tutte e 4 le lingue, gli appartamenti arrivano da
    APARTMENTS (stessi href del sito) e gli articoli dal blog di ciascuna
    lingua — niente slug scritti a mano qui. Ogni voce dichiara le versioni
-   nelle altre lingue (hreflang) solo dove la pagina esiste davvero.
+   nelle altre lingue (hreflang) solo dove la pagina esiste davvero, con
+   x-default verso l'italiano: stessi valori del <head> (src/lib/seo.ts).
    Nessun lastModified: il progetto non ha date di modifica affidabili per
    pagina, e una data inventata è peggio di nessuna. */
 const SITE_URL = "https://www.lamoraassisi.com";
@@ -39,7 +41,7 @@ function absolute(locale: Locale, path: string) {
 /* Una voce per ogni lingua in cui il path esiste, ciascuna con l'elenco
    completo delle alternative linguistiche. */
 function entries(path: string, locales: readonly Locale[]): MetadataRoute.Sitemap {
-  const languages = Object.fromEntries(locales.map((l) => [l, absolute(l, path)]));
+  const languages = hreflangLanguages(path, locales);
   return locales.map((locale) => ({ url: absolute(locale, path), alternates: { languages } }));
 }
 

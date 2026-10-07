@@ -7,6 +7,7 @@ import { NewsletterSection } from "@/components/newsletter-section";
 import { CertificationsMarquee } from "@/components/certifications-marquee";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { pageMetadata } from "@/lib/seo";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -29,7 +30,7 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
 
 export function getCofanettiMetadata(locale: Locale) {
   const m = METADATA_TEXT[locale];
-  return { title: m.title, description: m.description, alternates: { canonical: withLocale(locale, "/offerte/cofanetti-regalo/") } };
+  return pageMetadata({ locale, path: "/offerte/cofanetti-regalo/", title: m.title, description: m.description });
 }
 
 type Box = { slug: string; title: string; people: number; priceEur: string; included: string; img: string; alt: string };

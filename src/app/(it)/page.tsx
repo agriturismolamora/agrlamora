@@ -23,6 +23,12 @@ import { CertificationsMarquee } from "@/components/certifications-marquee";
 import { PromoPopup } from "@/components/promo-popup";
 import { SectionProgressDots } from "@/components/section-progress-dots";
 import { SectionSnapScroll } from "@/components/section-snap-scroll";
+import { getHomeMetadata } from "@/data/home-metadata";
+import type { Metadata } from "next";
+
+/* Canonical, hreflang, Open Graph e Twitter della home (src/data/home-metadata.ts):
+   qui e non nel layout, che li farebbe ereditare a tutte le pagine. */
+export const metadata: Metadata = getHomeMetadata("it");
 
 /* Header/footer/booking bar/chatbot/back-to-top e il JSON-LD LodgingBusiness
    vivono ora in layout.tsx (globali su tutte le pagine, non solo qui).

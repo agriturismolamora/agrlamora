@@ -28,6 +28,7 @@ import {
 } from "@/data/villa";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { pageMetadata } from "@/lib/seo";
 
 const VILLA_OFFERS_WIDGET_TEXT: Record<Locale, { label: string; heading: string }> = {
   it: { label: "Offerte in corso", heading: "Le promozioni attive per Villa Relax" },
@@ -57,7 +58,13 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
 
 export function getVillaRelaxMetadata(locale: Locale) {
   const m = METADATA_TEXT[locale];
-  return { title: m.title, description: m.description, alternates: { canonical: withLocale(locale, "/villa-relax-assisi/") } };
+  return pageMetadata({
+    locale,
+    path: "/villa-relax-assisi/",
+    title: m.title,
+    description: m.description,
+    image: { src: "/images/villa/villa esterna.webp", alt: m.title, width: 2000, height: 1500 },
+  });
 }
 
 function ParkingIcon() {

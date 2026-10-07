@@ -5,6 +5,7 @@ import { HoverFill } from "@/components/hover-fill";
 import { HydromassageVideo } from "@/components/hydromassage-video";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { pageMetadata } from "@/lib/seo";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -27,7 +28,7 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
 
 export function getPiscinaMetadata(locale: Locale) {
   const m = METADATA_TEXT[locale];
-  return { title: m.title, description: m.description, alternates: { canonical: withLocale(locale, "/piscina/") } };
+  return pageMetadata({ locale, path: "/piscina/", title: m.title, description: m.description });
 }
 
 const TEXT: Record<

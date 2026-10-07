@@ -9,6 +9,7 @@ import { PawIcon } from "@/components/amenity-icons";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
+import { pageMetadata } from "@/lib/seo";
 
 const TEXT: Record<
   Locale,
@@ -79,14 +80,14 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
     description: "Cinq appartements indépendants au cœur de la verdure ombrienne, de 2 à 8 personnes : Gemelli, Bilancia, Pesci, Acquario, Sagittario. Piscine, jardin, cuisine équipée dans chacun.",
   },
   de: {
-    title: "Apartments in Assisi",
+    title: "Ferienwohnungen in Assisi",
     description: "Fünf unabhängige Apartments inmitten des umbrischen Grüns, für 2 bis 8 Gäste: Gemelli, Bilancia, Pesci, Acquario, Sagittario. Pool, Garten, ausgestattete Küche in jedem.",
   },
 };
 
 export function getAlloggiMetadata(locale: Locale) {
   const m = METADATA_TEXT[locale];
-  return { title: m.title, description: m.description, alternates: { canonical: withLocale(locale, "/alloggi/") } };
+  return pageMetadata({ locale, path: "/alloggi/", title: m.title, description: m.description });
 }
 
 export function AlloggiPageView({ locale }: { locale: Locale }) {

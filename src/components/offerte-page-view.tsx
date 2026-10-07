@@ -14,6 +14,7 @@ import { bbitOfferteUrl } from "@/lib/bbit-widget-urls";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { EUROCHOCOLATE_2026 } from "@/data/promo";
+import { pageMetadata } from "@/lib/seo";
 
 const OFFERS_WIDGET_TEXT: Record<Locale, { label: string; heading: string }> = {
   it: { label: "Offerte in corso", heading: "Le promozioni attive in questo momento" },
@@ -76,7 +77,7 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
 
 export function getOfferteMetadata(locale: Locale) {
   const m = METADATA_TEXT[locale];
-  return { title: m.title, description: m.description, alternates: { canonical: withLocale(locale, "/offerte/") } };
+  return pageMetadata({ locale, path: "/offerte/", title: m.title, description: m.description });
 }
 
 const GIFT_CARDS: Record<Locale, { href: string; title: string; desc: string; img: string }[]> = {

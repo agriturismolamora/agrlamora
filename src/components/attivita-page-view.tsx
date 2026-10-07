@@ -8,6 +8,7 @@ import { NewsletterSection } from "@/components/newsletter-section";
 import { CertificationsMarquee } from "@/components/certifications-marquee";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { pageMetadata } from "@/lib/seo";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -30,7 +31,7 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
 
 export function getAttivitaMetadata(locale: Locale) {
   const m = METADATA_TEXT[locale];
-  return { title: m.title, description: m.description, alternates: { canonical: withLocale(locale, "/agriturismo-famiglie-ad-assisi-e-dintorni/") } };
+  return pageMetadata({ locale, path: "/agriturismo-famiglie-ad-assisi-e-dintorni/", title: m.title, description: m.description });
 }
 
 const EBIKE_PRICES: Record<Locale, { duration: string; price: string }[]> = {
