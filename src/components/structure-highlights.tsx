@@ -75,7 +75,7 @@ export function StructureHighlights({ locale }: { locale: Locale }) {
               {signatures.map((s, i) => (
                 <Reveal key={s.title} as="li" delay={i * 100}>
                   <Link href={s.href} className="group flex items-baseline gap-5 py-5">
-                    <span className="shrink-0 font-display text-sm text-ink-soft/50">{s.tag}</span>
+                    <span className="shrink-0 font-display text-sm text-ink-soft/90">{s.tag}</span>
                     <h3 className="font-display text-[24px] leading-[1.2] text-ink transition-colors group-hover:text-raspberry sm:text-[28px]">
                       {s.title}
                     </h3>

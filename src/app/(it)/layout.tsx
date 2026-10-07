@@ -12,8 +12,9 @@ export const metadata: Metadata = {
   description:
     "Agriturismo La Mora, ad Assisi: 5 appartamenti immersi nel verde umbro, piscina panoramica, colazione bio e attività per famiglie. A circa 11 km dall'aeroporto di Perugia.",
   icons: {
-    icon: "/images/favicon/favicon%20icona%20agriturismo%20la%20mora.png",
-    apple: "/images/favicon/favicon%20icona%20agriturismo%20la%20mora.png",
+    // Ridotte dallo stesso disegno: l'originale (1254 px, 1,5 MB) lo scaricava ogni pagina.
+    icon: [{ url: "/images/favicon/favicon-agriturismo-la-mora-192.png", sizes: "192x192", type: "image/png" }],
+    apple: [{ url: "/images/favicon/apple-touch-icon-agriturismo-la-mora-180.png", sizes: "180x180", type: "image/png" }],
   },
 };
 

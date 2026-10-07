@@ -279,6 +279,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
           alt="Ingresso di Agriturismo La Mora"
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
         />
@@ -341,7 +342,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
                 </span>
               </div>
             </Link>
-            <p className="mt-2 text-[11px] leading-[1.5] text-ink-soft/80">
+            <p className="mt-2 text-[11px] leading-[1.5] text-ink-soft">
               <PhotoCreditLine credit={EUROCHOCOLATE_2024_PHOTO.credit} locale={locale} prefix={EUROCHOCOLATE_2024_PHOTO.caption[locale]} />
             </p>
           </Reveal>

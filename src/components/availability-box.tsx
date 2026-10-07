@@ -156,7 +156,7 @@ export function AvailabilityBox({ apt, locale }: { apt: Apartment; locale: Local
           393 4363917
         </a>
 
-        <p className="mt-5 text-[11px] leading-[1.6] text-ink-soft/80">{text.condizioni}</p>
+        <p className="mt-5 text-[11px] leading-[1.6] text-ink-soft">{text.condizioni}</p>
       </div>
 
       <Link

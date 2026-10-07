@@ -245,6 +245,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
           alt="Agriturismo La Mora visto dall'alto, nella campagna umbra vicino Assisi"
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
         />

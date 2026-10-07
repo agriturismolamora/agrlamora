@@ -84,6 +84,7 @@ export function BlogIndexPageView({ locale }: { locale: Locale }) {
                   alt={featured.alt}
                   fill
                   priority
+                  fetchPriority="high"
                   style={{ objectPosition: featured.imagePosition }}
                   sizes="(max-width: 640px) 100vw, 540px"
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
@@ -132,7 +133,7 @@ export function BlogIndexPageView({ locale }: { locale: Locale }) {
                   </span>
                   <h3 className="mt-1.5 font-display text-[17px] leading-[1.3] text-ink [text-wrap:balance]">{post.title}</h3>
                   {post.imageCredit && (
-                    <PhotoCreditLine credit={post.imageCredit} locale={locale} linked={false} className="mt-1.5 block text-[10px] leading-[1.4] text-ink-soft/70" />
+                    <PhotoCreditLine credit={post.imageCredit} locale={locale} linked={false} className="mt-1.5 block text-[10px] leading-[1.4] text-ink-soft" />
                   )}
                 </Link>
               </Reveal>

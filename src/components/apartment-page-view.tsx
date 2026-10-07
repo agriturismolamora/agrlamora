@@ -226,7 +226,7 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
 
       {/* 1. Hero immersiva */}
       <section className="relative flex h-[78vh] min-h-[520px] items-end overflow-hidden">
-        <WatermarkedImage src={hero.src} alt={hero.alt} fill priority sizes="100vw" className="object-cover" />
+        <WatermarkedImage src={hero.src} alt={hero.alt} fill priority fetchPriority="high" sizes="100vw" className="object-cover" />
         <div
           aria-hidden="true"
           className="absolute inset-0"

@@ -221,6 +221,7 @@ export function ColazionePageView({ locale }: { locale: Locale }) {
           alt="Colazione biologica servita ad Agriturismo La Mora"
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
         />

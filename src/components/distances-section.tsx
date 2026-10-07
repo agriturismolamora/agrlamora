@@ -72,7 +72,7 @@ export function DistancesSection({ locale }: { locale: Locale }) {
           ))}
         </ul>
 
-        <p className="mt-6 max-w-[640px] text-[12px] leading-[1.6] text-ink-soft/80">{text.note}</p>
+        <p className="mt-6 max-w-[640px] text-[12px] leading-[1.6] text-ink-soft">{text.note}</p>
       </div>
     </section>
   );

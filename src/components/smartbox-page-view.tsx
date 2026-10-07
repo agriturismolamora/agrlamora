@@ -119,6 +119,7 @@ export function SmartboxPageView({ locale }: { locale: Locale }) {
           alt="Agriturismo La Mora, la struttura che ti aspetta con il tuo cofanetto Smartbox"
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
         />

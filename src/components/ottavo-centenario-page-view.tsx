@@ -117,6 +117,7 @@ export function OttavoCentenarioPageView({ locale }: { locale: Locale }) {
           alt="Basilica di San Francesco d'Assisi"
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
         />

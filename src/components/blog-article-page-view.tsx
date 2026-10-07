@@ -440,7 +440,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
       <StructuredData locale={locale} path={`/blog/${post.slug}/`} nodes={articleNodes} crumbName={post.title} />
 
       <section className="relative flex h-[56vh] min-h-[400px] items-end overflow-hidden">
-        <Image src={post.image} alt={post.alt} fill priority sizes="100vw" className="object-cover" style={{ objectPosition: post.imagePosition }} />
+        <Image src={post.image} alt={post.alt} fill priority fetchPriority="high" sizes="100vw" className="object-cover" style={{ objectPosition: post.imagePosition }} />
         <div
           aria-hidden="true"
           className="absolute inset-0"
@@ -527,7 +527,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
                     />
                   </div>
                   {p.imageCredit && (
-                    <PhotoCreditLine credit={p.imageCredit} locale={locale} linked={false} className="mt-1.5 block text-[10px] leading-[1.4] text-ink-soft/70" />
+                    <PhotoCreditLine credit={p.imageCredit} locale={locale} linked={false} className="mt-1.5 block text-[10px] leading-[1.4] text-ink-soft" />
                   )}
                   <h3 className="mt-3 font-display text-[16px] leading-[1.3] text-ink [text-wrap:balance]">{p.title}</h3>
                 </Link>

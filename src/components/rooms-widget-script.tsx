@@ -11,6 +11,18 @@ const LA_MORA_ID = "60754";
 const VILLA_ID = "61792";
 const REGIONE_ID = "18";
 
+/* L'iframe della modale (la pagina di prenotazione del fornitore) si carica
+   solo quando la modale si apre, non a ogni pagina: lo script lo scrive con
+   src via document.write e il browser lo scaricava subito, nascosto, con
+   circa 20 MB di foto delle camere più gli script di terzi della pagina del
+   fornitore (Google Tag Manager, accesso Google/Apple, Facebook), prima di
+   qualsiasi clic o consenso. Questo script, eseguito subito prima di quello
+   del fornitore, intercetta UNA sola chiamata a document.write (poi rimette
+   l'originale) e sposta l'URL in data-rrp-src; openRoomsWidget()
+   (lib/rrp-widget.ts) lo copia in src all'apertura. Il resto del markup del
+   fornitore non cambia. */
+const DEFER_IFRAME = `(function(){var w=document.write;document.write=function(h){document.write=w;return w.call(document,String(h).replace('<iframe src="','<iframe data-rrp-src="'))}})();`;
+
 function widgetSrc(struttura: string, locale: Locale) {
   return `https://www.bed-and-breakfast.it/scripts/widget/widget_frm_camere.cfm?idstruttura=${struttura}&idregione=${REGIONE_ID}&l=${locale}`;
 }
@@ -49,7 +61,10 @@ export function RoomsWidgetScript({ locale }: { locale: Locale }) {
   const struttura = isVilla ? VILLA_ID : LA_MORA_ID;
 
   return (
-    // eslint-disable-next-line @next/next/no-sync-scripts
-    <script key={`${struttura}-${locale}`} src={widgetSrc(struttura, locale)} />
+    <>
+      <script key={`defer-${struttura}-${locale}`} dangerouslySetInnerHTML={{ __html: DEFER_IFRAME }} />
+      {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+      <script key={`${struttura}-${locale}`} src={widgetSrc(struttura, locale)} />
+    </>
   );
 }

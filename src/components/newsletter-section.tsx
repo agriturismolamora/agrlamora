@@ -173,7 +173,7 @@ export function NewsletterSection({ locale }: { locale: Locale }) {
             )}
 
             {RECAPTCHA_SITE_KEY ? (
-              <p className="mt-4 text-[11px] leading-[1.6] text-ink-soft/70">
+              <p className="mt-4 text-[11px] leading-[1.6] text-ink-soft">
                 {{
                   it: <>Questo sito è protetto da reCAPTCHA e si applicano le{" "}
                     <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">Norme sulla privacy</a>{" "}
@@ -198,7 +198,7 @@ export function NewsletterSection({ locale }: { locale: Locale }) {
                 }[locale]}
               </p>
             ) : (
-              <p className="mt-4 text-[11px] text-ink-soft/70">{t("newsletter", "disclaimer", locale)}</p>
+              <p className="mt-4 text-[11px] text-ink-soft">{t("newsletter", "disclaimer", locale)}</p>
             )}
           </form>
         )}

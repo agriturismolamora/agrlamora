@@ -205,6 +205,7 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
           alt="Piscina panoramica di Agriturismo La Mora"
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
         />

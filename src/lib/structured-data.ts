@@ -129,6 +129,8 @@ function websiteNode(): JsonLdNode {
     name: "Agriturismo La Mora",
     inLanguage: ["it", "en", "fr", "de"],
     publisher: { "@id": LD_ID.lamora },
+    // Chi ha realizzato il sito: lo stesso credito del footer.
+    creator: { "@type": "Organization", name: "Agria System", url: "https://agriasystem.com" },
   };
 }
 

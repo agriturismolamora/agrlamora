@@ -87,15 +87,16 @@ export async function FacebookFeed({ locale }: { locale: Locale }) {
 
             {/* Stesso "sistema pulsante" del resto del sito (forma, padding,
                 tipografia, HoverFill direzionale) ma con la palette presa
-                dal blu ufficiale Facebook (#1877F2, lo stesso di
-                FacebookMark) invece dell'oro generico usato altrove: resta
+                dal blu Facebook invece dell'oro generico usato altrove: resta
                 riconoscibile come brand Facebook senza sembrare un widget
-                esterno incollato nella pagina. */}
+                esterno incollato nella pagina. #166FE5 e non #1877F2 (quello
+                di FacebookMark): con il testo bianco a 10px il blu ufficiale
+                si ferma a 4,23:1, questo arriva a 4,75:1 (WCAG AA). */}
             <a
               href={FACEBOOK_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex shrink-0 items-center gap-2.5 overflow-hidden rounded-lg bg-[#1877F2] px-5 py-3 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-white"
+              className="group relative inline-flex shrink-0 items-center gap-2.5 overflow-hidden rounded-lg bg-[#166FE5] px-5 py-3 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-white"
             >
               <HoverFill color="#0f5dd8" />
               <span className="relative z-10 inline-flex items-center gap-2">

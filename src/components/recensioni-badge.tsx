@@ -138,7 +138,7 @@ export function RecensioniBadge({ struttura, locale }: { struttura: "lamora" | "
   const consentText = CONSENT_TEXT[locale];
   return (
     <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
-      <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-cream/45">{TEXT[locale]}</span>
+      <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-cream/60">{TEXT[locale]}</span>
       <div className="-mx-6 snap-x snap-mandatory scroll-px-6 overflow-x-auto px-6 [scrollbar-width:none] sm:-mx-10 sm:scroll-px-10 sm:px-10 lg:mx-0 lg:overflow-visible lg:px-0 [&::-webkit-scrollbar]:hidden">
       <ExternalContentGate
         locale={locale}

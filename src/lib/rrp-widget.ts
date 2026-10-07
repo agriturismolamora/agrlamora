@@ -25,8 +25,11 @@ export function openRoomsWidget(params?: { checkIn?: Date | null; checkOut?: Dat
   const iframe = modal?.querySelector<HTMLIFrameElement>(".rrp-widget-iframe-form-camere");
 
   if (iframe) {
+    // Alla prima apertura l'iframe non ha ancora src: l'URL del fornitore
+    // aspetta in data-rrp-src (vedi rooms-widget-script.tsx).
+    const current = iframe.getAttribute("src") || iframe.dataset.rrpSrc || "";
     try {
-      const url = new URL(iframe.src);
+      const url = new URL(current);
       if (params?.checkIn) url.searchParams.set("checkin", formatDateParam(params.checkIn));
       if (params?.checkOut) url.searchParams.set("checkout", formatDateParam(params.checkOut));
       if (params?.guests) {
@@ -34,7 +37,12 @@ export function openRoomsWidget(params?: { checkIn?: Date | null; checkOut?: Dat
         url.searchParams.set("NumberPeople", String(params.guests));
       }
       const next = url.toString();
-      if (next !== iframe.src) iframe.src = next;
+      if (next !== iframe.getAttribute("src")) {
+        // Cerchio di caricamento (globals.css) finché la pagina non arriva.
+        iframe.classList.add("rrp-loading");
+        iframe.addEventListener("load", () => iframe.classList.remove("rrp-loading"), { once: true });
+        iframe.src = next;
+      }
     } catch {
       // src non ancora valido/pronto: apriamo comunque il modale con
       // quello di default, meglio di un pulsante che non fa nulla.

@@ -155,7 +155,7 @@ export async function ReviewsSection({ locale }: { locale: Locale }) {
             rendeva illeggibili) ma senza diventare un blocco statistico a
             sé stante come nella versione intermedia. */}
         <Reveal delay={160}>
-          <div className="mt-14 flex items-center justify-center gap-2.5 text-[10px] uppercase tracking-[0.14em] text-ink-soft/70 sm:mt-16">
+          <div className="mt-14 flex items-center justify-center gap-2.5 text-[10px] uppercase tracking-[0.14em] text-ink-soft sm:mt-16">
             <span>{text.da}</span>
             <GoogleMark size={20} />
             <span>{text.e}</span>

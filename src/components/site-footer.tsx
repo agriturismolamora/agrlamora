@@ -22,6 +22,15 @@ const WHATSAPP_DISPLAY = "WhatsApp 393 4363917";
 const EMAIL = "agriturismolamora@gmail.com";
 const FACEBOOK_URL = "https://www.facebook.com/p/Agriturismo-la-Mora-di-Assisi-100066662774182/";
 
+/* Credito del sito: il link è solo sul nome. */
+const CREDIT: Record<Locale, string> = {
+  it: "Realizzato da",
+  en: "Website by",
+  fr: "Site réalisé par",
+  de: "Website von",
+};
+const CREDIT_URL = "https://agriasystem.com";
+
 /* Stesso ordine della nav dell'header (site-header.tsx): La Mora, Alloggi,
    Territorio, Esperienze, Villa Relax, poi le altre voci. */
 function getNav(locale: Locale) {
@@ -89,7 +98,7 @@ const ArrowUpIcon = () => (
   </Icon>
 );
 
-const HEADING = "text-[10px] font-semibold uppercase tracking-[0.2em] text-cream/45";
+const HEADING = "text-[10px] font-semibold uppercase tracking-[0.2em] text-cream/60";
 const SOCIAL = "flex h-9 w-9 items-center justify-center rounded-full border border-cream/20 text-cream/80 transition-colors hover:border-gold hover:text-gold";
 const CONTACT = "flex items-start gap-3 text-cream/80 transition-colors hover:text-cream";
 
@@ -98,7 +107,9 @@ const CONTACT = "flex items-start gap-3 text-cream/80 transition-colors hover:te
    blocchi con un titoletto ciascuno — marchio e social, menu, contatti con
    icone — poi le recensioni e la riga legale. Allineato a sinistra su
    telefono (prima era tutto centrato e impilato), tre colonne da lg in su.
-   Nessun credito d'agenzia (vedi PLAN.md).
+   In fondo il credito del sito (Agria System), voluto dal titolare: 12px,
+   contrasto AA sul fondo scuro; gli elementi fissi (barra Prenota,
+   Richiesta, chat) si dissolvono vicino al footer e non lo coprono.
    "Preferenze cookie": presente in TUTTE le pagine, apre lo stesso
    pannello del banner (vedi cookie-consent-manager.tsx) tramite un evento
    globale. "Torna su": qui dentro perché il pulsante fisso si dissolve
@@ -230,6 +241,18 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             </button>
           </div>
         </div>
+
+        <p className="mt-5 text-[12px] leading-[1.6] text-cream/70">
+          {CREDIT[locale]}{" "}
+          <a
+            href={CREDIT_URL}
+            target="_blank"
+            rel="noopener"
+            className="text-cream underline decoration-cream/40 underline-offset-4 transition-colors hover:decoration-cream"
+          >
+            Agria System
+          </a>
+        </p>
       </div>
     </footer>
   );

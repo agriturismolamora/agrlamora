@@ -91,6 +91,7 @@ export function Hero({ locale }: { locale: Locale }) {
             width={370}
             height={278}
             priority
+            fetchPriority="high"
             className="h-auto w-[min(290px,76vw)] md:w-[clamp(260px,26vw,370px)]"
           />
         </Link>

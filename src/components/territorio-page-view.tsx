@@ -223,6 +223,7 @@ export function TerritorioPageView({ locale }: { locale: Locale }) {
           alt="Assisi al tramonto vista dalla campagna umbra"
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
         />

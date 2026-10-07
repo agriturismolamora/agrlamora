@@ -11,7 +11,11 @@ import { useEffect, useRef } from "react";
    totale, così il ciclo resta impercettibile. Scorre anche con "Riduci
    movimento" attivo sul dispositivo (richiesta esplicita del titolare: era
    il motivo della striscia ferma sull'iPhone di Paolo — stessa scelta già
-   fatta per il video della hero e il carousel appartamenti). */
+   fatta per il video della hero e il carousel appartamenti).
+   Il loop gira solo mentre la striscia è sullo schermo (IntersectionObserver)
+   e la larghezza si misura solo quando cambia (ResizeObserver): leggere
+   scrollWidth a ogni fotogramma forzava un layout continuo, anche a
+   striscia fuori vista, e pesava su tutta la pagina. */
 export function MarqueeTrack({
   children,
   speed = 32,
@@ -28,13 +32,14 @@ export function MarqueeTrack({
     if (!track) return;
 
     let offset = 0;
-    let last = performance.now();
+    let last = 0;
     let raf = 0;
+    let halfWidth = track.scrollWidth / 2;
 
     function frame(now: number) {
-      const dt = now - last;
+      // Alla ripartenza (last = 0) nessun salto: il tempo fuori vista non conta.
+      const dt = last ? now - last : 0;
       last = now;
-      const halfWidth = track!.scrollWidth / 2;
       if (halfWidth > 0) {
         offset = (offset + (speed * dt) / 1000) % halfWidth;
         track!.style.transform = `translateX(-${offset}px)`;
@@ -42,8 +47,30 @@ export function MarqueeTrack({
       raf = window.requestAnimationFrame(frame);
     }
 
-    raf = window.requestAnimationFrame(frame);
-    return () => window.cancelAnimationFrame(raf);
+    function start() {
+      if (raf) return;
+      last = 0;
+      raf = window.requestAnimationFrame(frame);
+    }
+
+    function stop() {
+      window.cancelAnimationFrame(raf);
+      raf = 0;
+    }
+
+    const resize = new ResizeObserver(() => {
+      halfWidth = track.scrollWidth / 2;
+    });
+    resize.observe(track);
+    // Osservato il contenitore fermo, non la traccia che scorre.
+    const visibility = new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop()));
+    visibility.observe(track.parentElement ?? track);
+
+    return () => {
+      stop();
+      visibility.disconnect();
+      resize.disconnect();
+    };
   }, [speed]);
 
   return (

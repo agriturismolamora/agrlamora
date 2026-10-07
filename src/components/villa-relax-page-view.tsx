@@ -359,6 +359,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
           alt="Villa Relax, villa indipendente nella campagna di Assisi"
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
         />

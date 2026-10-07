@@ -296,7 +296,7 @@ export async function PriceComparisonSection({ locale }: { locale: Locale }) {
                     <p className="mt-2 text-[12px] text-ink-soft">
                       {STAY.nights} {text.nights} a €{DIRECT_PRICE_EUR} · {tr(locale, DIRECT_PRICE_CONDITION)}
                     </p>
-                    <p className="mt-4 border-t border-ink/10 pt-4 text-[11px] leading-[1.6] text-ink-soft/80">
+                    <p className="mt-4 border-t border-ink/10 pt-4 text-[11px] leading-[1.6] text-ink-soft">
                       {text.preferisciLiberta(DIRECT_PRICE_FLEX_PER_NIGHT, DIRECT_PRICE_FLEX_EUR, STAY.nights, tr(locale, DIRECT_PRICE_FLEX_CONDITION))}
                     </p>
                   </>
@@ -352,7 +352,7 @@ export async function PriceComparisonSection({ locale }: { locale: Locale }) {
         </Reveal>
 
         <Reveal delay={220}>
-          <p className="mx-auto mt-6 max-w-[560px] text-center text-[12px] leading-[1.7] text-ink-soft/80">
+          <p className="mx-auto mt-6 max-w-[560px] text-center text-[12px] leading-[1.7] text-ink-soft">
             {text.disclaimer(trDate(locale, STAY.checkinLabel), trDate(locale, STAY.checkoutLabel), STAY.nights, STAY.adults, STAY.apartmentName, trDate(locale, CHECKED_ON_LABEL))}
           </p>
         </Reveal>

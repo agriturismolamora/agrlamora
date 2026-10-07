@@ -182,6 +182,7 @@ export function CofanettiPageView({ locale }: { locale: Locale }) {
           alt="Piscina di Agriturismo La Mora"
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
         />
