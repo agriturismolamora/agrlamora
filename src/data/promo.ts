@@ -91,14 +91,14 @@ export const EUROCHOCOLATE_2026: Promo = {
   text: {
     it: {
       validity: "Valida per tutta la durata di Eurochocolate, dal 13 al 22 novembre 2026",
-      title: "-10% per Eurochocolate 2026",
+      title: "Dormi a La Mora con il -10% durante Eurochocolate",
       conditionsHeading: "Condizioni",
       conditions: [
         "Metti \"Mi piace\" alla pagina Facebook di Agriturismo La Mora.",
         "Salva il post dell'offerta oppure mostra il biglietto di Eurochocolate al momento del pagamento.",
         "Disponibilità limitata nei giorni dell'evento.",
       ],
-      bookCta: "Prenota",
+      bookCta: "Prenota all'Agriturismo La Mora",
       whatsappCta: "Scrivici su WhatsApp",
       whatsappMessage: "Ciao! Vorrei soggiornare a La Mora durante Eurochocolate 2026 con l'offerta -10%. Le mie date sono: ",
       facebookCta: "Metti Mi piace alla pagina Facebook",
@@ -107,14 +107,14 @@ export const EUROCHOCOLATE_2026: Promo = {
     },
     en: {
       validity: "Valid for the whole of Eurochocolate, 13 to 22 November 2026",
-      title: "10% off for Eurochocolate 2026",
+      title: "Stay at La Mora with 10% off during Eurochocolate",
       conditionsHeading: "Conditions",
       conditions: [
         "Like the Agriturismo La Mora Facebook page.",
         "Save the offer post or show your Eurochocolate ticket when you pay.",
         "Limited availability on the days of the event.",
       ],
-      bookCta: "Book",
+      bookCta: "Book at Agriturismo La Mora",
       whatsappCta: "Message us on WhatsApp",
       whatsappMessage: "Hi! I'd like to stay at La Mora during Eurochocolate 2026 with the 10% offer. My dates are: ",
       facebookCta: "Like our Facebook page",
@@ -123,14 +123,14 @@ export const EUROCHOCOLATE_2026: Promo = {
     },
     fr: {
       validity: "Valable pendant toute la durée d'Eurochocolate, du 13 au 22 novembre 2026",
-      title: "-10% pour Eurochocolate 2026",
+      title: "Dormez à La Mora avec -10 % pendant Eurochocolate",
       conditionsHeading: "Conditions",
       conditions: [
         "Aimez la page Facebook d'Agriturismo La Mora.",
         "Enregistrez la publication de l'offre ou présentez votre billet Eurochocolate au moment du paiement.",
         "Disponibilité limitée pendant les jours de l'événement.",
       ],
-      bookCta: "Réserver",
+      bookCta: "Réserver à l'Agriturismo La Mora",
       whatsappCta: "Écrivez-nous sur WhatsApp",
       whatsappMessage: "Bonjour ! Je voudrais séjourner à La Mora pendant Eurochocolate 2026 avec l'offre -10%. Mes dates sont : ",
       facebookCta: "Aimer notre page Facebook",
@@ -139,14 +139,14 @@ export const EUROCHOCOLATE_2026: Promo = {
     },
     de: {
       validity: "Gültig während der gesamten Eurochocolate, vom 13. bis 22. November 2026",
-      title: "-10% zur Eurochocolate 2026",
+      title: "Mit 10 % Rabatt im La Mora übernachten, während der Eurochocolate",
       conditionsHeading: "Bedingungen",
       conditions: [
         "Geben Sie der Facebook-Seite von Agriturismo La Mora ein „Gefällt mir“.",
         "Speichern Sie den Beitrag mit dem Angebot oder zeigen Sie beim Bezahlen Ihr Eurochocolate-Ticket vor.",
         "Begrenzte Verfügbarkeit an den Veranstaltungstagen.",
       ],
-      bookCta: "Buchen",
+      bookCta: "Im Agriturismo La Mora buchen",
       whatsappCta: "Schreiben Sie uns auf WhatsApp",
       whatsappMessage: "Hallo! Ich möchte während der Eurochocolate 2026 mit dem Angebot -10% bei La Mora übernachten. Meine Daten sind: ",
       facebookCta: "Unsere Facebook-Seite liken",

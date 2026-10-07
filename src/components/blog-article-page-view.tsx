@@ -19,6 +19,8 @@ import type { BlogPost } from "@/data/blog-posts";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
 import { LD_ID, faqPageNode, type JsonLdNode } from "@/lib/structured-data";
+import { BrandStrip } from "@/components/brand-strip";
+import { StayBox } from "@/components/stay-box";
 
 type Params = { slug: string };
 
@@ -234,6 +236,19 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
   const midCta = (
     <Reveal>
       <BlogBookingCta variant="distance" locale={locale} theme={ctaTheme} distance={distance} />
+    </Reveal>
+  );
+
+  /* Striscia "chi scrive" sotto titolo e lead, in tutti gli articoli; il
+     riquadro "Dormi a La Mora" (dove previsto) prende il posto della CTA A. */
+  const brandStrip = (
+    <Reveal delay={40}>
+      <BrandStrip locale={locale} dark={isChocolate} />
+    </Reveal>
+  );
+  const stayBox = post.stayBox && (
+    <Reveal delay={60}>
+      <StayBox data={post.stayBox} chocolate={isChocolate} />
     </Reveal>
   );
 
@@ -466,9 +481,11 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
             <CocoaParticles />
             <div className="mx-auto max-w-[760px] px-6 pb-14 pt-12 sm:px-10 sm:pb-16 sm:pt-14">
               {intro}
+              {brandStrip}
               {inBreve}
+              {stayBox}
               {offerTop}
-              {introCta}
+              {!stayBox && introCta}
             </div>
           </section>
           <div className={`${choco.root} ${choco.cream}`}>
@@ -480,9 +497,11 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
         <section className="bg-cream py-14 sm:py-16">
           <div className="mx-auto max-w-[680px] px-6 sm:px-10">
             {intro}
+            {brandStrip}
             {inBreve}
+            {stayBox}
             {offerTop}
-            {introCta}
+            {!stayBox && introCta}
             {body}
           </div>
         </section>

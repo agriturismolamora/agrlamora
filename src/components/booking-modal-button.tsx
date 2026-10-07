@@ -10,9 +10,16 @@ import { openRoomsWidget } from "@/lib/rrp-widget";
    pulsante montato dopo una navigazione interna, senza questa chiamata, non
    aprirebbe nulla. Se invece lo script lo ha agganciato, i due handler fanno
    la stessa cosa (rendono visibile la modale): nessun effetto doppio. */
-export function BookingModalButton({ className = "", children }: { className?: string; children: ReactNode }) {
+export function BookingModalButton({ className = "", children, onClick }: { className?: string; children: ReactNode; onClick?: () => void }) {
   return (
-    <button type="button" onClick={() => openRoomsWidget()} className={`rrp-widget-open-modal ${className}`}>
+    <button
+      type="button"
+      onClick={() => {
+        onClick?.(); // es. chiudere il popup prima di aprire la prenotazione
+        openRoomsWidget();
+      }}
+      className={`rrp-widget-open-modal ${className}`}
+    >
       {children}
     </button>
   );

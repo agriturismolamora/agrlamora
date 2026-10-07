@@ -164,7 +164,9 @@ export function SectionProgressDots({ locale }: { locale: Locale }) {
   return (
     <nav
       aria-label={NAV_LABEL[locale]}
-      className="pointer-events-none fixed right-[18px] top-1/2 z-[60] hidden -translate-y-1/2 flex-col items-center gap-3 lg:flex"
+      // Pillola scura semitrasparente dietro i puntini: restano leggibili su
+      // foto, sezioni scure e sezioni color crema (prima sparivano sul crema).
+      className="pointer-events-none fixed right-[14px] top-1/2 z-[60] hidden -translate-y-1/2 flex-col items-center gap-3 rounded-full bg-[#1c2117]/45 px-1 py-2.5 shadow-[0_4px_14px_rgba(0,0,0,0.18)] backdrop-blur-[2px] lg:flex"
     >
       {SECTION_IDS.map((id) => {
         const isActive = id === activeId;
@@ -181,7 +183,7 @@ export function SectionProgressDots({ locale }: { locale: Locale }) {
             <span
               aria-hidden="true"
               className={`rounded-full transition-all duration-250 ease-out ${
-                isActive ? "h-2.5 w-2.5 bg-[#f1f1f1]" : "h-[7px] w-[7px] bg-[#f1f1f1]/35 group-hover:bg-[#f1f1f1]/60"
+                isActive ? "h-2.5 w-2.5 bg-[#f1f1f1]" : "h-[7px] w-[7px] bg-[#f1f1f1]/55 group-hover:bg-[#f1f1f1]/85"
               }`}
               style={isActive ? { boxShadow: "0 0 12px 3px rgba(241,241,241,0.5)" } : undefined}
             />

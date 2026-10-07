@@ -97,6 +97,11 @@ function getNavLeft(locale: Locale): NavItem[] {
    raggiungibili dal pannello MENU, che elenca sempre tutto. */
 const NAV_LEFT_TABLET = new Set(["alloggi", "villa-relax", "territorio", "offerte"]);
 
+/* Pagine che iniziano con una sezione chiara, senza foto sotto l'header:
+   barra piena anche in cima, altrimenti voci e logo color crema sparivano
+   sul fondo crema (bug visto su /alloggi/ e sull'indice del blog). */
+const LIGHT_TOP_PATHS = new Set(["/alloggi/", "/blog/", "/privacy/", "/cookie-policy/", "/termini-e-condizioni/"]);
+
 function getNavRight(locale: Locale): NavChild[] {
   return [
     { label: t("nav", "recensioni", locale), href: withLocale(locale, "/#section-reviews") },
@@ -280,6 +285,10 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const pathname = usePathname();
   const { path: bareItalianPath } = splitLocaleFromPath(pathname ?? "/");
   const onVillaPage = bareItalianPath.startsWith("/villa-relax-assisi");
+  /* Blog (indice e articoli): logo e "Agriturismo La Mora" sempre visibili,
+     anche scorrendo; l'header non si nasconde (richiesta del titolare). */
+  const onBlog = bareItalianPath.startsWith("/blog/");
+  const lightTop = LIGHT_TOP_PATHS.has(bareItalianPath);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -312,7 +321,10 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   // Stato B (sticky): compare mentre si risale la pagina, oppure mentre il
   // pannello MENU è aperto (per non far sparire l'header sotto il pannello).
   const sticky = mode === "sticky" || menuOpen;
-  const hidden = mode === "hidden" && !menuOpen;
+  const hidden = mode === "hidden" && !menuOpen && !onBlog;
+  // Barra piena: stato sticky, pagine con inizio chiaro, blog appena si scorre.
+  const solid = sticky || lightTop || (onBlog && mode !== "top");
+  const showLogo = solid || onBlog;
 
   return (
     <header
@@ -364,12 +376,12 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           Stato B: piena, verde scurissimo, compatta, con logo piccolo. */}
       <div
         className={`transition-[background-color,backdrop-filter] duration-300 ease-out ${
-          sticky ? "bg-[#1a2922]/97 shadow-[0_6px_24px_-12px_rgba(0,0,0,0.5)] backdrop-blur-md" : "bg-transparent"
+          solid ? "bg-[#1a2922]/97 shadow-[0_6px_24px_-12px_rgba(0,0,0,0.5)] backdrop-blur-md" : "bg-transparent"
         }`}
       >
         <div
           className={`mx-auto flex max-w-[1600px] items-center justify-between transition-[padding] duration-300 ease-out ${
-            sticky ? "py-3" : "py-5"
+            solid ? "py-3" : "py-5"
           }`}
           style={{ paddingInline: "clamp(20px, 4vw, 56px)" }}
         >
@@ -381,7 +393,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
                 dimensionato sull'altezza per restare leggibile (max-height
                 52px) e non sulla larghezza, altrimenti l'immagine dovrebbe
                 superare i 90px di altezza e sforare l'header. */}
-            {sticky && (
+            {showLogo && (
               <>
                 {/* Pagine Villa: logo Villa Relax, un po' più alto di quello
                     di La Mora perché è più stretto (stessa area visiva). */}
@@ -397,7 +409,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
                   <Link
                     href={withLocale(locale, "/")}
                     aria-label={`Agriturismo La Mora — ${t("nav", "torna", locale)}`}
-                    className="flex shrink-0 items-center"
+                    className="flex shrink-0 items-center gap-3"
                   >
                     <Image
                       src="/images/logo/logo-bianco-agriturismo-la-mora.png"
@@ -406,6 +418,11 @@ export function SiteHeader({ locale }: { locale: Locale }) {
                       height={105}
                       className="h-12 w-auto sm:h-[52px]"
                     />
+                    {onBlog && (
+                      <span className="max-w-[118px] font-display text-[16px] leading-[1.1] text-cream sm:max-w-none sm:text-[19px]">
+                        Agriturismo La&nbsp;Mora
+                      </span>
+                    )}
                   </Link>
                 )}
                 <span

@@ -1,5 +1,6 @@
 import type { Locale } from "@/lib/i18n";
 import type { PromoId } from "@/data/promo";
+import type { StayBoxData } from "@/components/stay-box";
 import {
   EUROCHOCOLATE_2024_PHOTO,
   CIOCCOLATO_FONDENTE_PHOTO,
@@ -71,6 +72,8 @@ export type BlogPost = {
   schemaType?: "Article" | "BlogPosting";
   /* Blocco "In breve" iniziale: fatti estraibili (date, distanze, tempi). */
   inBreve?: { heading: string; items: { label: string; value: string }[] };
+  /* Riquadro "Dormi a La Mora" dopo "In breve", al posto della CTA A. */
+  stayBox?: StayBoxData;
   intro: string;
   /* introCtaHeading: riga della CTA A solo se l'articolo non ha testi in
      src/data/blog-ctas.ts; label/href non sono più mostrati (la CTA A ha
@@ -132,9 +135,9 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
   it: {
     slug: "eurochocolate-2026-dove-dormire",
     category: "Eventi",
-    title: "Eurochocolate 2026: dove dormire vicino a Perugia",
+    title: "Eurochocolate 2026: dormi in agriturismo vicino a Perugia",
     excerpt: "Date, programma e consigli pratici per Eurochocolate 2026 (Perugia, 13–22 novembre) e un -10% per chi soggiorna ad Agriturismo La Mora, a 21 km dal centro.",
-    metaDescription: "Eurochocolate 2026 a Perugia dal 13 al 22 novembre: date, orari, cosa vedere e dove dormire. Agriturismo La Mora è a 21 km dal centro, con il 10% di sconto.",
+    metaDescription: "Eurochocolate 2026 a Perugia, 13–22 novembre: date, orari e programma. Dormi in agriturismo a 23 minuti dal centro, con il -10% ad Agriturismo La Mora.",
     image: EUROCHOCOLATE_2024_PHOTO.src,
     alt: EUROCHOCOLATE_2024_PHOTO.alt.it,
     imageCaption: EUROCHOCOLATE_2024_PHOTO.caption.it,
@@ -154,6 +157,17 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
         { label: "Da La Mora", value: "21,0 km · circa 23 min in auto" },
         { label: "Offerta La Mora", value: "-10% durante l'evento" },
       ],
+    },
+    stayBox: {
+      heading: "Dormi a La Mora, il nostro agriturismo a 23 minuti da Perugia",
+      image: "/images/home/foto dell agriturismo dall alto.webp",
+      alt: "Agriturismo La Mora visto dall'alto: la casa, gli appartamenti, il parco e la campagna intorno",
+      benefits: [
+        "5 appartamenti indipendenti con cucina, da 4 a 8 posti letto",
+        "Parcheggio gratuito: il centro di Perugia è a 21,0 km, circa 23 minuti",
+        "-10% durante Eurochocolate prenotando direttamente, alle condizioni dell'offerta",
+      ],
+      cta: "Prenota all'Agriturismo La Mora",
     },
     intro:
       "Dal 13 al 22 novembre 2026 il centro storico di Perugia ospita la 32ª edizione di Eurochocolate, il festival internazionale del cioccolato, quest'anno con il tema «Fate Dolci». Agriturismo La Mora è a 21,0 km dal centro di Perugia, circa 23 minuti in auto: una base in campagna, tra Perugia e Assisi, per vivere il festival di giorno e la sera rientrare in un appartamento tutto vostro.",
@@ -297,9 +311,9 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
   en: {
     slug: "eurochocolate-2026-dove-dormire",
     category: "Events",
-    title: "Eurochocolate 2026: where to stay near Perugia",
+    title: "Eurochocolate 2026: stay at an agriturismo near Perugia",
     excerpt: "Dates, programme and practical tips for Eurochocolate 2026 (Perugia, 13–22 November), plus 10% off at Agriturismo La Mora, 21 km from the centre.",
-    metaDescription: "Eurochocolate 2026 in Perugia, 13–22 November: dates, opening hours, what to see and where to stay. Agriturismo La Mora is 21 km from the centre, with 10% off.",
+    metaDescription: "Eurochocolate 2026 in Perugia, 13–22 November: dates, hours and programme. Stay at an agriturismo 23 minutes from the centre, with 10% off at La Mora.",
     image: EUROCHOCOLATE_2024_PHOTO.src,
     alt: EUROCHOCOLATE_2024_PHOTO.alt.en,
     imageCaption: EUROCHOCOLATE_2024_PHOTO.caption.en,
@@ -319,6 +333,17 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
         { label: "From La Mora", value: "21.0 km · about 23 min by car" },
         { label: "La Mora offer", value: "10% off during the event" },
       ],
+    },
+    stayBox: {
+      heading: "Stay at La Mora, our agriturismo 23 minutes from Perugia",
+      image: "/images/home/foto dell agriturismo dall alto.webp",
+      alt: "Agriturismo La Mora from above: the house, the apartments, the grounds and the countryside around",
+      benefits: [
+        "5 independent apartments with a kitchen, sleeping 4 to 8",
+        "Free parking: central Perugia is 21.0 km away, about 23 minutes",
+        "10% off during Eurochocolate when you book direct, under the offer's conditions",
+      ],
+      cta: "Book at Agriturismo La Mora",
     },
     intro:
       "From 13 to 22 November 2026, Perugia's historic centre hosts the 32nd Eurochocolate, the international chocolate festival, this year themed “Fate Dolci” — a play on words meaning both “sweet fairies” and “make sweets”. Agriturismo La Mora is 21.0 km from central Perugia, about 23 minutes by car: a countryside base between Perugia and Assisi, so you can enjoy the festival by day and come back to an apartment of your own in the evening.",
@@ -462,9 +487,9 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
   fr: {
     slug: "eurochocolate-2026-dove-dormire",
     category: "Événements",
-    title: "Eurochocolate 2026 : où dormir près de Pérouse",
+    title: "Eurochocolate 2026 : dormir en agritourisme près de Pérouse",
     excerpt: "Dates, programme et conseils pratiques pour Eurochocolate 2026 (Pérouse, 13–22 novembre), et -10 % pour un séjour à l'Agriturismo La Mora, à 21 km du centre.",
-    metaDescription: "Eurochocolate 2026 à Pérouse du 13 au 22 novembre : dates, horaires, que voir et où dormir. L'Agriturismo La Mora est à 21 km du centre, avec 10 % de remise.",
+    metaDescription: "Eurochocolate 2026 à Pérouse, du 13 au 22 novembre : dates, horaires et programme. Dormez en agritourisme à 23 minutes du centre, avec -10 % à La Mora.",
     image: EUROCHOCOLATE_2024_PHOTO.src,
     alt: EUROCHOCOLATE_2024_PHOTO.alt.fr,
     imageCaption: EUROCHOCOLATE_2024_PHOTO.caption.fr,
@@ -484,6 +509,17 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
         { label: "Depuis La Mora", value: "21,0 km · env. 23 min en voiture" },
         { label: "Offre La Mora", value: "-10 % pendant l'événement" },
       ],
+    },
+    stayBox: {
+      heading: "Dormez à La Mora, notre agritourisme à 23 minutes de Pérouse",
+      image: "/images/home/foto dell agriturismo dall alto.webp",
+      alt: "L'Agriturismo La Mora vu d'en haut : la maison, les appartements, le parc et la campagne autour",
+      benefits: [
+        "5 appartements indépendants avec cuisine, de 4 à 8 couchages",
+        "Parking gratuit : le centre de Pérouse est à 21,0 km, environ 23 minutes",
+        "-10 % pendant Eurochocolate en réservant en direct, aux conditions de l'offre",
+      ],
+      cta: "Réserver à l'Agriturismo La Mora",
     },
     intro:
       "Du 13 au 22 novembre 2026, le centre historique de Pérouse accueille la 32e édition d'Eurochocolate, le festival international du chocolat, cette année sur le thème « Fate Dolci » — un jeu de mots entre « fées douces » et « faites des douceurs ». L'Agriturismo La Mora est à 21,0 km du centre de Pérouse, environ 23 minutes en voiture : une base à la campagne, entre Pérouse et Assise, pour profiter du festival en journée et retrouver le soir un appartement rien qu'à vous.",
@@ -627,9 +663,9 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
   de: {
     slug: "eurochocolate-2026-dove-dormire",
     category: "Veranstaltungen",
-    title: "Eurochocolate 2026: Übernachten in der Nähe von Perugia",
+    title: "Eurochocolate 2026: im Agriturismo bei Perugia übernachten",
     excerpt: "Termine, Programm und praktische Tipps zur Eurochocolate 2026 (Perugia, 13.–22. November) – dazu 10 % Rabatt im Agriturismo La Mora, 21 km vom Zentrum.",
-    metaDescription: "Eurochocolate 2026 in Perugia vom 13. bis 22. November: Termine, Öffnungszeiten, Programm und Unterkunft. Agriturismo La Mora liegt 21 km vom Zentrum, mit 10 % Rabatt.",
+    metaDescription: "Eurochocolate 2026 in Perugia, 13.–22. November: Termine, Zeiten und Programm. Im Agriturismo 23 Minuten vom Zentrum übernachten, mit 10 % Rabatt im La Mora.",
     image: EUROCHOCOLATE_2024_PHOTO.src,
     alt: EUROCHOCOLATE_2024_PHOTO.alt.de,
     imageCaption: EUROCHOCOLATE_2024_PHOTO.caption.de,
@@ -649,6 +685,17 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
         { label: "Ab La Mora", value: "21,0 km · ca. 23 Min. mit dem Auto" },
         { label: "Angebot La Mora", value: "-10 % während der Veranstaltung" },
       ],
+    },
+    stayBox: {
+      heading: "Übernachten Sie im La Mora, unserem Agriturismo 23 Minuten von Perugia",
+      image: "/images/home/foto dell agriturismo dall alto.webp",
+      alt: "Das Agriturismo La Mora von oben: Haus, Ferienwohnungen, Garten und die Landschaft ringsum",
+      benefits: [
+        "5 unabhängige Ferienwohnungen mit Küche, für 4 bis 8 Personen",
+        "Kostenloser Parkplatz: Die Altstadt von Perugia ist 21,0 km entfernt, rund 23 Minuten",
+        "10 % Rabatt während der Eurochocolate bei Direktbuchung, zu den Bedingungen des Angebots",
+      ],
+      cta: "Im Agriturismo La Mora buchen",
     },
     intro:
       "Vom 13. bis 22. November 2026 findet in der Altstadt von Perugia die 32. Eurochocolate statt, das internationale Schokoladenfestival – in diesem Jahr unter dem Motto „Fate Dolci“, ein Wortspiel aus „süße Feen“ und „macht Süßes“. Das Agriturismo La Mora liegt 21,0 km vom Zentrum Perugias entfernt, rund 23 Minuten mit dem Auto: ein ländlicher Ausgangspunkt zwischen Perugia und Assisi, um tagsüber das Festival zu erleben und abends in die eigene Ferienwohnung zurückzukehren.",
@@ -3108,25 +3155,25 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
       slug: "bosco-san-francesco",
       category: "Natura",
       title: "Il Bosco di San Francesco, tra i sentieri del FAI",
-      excerpt: "Un'area naturale protetta tra Assisi e Santa Maria degli Angeli: uliveti, bosco e il torrente Tescio, gestiti dal FAI.",
-      metaDescription: "Il Bosco di San Francesco ad Assisi: percorso FAI di 4 km tra uliveti e torrente Tescio, orari e come arrivare da Agriturismo La Mora.",
+      excerpt: "Sotto la Basilica di San Francesco, un sentiero FAI di 1,5 km tra uliveti e bosco, con il Terzo Paradiso di Pistoletto e il complesso di Santa Croce.",
+      metaDescription: "Il Bosco di San Francesco ad Assisi: sentiero FAI di 1,5 km dalla Basilica superiore a Santa Croce, circa 90 minuti di visita. Come arrivare da La Mora.",
       image: "/images/territorio/assisi/bosco di san francesco assisi.jpg",
       alt: "Vista aerea del Bosco di San Francesco, con gli uliveti circolari e le mura di Assisi sullo sfondo",
       intro:
-        "Tra Assisi e Santa Maria degli Angeli, un percorso naturalistico di circa 4 km attraversa uliveti secolari, bosco misto e il torrente Tescio — un modo diverso di vivere il territorio, lontano dalla pietra del centro storico.",
-      introCtaHeading: "Vuoi camminare tra gli ulivi e tornare in piscina lo stesso pomeriggio?",
+        "Sotto la Basilica di San Francesco, un sentiero di 1,5 km scende tra uliveti e bosco fino al complesso benedettino di Santa Croce: un modo diverso di vivere Assisi, lontano dalla pietra del centro storico.",
+      introCtaHeading: "Vuoi camminare tra gli ulivi e, da maggio a settembre, tornare in piscina lo stesso pomeriggio?",
       introCtaLabel: "Verifica la disponibilità",
       introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "Un bosco gestito dal FAI" },
         {
           type: "p",
-          text: "Dal 2008 il Bosco di San Francesco è affidato al FAI (Fondo Ambiente Italiano), che ne cura la manutenzione e organizza visite guidate lungo il percorso. Il sentiero collega idealmente due luoghi simbolo del francescanesimo — Assisi in alto, Santa Maria degli Angeli in basso — attraversando un paesaggio che è rimasto agricolo: uliveti ancora coltivati, terrazzamenti, il corso del Tescio che accompagna buona parte del cammino.",
+          text: "Il Bosco di San Francesco è del FAI (Fondo per l'Ambiente Italiano) dal 2008, quando lo ha acquistato grazie a una donazione di Intesa Sanpaolo. Si entra da un portone nel muro della piazza della Basilica superiore e il sentiero, in pendenza e con fondo naturale, scende fino al complesso di Santa Croce, fondato tra Duecento e Trecento dalle monache benedettine, con chiesa romanica, mulino e torre trecentesca.",
         },
         { type: "h3", text: "Cosa si vede lungo il percorso" },
         {
           type: "p",
-          text: "Oltre agli uliveti, il percorso include un'installazione artistica permanente — un grande cerchio di ulivi visibile anche dall'alto — pensata come luogo di sosta e riflessione, oltre a punti panoramici sulle mura di Assisi che dominano la vallata da entrambi i lati del bosco.",
+          text: "Lungo il percorso si incontra il Terzo Paradiso di Michelangelo Pistoletto: 121 ulivi piantati in doppio filare che compongono tre grandi cerchi tangenti, ben riconoscibili anche dall'alto. Il sentiero ha dislivelli e qualche gradino: la visita dura circa 90 minuti.",
         },
         {
           type: "image",
@@ -3137,9 +3184,10 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         {
           type: "facts",
           items: [
-            { label: "Lunghezza", value: "Circa 4 km" },
+            { label: "Lunghezza", value: "1,5 km, in pendenza" },
+            { label: "Durata della visita", value: "Circa 90 minuti" },
+            { label: "Ingressi", value: "Piazza della Basilica superiore e complesso di Santa Croce" },
             { label: "Gestione", value: "FAI, dal 2008" },
-            { label: "Ingresso principale", value: "Vicino a Santa Maria degli Angeli" },
             { label: "Orari e biglietti", value: "Variano per stagione — verificare sul sito FAI" },
           ],
         },
@@ -3153,7 +3201,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "Da Agriturismo La Mora" },
         {
           type: "p",
-          text: "L'ingresso principale del bosco, dalla piazza della Basilica superiore di San Francesco, è a 7,5 km da La Mora, circa 18 minuti in auto: si lascia la macchina in uno dei parcheggi di Assisi e si prosegue a piedi. È una delle gite più semplici da organizzare durante il soggiorno — non serve una giornata intera, si può abbinare comodamente a una visita alla Basilica o a un pomeriggio in piscina al ritorno.",
+          text: "L'ingresso principale del bosco, dalla piazza della Basilica superiore di San Francesco, è a 7,5 km da La Mora, circa 18 minuti in auto: si lascia la macchina in uno dei parcheggi di Assisi e si prosegue a piedi. È una delle gite più semplici da organizzare durante il soggiorno — non serve una giornata intera, si può abbinare comodamente a una visita alla Basilica o, da maggio a settembre, a un pomeriggio in piscina al ritorno.",
         },
       ],
       finalCtaHeading: "Ci si arriva in 18 minuti, si torna per il resto della giornata.",
@@ -3232,7 +3280,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           { q: "Come si arriva a San Damiano da Agriturismo La Mora?", a: "In auto sono 7,4 km, circa 11 minuti secondo Google Maps." },
         ],
       },
-      finalCtaHeading: "Torna a La Mora, e rilassati in piscina.",
+      finalCtaHeading: "Torna a La Mora: da maggio a settembre, un tuffo in piscina.",
       finalCtaBody: "A 6,8 km dal centro di Assisi, la campagna umbra aspetta con calma.",
       finalCtaLabel: "Scopri gli appartamenti",
       finalCtaHref: "/alloggi/",
@@ -3374,7 +3422,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           text: "L'Eremo delle Carceri, punto di partenza dei sentieri principali, è a 12,2 km da La Mora, circa 20 minuti in auto secondo Google Maps. Per chi preferisce muoversi in modo più leggero, l'e-bike a noleggio in struttura rende più semplice affrontare i tratti in salita senza rinunciare alla gita.",
         },
       ],
-      finalCtaHeading: "Torna a La Mora, tra piscina e campagna.",
+      finalCtaHeading: "Torna a La Mora: campagna tutto l'anno, piscina da maggio a settembre.",
       finalCtaBody: "Cinque appartamenti indipendenti, a 6,8 km dal centro di Assisi e a 12,2 km dall'Eremo delle Carceri.",
       finalCtaLabel: "Scopri gli appartamenti",
       finalCtaHref: "/alloggi/",
@@ -3624,25 +3672,25 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
       slug: "bosco-san-francesco",
       category: "Nature",
       title: "Bosco di San Francesco, on the FAI trails",
-      excerpt: "A protected natural area between Assisi and Santa Maria degli Angeli: olive groves, woodland and the Tescio stream, cared for by the FAI.",
-      metaDescription: "Bosco di San Francesco in Assisi: a 4 km FAI trail through olive groves and the Tescio stream, opening hours and how to get there from Agriturismo La Mora.",
+      excerpt: "Below the Basilica of San Francesco, a 1.5 km FAI trail through olive groves and woodland, with Pistoletto's Third Paradise and the Santa Croce complex.",
+      metaDescription: "Bosco di San Francesco in Assisi: a 1.5 km FAI trail from the upper Basilica to Santa Croce, a visit of about 90 minutes. How to get there from La Mora.",
       image: "/images/territorio/assisi/bosco di san francesco assisi.jpg",
       alt: "Aerial view of Bosco di San Francesco, with its circular olive grove and the walls of Assisi in the background",
       intro:
-        "Between Assisi and Santa Maria degli Angeli, a roughly 4 km nature trail crosses centuries-old olive groves, mixed woodland and the Tescio stream — a different way to experience the area, away from the stone of the historic centre.",
-      introCtaHeading: "Want to walk among the olive trees and be back at the pool the same afternoon?",
+        "Below the Basilica of San Francesco, a 1.5 km trail runs down through olive groves and woodland to the Benedictine complex of Santa Croce: a different way to experience Assisi, away from the stone of the historic centre.",
+      introCtaHeading: "Want to walk among the olive trees and, from May to September, be back at the pool the same afternoon?",
       introCtaLabel: "Check availability",
       introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "A wood cared for by the FAI" },
         {
           type: "p",
-          text: "Since 2008, Bosco di San Francesco has been entrusted to the FAI (Italian National Trust), which maintains it and organises guided visits along the trail. The path ideally connects two symbolic Franciscan sites — Assisi above, Santa Maria degli Angeli below — crossing a landscape that has stayed agricultural: olive groves still cultivated, terracing, and the Tescio stream running alongside much of the walk.",
+          text: "Bosco di San Francesco has belonged to the FAI (the Italian National Trust) since 2008, when it was bought thanks to a donation from Intesa Sanpaolo. You enter through a gate in the wall around the square of the upper Basilica, and the trail, sloping and unpaved, runs down to the Santa Croce complex, founded in the 13th–14th centuries by Benedictine nuns, with a Romanesque church, a mill and a 14th-century tower.",
         },
         { type: "h3", text: "What you'll see along the way" },
         {
           type: "p",
-          text: "Besides the olive groves, the trail includes a permanent art installation — a large circle of olive trees visible even from above — designed as a place to pause and reflect, along with panoramic points looking onto the walls of Assisi, which dominate the valley from both sides of the wood.",
+          text: "Along the way you come across Michelangelo Pistoletto's Third Paradise: 121 olive trees planted in double rows forming three large tangent circles, easy to make out even from above. The trail has slopes and a few steps: the visit takes about 90 minutes.",
         },
         {
           type: "image",
@@ -3653,9 +3701,10 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         {
           type: "facts",
           items: [
-            { label: "Length", value: "About 4 km" },
+            { label: "Length", value: "1.5 km, sloping" },
+            { label: "Visit duration", value: "About 90 minutes" },
+            { label: "Entrances", value: "Square of the upper Basilica and the Santa Croce complex" },
             { label: "Managed by", value: "FAI, since 2008" },
-            { label: "Main entrance", value: "Near Santa Maria degli Angeli" },
             { label: "Hours and tickets", value: "Vary by season — check the FAI website" },
           ],
         },
@@ -3669,7 +3718,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "From Agriturismo La Mora" },
         {
           type: "p",
-          text: "The wood's main entrance, from the square of the upper Basilica of San Francesco, is 7.5 km from La Mora, about 18 minutes by car: you leave the car in one of Assisi's car parks and continue on foot. It's one of the easiest trips to fit into your stay — no need for a full day, it pairs comfortably with a visit to the Basilica or an afternoon at the pool on the way back.",
+          text: "The wood's main entrance, from the square of the upper Basilica of San Francesco, is 7.5 km from La Mora, about 18 minutes by car: you leave the car in one of Assisi's car parks and continue on foot. It's one of the easiest trips to fit into your stay — no need for a full day, it pairs comfortably with a visit to the Basilica or, from May to September, an afternoon at the pool on the way back.",
         },
       ],
       finalCtaHeading: "You're there in 18 minutes, and back for the rest of the day.",
@@ -3748,7 +3797,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           { q: "How do you get to San Damiano from Agriturismo La Mora?", a: "By car it's 7.4 km, about 11 minutes according to Google Maps." },
         ],
       },
-      finalCtaHeading: "Back to La Mora, and unwind by the pool.",
+      finalCtaHeading: "Back to La Mora: from May to September, a swim in the pool.",
       finalCtaBody: "6.8 km from the centre of Assisi, the Umbrian countryside waits with no rush.",
       finalCtaLabel: "Discover the apartments",
       finalCtaHref: "/alloggi/",
@@ -3890,7 +3939,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           text: "The Eremo delle Carceri, starting point of the main trails, is 12.2 km from La Mora, about 20 minutes by car according to Google Maps. For those who prefer to travel lighter, the e-bike available for hire at the property makes the uphill stretches much easier without giving up on the trip.",
         },
       ],
-      finalCtaHeading: "Back to La Mora, between the pool and the countryside.",
+      finalCtaHeading: "Back to La Mora: countryside all year, the pool from May to September.",
       finalCtaBody: "Five independent apartments, 6.8 km from the centre of Assisi and 12.2 km from the Eremo delle Carceri.",
       finalCtaLabel: "Discover the apartments",
       finalCtaHref: "/alloggi/",
@@ -4140,25 +4189,25 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
       slug: "bosco-san-francesco",
       category: "Nature",
       title: "Le Bosco di San Francesco, sur les sentiers du FAI",
-      excerpt: "Une zone naturelle protégée entre Assise et Santa Maria degli Angeli : oliveraies, bois et le torrent Tescio, gérés par le FAI.",
-      metaDescription: "Le Bosco di San Francesco à Assise : parcours FAI de 4 km entre oliveraies et torrent Tescio, horaires et comment y aller depuis Agriturismo La Mora.",
+      excerpt: "Sous la basilique Saint-François, un sentier FAI de 1,5 km entre oliveraies et bois, avec le Troisième Paradis de Pistoletto et le complexe de Santa Croce.",
+      metaDescription: "Le Bosco di San Francesco à Assise : sentier FAI de 1,5 km de la basilique supérieure à Santa Croce, environ 90 minutes de visite. Y aller depuis La Mora.",
       image: "/images/territorio/assisi/bosco di san francesco assisi.jpg",
       alt: "Vue aérienne du Bosco di San Francesco, avec ses oliviers disposés en cercle et les remparts d'Assise en arrière-plan",
       intro:
-        "Entre Assise et Santa Maria degli Angeli, un parcours naturaliste d'environ 4 km traverse des oliveraies séculaires, un bois mixte et le torrent Tescio — une autre façon de découvrir le territoire, loin de la pierre du centre historique.",
-      introCtaHeading: "Envie de marcher parmi les oliviers et de retrouver la piscine le même après-midi ?",
+        "Sous la basilique Saint-François, un sentier de 1,5 km descend entre oliveraies et bois jusqu'au complexe bénédictin de Santa Croce : une autre façon de découvrir Assise, loin de la pierre du centre historique.",
+      introCtaHeading: "Envie de marcher parmi les oliviers et, de mai à septembre, de retrouver la piscine le même après-midi ?",
       introCtaLabel: "Vérifier les disponibilités",
       introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "Un bois géré par le FAI" },
         {
           type: "p",
-          text: "Depuis 2008, le Bosco di San Francesco est confié au FAI (Fondo Ambiente Italiano), qui en assure l'entretien et organise des visites guidées le long du parcours. Le sentier relie symboliquement deux hauts lieux du franciscanisme — Assise en haut, Santa Maria degli Angeli en bas — en traversant un paysage resté agricole : oliveraies encore cultivées, terrasses, et le cours du Tescio qui accompagne une bonne partie du chemin.",
+          text: "Le Bosco di San Francesco appartient au FAI (Fondo per l'Ambiente Italiano) depuis 2008, année de son acquisition grâce à un don d'Intesa Sanpaolo. On y entre par un portail dans le mur de la place de la basilique supérieure, et le sentier, en pente et en terrain naturel, descend jusqu'au complexe de Santa Croce, fondé entre le XIIIe et le XIVe siècle par des moniales bénédictines, avec église romane, moulin et tour du XIVe siècle.",
         },
         { type: "h3", text: "Ce que l'on découvre le long du parcours" },
         {
           type: "p",
-          text: "Outre les oliveraies, le parcours comprend une installation artistique permanente — un grand cercle d'oliviers visible même depuis le ciel — conçue comme un lieu de halte et de réflexion, ainsi que des points de vue sur les remparts d'Assise qui dominent la vallée des deux côtés du bois.",
+          text: "En chemin, on découvre le Troisième Paradis de Michelangelo Pistoletto : 121 oliviers plantés en double rangée qui forment trois grands cercles tangents, bien visibles même d'en haut. Le sentier comporte des dénivelés et quelques marches : la visite dure environ 90 minutes.",
         },
         {
           type: "image",
@@ -4169,9 +4218,10 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         {
           type: "facts",
           items: [
-            { label: "Longueur", value: "Environ 4 km" },
+            { label: "Longueur", value: "1,5 km, en pente" },
+            { label: "Durée de la visite", value: "Environ 90 minutes" },
+            { label: "Entrées", value: "Place de la basilique supérieure et complexe de Santa Croce" },
             { label: "Gestion", value: "FAI, depuis 2008" },
-            { label: "Entrée principale", value: "Près de Santa Maria degli Angeli" },
             { label: "Horaires et billets", value: "Variables selon la saison — vérifier sur le site du FAI" },
           ],
         },
@@ -4185,7 +4235,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "Depuis Agriturismo La Mora" },
         {
           type: "p",
-          text: "L'entrée principale du bois, depuis la place de la basilique supérieure Saint-François, est à 7,5 km de La Mora, environ 18 minutes en voiture : on laisse la voiture dans l'un des parkings d'Assise et on continue à pied. C'est l'une des excursions les plus simples à organiser pendant le séjour — pas besoin d'y consacrer une journée entière, elle se combine facilement avec une visite de la basilique ou un après-midi à la piscine au retour.",
+          text: "L'entrée principale du bois, depuis la place de la basilique supérieure Saint-François, est à 7,5 km de La Mora, environ 18 minutes en voiture : on laisse la voiture dans l'un des parkings d'Assise et on continue à pied. C'est l'une des excursions les plus simples à organiser pendant le séjour — pas besoin d'y consacrer une journée entière, elle se combine facilement avec une visite de la basilique ou, de mai à septembre, un après-midi à la piscine au retour.",
         },
       ],
       finalCtaHeading: "On y arrive en 18 minutes, on revient pour le reste de la journée.",
@@ -4264,7 +4314,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           { q: "Comment aller à San Damiano depuis Agriturismo La Mora ?", a: "En voiture, il y a 7,4 km, environ 11 minutes selon Google Maps." },
         ],
       },
-      finalCtaHeading: "Retour à La Mora, pour se détendre à la piscine.",
+      finalCtaHeading: "Retour à La Mora : de mai à septembre, une baignade à la piscine.",
       finalCtaBody: "À 6,8 km du centre d'Assise, la campagne ombrienne attend, sans hâte.",
       finalCtaLabel: "Découvrir les appartements",
       finalCtaHref: "/alloggi/",
@@ -4406,7 +4456,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           text: "L'Eremo delle Carceri, point de départ des principaux sentiers, est à 12,2 km de La Mora, environ 20 minutes en voiture selon Google Maps. Pour qui préfère se déplacer autrement, le vélo électrique loué sur place facilite les tronçons en montée sans renoncer à l'excursion.",
         },
       ],
-      finalCtaHeading: "Retour à La Mora, entre piscine et campagne.",
+      finalCtaHeading: "Retour à La Mora : la campagne toute l'année, la piscine de mai à septembre.",
       finalCtaBody: "Cinq appartements indépendants, à 6,8 km du centre d'Assise et à 12,2 km de l'Eremo delle Carceri.",
       finalCtaLabel: "Découvrir les appartements",
       finalCtaHref: "/alloggi/",
@@ -4656,25 +4706,25 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
       slug: "bosco-san-francesco",
       category: "Natur",
       title: "Der Bosco di San Francesco, auf den Wegen des FAI",
-      excerpt: "Ein geschütztes Naturgebiet zwischen Assisi und Santa Maria degli Angeli: Olivenhaine, Wald und der Bach Tescio, gepflegt vom FAI.",
-      metaDescription: "Der Bosco di San Francesco in Assisi: 4 km langer FAI-Weg durch Olivenhaine und entlang des Bachs Tescio, Öffnungszeiten und Anfahrt von Agriturismo La Mora.",
+      excerpt: "Unterhalb der Basilika San Francesco: ein 1,5 km langer FAI-Weg durch Olivenhaine und Wald, mit Pistolettos Drittem Paradies und dem Komplex Santa Croce.",
+      metaDescription: "Der Bosco di San Francesco in Assisi: 1,5 km langer FAI-Weg von der Oberkirche bis Santa Croce, rund 90 Minuten Besuch. Anfahrt von Agriturismo La Mora.",
       image: "/images/territorio/assisi/bosco di san francesco assisi.jpg",
       alt: "Luftaufnahme des Bosco di San Francesco mit dem kreisförmigen Olivenhain und den Mauern von Assisi im Hintergrund",
       intro:
-        "Zwischen Assisi und Santa Maria degli Angeli führt ein etwa 4 km langer Naturpfad durch jahrhundertealte Olivenhaine, Mischwald und entlang des Bachs Tescio — eine andere Art, die Gegend zu erleben, fernab vom Stein der Altstadt.",
-      introCtaHeading: "Lust, zwischen Olivenbäumen zu spazieren und am selben Nachmittag wieder am Pool zu sein?",
+        "Unterhalb der Basilika San Francesco führt ein 1,5 km langer Weg durch Olivenhaine und Wald hinunter zum Benediktinerkomplex Santa Croce: eine andere Art, Assisi zu erleben, fernab vom Stein der Altstadt.",
+      introCtaHeading: "Lust, zwischen Olivenbäumen zu spazieren und von Mai bis September am selben Nachmittag wieder am Pool zu sein?",
       introCtaLabel: "Verfügbarkeit prüfen",
       introCtaHref: BOOKING_MODAL_HREF,
       content: [
         { type: "h2", text: "Ein vom FAI gepflegter Wald" },
         {
           type: "p",
-          text: "Seit 2008 wird der Bosco di San Francesco vom FAI (italienischer Nationaltrust) betreut, der ihn instand hält und Führungen entlang des Weges organisiert. Der Pfad verbindet symbolisch zwei Franziskus-Stätten — Assisi oben, Santa Maria degli Angeli unten — und durchquert dabei eine Landschaft, die landwirtschaftlich geblieben ist: noch bewirtschaftete Olivenhaine, Terrassen und der Tescio, der einen Großteil des Weges begleitet.",
+          text: "Der Bosco di San Francesco gehört seit 2008 dem FAI (Fondo per l'Ambiente Italiano), der ihn dank einer Spende von Intesa Sanpaolo erworben hat. Man betritt ihn durch ein Tor in der Mauer am Platz der Oberkirche; der abschüssige Naturweg führt hinunter zum Komplex Santa Croce, im 13. und 14. Jahrhundert von Benediktinerinnen gegründet, mit romanischer Kirche, Mühle und einem Turm aus dem 14. Jahrhundert.",
         },
         { type: "h3", text: "Was man unterwegs sieht" },
         {
           type: "p",
-          text: "Neben den Olivenhainen umfasst der Weg eine dauerhafte Kunstinstallation — ein großer Olivenbaum-Kreis, der sogar von oben sichtbar ist — als Ort zum Innehalten und Nachdenken gedacht, sowie Aussichtspunkte auf die Mauern von Assisi, die das Tal von beiden Seiten des Waldes dominieren.",
+          text: "Unterwegs begegnet man dem Dritten Paradies von Michelangelo Pistoletto: 121 Olivenbäume in Doppelreihen, die drei große, sich berührende Kreise bilden und auch von oben gut zu erkennen sind. Der Weg hat Steigungen und einige Stufen: Der Besuch dauert rund 90 Minuten.",
         },
         {
           type: "image",
@@ -4685,9 +4735,10 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         {
           type: "facts",
           items: [
-            { label: "Länge", value: "Etwa 4 km" },
+            { label: "Länge", value: "1,5 km, abschüssig" },
+            { label: "Besuchsdauer", value: "Rund 90 Minuten" },
+            { label: "Eingänge", value: "Platz der Oberkirche und Komplex Santa Croce" },
             { label: "Verwaltung", value: "FAI, seit 2008" },
-            { label: "Haupteingang", value: "Nahe Santa Maria degli Angeli" },
             { label: "Öffnungszeiten und Tickets", value: "Saisonabhängig — auf der FAI-Website prüfen" },
           ],
         },
@@ -4701,7 +4752,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "Von Agriturismo La Mora aus" },
         {
           type: "p",
-          text: "Der Haupteingang des Waldes, am Platz der Oberkirche von San Francesco, liegt 7,5 km von La Mora entfernt, rund 18 Minuten mit dem Auto: Man lässt das Auto auf einem der Parkplätze von Assisi stehen und geht zu Fuß weiter. Es ist einer der einfachsten Ausflüge während des Aufenthalts — kein ganzer Tag nötig, gut kombinierbar mit einem Besuch der Basilika oder einem Nachmittag am Pool danach.",
+          text: "Der Haupteingang des Waldes, am Platz der Oberkirche von San Francesco, liegt 7,5 km von La Mora entfernt, rund 18 Minuten mit dem Auto: Man lässt das Auto auf einem der Parkplätze von Assisi stehen und geht zu Fuß weiter. Es ist einer der einfachsten Ausflüge während des Aufenthalts — kein ganzer Tag nötig, gut kombinierbar mit einem Besuch der Basilika oder, von Mai bis September, einem Nachmittag am Pool danach.",
         },
       ],
       finalCtaHeading: "In 18 Minuten dort, und zurück für den Rest des Tages.",
@@ -4780,7 +4831,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           { q: "Wie kommt man von Agriturismo La Mora nach San Damiano?", a: "Mit dem Auto sind es 7,4 km, laut Google Maps rund 11 Minuten." },
         ],
       },
-      finalCtaHeading: "Zurück nach La Mora, zum Entspannen am Pool.",
+      finalCtaHeading: "Zurück nach La Mora: von Mai bis September ein Sprung in den Pool.",
       finalCtaBody: "6,8 km vom Zentrum Assisis entfernt wartet die umbrische Landschaft, ganz ohne Eile.",
       finalCtaLabel: "Die Apartments entdecken",
       finalCtaHref: "/alloggi/",
@@ -4922,7 +4973,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           text: "Die Eremo delle Carceri, Ausgangspunkt der wichtigsten Wege, liegt 12,2 km von La Mora entfernt, laut Google Maps rund 20 Minuten mit dem Auto. Wer lieber leichter unterwegs ist, dem erleichtert das vor Ort mietbare E-Bike die Anstiege, ohne auf den Ausflug verzichten zu müssen.",
         },
       ],
-      finalCtaHeading: "Zurück nach La Mora, zwischen Pool und Landschaft.",
+      finalCtaHeading: "Zurück nach La Mora: Landschaft das ganze Jahr, Pool von Mai bis September.",
       finalCtaBody: "Fünf unabhängige Apartments, 6,8 km vom Zentrum Assisis und 12,2 km von der Eremo delle Carceri entfernt.",
       finalCtaLabel: "Die Apartments entdecken",
       finalCtaHref: "/alloggi/",

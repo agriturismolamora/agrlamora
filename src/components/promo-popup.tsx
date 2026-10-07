@@ -15,6 +15,7 @@ import { ChocolateDrip, CocoaParticles } from "@/components/chocolate-decor";
 import choco from "@/components/chocolate-theme.module.css";
 import { PhotoCreditLine } from "@/components/photo-credit";
 import { EUROCHOCOLATE_2024_PHOTO } from "@/data/photo-credits";
+import { BookingModalButton } from "@/components/booking-modal-button";
 
 /* Chiave del popup di prenotazione diretta: invariata, così finita una
    promo a tempo il ritorno a questo popup rispetta ancora il suo cooldown. */
@@ -93,36 +94,41 @@ const TEXT: Record<
   },
 };
 
-/* Testi del popup Eurochocolate (titolo, -10%, date, CTA all'articolo).
-   Le condizioni complete stanno nell'articolo, non qui. */
-const EUROCHOCOLATE_TEXT: Record<Locale, { label: string; heading: string; dates: string; detail: string; cta: string }> = {
+/* Testi del popup Eurochocolate: stesso messaggio del box nell'articolo
+   ("Dormi a La Mora con il -10%..."), Prenota (modale) e link alle
+   condizioni complete, che stanno nell'articolo. */
+const EUROCHOCOLATE_TEXT: Record<Locale, { label: string; heading: string; dates: string; detail: string; cta: string; book: string }> = {
   it: {
     label: "Eurochocolate 2026 · Perugia",
-    heading: "Un soggiorno dolce come il cioccolato",
+    heading: "Dormi a La\u00a0Mora con il -10% durante Eurochocolate",
     dates: "13–22 novembre 2026",
-    detail: "Sconto del 10% ad Agriturismo La Mora per tutta la durata dell'evento, a 21 km dal centro di Perugia.",
-    cta: "Scopri l'offerta",
+    detail: "L'agriturismo a 23 minuti dal centro di Perugia: 10% di sconto per tutta la durata dell'evento, alle condizioni dell'offerta.",
+    cta: "Condizioni dell'offerta",
+    book: "Prenota all'Agriturismo La Mora",
   },
   en: {
     label: "Eurochocolate 2026 · Perugia",
-    heading: "A stay as sweet as chocolate",
+    heading: "Stay at La\u00a0Mora with 10% off during Eurochocolate",
     dates: "13–22 November 2026",
-    detail: "10% off at Agriturismo La Mora for the whole event, 21 km from central Perugia.",
-    cta: "See the offer",
+    detail: "Our agriturismo 23 minutes from central Perugia: 10% off for the whole event, under the offer's conditions.",
+    cta: "Offer conditions",
+    book: "Book at Agriturismo La Mora",
   },
   fr: {
     label: "Eurochocolate 2026 · Pérouse",
-    heading: "Un séjour doux comme le chocolat",
+    heading: "Dormez à La\u00a0Mora avec -10 % pendant Eurochocolate",
     dates: "13–22 novembre 2026",
-    detail: "10 % de remise à l'Agriturismo La Mora pendant toute la durée de l'événement, à 21 km du centre de Pérouse.",
-    cta: "Voir l'offre",
+    detail: "Notre agritourisme à 23 minutes du centre de Pérouse : 10 % de remise pendant tout l'événement, aux conditions de l'offre.",
+    cta: "Conditions de l'offre",
+    book: "Réserver à l'Agriturismo La Mora",
   },
   de: {
     label: "Eurochocolate 2026 · Perugia",
-    heading: "Ein Aufenthalt, süß wie Schokolade",
+    heading: "Mit 10 % Rabatt im La\u00a0Mora übernachten, während der Eurochocolate",
     dates: "13.–22. November 2026",
-    detail: "10 % Rabatt im Agriturismo La Mora während der gesamten Veranstaltung, 21 km vom Zentrum Perugias.",
-    cta: "Zum Angebot",
+    detail: "Unser Agriturismo 23 Minuten vom Zentrum Perugias: 10 % Rabatt während der gesamten Veranstaltung, zu den Bedingungen des Angebots.",
+    cta: "Angebotsbedingungen",
+    book: "Im Agriturismo La Mora buchen",
   },
 };
 
@@ -296,13 +302,19 @@ export function PromoPopup({ locale }: { locale: Locale }) {
             <p className={`${choco.offerBadge} mt-4`}>-{promo.discountPercent}%</p>
             <p className="mt-3 text-[13px] font-semibold uppercase tracking-[0.08em] text-[var(--crema)]">{text.dates}</p>
             <p className="mx-auto mt-3 max-w-[340px] text-[13px] leading-[1.6] text-[var(--crema)]/85">{text.detail}</p>
-            <Link
-              href={withLocale(locale, `/blog/${promo.articleSlug}/`)}
+            <BookingModalButton
               onClick={() => setOpen(false)}
               className={`${choco.sheen} mt-6 inline-flex min-h-[46px] items-center gap-2.5 rounded-lg px-7 font-sans text-[11px] font-semibold uppercase tracking-[0.08em]`}
             >
-              {text.cta}
+              {text.book}
               <span aria-hidden="true">→</span>
+            </BookingModalButton>
+            <Link
+              href={withLocale(locale, `/blog/${promo.articleSlug}/`)}
+              onClick={() => setOpen(false)}
+              className="mt-3 block text-[12px] font-semibold text-[var(--caramello-chiaro)] underline decoration-[var(--caramello-chiaro)]/40 underline-offset-4 hover:text-[var(--crema)]"
+            >
+              {text.cta}
             </Link>
           </div>
           <ChocolateDrip className="!mt-4 rotate-180 rounded-b-[10px] text-[#24150c]" />
