@@ -113,7 +113,7 @@ const ICONS = [LandscapeIcon, WaveIcon, CupIcon, FamilyIcon, PawIcon, BikeIcon, 
 function getHighlights(locale: Locale): Highlight[] {
   const data: Record<Locale, { label: string; title: string; description: string }[]> = {
     it: [
-      { label: "Territorio", title: "Vista su Assisi", description: "La campagna intorno, la Basilica di San Francesco a pochi minuti di auto." },
+      { label: "Territorio", title: "Vista su Assisi", description: "La campagna intorno, la Basilica di San Francesco a 7,5 km, circa 18 minuti in auto." },
       { label: "Piscina", title: "Piscina panoramica", description: "Aperta nella bella stagione, immersa nel verde della campagna umbra." },
       { label: "Colazione", title: "Colazione biologica", description: "Biologica ogni mattina, con dolci tipici umbri e prodotti del territorio." },
       { label: "Famiglie", title: "Pensato per le famiglie", description: "Parco giochi, spazi aperti e appartamenti adatti a chi viaggia con bambini." },
@@ -124,7 +124,7 @@ function getHighlights(locale: Locale): Highlight[] {
       { label: "Gestione familiare", title: "Gestione familiare", description: "Paolo segue personalmente ogni ospite, da sempre." },
     ],
     en: [
-      { label: "Area", title: "A view of Assisi", description: "The countryside all around, the Basilica of St. Francis a few minutes' drive away." },
+      { label: "Area", title: "A view of Assisi", description: "The countryside all around, the Basilica of St. Francis 7.5 km away, about 18 minutes by car." },
       { label: "Pool", title: "Panoramic pool", description: "Open during the warm season, surrounded by the green Umbrian countryside." },
       { label: "Breakfast", title: "Organic breakfast", description: "Organic every morning, with fine Umbrian pastries and local produce." },
       { label: "Families", title: "Made for families", description: "Playground, open spaces and apartments suited to travelling with children." },
@@ -135,7 +135,7 @@ function getHighlights(locale: Locale): Highlight[] {
       { label: "Family-run", title: "Family-run", description: "Paolo personally looks after every guest, as he always has." },
     ],
     fr: [
-      { label: "Territoire", title: "Vue sur Assise", description: "La campagne tout autour, la Basilique Saint-François à quelques minutes en voiture." },
+      { label: "Territoire", title: "Vue sur Assise", description: "La campagne tout autour, la Basilique Saint-François à 7,5 km, environ 18 minutes en voiture." },
       { label: "Piscine", title: "Piscine panoramique", description: "Ouverte pendant la belle saison, au cœur de la campagne ombrienne." },
       { label: "Petit-déjeuner", title: "Petit-déjeuner biologique", description: "Biologique chaque matin, avec des pâtisseries typiques d'Ombrie et des produits locaux." },
       { label: "Familles", title: "Pensé pour les familles", description: "Aire de jeux, espaces ouverts et appartements adaptés aux voyages avec enfants." },
@@ -146,7 +146,7 @@ function getHighlights(locale: Locale): Highlight[] {
       { label: "Gestion familiale", title: "Gestion familiale", description: "Paolo s'occupe personnellement de chaque hôte, depuis toujours." },
     ],
     de: [
-      { label: "Umgebung", title: "Blick auf Assisi", description: "Die Landschaft ringsum, die Basilika des Heiligen Franziskus wenige Autominuten entfernt." },
+      { label: "Umgebung", title: "Blick auf Assisi", description: "Die Landschaft ringsum, die Basilika des Heiligen Franziskus 7,5 km entfernt, rund 18 Minuten mit dem Auto." },
       { label: "Pool", title: "Panorama-Pool", description: "In der warmen Jahreszeit geöffnet, umgeben vom Grün der umbrischen Landschaft." },
       { label: "Frühstück", title: "Bio-Frühstück", description: "Jeden Morgen biologisch, mit feinem umbrischem Gebäck und lokalen Produkten." },
       { label: "Familien", title: "Für Familien gemacht", description: "Spielplatz, offene Flächen und Apartments, die für Reisen mit Kindern geeignet sind." },

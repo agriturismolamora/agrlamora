@@ -9,6 +9,7 @@ import { getPlace, type PlaceKey } from "@/data/places";
 import { MapsButton } from "@/components/maps-button";
 import { EUROCHOCOLATE_2026 } from "@/data/promo";
 import { pageMetadata } from "@/lib/seo";
+import { StructuredData } from "@/components/structured-data";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -39,7 +40,7 @@ type Place = { name: string; src: string; alt: string; note: string; credit?: st
 const ASSISI_PLACES: Record<Locale, Place[]> = {
   it: [
     { name: "Basilica di San Francesco", src: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilica di San Francesco ad Assisi", note: "Il cuore della città, patrimonio UNESCO: gli affreschi di Giotto nella Basilica Superiore sono tra i motivi principali per cui si viene ad Assisi.", maps: "basilica" },
-    { name: "Basilica di Santa Maria degli Angeli", src: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg", alt: "Basilica di Santa Maria degli Angeli con la Porziuncola", note: "Custodisce al suo interno la Porziuncola, la piccola chiesa dove San Francesco fondò l'ordine francescano. A pochi minuti dalla struttura." },
+    { name: "Basilica di Santa Maria degli Angeli", src: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg", alt: "Basilica di Santa Maria degli Angeli con la Porziuncola", note: "Custodisce al suo interno la Porziuncola, la piccola chiesa dove San Francesco fondò l'ordine francescano. A 2,1 km dalla struttura." },
     { name: "Eremo delle Carceri", src: "/images/territorio/assisi/eremo delle carceri assisi.jpg", alt: "Eremo delle Carceri sul Monte Subasio", note: "Il romitorio dove Francesco si ritirava in preghiera, immerso nel bosco del Monte Subasio: una tappa più silenziosa, lontana dal centro." },
     { name: "Bosco di San Francesco", src: "/images/territorio/assisi/bosco di san francesco assisi.jpg", alt: "Bosco di San Francesco, area naturale protetta dal FAI", note: "Un percorso naturalistico gestito dal FAI, tra uliveti, bosco e il torrente Tescio: una passeggiata diversa dal centro storico." },
     { name: "Santuario di San Damiano", src: "/images/territorio/assisi/santuario san-damiano-assisi.jpg", alt: "Santuario di San Damiano nei dintorni di Assisi", note: "Dove Francesco udì il celebre invito a 'riparare la mia chiesa' e dove Chiara d'Assisi visse gran parte della sua vita." },
@@ -49,7 +50,7 @@ const ASSISI_PLACES: Record<Locale, Place[]> = {
   ],
   en: [
     { name: "Basilica of St. Francis", src: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilica of St. Francis in Assisi", note: "The heart of the city, a UNESCO World Heritage Site: Giotto's frescoes in the Upper Basilica are among the main reasons people come to Assisi.", maps: "basilica" },
-    { name: "Basilica of Santa Maria degli Angeli", src: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg", alt: "Basilica of Santa Maria degli Angeli with the Porziuncola", note: "Houses the Porziuncola, the small church where St. Francis founded the Franciscan order. Minutes from the property." },
+    { name: "Basilica of Santa Maria degli Angeli", src: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg", alt: "Basilica of Santa Maria degli Angeli with the Porziuncola", note: "Houses the Porziuncola, the small church where St. Francis founded the Franciscan order. 2.1 km from the property." },
     { name: "Eremo delle Carceri", src: "/images/territorio/assisi/eremo delle carceri assisi.jpg", alt: "Eremo delle Carceri hermitage on Monte Subasio", note: "The hermitage where Francis withdrew to pray, set in the woods of Monte Subasio: a quieter stop, away from the centre." },
     { name: "Bosco di San Francesco", src: "/images/territorio/assisi/bosco di san francesco assisi.jpg", alt: "Bosco di San Francesco, a protected natural area run by FAI", note: "A nature trail managed by the FAI (Italian National Trust), through olive groves, woodland and the Tescio stream: a different kind of walk from the historic centre." },
     { name: "Sanctuary of San Damiano", src: "/images/territorio/assisi/santuario san-damiano-assisi.jpg", alt: "Sanctuary of San Damiano near Assisi", note: "Where Francis heard the famous call to 'repair my church' and where Clare of Assisi spent much of her life." },
@@ -59,7 +60,7 @@ const ASSISI_PLACES: Record<Locale, Place[]> = {
   ],
   fr: [
     { name: "Basilique Saint-François", src: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilique Saint-François à Assise", note: "Le cœur de la ville, patrimoine de l'UNESCO : les fresques de Giotto dans la basilique supérieure sont l'une des principales raisons de venir à Assise.", maps: "basilica" },
-    { name: "Basilique Sainte-Marie-des-Anges", src: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg", alt: "Basilique Sainte-Marie-des-Anges avec la Portioncule", note: "Elle abrite la Portioncule, la petite église où Saint François fonda l'ordre franciscain. À quelques minutes de la structure." },
+    { name: "Basilique Sainte-Marie-des-Anges", src: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg", alt: "Basilique Sainte-Marie-des-Anges avec la Portioncule", note: "Elle abrite la Portioncule, la petite église où Saint François fonda l'ordre franciscain. À 2,1 km de la structure." },
     { name: "Ermitage des Carceri", src: "/images/territorio/assisi/eremo delle carceri assisi.jpg", alt: "Ermitage des Carceri sur le Mont Subasio", note: "L'ermitage où François se retirait pour prier, niché dans les bois du Mont Subasio : une étape plus silencieuse, loin du centre." },
     { name: "Bosco di San Francesco", src: "/images/territorio/assisi/bosco di san francesco assisi.jpg", alt: "Bosco di San Francesco, zone naturelle protégée par le FAI", note: "Un parcours naturaliste géré par le FAI, entre oliveraies, bois et le torrent Tescio : une promenade différente du centre historique." },
     { name: "Sanctuaire de San Damiano", src: "/images/territorio/assisi/santuario san-damiano-assisi.jpg", alt: "Sanctuaire de San Damiano aux environs d'Assise", note: "Là où François entendit le célèbre appel à « réparer mon église » et où Claire d'Assise passa une grande partie de sa vie." },
@@ -69,7 +70,7 @@ const ASSISI_PLACES: Record<Locale, Place[]> = {
   ],
   de: [
     { name: "Basilika des Heiligen Franziskus", src: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilika des Heiligen Franziskus in Assisi", note: "Das Herz der Stadt, UNESCO-Welterbe: Giottos Fresken in der Oberkirche gehören zu den Hauptgründen, warum man nach Assisi kommt.", maps: "basilica" },
-    { name: "Basilika Santa Maria degli Angeli", src: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg", alt: "Basilika Santa Maria degli Angeli mit der Portiuncula", note: "Beherbergt die Portiuncula, die kleine Kirche, in der der Heilige Franziskus den Franziskanerorden gründete. Wenige Minuten von der Unterkunft entfernt." },
+    { name: "Basilika Santa Maria degli Angeli", src: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg", alt: "Basilika Santa Maria degli Angeli mit der Portiuncula", note: "Beherbergt die Portiuncula, die kleine Kirche, in der der Heilige Franziskus den Franziskanerorden gründete. 2,1 km von der Unterkunft entfernt." },
     { name: "Eremo delle Carceri", src: "/images/territorio/assisi/eremo delle carceri assisi.jpg", alt: "Einsiedelei Eremo delle Carceri auf dem Monte Subasio", note: "Die Einsiedelei, in die sich Franziskus zum Gebet zurückzog, mitten in den Wäldern des Monte Subasio: ein ruhigerer Ort, abseits des Zentrums." },
     { name: "Bosco di San Francesco", src: "/images/territorio/assisi/bosco di san francesco assisi.jpg", alt: "Bosco di San Francesco, ein vom FAI geschütztes Naturgebiet", note: "Ein vom FAI (italienischer Nationaltrust) verwalteter Naturpfad durch Olivenhaine, Wald und den Bach Tescio: ein anderer Spaziergang als die Altstadt." },
     { name: "Wallfahrtskirche San Damiano", src: "/images/territorio/assisi/santuario san-damiano-assisi.jpg", alt: "Wallfahrtskirche San Damiano bei Assisi", note: "Wo Franziskus den berühmten Ruf hörte, „meine Kirche wieder aufzubauen“, und wo Klara von Assisi einen Großteil ihres Lebens verbrachte." },
@@ -125,9 +126,9 @@ const TEXT: Record<
   it: {
     heroLabel: "Il territorio",
     heroTitle: "Assisi fuori dalla finestra. L'Umbria tutt'intorno.",
-    heroBody: "La Mora è a pochi minuti da Assisi, in posizione comoda anche per Santa Maria degli Angeli, Spello e Perugia. Una base per muoversi, non solo per dormire.",
+    heroBody: "La Mora è a 6,8 km dal centro di Assisi (circa 14 minuti in auto), in posizione comoda anche per Santa Maria degli Angeli (2,1 km), Spello e Perugia (21,0 km). Una base per muoversi, non solo per dormire.",
     assisiLabel: "Assisi",
-    assisiHeading: "La città di Francesco, a pochi minuti dalla struttura.",
+    assisiHeading: "La città di Francesco, a 6,8 km dalla struttura.",
     fotoWord: "Foto",
     dintorniLabel: "Dintorni",
     dintorniHeading: "Oltre Assisi, l'Umbria che si scopre in giornata.",
@@ -146,9 +147,9 @@ const TEXT: Record<
   en: {
     heroLabel: "The area",
     heroTitle: "Assisi outside the window. Umbria all around.",
-    heroBody: "La Mora is minutes from Assisi, in a convenient position for Santa Maria degli Angeli, Spello and Perugia too. A base to move around from, not just to sleep in.",
+    heroBody: "La Mora is 6.8 km from the centre of Assisi (about 14 minutes by car), in a convenient position for Santa Maria degli Angeli (2.1 km), Spello and Perugia (21.0 km) too. A base to move around from, not just to sleep in.",
     assisiLabel: "Assisi",
-    assisiHeading: "The city of Francis, minutes from the property.",
+    assisiHeading: "The city of Francis, 6.8 km from the property.",
     fotoWord: "Photo",
     dintorniLabel: "Nearby",
     dintorniHeading: "Beyond Assisi, the Umbria you can discover in a day.",
@@ -167,9 +168,9 @@ const TEXT: Record<
   fr: {
     heroLabel: "Le territoire",
     heroTitle: "Assise à votre fenêtre. L'Ombrie tout autour.",
-    heroBody: "La Mora est à quelques minutes d'Assise, dans une position pratique aussi pour Santa Maria degli Angeli, Spello et Pérouse. Une base pour se déplacer, pas seulement pour dormir.",
+    heroBody: "La Mora est à 6,8 km du centre d'Assise (environ 14 minutes en voiture), dans une position pratique aussi pour Santa Maria degli Angeli (2,1 km), Spello et Pérouse (21,0 km). Une base pour se déplacer, pas seulement pour dormir.",
     assisiLabel: "Assise",
-    assisiHeading: "La ville de François, à quelques minutes de la structure.",
+    assisiHeading: "La ville de François, à 6,8 km de la structure.",
     fotoWord: "Photo",
     dintorniLabel: "Aux alentours",
     dintorniHeading: "Au-delà d'Assise, l'Ombrie à découvrir en une journée.",
@@ -188,9 +189,9 @@ const TEXT: Record<
   de: {
     heroLabel: "Die Umgebung",
     heroTitle: "Assisi vor dem Fenster. Umbrien ringsum.",
-    heroBody: "La Mora liegt nur wenige Minuten von Assisi entfernt, auch praktisch gelegen für Santa Maria degli Angeli, Spello und Perugia. Eine Basis zum Erkunden, nicht nur zum Schlafen.",
+    heroBody: "La Mora liegt 6,8 km vom Zentrum Assisis entfernt (rund 14 Minuten mit dem Auto), auch praktisch gelegen für Santa Maria degli Angeli (2,1 km), Spello und Perugia (21,0 km). Eine Basis zum Erkunden, nicht nur zum Schlafen.",
     assisiLabel: "Assisi",
-    assisiHeading: "Die Stadt des Franziskus, wenige Minuten von der Unterkunft entfernt.",
+    assisiHeading: "Die Stadt des Franziskus, 6,8 km von der Unterkunft entfernt.",
     fotoWord: "Foto",
     dintorniLabel: "Umgebung",
     dintorniHeading: "Jenseits von Assisi: das Umbrien, das man an einem Tag entdeckt.",
@@ -215,6 +216,7 @@ export function TerritorioPageView({ locale }: { locale: Locale }) {
 
   return (
     <>
+      <StructuredData locale={locale} path="/territorio/" />
       <section className="relative flex h-[64vh] min-h-[460px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/territorio/assisi/assisi con tramonto.jpg"

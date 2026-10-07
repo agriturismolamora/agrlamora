@@ -19,11 +19,14 @@ export function Reveal({
   className = "",
   delay = 0,
   as: Tag = "div",
+  ariaHidden,
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
   as?: "div" | "span" | "li";
+  /* true: contenuto doppione (variante desktop/mobile non mostrata). */
+  ariaHidden?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -62,6 +65,7 @@ export function Reveal({
       ref={ref}
       className={`reveal ${className}`}
       data-revealed={visible ? "true" : undefined}
+      aria-hidden={ariaHidden || undefined}
       style={delay ? ({ "--reveal-delay": `${delay}ms` } as CSSProperties) : undefined}
     >
       {children}

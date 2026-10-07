@@ -9,6 +9,7 @@ import { CertificationsMarquee } from "@/components/certifications-marquee";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
+import { StructuredData } from "@/components/structured-data";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -68,7 +69,7 @@ function getFaqItems(locale: Locale): FaqItem[] {
       { question: "La piscina è adatta alle famiglie?", answer: "Sì: è panoramica, con sedute all'ombra intorno, aperta dal 1° maggio al 28 settembre dalle 9:00 alle 19:00. Accanto ci sono il parco giochi e il campo da calcetto in erba naturale." },
       { question: "Ci sono attività per i bambini?", answer: "Il parco giochi con altalene e scivoli è sempre disponibile per gli ospiti, il babysitting è organizzabile su richiesta e la culla si aggiunge a 10€ a soggiorno." },
       { question: "È possibile andare a cavallo?", answer: "No: i cavalli fanno parte della nostra azienda agricola e gli ospiti possono vederli e avvicinarli, ma non organizziamo lezioni di equitazione né passeggiate a cavallo." },
-      { question: "Cosa si può visitare partendo da La Mora?", answer: "Assisi è a pochi minuti, e da qui si raggiungono facilmente anche Santa Maria degli Angeli, Spello e Perugia — a piedi, in auto o in e-bike." },
+      { question: "Cosa si può visitare partendo da La Mora?", answer: "Il centro di Assisi (Piazza del Comune) è a 6,8 km, circa 14 minuti in auto, e la Basilica di San Francesco a 7,5 km; da qui si raggiungono facilmente anche Santa Maria degli Angeli (2,1 km), Spello e Perugia (21,0 km, circa 23 minuti), in auto o in e-bike." },
       { question: "Le attività vanno prenotate?", answer: "Piscina e parco giochi sono sempre a disposizione degli ospiti. E-bike e babysitting vanno concordati in anticipo, scrivendoci su WhatsApp o per telefono." },
     ],
     en: [
@@ -76,7 +77,7 @@ function getFaqItems(locale: Locale): FaqItem[] {
       { question: "Is the pool suitable for families?", answer: "Yes: it's panoramic, with shaded seating around it, open from 1 May to 28 September, 9am to 7pm. Right next to it are the playground and the natural-grass five-a-side pitch." },
       { question: "Are there activities for children?", answer: "The playground with swings and slides is always available to guests, babysitting can be arranged on request, and a cot can be added for €10 per stay." },
       { question: "Can I go horse riding?", answer: "No: the horses are part of our own farm and guests can see them and get close to them, but we don't organise riding lessons or horseback rides." },
-      { question: "What can be visited from La Mora?", answer: "Assisi is minutes away, and from here you can also easily reach Santa Maria degli Angeli, Spello and Perugia — on foot, by car or by e-bike." },
+      { question: "What can be visited from La Mora?", answer: "The centre of Assisi (Piazza del Comune) is 6.8 km away, about 14 minutes by car, and the Basilica of San Francesco 7.5 km; from here you can also easily reach Santa Maria degli Angeli (2.1 km), Spello and Perugia (21.0 km, about 23 minutes), by car or by e-bike." },
       { question: "Do activities need to be booked?", answer: "The pool and playground are always available to guests. E-bikes and babysitting need to be arranged in advance, by writing to us on WhatsApp or by phone." },
     ],
     fr: [
@@ -84,7 +85,7 @@ function getFaqItems(locale: Locale): FaqItem[] {
       { question: "La piscine convient-elle aux familles ?", answer: "Oui : elle est panoramique, avec des assises à l'ombre tout autour, ouverte du 1er mai au 28 septembre de 9h à 19h. Juste à côté se trouvent l'aire de jeux et le terrain de football en gazon naturel." },
       { question: "Y a-t-il des activités pour les enfants ?", answer: "L'aire de jeux avec balançoires et toboggans est toujours accessible aux hôtes, le baby-sitting peut être organisé sur demande et le lit bébé s'ajoute pour 10€ par séjour." },
       { question: "Peut-on faire de l'équitation ?", answer: "Non : les chevaux font partie de notre exploitation agricole et les hôtes peuvent les voir et les approcher, mais nous n'organisons ni cours d'équitation ni promenades à cheval." },
-      { question: "Que peut-on visiter depuis La Mora ?", answer: "Assise est à quelques minutes, et depuis ici on rejoint aussi facilement Santa Maria degli Angeli, Spello et Pérouse — à pied, en voiture ou en e-bike." },
+      { question: "Que peut-on visiter depuis La Mora ?", answer: "Le centre d'Assise (Piazza del Comune) est à 6,8 km, environ 14 minutes en voiture, et la basilique Saint-François à 7,5 km ; d'ici on rejoint aussi facilement Santa Maria degli Angeli (2,1 km), Spello et Pérouse (21,0 km, environ 23 minutes), en voiture ou en e-bike." },
       { question: "Faut-il réserver les activités ?", answer: "La piscine et l'aire de jeux sont toujours à la disposition des hôtes. Les e-bikes et le baby-sitting doivent être convenus à l'avance, en nous écrivant sur WhatsApp ou par téléphone." },
     ],
     de: [
@@ -92,7 +93,7 @@ function getFaqItems(locale: Locale): FaqItem[] {
       { question: "Ist der Pool für Familien geeignet?", answer: "Ja: er ist panoramisch, mit schattigen Sitzgelegenheiten drumherum, geöffnet vom 1. Mai bis 28. September von 9 bis 19 Uhr. Direkt daneben liegen der Spielplatz und der Fußballplatz mit Naturrasen." },
       { question: "Gibt es Aktivitäten für Kinder?", answer: "Der Spielplatz mit Schaukeln und Rutschen steht den Gästen immer zur Verfügung, Babysitting kann auf Anfrage organisiert werden und ein Kinderbett kostet 10€ pro Aufenthalt." },
       { question: "Kann man reiten?", answer: "Nein: die Pferde gehören zu unserem eigenen Hof, Gäste können sie sehen und sich ihnen nähern, aber wir bieten weder Reitstunden noch Ausritte an." },
-      { question: "Was kann man von La Mora aus besichtigen?", answer: "Assisi ist nur wenige Minuten entfernt, und von hier aus erreicht man auch leicht Santa Maria degli Angeli, Spello und Perugia — zu Fuß, mit dem Auto oder mit dem E-Bike." },
+      { question: "Was kann man von La Mora aus besichtigen?", answer: "Das Zentrum von Assisi (Piazza del Comune) liegt 6,8 km entfernt, rund 14 Minuten mit dem Auto, die Basilika San Francesco 7,5 km; von hier aus erreicht man auch leicht Santa Maria degli Angeli (2,1 km), Spello und Perugia (21,0 km, rund 23 Minuten), mit dem Auto oder mit dem E-Bike." },
       { question: "Müssen Aktivitäten gebucht werden?", answer: "Pool und Spielplatz stehen den Gästen immer zur Verfügung. E-Bikes und Babysitting müssen im Voraus vereinbart werden, indem man uns auf WhatsApp oder telefonisch schreibt." },
     ],
   };
@@ -148,7 +149,7 @@ const TEXT: Record<
     cavalliBody: "Fanno parte dell'azienda agricola. Gli ospiti possono vederli, avvicinarli — non organizziamo lezioni di equitazione né passeggiate a cavallo.",
     territorioLabel: "Oltre la struttura",
     territorioHeading: "Le attività qui sono un punto di partenza, non il punto d'arrivo.",
-    territorioBody: "Una mattina in piscina, un giro in e-bike nel pomeriggio, e Assisi resta a pochi minuti per il resto della giornata — con la campagna umbra tutt'intorno a fare da cornice a entrambe le cose.",
+    territorioBody: "Una mattina in piscina, un giro in e-bike nel pomeriggio, e il centro di Assisi resta a 14 minuti d'auto (6,8 km) per il resto della giornata — con la campagna umbra tutt'intorno a fare da cornice a entrambe le cose.",
     territorioCta: "Scopri il territorio",
     pauseQuote: "Non tutto quello che si vive qui si vede in una fotografia.",
     faqLabel: "Domande frequenti",
@@ -174,7 +175,7 @@ const TEXT: Record<
     cavalliBody: "They're part of the farm. Guests can see them, get close to them — we don't organise riding lessons or horseback rides.",
     territorioLabel: "Beyond the property",
     territorioHeading: "The activities here are a starting point, not the destination.",
-    territorioBody: "A morning at the pool, an e-bike ride in the afternoon, and Assisi remains minutes away for the rest of the day — with the Umbrian countryside all around as the backdrop to both.",
+    territorioBody: "A morning at the pool, an e-bike ride in the afternoon, and the centre of Assisi is still just 14 minutes away by car (6.8 km) for the rest of the day — with the Umbrian countryside all around as the backdrop to both.",
     territorioCta: "Discover the area",
     pauseQuote: "Not everything you experience here can be seen in a photograph.",
     faqLabel: "Frequently asked questions",
@@ -200,7 +201,7 @@ const TEXT: Record<
     cavalliBody: "Ils font partie de l'exploitation agricole. Les hôtes peuvent les voir, les approcher — nous n'organisons ni cours d'équitation ni promenades à cheval.",
     territorioLabel: "Au-delà de la structure",
     territorioHeading: "Les activités ici sont un point de départ, pas une fin en soi.",
-    territorioBody: "Une matinée à la piscine, une balade en e-bike l'après-midi, et Assise reste à quelques minutes pour le reste de la journée — avec la campagne ombrienne tout autour en toile de fond des deux.",
+    territorioBody: "Une matinée à la piscine, une balade en e-bike l'après-midi, et le centre d'Assise reste à 14 minutes en voiture (6,8 km) pour le reste de la journée — avec la campagne ombrienne tout autour en toile de fond des deux.",
     territorioCta: "Découvrir le territoire",
     pauseQuote: "Tout ce que l'on vit ici ne se voit pas sur une photographie.",
     faqLabel: "Questions fréquentes",
@@ -226,7 +227,7 @@ const TEXT: Record<
     cavalliBody: "Sie gehören zum Hof. Gäste können sie sehen, sich ihnen nähern — wir bieten weder Reitstunden noch Ausritte an.",
     territorioLabel: "Über die Unterkunft hinaus",
     territorioHeading: "Die Aktivitäten hier sind ein Ausgangspunkt, kein Ziel.",
-    territorioBody: "Ein Vormittag am Pool, eine E-Bike-Tour am Nachmittag, und Assisi bleibt für den Rest des Tages nur wenige Minuten entfernt — mit der umbrischen Landschaft ringsum als Kulisse für beides.",
+    territorioBody: "Ein Vormittag am Pool, eine E-Bike-Tour am Nachmittag, und das Zentrum von Assisi bleibt für den Rest des Tages nur 14 Autominuten (6,8 km) entfernt — mit der umbrischen Landschaft ringsum als Kulisse für beides.",
     territorioCta: "Die Umgebung entdecken",
     pauseQuote: "Nicht alles, was man hier erlebt, sieht man auf einem Foto.",
     faqLabel: "Häufig gestellte Fragen",
@@ -240,6 +241,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
 
   return (
     <>
+      <StructuredData locale={locale} path="/agriturismo-famiglie-ad-assisi-e-dintorni/" />
       <section className="relative flex h-[92vh] min-h-[600px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/piscina/piscina agriturismo la mora.webp"

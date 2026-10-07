@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { PhotoCreditLine } from "@/components/photo-credit";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { Reveal } from "@/components/scroll-reveal";
 import { PinnedHold } from "@/components/pinned-hold";
 import { HoverFill } from "@/components/hover-fill";
@@ -38,6 +38,19 @@ const TEXT: Record<Locale, { label: string; heading: string; cta: string; scopri
   },
 };
 
+/* Ventaglio (da lg) e striscia (sotto lg) sono sempre entrambi nel DOM,
+   scambiati dal CSS: quello non mostrato è aria-hidden. Sul server (null)
+   si considera mostrata la striscia, che ha tutti gli articoli. */
+const LG_QUERY = "(min-width: 64rem)";
+function subscribeLg(onChange: () => void) {
+  const mq = window.matchMedia(LG_QUERY);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+function useIsLg(): boolean | null {
+  return useSyncExternalStore(subscribeLg, () => window.matchMedia(LG_QUERY).matches, () => null);
+}
+
 export function BlogSection({ locale }: { locale: Locale }) {
   const POSTS = getBlogPosts(locale);
   /* Ventaglio desktop: al massimo FAN_MAX card. Con 8 articoli (dopo
@@ -54,6 +67,7 @@ export function BlogSection({ locale }: { locale: Locale }) {
      "hover:z-20" da solo non ha mai funzionato — la card in hover restava
      comunque sotto le vicine con i più alto. */
   const [hovered, setHovered] = useState<number | null>(null);
+  const isLg = useIsLg();
 
   return (
     <section id="section-blog" aria-labelledby="blog-heading" className="bg-cream-dim py-24 sm:py-28 lg:min-h-[140vh] lg:py-0">
@@ -91,7 +105,7 @@ export function BlogSection({ locale }: { locale: Locale }) {
             esiste su touch). Il reveal è su tutta la fila (non per-card):
             i margini negativi/z-index dell'overlap vivono sui Link, un
             fade-in per-card romperebbe quella geometria. */}
-        <Reveal delay={100} className="mt-14 hidden sm:mt-16 lg:flex lg:justify-center">
+        <Reveal delay={100} className="mt-14 hidden sm:mt-16 lg:flex lg:justify-center" ariaHidden={isLg !== true}>
           {fanPosts.map((post, i) => (
             <Link
               key={post.slug}
@@ -143,7 +157,7 @@ export function BlogSection({ locale }: { locale: Locale }) {
           ))}
         </Reveal>
 
-        <Reveal delay={100} className="mt-14 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 sm:mt-16 lg:hidden">
+        <Reveal delay={100} className="mt-14 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 sm:mt-16 lg:hidden" ariaHidden={isLg === true}>
           {POSTS.map((post) => (
             <Link
               key={post.slug}

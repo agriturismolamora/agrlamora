@@ -6,6 +6,7 @@ import { Reveal } from "@/components/scroll-reveal";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
+import { StructuredData } from "@/components/structured-data";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -61,6 +62,7 @@ export function BlogIndexPageView({ locale }: { locale: Locale }) {
 
   return (
     <>
+      <StructuredData locale={locale} path="/blog/" />
       <section className="bg-cream pb-4 pt-16 sm:pt-20">
         <div className="mx-auto max-w-[900px] px-6 text-center sm:px-10">
           <Reveal>

@@ -12,6 +12,7 @@ import { CertificationsMarquee } from "@/components/certifications-marquee";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
+import { StructuredData } from "@/components/structured-data";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -40,7 +41,7 @@ export function getChiSiamoMetadata(locale: Locale) {
 function getFaqItems(locale: Locale): FaqItem[] {
   const items: Record<Locale, FaqItem[]> = {
     it: [
-      { question: "Quanto dista La Mora da Assisi?", answer: "Il centro storico è a pochi minuti d'auto. La Basilica di Santa Maria degli Angeli è a 2,2 km, la stazione ferroviaria di Assisi a 2,9 km, l'aeroporto dell'Umbria a 10 km." },
+      { question: "Quanto dista La Mora da Assisi?", answer: "Piazza del Comune, nel centro storico, è a 6,8 km (circa 14 minuti in auto) e la Basilica di San Francesco a 7,5 km (circa 18 minuti). La Basilica di Santa Maria degli Angeli è a 2,1 km, la stazione ferroviaria di Assisi a 2,9 km, l'aeroporto dell'Umbria a 11,4 km." },
       { question: "La struttura è adatta alle famiglie?", answer: "Sì: parco giochi con altalene e scivoli, piscina panoramica e babysitting su richiesta. Diversi appartamenti hanno letti a castello pensati per i bambini." },
       { question: "Sono ammessi animali?", answer: "In due appartamenti su cinque — Gemelli e Sagittario — entrambi con giardino privato recintato, al costo di 25€ a soggiorno, guinzaglio obbligatorio negli spazi comuni. Negli altri tre — Pesci, Acquario e Bilancia — sono ammessi solo animali di piccola taglia, previo accordo con il proprietario, sempre a 25€ a soggiorno." },
       { question: "È possibile prenotare direttamente?", answer: "Sì, scrivendo su WhatsApp o telefonando: rispondiamo noi, senza intermediari. Chi prenota diretto ha anche condizioni migliori rispetto alle piattaforme." },
@@ -48,7 +49,7 @@ function getFaqItems(locale: Locale): FaqItem[] {
       { question: "Qual è la politica di cancellazione?", answer: "Dipende dalla stagione: bassa stagione, preavviso di 7 giorni; media stagione, 14 giorni; alta stagione (luglio-agosto), 21 giorni. In caso di mancato arrivo senza preavviso (no-show), in bassa stagione si perde la sola caparra, in media e alta stagione è dovuto l'intero importo del soggiorno." },
     ],
     en: [
-      { question: "How far is La Mora from Assisi?", answer: "The historic centre is a few minutes' drive away. The Basilica of Santa Maria degli Angeli is 2.2 km away, Assisi railway station 2.9 km, Umbria airport 10 km." },
+      { question: "How far is La Mora from Assisi?", answer: "Piazza del Comune, in the historic centre, is 6.8 km away (about 14 minutes by car) and the Basilica of San Francesco 7.5 km (about 18 minutes). The Basilica of Santa Maria degli Angeli is 2.1 km away, Assisi railway station 2.9 km, Umbria airport 11.4 km." },
       { question: "Is the property suitable for families?", answer: "Yes: a playground with swings and slides, a panoramic pool and babysitting on request. Several apartments have bunk beds designed for children." },
       { question: "Are pets allowed?", answer: "In two of the five apartments — Gemelli and Sagittario — both with a private fenced garden, at a cost of €25 per stay, leash required in common areas. In the other three — Pesci, Acquario and Bilancia — only small pets are allowed, subject to agreement with the owner, also at €25 per stay." },
       { question: "Can I book directly?", answer: "Yes, by writing on WhatsApp or calling: we answer personally, with no intermediaries. Those who book directly also get better conditions than on the platforms." },
@@ -56,7 +57,7 @@ function getFaqItems(locale: Locale): FaqItem[] {
       { question: "What is the cancellation policy?", answer: "It depends on the season: low season, 7 days' notice; mid season, 14 days; high season (July-August), 21 days. In case of no-show without notice, in low season only the deposit is lost, in mid and high season the full stay amount is due." },
     ],
     fr: [
-      { question: "À quelle distance La Mora se trouve-t-elle d'Assise ?", answer: "Le centre historique est à quelques minutes en voiture. La basilique Sainte-Marie-des-Anges est à 2,2 km, la gare d'Assise à 2,9 km, l'aéroport d'Ombrie à 10 km." },
+      { question: "À quelle distance La Mora se trouve-t-elle d'Assise ?", answer: "La Piazza del Comune, dans le centre historique, est à 6,8 km (environ 14 minutes en voiture) et la basilique Saint-François à 7,5 km (environ 18 minutes). La basilique Sainte-Marie-des-Anges est à 2,1 km, la gare d'Assise à 2,9 km, l'aéroport d'Ombrie à 11,4 km." },
       { question: "La structure convient-elle aux familles ?", answer: "Oui : aire de jeux avec balançoires et toboggans, piscine panoramique et baby-sitting sur demande. Plusieurs appartements ont des lits superposés pensés pour les enfants." },
       { question: "Les animaux sont-ils admis ?", answer: "Dans deux appartements sur cinq — Gemelli et Sagittario — tous deux avec jardin privé clôturé, au coût de 25€ par séjour, laisse obligatoire dans les espaces communs. Dans les trois autres — Pesci, Acquario et Bilancia — seuls les petits animaux sont admis, sous réserve d'accord avec le propriétaire, toujours à 25€ par séjour." },
       { question: "Peut-on réserver directement ?", answer: "Oui, en écrivant sur WhatsApp ou en appelant : c'est nous qui répondons, sans intermédiaires. Une réservation directe donne aussi accès à de meilleures conditions que sur les plateformes." },
@@ -64,7 +65,7 @@ function getFaqItems(locale: Locale): FaqItem[] {
       { question: "Quelle est la politique d'annulation ?", answer: "Cela dépend de la saison : basse saison, préavis de 7 jours ; moyenne saison, 14 jours ; haute saison (juillet-août), 21 jours. En cas de non-présentation sans préavis, en basse saison seul l'acompte est perdu, en moyenne et haute saison le montant total du séjour est dû." },
     ],
     de: [
-      { question: "Wie weit ist La Mora von Assisi entfernt?", answer: "Die Altstadt ist wenige Autominuten entfernt. Die Basilika Santa Maria degli Angeli liegt 2,2 km entfernt, der Bahnhof von Assisi 2,9 km, der Flughafen Umbrien 10 km." },
+      { question: "Wie weit ist La Mora von Assisi entfernt?", answer: "Die Piazza del Comune in der Altstadt liegt 6,8 km entfernt (rund 14 Minuten mit dem Auto), die Basilika San Francesco 7,5 km (rund 18 Minuten). Die Basilika Santa Maria degli Angeli liegt 2,1 km entfernt, der Bahnhof von Assisi 2,9 km, der Flughafen Umbrien 11,4 km." },
       { question: "Ist die Unterkunft für Familien geeignet?", answer: "Ja: Spielplatz mit Schaukeln und Rutschen, Panoramapool und Babysitting auf Anfrage. Mehrere Apartments verfügen über Etagenbetten für Kinder." },
       { question: "Sind Haustiere erlaubt?", answer: "In zwei der fünf Apartments — Gemelli und Sagittario — beide mit eigenem eingezäuntem Garten, zum Preis von 25€ pro Aufenthalt, Leinenpflicht in den Gemeinschaftsbereichen. In den anderen drei — Pesci, Acquario und Bilancia — sind nur kleine Haustiere erlaubt, nach Absprache mit dem Eigentümer, ebenfalls für 25€ pro Aufenthalt." },
       { question: "Kann man direkt buchen?", answer: "Ja, per WhatsApp oder Telefon: wir selbst antworten, ohne Vermittler. Wer direkt bucht, erhält zudem bessere Konditionen als über die Plattformen." },
@@ -107,7 +108,7 @@ const TEXT: Record<
   it: {
     heroLabel: "Agriturismo La Mora · Assisi",
     heroTitle: "Una casa di famiglia, prima che un agriturismo.",
-    introQuote: "La Mora è una casa di famiglia immersa nella campagna umbra, a pochi minuti da Assisi. L'ospitalità qui è diretta, personale — non un servizio, un'abitudine di famiglia.",
+    introQuote: "La Mora è una casa di famiglia immersa nella campagna umbra, a 6,8 km dal centro di Assisi. L'ospitalità qui è diretta, personale — non un servizio, un'abitudine di famiglia.",
     originiLabel: "Le origini",
     originiHeading: "Un vecchio casale, restituito alla vita.",
     originiBody: "Prima di essere un agriturismo, La Mora è un'azienda agricola: terra vera, ulivi, un maneggio con i cavalli. Il casale che oggi ospita gli appartamenti nasce dal recupero di un edificio rurale della campagna umbra — non costruito per accogliere ospiti, ma trasformato per farlo restando fedele a quello che era.",
@@ -120,7 +121,7 @@ const TEXT: Record<
       { title: "Cinque appartamenti", text: "Indipendenti, ognuno con cucina propria e ingresso privato.", img: "/images/struttura/sala arredata di una delle stanze.jpeg", alt: "Interno arredato di uno degli appartamenti" },
       { title: "I cavalli", text: "Fanno parte dell'azienda agricola: gli ospiti possono vederli e avvicinarli.", img: "/images/home/foto dei cavalli.webp", alt: "I cavalli di Agriturismo La Mora" },
       { title: "Colazione bio", text: "Biologica, con dolci tipici umbri e frutta di stagione, ogni mattina.", img: "/images/colazione/colazione bio agriturismo la mora.webp", alt: "Colazione biologica di Agriturismo La Mora" },
-      { title: "Assisi vicina", text: "A pochi minuti, base comoda per il centro storico e il territorio.", img: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilica di San Francesco ad Assisi" },
+      { title: "Assisi vicina", text: "A 6,8 km dal centro, circa 14 minuti in auto: base comoda per il centro storico e il territorio.", img: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilica di San Francesco ad Assisi" },
     ],
     ospitareLabel: "Il nostro modo di ospitare",
     ospitareQuote: "Non gestiamo un hotel. Viviamo qui, e apriamo la porta a chi arriva.",
@@ -138,7 +139,7 @@ const TEXT: Record<
   en: {
     heroLabel: "Agriturismo La Mora · Assisi",
     heroTitle: "A family home, before it's an agriturismo.",
-    introQuote: "La Mora is a family home set in the Umbrian countryside, minutes from Assisi. Hospitality here is direct, personal — not a service, a family habit.",
+    introQuote: "La Mora is a family home set in the Umbrian countryside, 6.8 km from the centre of Assisi. Hospitality here is direct, personal — not a service, a family habit.",
     originiLabel: "The origins",
     originiHeading: "An old farmhouse, brought back to life.",
     originiBody: "Before it was an agriturismo, La Mora was a working farm: real land, olive trees, a riding stable with horses. The farmhouse that today houses the apartments came from restoring a rural building in the Umbrian countryside — not built to host guests, but transformed to do so while staying true to what it was.",
@@ -151,7 +152,7 @@ const TEXT: Record<
       { title: "Five apartments", text: "Independent, each with its own kitchen and private entrance.", img: "/images/struttura/sala arredata di una delle stanze.jpeg", alt: "Furnished interior of one of the apartments" },
       { title: "The horses", text: "Part of the farm: guests can see them and get close to them.", img: "/images/home/foto dei cavalli.webp", alt: "The horses of Agriturismo La Mora" },
       { title: "Organic breakfast", text: "Organic, with typical Umbrian pastries and seasonal fruit, every morning.", img: "/images/colazione/colazione bio agriturismo la mora.webp", alt: "Organic breakfast at Agriturismo La Mora" },
-      { title: "Assisi nearby", text: "Minutes away, a convenient base for the historic centre and the area.", img: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilica of St. Francis in Assisi" },
+      { title: "Assisi nearby", text: "6.8 km from the centre, about 14 minutes by car: a convenient base for the historic centre and the area.", img: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilica of St. Francis in Assisi" },
     ],
     ospitareLabel: "Our way of hosting",
     ospitareQuote: "We don't run a hotel. We live here, and open the door to those who arrive.",
@@ -169,7 +170,7 @@ const TEXT: Record<
   fr: {
     heroLabel: "Agriturismo La Mora · Assise",
     heroTitle: "Une maison de famille, avant d'être un agriturismo.",
-    introQuote: "La Mora est une maison de famille nichée dans la campagne ombrienne, à quelques minutes d'Assise. L'hospitalité y est directe, personnelle — pas un service, une habitude de famille.",
+    introQuote: "La Mora est une maison de famille nichée dans la campagne ombrienne, à 6,8 km du centre d'Assise. L'hospitalité y est directe, personnelle — pas un service, une habitude de famille.",
     originiLabel: "Les origines",
     originiHeading: "Une ancienne ferme, rendue à la vie.",
     originiBody: "Avant d'être un agriturismo, La Mora était une exploitation agricole : une vraie terre, des oliviers, un manège avec des chevaux. La ferme qui abrite aujourd'hui les appartements est née de la restauration d'un bâtiment rural de la campagne ombrienne — non construit pour accueillir des hôtes, mais transformé pour le faire en restant fidèle à ce qu'il était.",
@@ -182,7 +183,7 @@ const TEXT: Record<
       { title: "Cinq appartements", text: "Indépendants, chacun avec sa propre cuisine et son entrée privée.", img: "/images/struttura/sala arredata di una delle stanze.jpeg", alt: "Intérieur meublé de l'un des appartements" },
       { title: "Les chevaux", text: "Font partie de l'exploitation agricole : les hôtes peuvent les voir et les approcher.", img: "/images/home/foto dei cavalli.webp", alt: "Les chevaux d'Agriturismo La Mora" },
       { title: "Petit-déjeuner bio", text: "Biologique, avec pâtisseries typiques d'Ombrie et fruits de saison, chaque matin.", img: "/images/colazione/colazione bio agriturismo la mora.webp", alt: "Petit-déjeuner biologique d'Agriturismo La Mora" },
-      { title: "Assise à proximité", text: "À quelques minutes, une base pratique pour le centre historique et le territoire.", img: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilique Saint-François d'Assise" },
+      { title: "Assise à proximité", text: "À 6,8 km du centre, environ 14 minutes en voiture : une base pratique pour le centre historique et le territoire.", img: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilique Saint-François d'Assise" },
     ],
     ospitareLabel: "Notre façon d'accueillir",
     ospitareQuote: "Nous ne gérons pas un hôtel. Nous vivons ici, et ouvrons la porte à ceux qui arrivent.",
@@ -200,7 +201,7 @@ const TEXT: Record<
   de: {
     heroLabel: "Agriturismo La Mora · Assisi",
     heroTitle: "Ein Familienhaus, bevor es ein Agriturismo ist.",
-    introQuote: "La Mora ist ein Familienhaus inmitten der umbrischen Landschaft, wenige Minuten von Assisi entfernt. Die Gastfreundschaft hier ist direkt, persönlich — kein Service, sondern eine Familiengewohnheit.",
+    introQuote: "La Mora ist ein Familienhaus inmitten der umbrischen Landschaft, 6,8 km vom Zentrum Assisis entfernt. Die Gastfreundschaft hier ist direkt, persönlich — kein Service, sondern eine Familiengewohnheit.",
     originiLabel: "Die Ursprünge",
     originiHeading: "Ein altes Landhaus, wieder zum Leben erweckt.",
     originiBody: "Bevor es ein Agriturismo war, war La Mora ein echter Bauernhof: echtes Land, Olivenbäume, ein Reitstall mit Pferden. Das Landhaus, das heute die Apartments beherbergt, entstand aus der Restaurierung eines ländlichen Gebäudes in der umbrischen Landschaft — nicht gebaut, um Gäste zu empfangen, aber so umgestaltet, dass es dem treu blieb, was es war.",
@@ -213,7 +214,7 @@ const TEXT: Record<
       { title: "Fünf Apartments", text: "Unabhängig, jedes mit eigener Küche und privatem Eingang.", img: "/images/struttura/sala arredata di una delle stanze.jpeg", alt: "Eingerichtetes Interieur eines der Apartments" },
       { title: "Die Pferde", text: "Gehören zum Hof: Gäste können sie sehen und sich ihnen nähern.", img: "/images/home/foto dei cavalli.webp", alt: "Die Pferde von Agriturismo La Mora" },
       { title: "Bio-Frühstück", text: "Biologisch, mit typisch umbrischem Gebäck und saisonalem Obst, jeden Morgen.", img: "/images/colazione/colazione bio agriturismo la mora.webp", alt: "Bio-Frühstück von Agriturismo La Mora" },
-      { title: "Assisi in der Nähe", text: "Wenige Minuten entfernt, eine praktische Basis für die Altstadt und die Umgebung.", img: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilika des Heiligen Franziskus in Assisi" },
+      { title: "Assisi in der Nähe", text: "6,8 km vom Zentrum, rund 14 Minuten mit dem Auto: eine praktische Basis für die Altstadt und die Umgebung.", img: "/images/territorio/assisi/basilica di assisi.jpg", alt: "Basilika des Heiligen Franziskus in Assisi" },
     ],
     ospitareLabel: "Unsere Art zu empfangen",
     ospitareQuote: "Wir führen kein Hotel. Wir leben hier und öffnen die Tür für alle, die ankommen.",
@@ -237,6 +238,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
 
   return (
     <>
+      <StructuredData locale={locale} path="/chi-siamo/" />
       <section className="relative flex h-[92vh] min-h-[600px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/home/foto dell agriturismo dall alto.webp"

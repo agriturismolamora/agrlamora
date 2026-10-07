@@ -8,6 +8,7 @@ import { CertificationsMarquee } from "@/components/certifications-marquee";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
+import { StructuredData } from "@/components/structured-data";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -174,6 +175,7 @@ export function CofanettiPageView({ locale }: { locale: Locale }) {
 
   return (
     <>
+      <StructuredData locale={locale} path="/offerte/cofanetti-regalo/" />
       <section className="relative flex h-[86vh] min-h-[560px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/home/foto della piscina agriturismo la mora.webp"

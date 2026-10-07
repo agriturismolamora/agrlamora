@@ -31,28 +31,28 @@ import type { Locale } from "@/lib/i18n";
    PLAN.md). */
 const SENTENCES_BY_LOCALE: Record<Locale, string[]> = {
   it: [
-    "A pochi minuti da Assisi, La Mora vive al proprio ritmo.",
+    "A 6,8 km dal centro di Assisi, La Mora vive al proprio ritmo.",
     "Cinque appartamenti indipendenti, una piscina tra il verde e tanto spazio libero intorno.",
     "I bambini corrono, i cani restano con voi, i giorni si allungano.",
     "È una casa di famiglia, prima ancora che un agriturismo.",
     "Si arriva per Assisi. Si resta per come ci si sente, qui.",
   ],
   en: [
-    "A few minutes from Assisi, La Mora moves at its own pace.",
+    "Just 6.8 km from the centre of Assisi, La Mora moves at its own pace.",
     "Five independent apartments, a pool surrounded by greenery, and plenty of open space around.",
     "Children run free, dogs stay by your side, the days grow longer.",
     "It's a family home, before it's an agriturismo.",
     "You come for Assisi. You stay for how it feels here.",
   ],
   fr: [
-    "À quelques minutes d'Assise, La Mora vit à son propre rythme.",
+    "À 6,8 km du centre d'Assise, La Mora vit à son propre rythme.",
     "Cinq appartements indépendants, une piscine entourée de verdure et beaucoup d'espace tout autour.",
     "Les enfants courent, les chiens restent avec vous, les journées s'allongent.",
     "C'est une maison de famille, avant d'être un agriturismo.",
     "On vient pour Assise. On reste pour ce que l'on ressent ici.",
   ],
   de: [
-    "Nur wenige Minuten von Assisi entfernt, lebt La Mora in seinem eigenen Rhythmus.",
+    "Nur 6,8 km vom Zentrum Assisis entfernt, lebt La Mora in seinem eigenen Rhythmus.",
     "Fünf unabhängige Apartments, ein Pool inmitten von Grün und viel freier Raum ringsum.",
     "Kinder laufen frei herum, Hunde bleiben bei Ihnen, die Tage werden länger.",
     "Es ist ein Familienhaus, noch bevor es ein Agriturismo ist.",

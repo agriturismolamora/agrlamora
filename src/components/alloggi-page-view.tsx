@@ -10,6 +10,8 @@ import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
 import { pageMetadata } from "@/lib/seo";
+import { StructuredData } from "@/components/structured-data";
+import { apartmentNodes } from "@/lib/structured-data";
 
 const TEXT: Record<
   Locale,
@@ -96,6 +98,7 @@ export function AlloggiPageView({ locale }: { locale: Locale }) {
 
   return (
     <>
+      <StructuredData locale={locale} path="/alloggi/" nodes={apartmentNodes(locale)} />
       <section className="bg-cream pb-4 pt-16 sm:pt-20">
         <div className="mx-auto max-w-[1200px] px-6 text-center sm:px-10">
           <Reveal>

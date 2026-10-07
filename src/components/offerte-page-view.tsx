@@ -15,6 +15,7 @@ import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { EUROCHOCOLATE_2026 } from "@/data/promo";
 import { pageMetadata } from "@/lib/seo";
+import { StructuredData } from "@/components/structured-data";
 
 const OFFERS_WIDGET_TEXT: Record<Locale, { label: string; heading: string }> = {
   it: { label: "Offerte in corso", heading: "Le promozioni attive in questo momento" },
@@ -271,6 +272,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
 
   return (
     <>
+      <StructuredData locale={locale} path="/offerte/" />
       <section className="relative flex h-[86vh] min-h-[560px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/home/esterno agriturismo la mora carretto e agriturismo.webp"

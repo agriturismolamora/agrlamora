@@ -17,6 +17,8 @@ import { ChocolateDrip, CocoaParticles } from "@/components/chocolate-decor";
 import choco from "@/components/chocolate-theme.module.css";
 import type { BlogPost } from "@/data/blog-posts";
 import { pageMetadata } from "@/lib/seo";
+import { StructuredData } from "@/components/structured-data";
+import { LD_ID, faqPageNode, type JsonLdNode } from "@/lib/structured-data";
 
 type Params = { slug: string };
 
@@ -156,36 +158,26 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
   const isChocolate = post.theme === "chocolate";
   const c = themeClasses(isChocolate);
 
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": post.schemaType ?? "Article",
-    headline: post.title,
-    description: post.metaDescription,
-    image: [absoluteUrl(post.image)],
-    inLanguage: locale,
-    mainEntityOfPage: absoluteUrl(articlePath(locale, post.slug)),
-    ...(post.datePublished ? { datePublished: post.datePublished } : {}),
-    author: { "@type": "Organization", name: "Agriturismo La Mora", url: SITE_URL },
-    publisher: {
-      "@type": "Organization",
-      name: "Agriturismo La Mora",
-      url: SITE_URL,
-      logo: { "@type": "ImageObject", url: absoluteUrl("/images/logo/logo agriturismo la mora.png") },
+  /* Nel @graph della pagina (StructuredData): l'articolo, con autore ed
+     editore = La Mora per @id, e la FAQPage solo quando le FAQ sono anche
+     visibili in pagina (sotto). */
+  const articleUrl = absoluteUrl(articlePath(locale, post.slug));
+  const articleNodes: JsonLdNode[] = [
+    {
+      "@type": post.schemaType ?? "Article",
+      "@id": `${articleUrl}#article`,
+      headline: post.title,
+      description: post.metaDescription,
+      image: [absoluteUrl(post.image)],
+      inLanguage: locale,
+      mainEntityOfPage: articleUrl,
+      ...(post.datePublished ? { datePublished: post.datePublished } : {}),
+      author: { "@id": LD_ID.lamora },
+      publisher: { "@id": LD_ID.lamora },
+      isPartOf: { "@id": LD_ID.website },
     },
-  };
-
-  /* FAQPage solo quando le FAQ sono anche visibili in pagina (sotto). */
-  const faqJsonLd = post.faq
-    ? {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: post.faq.items.map((f) => ({
-          "@type": "Question",
-          name: f.q,
-          acceptedAnswer: { "@type": "Answer", text: f.a },
-        })),
-      }
-    : null;
+    ...(post.faq ? [faqPageNode(locale, `/blog/${post.slug}/`, post.faq.items.map((item) => ({ question: item.q, answer: item.a })))] : []),
+  ];
 
   const intro = (
     <Reveal>
@@ -422,8 +414,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
-      {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
+      <StructuredData locale={locale} path={`/blog/${post.slug}/`} nodes={articleNodes} crumbName={post.title} />
 
       <section className="relative flex h-[56vh] min-h-[400px] items-end overflow-hidden">
         <Image src={post.image} alt={post.alt} fill priority sizes="100vw" className="object-cover" style={{ objectPosition: post.imagePosition }} />

@@ -42,22 +42,22 @@ const CONFIG: Record<
       it: {
         label: "Dove siamo",
         heading: "Assisi fuori dalla finestra. L'Umbria tutt'intorno.",
-        body: "La Mora è in aperta campagna, a 5 km da Assisi e a circa 11 km dall'aeroporto di Perugia Sant'Egidio: un punto d'appoggio comodo per muoversi in tutta l'Umbria e tornare ogni sera nel silenzio della campagna.",
+        body: "La Mora è in aperta campagna, a 6,8 km dal centro di Assisi e a 11,4 km dall'aeroporto di Perugia Sant'Egidio: un punto d'appoggio comodo per muoversi in tutta l'Umbria e tornare ogni sera nel silenzio della campagna.",
       },
       en: {
         label: "Where we are",
         heading: "Assisi right outside the window. Umbria all around.",
-        body: "La Mora is in open countryside, 5 km from Assisi and about 11 km from Perugia Sant'Egidio airport: a convenient base for getting around Umbria and returning every evening to the quiet of the countryside.",
+        body: "La Mora is in open countryside, 6.8 km from the centre of Assisi and 11.4 km from Perugia Sant'Egidio airport: a convenient base for getting around Umbria and returning every evening to the quiet of the countryside.",
       },
       fr: {
         label: "Où nous sommes",
         heading: "Assise juste devant la fenêtre. L'Ombrie tout autour.",
-        body: "La Mora est en pleine campagne, à 5 km d'Assise et à environ 11 km de l'aéroport de Pérouse Sant'Egidio : une base pratique pour parcourir toute l'Ombrie et retrouver chaque soir le calme de la campagne.",
+        body: "La Mora est en pleine campagne, à 6,8 km du centre d'Assise et à 11,4 km de l'aéroport de Pérouse Sant'Egidio : une base pratique pour parcourir toute l'Ombrie et retrouver chaque soir le calme de la campagne.",
       },
       de: {
         label: "Wo wir sind",
         heading: "Assisi direkt vor dem Fenster. Umbrien ringsum.",
-        body: "La Mora liegt in offener Landschaft, 5 km von Assisi und etwa 11 km vom Flughafen Perugia Sant'Egidio entfernt: eine praktische Basis, um ganz Umbrien zu erkunden und jeden Abend in die Stille der Landschaft zurückzukehren.",
+        body: "La Mora liegt in offener Landschaft, 6,8 km vom Zentrum Assisis und 11,4 km vom Flughafen Perugia Sant'Egidio entfernt: eine praktische Basis, um ganz Umbrien zu erkunden und jeden Abend in die Stille der Landschaft zurückzukehren.",
       },
     },
   },

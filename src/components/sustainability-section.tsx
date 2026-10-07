@@ -42,7 +42,7 @@ const TEXT: Record<
     evTag: "Mobilità elettrica",
     evTitle: "Ricarica auto elettriche",
     evBody:
-      "Una colonnina da 22 kW è a disposizione degli ospiti nel parcheggio privato della struttura: bastano pochi minuti per fare il pieno di energia mentre si è in piscina o in giro per Assisi.",
+      "Una colonnina da 22 kW è a disposizione degli ospiti nel parcheggio privato della struttura: l'auto si ricarica mentre si è in piscina o in giro per Assisi. Basta segnalarlo quando si prenota.",
     evNote: "Da segnalare in fase di prenotazione",
   },
   en: {
@@ -58,7 +58,7 @@ const TEXT: Record<
     evTag: "Electric mobility",
     evTitle: "Electric car charging",
     evBody:
-      "A 22kW charging station is available to guests in the property's private car park: just a few minutes to top up energy while you're at the pool or out around Assisi.",
+      "A 22kW charging station is available to guests in the property's private car park: your car charges while you're at the pool or out around Assisi. Just let us know when you book.",
     evNote: "Let us know when you book",
   },
   fr: {
@@ -74,7 +74,7 @@ const TEXT: Record<
     evTag: "Mobilité électrique",
     evTitle: "Recharge voitures électriques",
     evBody:
-      "Une borne de 22 kW est à la disposition des hôtes dans le parking privé de la structure : quelques minutes suffisent pour faire le plein d'énergie pendant la piscine ou une sortie à Assise.",
+      "Une borne de 22 kW est à la disposition des hôtes dans le parking privé de la structure : la voiture se recharge pendant la piscine ou une sortie à Assise. Il suffit de le signaler à la réservation.",
     evNote: "À signaler lors de la réservation",
   },
   de: {
@@ -90,7 +90,7 @@ const TEXT: Record<
     evTag: "Elektromobilität",
     evTitle: "Ladestation für Elektroautos",
     evBody:
-      "Eine 22-kW-Ladestation steht den Gästen auf dem privaten Parkplatz der Struktur zur Verfügung: wenige Minuten genügen, während man am Pool ist oder Assisi erkundet.",
+      "Eine 22-kW-Ladestation steht den Gästen auf dem privaten Parkplatz der Struktur zur Verfügung: Das Auto lädt, während man am Pool ist oder Assisi erkundet. Einfach bei der Buchung angeben.",
     evNote: "Bitte bei der Buchung angeben",
   },
 };

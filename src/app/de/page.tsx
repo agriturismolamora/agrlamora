@@ -25,13 +25,18 @@ import { SectionProgressDots } from "@/components/section-progress-dots";
 import { SectionSnapScroll } from "@/components/section-snap-scroll";
 import { getHomeMetadata } from "@/data/home-metadata";
 import type { Metadata } from "next";
+import { HomeFaq } from "@/components/home-faq";
+import { StructuredData } from "@/components/structured-data";
+import { apartmentNodes, faqPageNode } from "@/lib/structured-data";
+import { HOME_FAQ } from "@/data/home-faq";
 
 /* Canonical, hreflang, Open Graph e Twitter della home (src/data/home-metadata.ts):
    qui e non nel layout, che li farebbe ereditare a tutte le pagine. */
 export const metadata: Metadata = getHomeMetadata("de");
 
-/* Header/footer/booking bar/chatbot/back-to-top e il JSON-LD LodgingBusiness
-   vivono ora in layout.tsx (globali su tutte le pagine, non solo qui).
+/* Header/footer/booking bar/chatbot/back-to-top vivono in layout.tsx (globali su
+   tutte le pagine). Il JSON-LD è qui (StructuredData): appartamenti e FAQ
+   della home, oltre a sito e struttura presenti su ogni pagina.
    Restano qui solo gli elementi esclusivi della home: il sipario d'apertura
    (HomeIntro), il popup promozionale, e i due controlli di navigazione
    scroll-driven (dots laterali, snap a sezioni) che dipendono dagli id
@@ -44,6 +49,7 @@ export const metadata: Metadata = getHomeMetadata("de");
 export default function Home() {
   return (
     <>
+      <StructuredData locale="de" path="/" nodes={[...apartmentNodes("de"), faqPageNode("de", "/", HOME_FAQ.de.items)]} />
       <HomeIntro />
       <Hero locale="de" />
       <ImmersiveStory locale="de" />
@@ -62,6 +68,7 @@ export default function Home() {
       <LaMoraDaVivere locale="de" />
       <VillaTeaser locale="de" />
       <LocationMap locale="de" />
+      <HomeFaq locale="de" />
       <FacebookFeed locale="de" />
       <NewsletterSection locale="de" />
       <CertificationsMarquee locale="de" />

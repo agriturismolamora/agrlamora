@@ -37,9 +37,9 @@ function tr(locale: Locale, s: string) {
    fissi in price-comparison.ts, tradotti qui senza duplicare il data file. */
 const DISTANCE_TR: Record<Locale, string> = {
   it: DISTANCE_LABEL,
-  en: "2.2 km from Santa Maria degli Angeli",
-  fr: "2,2 km de Sainte-Marie-des-Anges",
-  de: "2,2 km von Santa Maria degli Angeli",
+  en: "2.1 km from Santa Maria degli Angeli",
+  fr: "2,1 km de Sainte-Marie-des-Anges",
+  de: "2,1 km von Santa Maria degli Angeli",
 };
 const IT_MONTHS: Record<string, Record<Locale, string>> = {
   ottobre: { it: "ottobre", en: "October", fr: "octobre", de: "Oktober" },

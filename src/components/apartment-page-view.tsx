@@ -15,6 +15,8 @@ import { ScrollDog } from "@/components/scroll-dog";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
+import { StructuredData } from "@/components/structured-data";
+import { apartmentName, apartmentNode } from "@/lib/structured-data";
 
 function WhatsAppIcon() {
   return (
@@ -98,7 +100,7 @@ const TEXT: Record<
     richiediGuida: "Richiedi la guida su WhatsApp",
     ospiti: "Ospiti",
     metratura: "Metratura",
-    letti: "Letti",
+    letti: "Posti letto",
     bagni: "Bagni",
     lAppartamento: "L'appartamento",
     caratteristiche: "Caratteristiche e servizi",
@@ -144,7 +146,7 @@ const TEXT: Record<
     richiediGuida: "Demander le guide sur WhatsApp",
     ospiti: "Voyageurs",
     metratura: "Superficie",
-    letti: "Lits",
+    letti: "Couchages",
     bagni: "Salles de bain",
     lAppartamento: "L'appartement",
     caratteristiche: "Caractéristiques et services",
@@ -167,7 +169,7 @@ const TEXT: Record<
     richiediGuida: "Anleitung auf WhatsApp anfordern",
     ospiti: "Gäste",
     metratura: "Größe",
-    letti: "Betten",
+    letti: "Schlafplätze",
     bagni: "Bäder",
     lAppartamento: "Das Apartment",
     caratteristiche: "Ausstattung und Service",
@@ -215,21 +217,9 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
   const hero = detail.gallery[0];
   const allAmenities = [...getSharedAmenities(locale), ...(detail.specificAmenities ?? [])];
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Accommodation",
-    name: `Appartamento ${apt.name}`,
-    description: detail.tagline,
-    numberOfRooms: 1,
-    occupancy: { "@type": "QuantitativeValue", maxValue: apt.maxGuests },
-    floorSize: { "@type": "QuantitativeValue", value: apt.sqm, unitCode: "MTK" },
-    petsAllowed: Boolean(apt.petFriendly),
-    containedInPlace: { "@type": "LodgingBusiness", name: "Agriturismo La Mora", address: "Via Fonte Citerna 7, 06081 Assisi (PG)" },
-  };
-
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <StructuredData locale={locale} path={apt.href} nodes={[apartmentNode(locale, apt)]} crumbName={apartmentName(locale, apt)} />
       {apt.petFriendly && <ScrollDog />}
 
       {/* 1. Hero immersiva */}
@@ -270,28 +260,31 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
 
       {/* 2. Fascia dati essenziali */}
       <section className="border-b border-ink/10 bg-cream-dim">
-        <div
+        {/* <dl> vero (prima dt/dd stavano in un <div>). Gli spazi {" "} tra
+            etichetta e valore non cambiano la grafica ma separano il testo
+            ("Ospiti 4 Metratura 45 m²...", non "Ospiti4Metratura45 m²"). */}
+        <dl
           className={`mx-auto grid max-w-[1200px] grid-cols-2 gap-6 px-6 py-7 text-center sm:px-10 ${apt.petFriendly ? "sm:grid-cols-5" : "sm:grid-cols-4"}`}
         >
           <div>
-            <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft">{t.ospiti}</dt>
-            <dd className="mt-1 font-display text-2xl text-ink">{apt.maxGuests}</dd>
+            <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft">{t.ospiti}</dt>{" "}
+            <dd className="mt-1 font-display text-2xl text-ink">{apt.maxGuests}</dd>{" "}
           </div>
           <div>
-            <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft">{t.metratura}</dt>
-            <dd className="mt-1 font-display text-2xl text-ink">{apt.sqm} m²</dd>
+            <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft">{t.metratura}</dt>{" "}
+            <dd className="mt-1 font-display text-2xl text-ink">{apt.sqm} m²</dd>{" "}
           </div>
           <div>
-            <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft">{t.letti}</dt>
-            <dd className="mt-1 font-display text-2xl text-ink">{apt.beds}</dd>
+            <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft">{t.letti}</dt>{" "}
+            <dd className="mt-1 font-display text-2xl text-ink">{apt.beds}</dd>{" "}
           </div>
           <div>
-            <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft">{t.bagni}</dt>
-            <dd className="mt-1 font-display text-2xl text-ink">{apt.bathrooms}</dd>
+            <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft">{t.bagni}</dt>{" "}
+            <dd className="mt-1 font-display text-2xl text-ink">{apt.bathrooms}</dd>{" "}
           </div>
           {apt.petFriendly && (
             <div className="col-span-2 sm:col-span-1">
-              <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft">{PET_TEXT[locale].label}</dt>
+              <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft">{PET_TEXT[locale].label}</dt>{" "}
               <dd className="mt-1 inline-flex items-center gap-2 font-display text-2xl text-ink">
                 <span className="text-olive-700 [&_svg]:h-6 [&_svg]:w-6">
                   <PawIcon />
@@ -300,7 +293,7 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
               </dd>
             </div>
           )}
-        </div>
+        </dl>
       </section>
 
       {/* 3. Descrizione + prenotazione */}

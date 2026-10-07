@@ -30,11 +30,11 @@ export const STAY = {
   apartmentName: "Acquario",
 } as const;
 
-/* Distanza reale, dalla stessa pagina Booking.com consultata per i prezzi
-   sopra ("Basilica di Santa Maria degli Angeli si trova a 2,2 km dalla
-   struttura"): non una distanza dal "centro" di Assisi, che non risulta
-   verificata da nessuna fonte del progetto. */
-export const DISTANCE_LABEL = "2,2 km da Santa Maria degli Angeli";
+/* Distanza in auto di Google Maps (07/10/2026), la stessa usata in tutto il
+   sito: la pagina Booking.com consultata per i prezzi sopra indicava 2,2 km
+   ("Basilica di Santa Maria degli Angeli si trova a 2,2 km dalla
+   struttura"), allineata a 2,1 su richiesta. */
+export const DISTANCE_LABEL = "2,1 km da Santa Maria degli Angeli";
 
 export const CHECKED_ON_LABEL = "4 settembre 2026";
 

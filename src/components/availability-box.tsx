@@ -111,19 +111,19 @@ export function AvailabilityBox({ apt, locale }: { apt: Apartment; locale: Local
 
         <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-ink/10 pt-5 text-[13px]">
           <div>
-            <dt className="text-ink-soft">{text.ospiti}</dt>
-            <dd className="mt-0.5 font-semibold text-ink">{text.finoA(apt.maxGuests)}</dd>
+            <dt className="text-ink-soft">{text.ospiti}</dt>{" "}
+            <dd className="mt-0.5 font-semibold text-ink">{text.finoA(apt.maxGuests)}</dd>{" "}
           </div>
           <div>
-            <dt className="text-ink-soft">{text.metratura}</dt>
-            <dd className="mt-0.5 font-semibold text-ink">{apt.sqm} m²</dd>
+            <dt className="text-ink-soft">{text.metratura}</dt>{" "}
+            <dd className="mt-0.5 font-semibold text-ink">{apt.sqm} m²</dd>{" "}
           </div>
           <div>
-            <dt className="text-ink-soft">{text.bagni}</dt>
-            <dd className="mt-0.5 font-semibold text-ink">{apt.bathrooms}</dd>
+            <dt className="text-ink-soft">{text.bagni}</dt>{" "}
+            <dd className="mt-0.5 font-semibold text-ink">{apt.bathrooms}</dd>{" "}
           </div>
           <div>
-            <dt className="text-ink-soft">{text.animali}</dt>
+            <dt className="text-ink-soft">{text.animali}</dt>{" "}
             {/* Gemelli e Sagittario: pillola con zampetta, stesso segno delle
                 card del carousel in home. */}
             {apt.petFriendly ? (

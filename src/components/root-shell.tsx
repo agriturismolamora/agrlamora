@@ -12,25 +12,6 @@ import { RoomsWidgetScript } from "@/components/rooms-widget-script";
 import { OctorateWidgetScript } from "@/components/octorate-widget-script";
 import type { Locale } from "@/lib/i18n";
 
-const JSON_LD_BASE = {
-  "@context": "https://schema.org",
-  "@type": "LodgingBusiness",
-  name: "Agriturismo La Mora",
-  image: "https://www.lamoraassisi.com/images/piscina/piscina%20agriturismo%20la%20mora.webp",
-  url: "https://www.lamoraassisi.com",
-  telephone: "+39 393 4363917",
-  email: "agriturismolamora@gmail.com",
-  priceRange: "€€",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Via Fonte Citerna, 7",
-    addressLocality: "Assisi",
-    addressRegion: "PG",
-    postalCode: "06081",
-    addressCountry: "IT",
-  },
-};
-
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin"],
@@ -58,13 +39,12 @@ const SKIP_LINK: Record<Locale, string> = {
    file È un root layout Next.js a sé (nessun layout.tsx comune sopra di
    loro), per poter dichiarare <html lang="..."> corretto per la propria
    lingua — l'unico modo per avere più root layout nell'App Router. Questo
-   componente evita di duplicare 4 volte il markup/i font/il JSON-LD. */
+   componente evita di duplicare 4 volte il markup e i font. Il JSON-LD non
+   è qui: ogni pagina stampa il proprio @graph (StructuredData). */
 export function RootShell({ locale, children }: { locale: Locale; children: ReactNode }) {
-  const jsonLd = { ...JSON_LD_BASE, inLanguage: locale };
   return (
     <html lang={locale} className={`${cormorant.variable} ${montserrat.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-cream text-ink">
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <a href="#main" className="skip-link">
           {SKIP_LINK[locale]}
         </a>

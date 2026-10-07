@@ -86,7 +86,7 @@ function getRules(locale: Locale): Rule[] {
       },
       {
         keywords: ["assisi", "distanza", " km", "dove siamo", "posizione", "territorio", "perugia", "spello", "aeroporto"],
-        reply: "Siamo a 5 km da Assisi, 2 km dalla stazione ferroviaria e circa 11 km dall'aeroporto di Perugia Sant'Egidio.",
+        reply: "In auto siamo a 6,8 km da Piazza del Comune ad Assisi (circa 14 minuti), a 7,5 km dalla Basilica di San Francesco (circa 18 minuti), a 2,9 km dalla stazione ferroviaria di Assisi e a 11,4 km dall'aeroporto di Perugia Sant'Egidio. Perugia è a 21,0 km, circa 23 minuti.",
         cta: { label: "Apri in Google Maps", href: "https://www.google.com/maps/search/?api=1&query=Agriturismo+La+Mora+Via+Fonte+Citerna+7+Assisi" },
       },
       {
@@ -141,7 +141,7 @@ function getRules(locale: Locale): Rule[] {
       },
       {
         keywords: ["assisi", "distance", " km", "where are", "location", "area", "perugia", "spello", "airport"],
-        reply: "We're 5 km from Assisi, 2 km from the train station and about 11 km from Perugia Sant'Egidio airport.",
+        reply: "By car we're 6.8 km from Piazza del Comune in Assisi (about 14 minutes), 7.5 km from the Basilica of San Francesco (about 18 minutes), 2.9 km from Assisi railway station and 11.4 km from Perugia Sant'Egidio airport. Perugia is 21.0 km away, about 23 minutes.",
         cta: { label: "Open in Google Maps", href: "https://www.google.com/maps/search/?api=1&query=Agriturismo+La+Mora+Via+Fonte+Citerna+7+Assisi" },
       },
       {
@@ -196,7 +196,7 @@ function getRules(locale: Locale): Rule[] {
       },
       {
         keywords: ["assise", "assisi", "distance", " km", "où êtes", "position", "territoire", "pérouse", "spello", "aéroport"],
-        reply: "Nous sommes à 5 km d'Assise, 2 km de la gare et environ 11 km de l'aéroport de Pérouse Sant'Egidio.",
+        reply: "En voiture, nous sommes à 6,8 km de la Piazza del Comune d'Assise (environ 14 minutes), à 7,5 km de la basilique Saint-François (environ 18 minutes), à 2,9 km de la gare d'Assise et à 11,4 km de l'aéroport de Pérouse Sant'Egidio. Pérouse est à 21,0 km, environ 23 minutes.",
         cta: { label: "Ouvrir dans Google Maps", href: "https://www.google.com/maps/search/?api=1&query=Agriturismo+La+Mora+Via+Fonte+Citerna+7+Assisi" },
       },
       {
@@ -251,7 +251,7 @@ function getRules(locale: Locale): Rule[] {
       },
       {
         keywords: ["assisi", "entfernung", " km", "wo befindet", "lage", "umgebung", "perugia", "spello", "flughafen"],
-        reply: "Wir sind 5 km von Assisi, 2 km vom Bahnhof und etwa 11 km vom Flughafen Perugia Sant'Egidio entfernt.",
+        reply: "Mit dem Auto sind wir 6,8 km von der Piazza del Comune in Assisi (rund 14 Minuten), 7,5 km von der Basilika San Francesco (rund 18 Minuten), 2,9 km vom Bahnhof Assisi und 11,4 km vom Flughafen Perugia Sant'Egidio entfernt. Perugia liegt 21,0 km entfernt, rund 23 Minuten.",
         cta: { label: "In Google Maps öffnen", href: "https://www.google.com/maps/search/?api=1&query=Agriturismo+La+Mora+Via+Fonte+Citerna+7+Assisi" },
       },
       {

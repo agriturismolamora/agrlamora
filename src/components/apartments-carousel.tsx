@@ -30,7 +30,7 @@ const TXT: Record<Locale, {
     sectionHeading: "Cinque appartamenti, cinque costellazioni",
     petFriendly: "Pet friendly",
     guests: "ospiti",
-    beds: "letti",
+    beds: "posti letto",
     bathroom: "bagno",
     bathrooms: "bagni",
     sqm: "metri quadrati",
@@ -60,7 +60,7 @@ const TXT: Record<Locale, {
     sectionHeading: "Cinq appartements, cinq constellations",
     petFriendly: "Animaux acceptés",
     guests: "voyageurs",
-    beds: "lits",
+    beds: "couchages",
     bathroom: "salle de bain",
     bathrooms: "salles de bain",
     sqm: "mètres carrés",
@@ -75,7 +75,7 @@ const TXT: Record<Locale, {
     sectionHeading: "Fünf Apartments, fünf Sternbilder",
     petFriendly: "Haustierfreundlich",
     guests: "Gäste",
-    beds: "Betten",
+    beds: "Schlafplätze",
     bathroom: "Bad",
     bathrooms: "Bäder",
     sqm: "Quadratmeter",
@@ -431,30 +431,33 @@ function FloorplanIcon() {
 }
 
 /* Riga di dettagli sempre visibile (non solo in hover): l'obiettivo esplicito
-   è che l'utente capisca capienza/letti/bagni/mq direttamente dalla card,
-   senza dover aprire la scheda dell'appartamento. Numeri nudi accanto alle
-   icone (non "4 ospiti", "4 letti"...): più compatti su card che arrivano a
-   scalare fino a ~0.87×, restano comunque leggibili grazie all'icona che
-   dà il contesto — l'etichetta completa resta disponibile via aria-label. */
+   è che l'utente capisca capienza/posti letto/bagni/mq direttamente dalla
+   card, senza dover aprire la scheda dell'appartamento. A vista numeri nudi
+   accanto alle icone (più compatti su card che scalano fino a ~0.87×); le
+   unità sono testo sr-only, con virgole tra le voci: il testo della riga è
+   "4 ospiti, 4 posti letto, 1 bagno, 45 m²" per screen reader e per chi
+   estrae il testo (prima: "44145 m²"). */
 function StatsRow({ apt, locale }: { apt: Apartment; locale: Locale }) {
   const x = TXT[locale];
   const items = [
-    { Icon: GuestsIcon, value: String(apt.maxGuests), label: `${apt.maxGuests} ${x.guests}` },
-    { Icon: BedIcon, value: String(apt.beds), label: `${apt.beds} ${x.beds}` },
-    { Icon: ShowerIcon, value: String(apt.bathrooms), label: `${apt.bathrooms} ${apt.bathrooms > 1 ? x.bathrooms : x.bathroom}` },
-    { Icon: FloorplanIcon, value: `${apt.sqm} m²`, label: `${apt.sqm} ${x.sqm}` },
+    { Icon: GuestsIcon, value: String(apt.maxGuests), unit: x.guests },
+    { Icon: BedIcon, value: String(apt.beds), unit: x.beds },
+    { Icon: ShowerIcon, value: String(apt.bathrooms), unit: apt.bathrooms > 1 ? x.bathrooms : x.bathroom },
+    { Icon: FloorplanIcon, value: `${apt.sqm} m²`, unit: "" },
   ];
   return (
-    <div className="mt-3 flex items-center justify-center gap-3 rounded-full bg-ink/35 px-3.5 py-1.5 text-cream backdrop-blur-[2px]">
-      {items.map(({ Icon, value, label }, i) => (
-        <span key={i} aria-label={label} className="flex items-center gap-1">
+    <p className="mt-3 flex items-center justify-center gap-3 rounded-full bg-ink/35 px-3.5 py-1.5 text-cream backdrop-blur-[2px]">
+      {items.map(({ Icon, value, unit }, i) => (
+        <span key={i} className="flex items-center gap-1">
           <Icon />
-          <span aria-hidden="true" className="text-[11px] font-medium tabular-nums">
+          <span className="text-[11px] font-medium tabular-nums">
             {value}
+            {unit && <span className="sr-only"> {unit}</span>}
+            {i < items.length - 1 && <span className="sr-only">, </span>}
           </span>
         </span>
       ))}
-    </div>
+    </p>
   );
 }
 
@@ -546,13 +549,18 @@ function CardFace({
   );
 }
 
+/* Titolo VISIVO della sezione, ripetuto in ogni variante (mobile, desktop,
+   griglia statica) perché fa parte del loro layout (il carousel desktop ne
+   misura l'altezza, vedi data-section-heading). Non è un <h2> ed è
+   aria-hidden: l'unico <h2> della sezione sta fuori dalle varianti, in
+   ApartmentsCarousel. */
 function SectionHeading({ locale }: { locale: Locale }) {
   return (
-    <div className="relative z-[2] mx-auto flex max-w-[720px] flex-col items-center px-6 pt-6 text-center sm:pt-8">
+    <div aria-hidden="true" data-section-heading="" className="relative z-[2] mx-auto flex max-w-[720px] flex-col items-center px-6 pt-6 text-center sm:pt-8">
       <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cream/70">{TXT[locale].sectionLabel}</span>
-      <h2 className="mt-5 font-display text-[clamp(32px,3vw,54px)] font-normal leading-[1.05] text-cream">
+      <p className="mt-5 font-display text-[clamp(32px,3vw,54px)] font-normal leading-[1.05] text-cream">
         {TXT[locale].sectionHeading}
-      </h2>
+      </p>
     </div>
   );
 }
@@ -621,7 +629,7 @@ function DesktopCarousel({ reducedMotion, locale }: { reducedMotion: boolean; lo
       // Altezze REALI di titolo e CTA lette dal DOM (non stimate): la card
       // può così crescere fino a occupare esattamente lo spazio verticale
       // che avanza, invece di restare piccola per una stima prudenziale.
-      const headingEl = outerRef.current?.querySelector("h2")?.parentElement;
+      const headingEl = outerRef.current?.querySelector("[data-section-heading]");
       const headingH = headingEl?.getBoundingClientRect().height ?? 0;
       const ctaH = ctaRef.current?.getBoundingClientRect().height ?? 0;
       cardWidthRef.current = cardWidthForViewport(window.innerWidth, window.innerHeight, headingH, ctaH);
@@ -1102,6 +1110,7 @@ export function ApartmentsCarousel({ locale }: { locale: Locale }) {
   return (
     <section
       id="section-apartments"
+      aria-labelledby="apartments-heading"
       data-snap-exempt="true"
       // max-md:mt-7: piccolo respiro (sfondo crema della pagina) tra le
       // sezioni a tutta larghezza in apertura della home, solo su mobile.
@@ -1117,13 +1126,23 @@ export function ApartmentsCarousel({ locale }: { locale: Locale }) {
           scroll bloccato. Desktop: con "Riduci movimento" resta la griglia
           statica, perché lì il carousel è agganciato allo scroll della
           pagina — esattamente ciò che quell'impostazione chiede di evitare. */}
+      {/* L'unico <h2> della sezione, fuori da entrambe le varianti: il
+          titolo visibile dentro ciascuna è solo grafico (SectionHeading). */}
+      <h2 id="apartments-heading" className="sr-only">
+        {TXT[locale].sectionHeading}
+      </h2>
       {tier !== "desktop" && (
         <div className="md:hidden">
           <MobileCarousel reducedMotion={reducedMotion} locale={locale} />
         </div>
       )}
+      {/* Nell'HTML del server (tier null) ci sono entrambe le varianti: la
+          desktop è marcata aria-hidden, così testo e card non risultano
+          doppi per chi legge l'HTML (mobile-first, come l'indicizzazione).
+          Dopo l'hydration resta montata solo la variante giusta, senza
+          aria-hidden. */}
       {tier !== "mobile" && (
-        <div className="hidden md:block">
+        <div className="hidden md:block" aria-hidden={tier === null ? true : undefined}>
           {reducedMotion ? <StaticGrid locale={locale} /> : <DesktopCarousel reducedMotion={reducedMotion} locale={locale} />}
         </div>
       )}

@@ -10,6 +10,7 @@ import { CertificationsMarquee } from "@/components/certifications-marquee";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
+import { StructuredData } from "@/components/structured-data";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -118,7 +119,7 @@ const TEXT: Record<
     promoBody: "Per l'Ottavo Centenario di San Francesco, la colazione bio è inclusa a chi scrive direttamente a noi invece di passare da un intermediario — valida su ogni prenotazione diretta, non solo durante le celebrazioni.",
     promoCta: "Scopri la promozione",
     pauseHeading: "Colazione con calma, poi si parte per Assisi.",
-    pauseBody: "Il centro storico è a pochi minuti: si fa colazione presto e si arriva in tempo per una mattinata tranquilla, prima dell'afflusso dei bus turistici.",
+    pauseBody: "Il centro storico è a 14 minuti d'auto (6,8 km): si fa colazione presto e si arriva in tempo per una mattinata tranquilla, prima dell'afflusso dei bus turistici.",
     pauseCta: "Scopri il territorio",
     faqLabel: "Domande frequenti",
     faqHeading: "Le domande che ci fate più spesso.",
@@ -146,7 +147,7 @@ const TEXT: Record<
     promoBody: "For the 8th Centenary of St. Francis, organic breakfast is included for those who write to us directly instead of going through a middleman — valid on every direct booking, not just during the celebrations.",
     promoCta: "Discover the promotion",
     pauseHeading: "Breakfast at a relaxed pace, then off to Assisi.",
-    pauseBody: "The historic centre is minutes away: have breakfast early and arrive in time for a quiet morning, before the tour buses arrive.",
+    pauseBody: "The historic centre is 14 minutes away by car (6.8 km): have breakfast early and arrive in time for a quiet morning, before the tour buses arrive.",
     pauseCta: "Discover the area",
     faqLabel: "Frequently asked questions",
     faqHeading: "The questions we're asked most often.",
@@ -174,7 +175,7 @@ const TEXT: Record<
     promoBody: "Pour le 8e Centenaire de Saint François, le petit-déjeuner bio est inclus pour ceux qui nous écrivent directement plutôt que de passer par un intermédiaire — valable sur toute réservation directe, pas seulement pendant les célébrations.",
     promoCta: "Découvrir la promotion",
     pauseHeading: "Petit-déjeuner tranquille, puis départ pour Assise.",
-    pauseBody: "Le centre historique est à quelques minutes : on prend son petit-déjeuner tôt et on arrive à temps pour une matinée calme, avant l'afflux des bus touristiques.",
+    pauseBody: "Le centre historique est à 14 minutes en voiture (6,8 km) : on prend son petit-déjeuner tôt et on arrive à temps pour une matinée calme, avant l'afflux des bus touristiques.",
     pauseCta: "Découvrir le territoire",
     faqLabel: "Questions fréquentes",
     faqHeading: "Les questions que l'on nous pose le plus souvent.",
@@ -202,7 +203,7 @@ const TEXT: Record<
     promoBody: "Zum 800. Todestag des Heiligen Franziskus ist das Bio-Frühstück für alle inklusive, die uns direkt schreiben, statt über einen Vermittler zu buchen — gültig für jede Direktbuchung, nicht nur während der Feierlichkeiten.",
     promoCta: "Aktion entdecken",
     pauseHeading: "In Ruhe frühstücken, dann geht's nach Assisi.",
-    pauseBody: "Die Altstadt ist nur wenige Minuten entfernt: früh frühstücken und rechtzeitig für einen ruhigen Morgen ankommen, bevor die Touristenbusse eintreffen.",
+    pauseBody: "Die Altstadt ist nur 14 Autominuten (6,8 km) entfernt: früh frühstücken und rechtzeitig für einen ruhigen Morgen ankommen, bevor die Touristenbusse eintreffen.",
     pauseCta: "Die Umgebung entdecken",
     faqLabel: "Häufig gestellte Fragen",
     faqHeading: "Die Fragen, die uns am häufigsten gestellt werden.",
@@ -213,6 +214,7 @@ export function ColazionePageView({ locale }: { locale: Locale }) {
   const text = TEXT[locale];
   return (
     <>
+      <StructuredData locale={locale} path="/agriturismo-con-colazione-inclusa-assisi/" />
       <section className="relative flex h-[86vh] min-h-[560px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/colazione/colazione bio agriturismo la mora.webp"

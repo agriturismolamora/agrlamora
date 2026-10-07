@@ -13,8 +13,8 @@ import { withLocale } from "@/lib/i18n";
 const TEXT: Record<Locale, { label: string; heading: string; body: string; assisi: string; eremo: string; perugia: string; cta: string }> = {
   it: {
     label: "Il territorio",
-    heading: "Assisi a 5 km. Il resto dell'Umbria si scopre da qui.",
-    body: "Agriturismo La Mora è a soli 5 km dal centro di Assisi e a 2 km dalla stazione ferroviaria, comodo anche per chi arriva in treno. Da qui, la Basilica di San Francesco, la Basilica di Santa Maria degli Angeli e l'Eremo delle Carceri sono raggiungibili in pochi minuti d'auto. Perugia è a distanza di una gita di mezza giornata, e borghi come Spello restano tappe naturali per chi si ferma più di qualche notte.",
+    heading: "Assisi a 6,8 km. Il resto dell'Umbria si scopre da qui.",
+    body: "Agriturismo La Mora è a 6,8 km da Piazza del Comune, nel centro di Assisi (circa 14 minuti in auto), e a 2,9 km dalla stazione ferroviaria, comodo anche per chi arriva in treno. In auto la Basilica di San Francesco è a 7,5 km (circa 18 minuti), la Basilica di Santa Maria degli Angeli a 2,1 km e l'Eremo delle Carceri a 12,2 km (circa 20 minuti). Perugia è a 21,0 km, circa 23 minuti, e borghi come Spello restano tappe naturali per chi si ferma più di qualche notte.",
     assisi: "Assisi",
     eremo: "Eremo delle Carceri",
     perugia: "Perugia",
@@ -22,8 +22,8 @@ const TEXT: Record<Locale, { label: string; heading: string; body: string; assis
   },
   en: {
     label: "The area",
-    heading: "Assisi 5 km away. The rest of Umbria unfolds from here.",
-    body: "Agriturismo La Mora is just 5 km from the centre of Assisi and 2 km from the train station, convenient for those arriving by rail. From here, the Basilica of St. Francis, the Basilica of Santa Maria degli Angeli and the Eremo delle Carceri are minutes away by car. Perugia makes a good half-day trip, and villages like Spello are a natural stop for those staying a few extra nights.",
+    heading: "Assisi 6.8 km away. The rest of Umbria unfolds from here.",
+    body: "Agriturismo La Mora is 6.8 km from Piazza del Comune, in the centre of Assisi (about 14 minutes by car), and 2.9 km from the train station, convenient for those arriving by rail. By car, the Basilica of St. Francis is 7.5 km away (about 18 minutes), the Basilica of Santa Maria degli Angeli 2.1 km and the Eremo delle Carceri 12.2 km (about 20 minutes). Perugia is 21.0 km away, about 23 minutes, and villages like Spello are a natural stop for those staying a few extra nights.",
     assisi: "Assisi",
     eremo: "Eremo delle Carceri",
     perugia: "Perugia",
@@ -31,8 +31,8 @@ const TEXT: Record<Locale, { label: string; heading: string; body: string; assis
   },
   fr: {
     label: "Le territoire",
-    heading: "Assise à 5 km. Le reste de l'Ombrie se découvre d'ici.",
-    body: "Agriturismo La Mora est à seulement 5 km du centre d'Assise et à 2 km de la gare, pratique pour ceux qui arrivent en train. D'ici, la Basilique Saint-François, la Basilique Sainte-Marie-des-Anges et l'Ermitage des Prisons sont à quelques minutes en voiture. Pérouse se visite en une demi-journée, et des bourgs comme Spello sont des étapes naturelles pour un séjour de plusieurs nuits.",
+    heading: "Assise à 6,8 km. Le reste de l'Ombrie se découvre d'ici.",
+    body: "Agriturismo La Mora est à 6,8 km de la Piazza del Comune, au centre d'Assise (environ 14 minutes en voiture), et à 2,9 km de la gare, pratique pour ceux qui arrivent en train. En voiture, la Basilique Saint-François est à 7,5 km (environ 18 minutes), la Basilique Sainte-Marie-des-Anges à 2,1 km et l'Ermitage des Prisons à 12,2 km (environ 20 minutes). Pérouse est à 21,0 km, environ 23 minutes, et des bourgs comme Spello sont des étapes naturelles pour un séjour de plusieurs nuits.",
     assisi: "Assise",
     eremo: "Ermitage des Prisons",
     perugia: "Pérouse",
@@ -40,8 +40,8 @@ const TEXT: Record<Locale, { label: string; heading: string; body: string; assis
   },
   de: {
     label: "Die Umgebung",
-    heading: "Assisi 5 km entfernt. Der Rest Umbriens erschließt sich von hier aus.",
-    body: "Agriturismo La Mora liegt nur 5 km vom Zentrum Assisis und 2 km vom Bahnhof entfernt, praktisch für alle, die mit dem Zug anreisen. Von hier aus sind die Basilika des Heiligen Franziskus, die Basilika Santa Maria degli Angeli und die Eremo delle Carceri in wenigen Autominuten erreichbar. Perugia eignet sich für einen Halbtagesausflug, und Orte wie Spello sind naheliegende Ziele für einen längeren Aufenthalt.",
+    heading: "Assisi 6,8 km entfernt. Der Rest Umbriens erschließt sich von hier aus.",
+    body: "Agriturismo La Mora liegt 6,8 km von der Piazza del Comune im Zentrum Assisis (rund 14 Minuten mit dem Auto) und 2,9 km vom Bahnhof entfernt, praktisch für alle, die mit dem Zug anreisen. Mit dem Auto sind die Basilika des Heiligen Franziskus 7,5 km (rund 18 Minuten), die Basilika Santa Maria degli Angeli 2,1 km und die Eremo delle Carceri 12,2 km (rund 20 Minuten) entfernt. Perugia liegt 21,0 km entfernt, rund 23 Minuten, und Orte wie Spello sind naheliegende Ziele für einen längeren Aufenthalt.",
     assisi: "Assisi",
     eremo: "Eremo delle Carceri",
     perugia: "Perugia",
@@ -72,7 +72,7 @@ export function TerritorySection({ locale }: { locale: Locale }) {
           <Reveal delay={80} className="relative aspect-[4/3] overflow-hidden rounded-[3px] lg:aspect-auto lg:h-full">
             <WatermarkedImage
               src="/images/territorio/assisi/basilica di assisi.jpg"
-              alt="Basilica di San Francesco ad Assisi, a pochi minuti da Agriturismo La Mora"
+              alt="Basilica di San Francesco ad Assisi, a 7,5 km da Agriturismo La Mora"
               fill
               sizes="(max-width: 1024px) 100vw, 60vw"
               className="object-cover"

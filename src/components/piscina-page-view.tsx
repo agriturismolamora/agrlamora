@@ -6,6 +6,7 @@ import { HydromassageVideo } from "@/components/hydromassage-video";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
+import { StructuredData } from "@/components/structured-data";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -150,6 +151,7 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
   const text = TEXT[locale];
   return (
     <>
+      <StructuredData locale={locale} path="/piscina/" />
       <section className="relative flex h-[68vh] min-h-[480px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/piscina/piscina agriturismo la mora di notte.jpeg"

@@ -17,10 +17,8 @@ import {
   VILLA_HOST_NAME,
   VILLA_HOST_IMAGE,
   VILLA_CIN,
-  VILLA_MAX_GUESTS,
   VILLA_GALLERY,
   VILLA_LOGO_ALT,
-  VILLA_LOGO_BLACK,
   VILLA_LOGO_WHITE,
   VILLA_WHATSAPP_NUMBER,
   getVillaRating,
@@ -31,7 +29,9 @@ import {
 } from "@/data/villa";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
-import { absoluteUrl, pageMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo";
+import { StructuredData } from "@/components/structured-data";
+import { villaNode } from "@/lib/structured-data";
 
 const VILLA_OFFERS_WIDGET_TEXT: Record<Locale, { label: string; heading: string }> = {
   it: { label: "Offerte in corso", heading: "Le promozioni attive per Villa Relax" },
@@ -145,35 +145,6 @@ function TvIcon() {
 
 const AMENITY_ICON_BY_INDEX: (() => React.JSX.Element)[] = [PawIcon, ParkingIcon, WifiIcon, GardenIcon, KitchenIcon, TvIcon, PoolIcon, WholeHouseIcon];
 
-const jsonLd = (locale: Locale, maxGuests: number) => ({
-  "@context": "https://schema.org",
-  "@type": "LodgingBusiness",
-  name: "Villa Relax",
-  description: "Villa indipendente con piscina privata ad Assisi, fino a 16 ospiti su 6 camere da letto.",
-  image: "https://www.lamoraassisi.com/images/villa/villa%20esterna.webp",
-  // Logo della Villa (scritte nere: Google lo mostra su fondo chiaro).
-  logo: { "@type": "ImageObject", url: absoluteUrl(VILLA_LOGO_BLACK.src), width: VILLA_LOGO_BLACK.width, height: VILLA_LOGO_BLACK.height },
-  url: `https://www.lamoraassisi.com${withLocale(locale, "/villa-relax-assisi/")}`,
-  telephone: "+39 393 4363917",
-  email: "agriturismolamora@gmail.com",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Via Di Bassano, 19",
-    addressLocality: "Assisi",
-    addressRegion: "PG",
-    postalCode: "06081",
-    addressCountry: "IT",
-  },
-  numberOfRooms: 6,
-  containsPlace: { "@type": "Accommodation", occupancy: { "@type": "QuantitativeValue", maxValue: maxGuests } },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: 9.7,
-    bestRating: 10,
-    ratingCount: 1,
-  },
-});
-
 const TEXT: Record<
   Locale,
   {
@@ -245,7 +216,7 @@ const TEXT: Record<
     suWord: "su",
     fonteWord: "Fonte",
     doveLabel: "Dove si trova",
-    doveHeading: "Zona campagna, a pochi minuti da Assisi.",
+    doveHeading: "Zona campagna, a 6 km dalla Basilica di San Francesco.",
     doveBody: "Villa Relax sorge in zona campagna, vicino ad Assisi e alla Basilica di San Francesco, con la Basilica di Santa Maria degli Angeli, San Damiano e l'Eremo delle Carceri tutti nel raggio di pochi chilometri — comoda anche per chi arriva a Umbria Fiere, a Bastia Umbra.",
     mapsCta: "Apri in Google Maps",
     territorioCta: "Scopri il territorio",
@@ -282,7 +253,7 @@ const TEXT: Record<
     suWord: "out of",
     fonteWord: "Source",
     doveLabel: "Where it is",
-    doveHeading: "Countryside area, minutes from Assisi.",
+    doveHeading: "Countryside area, 6 km from the Basilica of St. Francis.",
     doveBody: "Villa Relax stands in a countryside area, close to Assisi and the Basilica of St. Francis, with the Basilica of Santa Maria degli Angeli, San Damiano and the Eremo delle Carceri hermitage all within a few kilometres — also convenient for those arriving at Umbria Fiere, in Bastia Umbra.",
     mapsCta: "Open in Google Maps",
     territorioCta: "Discover the area",
@@ -319,7 +290,7 @@ const TEXT: Record<
     suWord: "sur",
     fonteWord: "Source",
     doveLabel: "Où elle se trouve",
-    doveHeading: "Zone de campagne, à quelques minutes d'Assise.",
+    doveHeading: "Zone de campagne, à 6 km de la basilique Saint-François.",
     doveBody: "Villa Relax se trouve en zone de campagne, près d'Assise et de la basilique Saint-François, avec la basilique Sainte-Marie-des-Anges, San Damiano et l'ermitage des Carceri tous à quelques kilomètres — pratique aussi pour ceux qui arrivent à Umbria Fiere, à Bastia Umbra.",
     mapsCta: "Ouvrir dans Google Maps",
     territorioCta: "Découvrir le territoire",
@@ -356,7 +327,7 @@ const TEXT: Record<
     suWord: "von",
     fonteWord: "Quelle",
     doveLabel: "Lage",
-    doveHeading: "Ländliche Gegend, wenige Minuten von Assisi entfernt.",
+    doveHeading: "Ländliche Gegend, 6 km von der Basilika des Heiligen Franziskus entfernt.",
     doveBody: "Villa Relax liegt in ländlicher Umgebung, nahe Assisi und der Basilika des Heiligen Franziskus, mit der Basilika Santa Maria degli Angeli, San Damiano und der Einsiedelei Eremo delle Carceri alle im Umkreis weniger Kilometer — auch praktisch für alle, die zur Umbria Fiere in Bastia Umbra kommen.",
     mapsCta: "In Google Maps öffnen",
     territorioCta: "Die Umgebung entdecken",
@@ -376,7 +347,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd(locale, VILLA_MAX_GUESTS)) }} />
+      <StructuredData locale={locale} path="/villa-relax-assisi/" nodes={[villaNode(locale)]} />
 
       {/* Altezza minima, non fissa, e spazio in alto per l'header: sugli
           schermi bassi logo e testo non finiscono sotto l'header, è la

@@ -4,23 +4,24 @@ import { HoverFill } from "@/components/hover-fill";
 import { BookingModalButton } from "@/components/booking-modal-button";
 import type { Locale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
+import { StructuredData } from "@/components/structured-data";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
     title: "Ottavo Centenario di San Francesco",
-    description: "Il 2026 segna gli 800 anni dalla morte di San Francesco d'Assisi. Agriturismo La Mora, a pochi minuti dalla Basilica, offre la colazione bio inclusa a chi prenota direttamente.",
+    description: "Il 2026 segna gli 800 anni dalla morte di San Francesco d'Assisi. Agriturismo La Mora, a 7,5 km dalla Basilica di San Francesco, offre la colazione bio inclusa a chi prenota direttamente.",
   },
   en: {
     title: "8th Centenary of St. Francis",
-    description: "2026 marks 800 years since the death of St. Francis of Assisi. Agriturismo La Mora, minutes from the Basilica, offers organic breakfast included for direct bookings.",
+    description: "2026 marks 800 years since the death of St. Francis of Assisi. Agriturismo La Mora, 7.5 km from the Basilica, offers organic breakfast included for direct bookings.",
   },
   fr: {
     title: "8e Centenaire de Saint François",
-    description: "2026 marque les 800 ans de la mort de Saint François d'Assise. Agriturismo La Mora, à quelques minutes de la basilique, offre le petit-déjeuner bio inclus pour les réservations directes.",
+    description: "2026 marque les 800 ans de la mort de Saint François d'Assise. Agriturismo La Mora, à 7,5 km de la basilique, offre le petit-déjeuner bio inclus pour les réservations directes.",
   },
   de: {
     title: "800. Todestag des Heiligen Franziskus",
-    description: "2026 markiert 800 Jahre seit dem Tod des Heiligen Franziskus von Assisi. Agriturismo La Mora, wenige Minuten von der Basilika entfernt, bietet bei Direktbuchung inklusives Bio-Frühstück.",
+    description: "2026 markiert 800 Jahre seit dem Tod des Heiligen Franziskus von Assisi. Agriturismo La Mora, 7,5 km von der Basilika entfernt, bietet bei Direktbuchung inklusives Bio-Frühstück.",
   },
 };
 
@@ -51,7 +52,7 @@ const TEXT: Record<
     heroTitle: "Ottocento anni dalla morte di San Francesco.",
     p1: "San Francesco morì ad Assisi il 3 ottobre 1226, nella Porziuncola. Il 2026 segna quindi l'ottavo centenario della sua morte — una ricorrenza che la città vive con particolare intensità, tra celebrazioni religiose, iniziative culturali e un flusso di pellegrini e visitatori superiore all'ordinario.",
     p2: "Per il programma ufficiale delle celebrazioni — liturgie, eventi, aperture straordinarie — il riferimento più affidabile restano i canali della Basilica di San Francesco e della Diocesi di Assisi: è un anno importante per la città, e le informazioni cambiano con l'avvicinarsi delle date, quindi meglio verificarle direttamente lì piuttosto che affidarsi a terzi.",
-    p3: "Quello che possiamo offrire noi è più semplice: siamo a pochi minuti dalla Basilica, in un momento in cui trovare un alloggio ad Assisi — soprattutto vicino al centro, in un anno di grande afflusso — può non essere scontato.",
+    p3: "Quello che possiamo offrire noi è più semplice: siamo a 7,5 km dalla Basilica, circa 18 minuti in auto, in un momento in cui trovare un alloggio ad Assisi — soprattutto vicino al centro, in un anno di grande afflusso — può non essere scontato.",
     promoLabel: "La nostra promozione",
     promoHeading: "Colazione bio inclusa per chi prenota direttamente dal sito ufficiale.",
     promoBody: "Valida su ogni prenotazione diretta, non solo durante le celebrazioni — un modo per dire grazie a chi sceglie di scrivere direttamente a noi invece che passare da un intermediario.",
@@ -65,7 +66,7 @@ const TEXT: Record<
     heroTitle: "Eight hundred years since the death of St. Francis.",
     p1: "St. Francis died in Assisi on 3 October 1226, at the Porziuncola. 2026 therefore marks the eighth centenary of his death — an occasion the city marks with particular intensity, with religious celebrations, cultural initiatives and a greater-than-usual flow of pilgrims and visitors.",
     p2: "For the official programme of celebrations — liturgies, events, special openings — the most reliable reference remains the channels of the Basilica of St. Francis and the Diocese of Assisi: it's an important year for the city, and information changes as dates approach, so it's best to check directly there rather than rely on third parties.",
-    p3: "What we can offer is simpler: we're minutes from the Basilica, at a time when finding accommodation in Assisi — especially near the centre, in a year of high demand — may not be a given.",
+    p3: "What we can offer is simpler: we're 7.5 km from the Basilica, about 18 minutes by car, at a time when finding accommodation in Assisi — especially near the centre, in a year of high demand — may not be a given.",
     promoLabel: "Our promotion",
     promoHeading: "Organic breakfast included for those who book directly through the official site.",
     promoBody: "Valid on every direct booking, not just during the celebrations — a way of saying thank you to those who choose to write to us directly instead of going through a middleman.",
@@ -79,7 +80,7 @@ const TEXT: Record<
     heroTitle: "Huit cents ans depuis la mort de Saint François.",
     p1: "Saint François mourut à Assise le 3 octobre 1226, à la Portioncule. 2026 marque donc le huitième centenaire de sa mort — une commémoration que la ville vit avec une intensité particulière, entre célébrations religieuses, initiatives culturelles et un afflux de pèlerins et de visiteurs supérieur à l'ordinaire.",
     p2: "Pour le programme officiel des célébrations — liturgies, événements, ouvertures exceptionnelles — la référence la plus fiable reste les canaux de la basilique Saint-François et du diocèse d'Assise : c'est une année importante pour la ville, et les informations évoluent à l'approche des dates, mieux vaut donc les vérifier directement là-bas plutôt que de se fier à des tiers.",
-    p3: "Ce que nous pouvons offrir est plus simple : nous sommes à quelques minutes de la basilique, à un moment où trouver un logement à Assise — surtout près du centre, dans une année de forte affluence — peut ne pas être évident.",
+    p3: "Ce que nous pouvons offrir est plus simple : nous sommes à 7,5 km de la basilique, environ 18 minutes en voiture, à un moment où trouver un logement à Assise — surtout près du centre, dans une année de forte affluence — peut ne pas être évident.",
     promoLabel: "Notre promotion",
     promoHeading: "Petit-déjeuner bio inclus pour une réservation directe sur le site officiel.",
     promoBody: "Valable sur toute réservation directe, pas seulement pendant les célébrations — une façon de remercier ceux qui choisissent de nous écrire directement plutôt que de passer par un intermédiaire.",
@@ -93,7 +94,7 @@ const TEXT: Record<
     heroTitle: "Achthundert Jahre seit dem Tod des Heiligen Franziskus.",
     p1: "Der Heilige Franziskus starb am 3. Oktober 1226 in Assisi, in der Portiuncula-Kapelle. 2026 markiert somit den 800. Jahrestag seines Todes — ein Ereignis, das die Stadt mit besonderer Intensität begeht, mit religiösen Feiern, kulturellen Initiativen und einem größeren Zustrom an Pilgern und Besuchern als gewöhnlich.",
     p2: "Für das offizielle Programm der Feierlichkeiten — Liturgien, Veranstaltungen, Sonderöffnungen — bleiben die Kanäle der Basilika des Heiligen Franziskus und der Diözese Assisi die zuverlässigste Quelle: es ist ein wichtiges Jahr für die Stadt, und die Informationen ändern sich, je näher die Termine rücken — es lohnt sich also, direkt dort nachzuschauen, statt sich auf Dritte zu verlassen.",
-    p3: "Was wir bieten können, ist einfacher: wir sind nur wenige Minuten von der Basilika entfernt, zu einer Zeit, in der eine Unterkunft in Assisi zu finden — besonders nahe der Altstadt, in einem Jahr mit großem Andrang — nicht selbstverständlich sein könnte.",
+    p3: "Was wir bieten können, ist einfacher: wir sind 7,5 km von der Basilika entfernt, rund 18 Minuten mit dem Auto, zu einer Zeit, in der eine Unterkunft in Assisi zu finden — besonders nahe der Altstadt, in einem Jahr mit großem Andrang — nicht selbstverständlich sein könnte.",
     promoLabel: "Unsere Aktion",
     promoHeading: "Bio-Frühstück inklusive bei Direktbuchung über die offizielle Website.",
     promoBody: "Gültig für jede Direktbuchung, nicht nur während der Feierlichkeiten — eine Art, Danke zu sagen an alle, die sich entscheiden, uns direkt zu schreiben, statt über einen Vermittler zu buchen.",
@@ -109,6 +110,7 @@ export function OttavoCentenarioPageView({ locale }: { locale: Locale }) {
 
   return (
     <>
+      <StructuredData locale={locale} path="/ottavo-centenario-san-francesco/" />
       <section className="relative flex h-[64vh] min-h-[460px] items-end overflow-hidden">
         <Image
           src="/images/ottavo centenario san francesco/basilica di san francesco di assisi ottavo centenario.webp"
