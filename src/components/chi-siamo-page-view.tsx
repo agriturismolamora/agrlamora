@@ -20,15 +20,15 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
     description: "La storia di Agriturismo La Mora: una casa di famiglia ad Assisi, tra campagna umbra e ospitalità diretta. Chi la gestisce, perché esiste, come si vive oggi.",
   },
   en: {
-    title: "About Us",
+    title: "About us: a family-run farm stay in Assisi",
     description: "The story of Agriturismo La Mora: a family home in Assisi, between Umbrian countryside and direct hospitality. Who runs it, why it exists, what it's like today.",
   },
   fr: {
-    title: "Qui Sommes-Nous",
+    title: "Qui sommes-nous : un agritourisme familial à Assise",
     description: "L'histoire d'Agriturismo La Mora : une maison de famille à Assise, entre campagne ombrienne et hospitalité directe. Qui la gère, pourquoi elle existe, comment on y vit aujourd'hui.",
   },
   de: {
-    title: "Über Uns",
+    title: "Über uns: ein Familien-Agriturismo in Assisi",
     description: "Die Geschichte von Agriturismo La Mora: ein Familienhaus in Assisi, zwischen umbrischer Landschaft und persönlicher Gastfreundschaft. Wer es führt, warum es existiert, wie man heute dort lebt.",
   },
 };

@@ -17,15 +17,15 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
     description: "Assisi, Santa Maria degli Angeli, Spello, Perugia: la guida al territorio umbro intorno ad Agriturismo La Mora, base ideale per visitare Assisi e dintorni.",
   },
   en: {
-    title: "The Area",
+    title: "Around Assisi: what to see nearby",
     description: "Assisi, Santa Maria degli Angeli, Spello, Perugia: the guide to the Umbrian area around Agriturismo La Mora, an ideal base for visiting Assisi and its surroundings.",
   },
   fr: {
-    title: "Le Territoire",
+    title: "Autour d'Assise : que voir à proximité",
     description: "Assise, Santa Maria degli Angeli, Spello, Pérouse : le guide du territoire ombrien autour d'Agriturismo La Mora, base idéale pour visiter Assise et ses environs.",
   },
   de: {
-    title: "Die Umgebung",
+    title: "Rund um Assisi: Sehenswertes in der Nähe",
     description: "Assisi, Santa Maria degli Angeli, Spello, Perugia: der Leitfaden zur umbrischen Umgebung von Agriturismo La Mora, ideale Basis für Assisi und Umgebung.",
   },
 };
@@ -83,19 +83,19 @@ const ASSISI_PLACES: Record<Locale, Place[]> = {
 const DINTORNI_PLACES: Record<Locale, Place[]> = {
   it: [
     { name: "Monte Subasio", src: "/images/territorio/dintorni/monte subasio alto.jpg", alt: "Monte Subasio, il massiccio che domina Assisi", note: "Il parco naturale che sovrasta Assisi: sentieri per camminare o pedalare, e i pascoli d'altura che hanno dato il nome al formaggio locale." },
-    { name: "Cascate delle Marmore", src: "/images/territorio/dintorni/cascate delle marmore.jpg", alt: "Cascate delle Marmore in Umbria", note: "Tra le cascate artificiali più alte d'Europa, a circa un'ora d'auto: una gita di mezza giornata per chi si ferma qualche notte in più." },
+    { name: "Cascate delle Marmore", src: "/images/territorio/dintorni/cascate delle marmore.jpg", alt: "Cascate delle Marmore in Umbria", note: "Tra le cascate più alte d'Europa, a 77 km, poco più di un'ora d'auto: una gita di mezza giornata per chi si ferma qualche notte in più." },
   ],
   en: [
     { name: "Monte Subasio", src: "/images/territorio/dintorni/monte subasio alto.jpg", alt: "Monte Subasio, the massif overlooking Assisi", note: "The natural park that rises above Assisi: trails for walking or cycling, and the upland pastures that gave the local cheese its name." },
-    { name: "Marmore Falls", src: "/images/territorio/dintorni/cascate delle marmore.jpg", alt: "Marmore Falls in Umbria", note: "Among the tallest man-made waterfalls in Europe, about an hour's drive away: a half-day trip for those staying a few extra nights." },
+    { name: "Marmore Falls", src: "/images/territorio/dintorni/cascate delle marmore.jpg", alt: "Marmore Falls in Umbria", note: "Among the highest waterfalls in Europe, 77 km away, just over an hour by car: a half-day trip for those staying a few extra nights." },
   ],
   fr: [
     { name: "Mont Subasio", src: "/images/territorio/dintorni/monte subasio alto.jpg", alt: "Mont Subasio, le massif qui domine Assise", note: "Le parc naturel qui surplombe Assise : des sentiers pour marcher ou pédaler, et les pâturages d'altitude qui ont donné son nom au fromage local." },
-    { name: "Cascate delle Marmore", src: "/images/territorio/dintorni/cascate delle marmore.jpg", alt: "Cascate delle Marmore en Ombrie", note: "Parmi les cascades artificielles les plus hautes d'Europe, à environ une heure de route : une excursion d'une demi-journée pour ceux qui restent quelques nuits de plus." },
+    { name: "Cascate delle Marmore", src: "/images/territorio/dintorni/cascate delle marmore.jpg", alt: "Cascate delle Marmore en Ombrie", note: "Parmi les plus hautes cascades d'Europe, à 77 km, un peu plus d'une heure de route : une excursion d'une demi-journée pour ceux qui restent quelques nuits de plus." },
   ],
   de: [
     { name: "Monte Subasio", src: "/images/territorio/dintorni/monte subasio alto.jpg", alt: "Monte Subasio, das Massiv über Assisi", note: "Der Naturpark, der über Assisi liegt: Wander- und Radwege sowie die Hochweiden, die dem lokalen Käse seinen Namen gaben." },
-    { name: "Wasserfälle von Marmore", src: "/images/territorio/dintorni/cascate delle marmore.jpg", alt: "Wasserfälle von Marmore in Umbrien", note: "Einer der höchsten künstlichen Wasserfälle Europas, etwa eine Autostunde entfernt: ein Halbtagesausflug für alle, die ein paar Nächte länger bleiben." },
+    { name: "Wasserfälle von Marmore", src: "/images/territorio/dintorni/cascate delle marmore.jpg", alt: "Wasserfälle von Marmore in Umbrien", note: "Einer der höchsten Wasserfälle Europas, 77 km entfernt, gut eine Autostunde: ein Halbtagesausflug für alle, die ein paar Nächte länger bleiben." },
   ],
 };
 

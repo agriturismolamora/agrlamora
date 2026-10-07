@@ -318,11 +318,19 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
               <ul className="mt-3 space-y-2">
                 {block.items.map((item) => {
                   const external = isExternalHref(item.href);
+                  // Villa Relax ha il suo script del widget camere: da una pagina
+                  // La Mora ci si arriva con una navigazione piena (<a>), come nel
+                  // resto del sito (vedi rooms-widget-script.tsx).
+                  const toVilla = item.href.startsWith("/villa-relax-assisi");
                   return (
                     <li key={item.href} className="text-[15px] leading-[1.6]">
                       {external ? (
                         <a href={item.href} target="_blank" rel="noopener noreferrer" className={c.link}>
                           {item.label} ↗
+                        </a>
+                      ) : toVilla ? (
+                        <a href={withLocale(locale, item.href)} className={c.link}>
+                          {item.label} →
                         </a>
                       ) : (
                         <Link href={withLocale(locale, item.href)} className={c.link}>

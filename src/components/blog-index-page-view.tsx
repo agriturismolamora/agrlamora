@@ -11,7 +11,7 @@ import { StructuredData } from "@/components/structured-data";
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
     title: "Blog: cosa vedere ad Assisi e in Umbria",
-    description: "Storie, luoghi e consigli per vivere Assisi e l'Umbria con calma: la Basilica di San Damiano, il Bosco di San Francesco, le Cascate delle Marmore e altro, dal blog di Agriturismo La Mora.",
+    description: "Storie, luoghi e consigli per vivere Assisi e l'Umbria con calma: il Santuario di San Damiano, il Bosco di San Francesco, le Cascate delle Marmore e altro, dal blog di Agriturismo La Mora.",
   },
   en: {
     title: "Blog: things to see in Assisi and Umbria",

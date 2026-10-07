@@ -18,15 +18,15 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
     description: "Colazione biologica dalle 8:00 alle 9:30 ad Assisi: dolci tipici umbri di alta pasticceria, frutta di stagione, olio EVO. Dolce 5€/persona/giorno, supplemento salata +10€, inclusa per chi prenota diretto.",
   },
   en: {
-    title: "Organic Breakfast",
+    title: "Organic breakfast at our Assisi farm stay",
     description: "Organic breakfast from 8am to 9:30am in Assisi: fine Umbrian pastries, seasonal fruit, EVO olive oil. Sweet €5/person/day, savoury supplement +€10, included for direct bookings.",
   },
   fr: {
-    title: "Petit-Déjeuner Bio",
+    title: "Petit-déjeuner bio à l'agritourisme d'Assise",
     description: "Petit-déjeuner biologique de 8h à 9h30 à Assise : pâtisseries typiques d'Ombrie, fruits de saison, huile d'olive extra vierge. Formule sucrée 5€/personne/jour, supplément salé +10€, inclus pour les réservations directes.",
   },
   de: {
-    title: "Bio-Frühstück",
+    title: "Bio-Frühstück im Agriturismo in Assisi",
     description: "Bio-Frühstück von 8 bis 9:30 Uhr in Assisi: feines umbrisches Gebäck, saisonales Obst, natives Olivenöl extra. Süß 5€/Person/Tag, herzhafter Zuschlag +10€, bei Direktbuchung inklusive.",
   },
 };

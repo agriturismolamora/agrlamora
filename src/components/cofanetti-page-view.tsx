@@ -16,15 +16,15 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
     description: "Regala un soggiorno ad Agriturismo La Mora, ad Assisi: quattro cofanetti reali con notti, colazioni e servizi già inclusi, da 139,90€.",
   },
   en: {
-    title: "Gift Boxes",
+    title: "Gift boxes: a stay in Assisi",
     description: "Give the gift of a stay at Agriturismo La Mora, in Assisi: four real gift boxes with nights, breakfast and services already included, from €139.90.",
   },
   fr: {
-    title: "Coffrets Cadeaux",
+    title: "Coffrets cadeaux : un séjour à Assise",
     description: "Offrez un séjour à Agriturismo La Mora, à Assise : quatre coffrets réels avec nuits, petits-déjeuners et services déjà inclus, à partir de 139,90€.",
   },
   de: {
-    title: "Geschenkboxen",
+    title: "Geschenkboxen: Aufenthalt in Assisi",
     description: "Verschenken Sie einen Aufenthalt bei Agriturismo La Mora in Assisi: vier echte Geschenkboxen mit Nächten, Frühstück und Leistungen bereits inbegriffen, ab 139,90€.",
   },
 };

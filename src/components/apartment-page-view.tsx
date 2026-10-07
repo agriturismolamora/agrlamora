@@ -16,7 +16,9 @@ import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
-import { apartmentName, apartmentNode } from "@/lib/structured-data";
+import { apartmentName, apartmentNode, faqPageNode } from "@/lib/structured-data";
+import { PetsSection } from "@/components/pets-section";
+import { PETS_TEXT } from "@/data/pets";
 
 function WhatsAppIcon() {
   return (
@@ -219,7 +221,7 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
 
   return (
     <>
-      <StructuredData locale={locale} path={apt.href} nodes={[apartmentNode(locale, apt)]} crumbName={apartmentName(locale, apt)} />
+      <StructuredData locale={locale} path={apt.href} nodes={[apartmentNode(locale, apt), ...(apt.petFriendly ? [faqPageNode(locale, apt.href, PETS_TEXT[locale].faq)] : [])]} crumbName={apartmentName(locale, apt)} />
       {apt.petFriendly && <ScrollDog />}
 
       {/* 1. Hero immersiva */}
@@ -372,6 +374,9 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
           </Reveal>
         </div>
       </section>
+
+      {/* 4c. Animali: solo Gemelli e Sagittario (petFriendly) */}
+      {apt.petFriendly && <PetsSection locale={locale} />}
 
       {/* 5. Galleria */}
       <section className="bg-cream py-16 sm:py-20">

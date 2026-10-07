@@ -7,23 +7,25 @@ import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
+import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
+import { faqPageNode } from "@/lib/structured-data";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
-    title: "Piscina Panoramica",
-    description: "Piscina panoramica 6×12 metri di Agriturismo La Mora ad Assisi, aperta dal 1° maggio al 28 settembre, orario 09:00–19:00, con area giochi e campo da calcetto in erba naturale.",
+    title: "Agriturismo ad Assisi con piscina",
+    description: "Agriturismo ad Assisi con piscina panoramica di 6×12 m, aperta dal 1° maggio al 28 settembre dalle 9:00 alle 19:00, con fontana idromassaggio e area giochi.",
   },
   en: {
-    title: "Panoramic Pool",
-    description: "6×12 metre panoramic pool at Agriturismo La Mora in Assisi, open from May 1st to September 28th, 9am–7pm, with a play area and natural-grass five-a-side pitch.",
+    title: "Agriturismo in Assisi with a swimming pool",
+    description: "Agriturismo in Assisi with a 6×12 m panoramic pool, open from 1 May to 28 September, 9am to 7pm, with a hydromassage fountain and a play area nearby.",
   },
   fr: {
-    title: "Piscine Panoramique",
-    description: "Piscine panoramique de 6×12 mètres à Agriturismo La Mora, Assise, ouverte du 1er mai au 28 septembre, de 9h à 19h, avec aire de jeux et terrain de foot à cinq en gazon naturel.",
+    title: "Agritourisme à Assise avec piscine",
+    description: "Agritourisme à Assise avec piscine panoramique de 6×12 m, ouverte du 1er mai au 28 septembre de 9h à 19h, avec fontaine hydromassante et aire de jeux.",
   },
   de: {
-    title: "Panorama-Pool",
-    description: "6×12 Meter großer Panorama-Pool bei Agriturismo La Mora in Assisi, geöffnet vom 1. Mai bis 28. September, 9–19 Uhr, mit Spielbereich und Fünf-gegen-fünf-Feld aus Naturrasen.",
+    title: "Agriturismo in Assisi mit Pool",
+    description: "Agriturismo in Assisi mit 6×12-m-Panoramapool, geöffnet vom 1. Mai bis 28. September von 9 bis 19 Uhr, mit Hydromassage-Brunnen und Spielplatz.",
   },
 };
 
@@ -36,9 +38,14 @@ const TEXT: Record<
   Locale,
   {
     label: string;
+    /* H1 con la ricerca principale; heading resta come sottotitolo. */
+    h1: string;
     heading: string;
     intro: string;
     attivitaLink: string;
+    faqLabel: string;
+    faqHeading: string;
+    faq: FaqItem[];
     facts: { label: string; value: string }[];
     fontanaLabel: string;
     fontanaHeading: string;
@@ -55,6 +62,16 @@ const TEXT: Record<
 > = {
   it: {
     label: "Piscina",
+    h1: "Agriturismo ad Assisi con piscina",
+    faqLabel: "Domande frequenti",
+    faqHeading: "La piscina in breve.",
+    faq: [
+      { question: "Quando è aperta la piscina?", answer: "Dal 1° maggio al 28 settembre, tutti i giorni dalle 9:00 alle 19:00." },
+      { question: "La piscina è aperta in ottobre?", answer: "No: la stagione della piscina va dal 1° maggio al 28 settembre." },
+      { question: "Quanto è grande la piscina?", answer: "6×12 metri. Nelle ore più calde si aziona anche una fontana idromassaggio." },
+      { question: "La piscina è riservata agli ospiti?", answer: "Sì, è riservata agli ospiti di Agriturismo La Mora ed è a pochi passi dagli appartamenti." },
+      { question: "Cosa c'è per i bambini vicino alla piscina?", answer: "Accanto alla piscina ci sono un'area giochi per i più piccoli e un campo da calcetto in erba naturale." },
+    ],
     heading: "Una piscina panoramica sulla campagna umbra.",
     intro: "6×12 metri, aperta dal 1° maggio al 28 settembre dalle 9:00 alle 19:00: la piscina è il centro delle giornate a La Mora, circondata da sedie all'ombra per chi preferisce guardare invece di nuotare. Accanto, un'area giochi per i più piccoli e un campo da calcetto in erba naturale — trovi tutte le altre attività della struttura nella pagina",
     attivitaLink: "Attività",
@@ -78,6 +95,16 @@ const TEXT: Record<
   },
   en: {
     label: "Pool",
+    h1: "Agriturismo in Assisi with a swimming pool",
+    faqLabel: "Frequently asked questions",
+    faqHeading: "The pool at a glance.",
+    faq: [
+      { question: "When is the pool open?", answer: "From 1 May to 28 September, every day from 9am to 7pm." },
+      { question: "Is the pool open in October?", answer: "No: the pool season runs from 1 May to 28 September." },
+      { question: "How big is the pool?", answer: "6×12 metres. In the hottest hours a hydromassage fountain is also turned on." },
+      { question: "Is the pool for guests only?", answer: "Yes, it is reserved for guests of Agriturismo La Mora and is a few steps from the apartments." },
+      { question: "What is there for children near the pool?", answer: "Next to the pool there is a play area for younger children and a natural-grass five-a-side pitch." },
+    ],
     heading: "A panoramic pool over the Umbrian countryside.",
     intro: "6×12 metres, open from May 1st to September 28th, 9am to 7pm: the pool is the centre of daily life at La Mora, surrounded by shaded chairs for those who'd rather watch than swim. Alongside, a play area for younger guests and a natural-grass five-a-side pitch — you'll find all the property's other activities on the",
     attivitaLink: "Activities",
@@ -101,6 +128,16 @@ const TEXT: Record<
   },
   fr: {
     label: "Piscine",
+    h1: "Agritourisme à Assise avec piscine",
+    faqLabel: "Questions fréquentes",
+    faqHeading: "La piscine en bref.",
+    faq: [
+      { question: "Quand la piscine est-elle ouverte ?", answer: "Du 1er mai au 28 septembre, tous les jours de 9h à 19h." },
+      { question: "La piscine est-elle ouverte en octobre ?", answer: "Non : la saison de la piscine va du 1er mai au 28 septembre." },
+      { question: "Quelle est la taille de la piscine ?", answer: "6×12 mètres. Aux heures les plus chaudes, une fontaine hydromassante est aussi mise en marche." },
+      { question: "La piscine est-elle réservée aux hôtes ?", answer: "Oui, elle est réservée aux hôtes d'Agriturismo La Mora et se trouve à quelques pas des appartements." },
+      { question: "Qu'y a-t-il pour les enfants près de la piscine ?", answer: "À côté de la piscine, il y a une aire de jeux pour les plus petits et un terrain de foot à cinq en gazon naturel." },
+    ],
     heading: "Une piscine panoramique sur la campagne ombrienne.",
     intro: "6×12 mètres, ouverte du 1er mai au 28 septembre de 9h à 19h : la piscine est le centre des journées à La Mora, entourée de chaises à l'ombre pour ceux qui préfèrent regarder plutôt que nager. À côté, une aire de jeux pour les plus petits et un terrain de foot à cinq en gazon naturel — retrouvez toutes les autres activités de la structure sur la page",
     attivitaLink: "Activités",
@@ -124,6 +161,16 @@ const TEXT: Record<
   },
   de: {
     label: "Pool",
+    h1: "Agriturismo in Assisi mit Pool",
+    faqLabel: "Häufige Fragen",
+    faqHeading: "Der Pool auf einen Blick.",
+    faq: [
+      { question: "Wann ist der Pool geöffnet?", answer: "Vom 1. Mai bis 28. September, täglich von 9 bis 19 Uhr." },
+      { question: "Ist der Pool im Oktober geöffnet?", answer: "Nein: Die Poolsaison dauert vom 1. Mai bis 28. September." },
+      { question: "Wie groß ist der Pool?", answer: "6×12 Meter. In den heißesten Stunden wird zusätzlich ein Hydromassage-Brunnen eingeschaltet." },
+      { question: "Ist der Pool nur für Gäste?", answer: "Ja, er ist den Gästen von Agriturismo La Mora vorbehalten und liegt wenige Schritte von den Apartments entfernt." },
+      { question: "Was gibt es für Kinder am Pool?", answer: "Neben dem Pool gibt es einen Spielbereich für die Kleinen und ein Fünf-gegen-fünf-Feld aus Naturrasen." },
+    ],
     heading: "Ein Panorama-Pool über der umbrischen Landschaft.",
     intro: "6×12 Meter, geöffnet vom 1. Mai bis 28. September, 9 bis 19 Uhr: der Pool ist der Mittelpunkt der Tage bei La Mora, umgeben von schattigen Stühlen für alle, die lieber zusehen als schwimmen. Daneben ein Spielbereich für die Kleinen und ein Fünf-gegen-fünf-Feld aus Naturrasen — alle weiteren Aktivitäten der Unterkunft finden Sie auf der Seite",
     attivitaLink: "Aktivitäten",
@@ -151,7 +198,7 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
   const text = TEXT[locale];
   return (
     <>
-      <StructuredData locale={locale} path="/piscina/" />
+      <StructuredData locale={locale} path="/piscina/" nodes={[faqPageNode(locale, "/piscina/", text.faq)]} />
       <section className="relative flex h-[68vh] min-h-[480px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/piscina/piscina agriturismo la mora di notte.jpeg"
@@ -169,8 +216,11 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
         <div className="relative z-[1] mx-auto w-full max-w-[900px] px-6 pb-14 text-center sm:px-10">
           <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-cream/75">{text.label}</span>
           <h1 className="mt-4 font-display text-[clamp(34px,5.5vw,58px)] font-normal leading-[1.1] text-cream [text-wrap:balance]">
-            {text.heading}
+            {text.h1}
           </h1>
+          <p className="mx-auto mt-4 max-w-[560px] font-display text-[clamp(18px,2.2vw,22px)] italic leading-[1.4] text-cream/85 [text-wrap:balance]">
+            {text.heading}
+          </p>
         </div>
       </section>
 
@@ -210,8 +260,8 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
             <dl className="mt-10 grid grid-cols-2 gap-6 border-t border-ink/10 pt-8 sm:grid-cols-4">
               {text.facts.map((f) => (
                 <div key={f.label} className="text-center sm:text-left">
-                  <dt className="text-[11px] uppercase tracking-[0.08em] text-ink-soft">{f.label}</dt>
-                  <dd className="mt-1 font-display text-[20px] text-ink">{f.value}</dd>
+                  <dt className="text-[11px] uppercase tracking-[0.08em] text-ink-soft">{f.label}</dt>{" "}
+                  <dd className="mt-1 font-display text-[20px] text-ink">{f.value}</dd>{" "}
                 </div>
               ))}
             </dl>
@@ -274,7 +324,23 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className="bg-cream py-16 sm:py-20">
+      <section aria-labelledby="pool-faq-heading" className="bg-cream py-16 sm:py-20">
+        <div className="mx-auto max-w-[1000px] px-6 sm:px-10">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[280px_1fr] lg:gap-16">
+            <Reveal>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">{text.faqLabel}</span>
+              <h2 id="pool-faq-heading" className="mt-4 font-display text-[clamp(24px,2.8vw,32px)] font-normal leading-[1.2] text-ink [text-wrap:balance]">
+                {text.faqHeading}
+              </h2>
+            </Reveal>
+            <Reveal delay={100}>
+              <FaqAccordion items={text.faq} />
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-cream-dim py-16 sm:py-20">
         <div className="mx-auto max-w-[900px] px-6 text-center sm:px-10">
           <Reveal>
             <p className="font-display text-[22px] font-normal italic leading-[1.5] text-ink [text-wrap:balance]">

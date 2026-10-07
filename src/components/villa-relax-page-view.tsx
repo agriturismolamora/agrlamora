@@ -46,15 +46,15 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
     description: "Villa Relax, ad Assisi: villa indipendente con piscina privata, giardino e fino a 16 posti letto su 6 camere da letto. Ideale per gruppi e famiglie numerose nella campagna umbra, vicino alla Basilica di San Francesco.",
   },
   en: {
-    title: "Villa Relax — Independent Villa in Assisi",
+    title: "Villa Relax: private villa with pool in Assisi",
     description: "Villa Relax, in Assisi: an independent villa with private pool, garden and up to 16 beds across 6 bedrooms. Ideal for groups and large families in the Umbrian countryside, near the Basilica of St. Francis.",
   },
   fr: {
-    title: "Villa Relax — Villa Indépendante à Assise",
+    title: "Villa Relax : villa avec piscine privée à Assise",
     description: "Villa Relax, à Assise : villa indépendante avec piscine privée, jardin et jusqu'à 16 couchages sur 6 chambres. Idéale pour les groupes et les grandes familles dans la campagne ombrienne, près de la basilique Saint-François.",
   },
   de: {
-    title: "Villa Relax — Unabhängige Villa in Assisi",
+    title: "Villa Relax: Villa mit privatem Pool in Assisi",
     description: "Villa Relax, in Assisi: eine unabhängige Villa mit privatem Pool, Garten und bis zu 16 Betten auf 6 Schlafzimmer. Ideal für Gruppen und große Familien in der umbrischen Landschaft, nahe der Basilika des Heiligen Franziskus.",
   },
 };

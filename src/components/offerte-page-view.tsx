@@ -63,15 +63,15 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
     description: "Le condizioni reali riservate a chi prenota direttamente ad Agriturismo La Mora: -10% da 7 notti, -10% per chi torna, -10% con tariffa non rimborsabile.",
   },
   en: {
-    title: "Offers",
+    title: "Direct booking offers in Assisi",
     description: "The real conditions reserved for those who book directly with Agriturismo La Mora: -10% from 7 nights, -10% for returning guests, -10% with the non-refundable rate.",
   },
   fr: {
-    title: "Offres",
+    title: "Offres de réservation directe à Assise",
     description: "Les conditions réelles réservées à ceux qui réservent directement chez Agriturismo La Mora : -10% à partir de 7 nuits, -10% pour les hôtes fidèles, -10% avec le tarif non remboursable.",
   },
   de: {
-    title: "Angebote",
+    title: "Direktbuchungs-Angebote in Assisi",
     description: "Die echten Konditionen für alle, die direkt bei Agriturismo La Mora buchen: -10% ab 7 Nächten, -10% für wiederkehrende Gäste, -10% mit nicht rückerstattbarem Tarif.",
   },
 };

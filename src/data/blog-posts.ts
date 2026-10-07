@@ -3029,13 +3029,22 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
     {
       slug: "basilica-santa-maria-degli-angeli",
       category: "Territorio",
-      title: "Basilica di Santa Maria degli Angeli: cosa vedere",
-      excerpt: "La chiesa che racchiude la Porziuncola, il luogo dove nacque l'ordine francescano, a 2,1 km da La Mora.",
-      metaDescription: "Guida alla Basilica di Santa Maria degli Angeli ad Assisi: Porziuncola, Cappella del Transito, Roseto, orari e distanza da Agriturismo La Mora (2 km).",
+      title: "Santa Maria degli Angeli: basilica, Porziuncola e cappella",
+      excerpt: "La basilica che custodisce la Porziuncola e la Cappella del Transito, a 2,1 km da La Mora: cosa vedere, orari e ingresso.",
+      metaDescription: "La Basilica di Santa Maria degli Angeli ad Assisi custodisce la Porziuncola e la Cappella del Transito. Orari, ingresso gratuito e dove dormire a 2,1 km.",
       image: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg",
       alt: "Facciata della Basilica di Santa Maria degli Angeli, ad Assisi",
+      inBreve: {
+        heading: "In breve",
+        items: [
+          { label: "Dentro la basilica", value: "Porziuncola e Cappella del Transito" },
+          { label: "Orari", value: "Tutti i giorni 7:30–12:30 e 14:30–19:00" },
+          { label: "Ingresso", value: "Gratuito" },
+          { label: "Da Agriturismo La Mora", value: "2,1 km in auto" },
+        ],
+      },
       intro:
-        "A due chilometri da Agriturismo La Mora, nella piana sotto Assisi, sorge una delle chiese più grandi della cristianità — costruita nel Cinquecento intorno a un edificio molto più piccolo e molto più antico: la Porziuncola.",
+        "A 2,1 km da Agriturismo La Mora, nella piana sotto Assisi, la Basilica di Santa Maria degli Angeli fu costruita tra il 1569 e il 1679, su progetto di Galeazzo Alessi, intorno a una chiesetta molto più piccola e antica: la Porziuncola.",
       introCtaHeading: "Programmi la visita? Scegli dove alloggiare a 2,1 km dalla Basilica.",
       introCtaLabel: "Scopri gli appartamenti",
       introCtaHref: "/alloggi/",
@@ -3043,7 +3052,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "La Porziuncola, il cuore dentro il cuore" },
         {
           type: "p",
-          text: "La Porziuncola è la piccola cappella dove San Francesco visse gran parte della sua vita religiosa e dove morì, il 3 ottobre 1226. Nel Cinquecento, per proteggerla e accogliere il crescente flusso di pellegrini, venne costruita intorno a essa un'enorme basilica: oggi, entrando, ci si trova davanti a una cappella minuscola sotto una cupola immensa — un contrasto che racconta, meglio di qualunque descrizione, la distanza tra la semplicità originaria di Francesco e come la sua eredità è stata poi celebrata.",
+          text: "La Porziuncola è la piccola chiesa che Francesco restaurò e dove comprese la propria vocazione: qui fondò l'Ordine dei Frati Minori, nel 1212 accolse Chiara e ottenne il Perdono di Assisi, l'indulgenza plenaria. Per proteggerla e accogliere i pellegrini, intorno a lei venne costruita un'enorme basilica: oggi, entrando, ci si trova davanti a una cappella minuscola sotto una cupola immensa — un contrasto che racconta, meglio di qualunque descrizione, la distanza tra la semplicità originaria di Francesco e il modo in cui la sua eredità è stata poi celebrata.",
         },
         {
           type: "image",
@@ -3051,26 +3060,35 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           alt: "Interno della Porziuncola, all'interno della Basilica di Santa Maria degli Angeli",
           caption: "La Porziuncola vista da dentro la navata della basilica.",
         },
+        { type: "h2", text: "Basilica, Porziuncola e Cappella del Transito: la differenza" },
+        {
+          type: "list",
+          items: [
+            "La basilica è la grande chiesa costruita tra il 1569 e il 1679 su progetto di Galeazzo Alessi. Il terremoto del 1832 ne distrusse parte della navata centrale; la facciata, con la statua dorata della Madonna degli Angeli di Guglielmo Colasanti, fu rifatta tra il 1925 e il 1930.",
+            "La Porziuncola è la chiesetta medievale al centro della basilica, sotto la cupola: è la «cappella» a cui si pensa quando si parla di Santa Maria degli Angeli, il luogo dove nacque l'ordine francescano.",
+            "La Cappella del Transito, anch'essa dentro la basilica, era una cella dell'infermeria del convento: qui Francesco morì la sera del 3 ottobre 1226.",
+          ],
+        },
         { type: "h2", text: "Cosa vedere oltre alla Porziuncola" },
         {
           type: "list",
           items: [
-            "Cappella del Transito — la cella dove Francesco morì, oggi trasformata in cappella.",
-            "Il Roseto — le rose senza spine legate alla leggenda di Francesco che si gettò tra i rovi per resistere a una tentazione.",
-            "Il Museo della Porziuncola — reperti e opere legate alla storia del luogo e dell'ordine francescano.",
-            "La statua di San Francesco nel piazzale antistante, punto di riferimento per chi arriva.",
+            "Il Roseto — le rose senza spine legate al miracolo raccontato dalla tradizione francescana.",
+            "Il Museo della Porziuncola — dedicato alla storia del santuario e del francescanesimo, aperto dalle 9:00 alle 13:00 e dalle 14:30 alle 17:00, chiuso il mercoledì.",
+            "La facciata con la statua dorata della Madonna degli Angeli, visibile già dal piazzale.",
           ],
         },
         { type: "h2", text: "Informazioni pratiche" },
         {
           type: "facts",
           items: [
-            { label: "Ingresso", value: "Gratuito" },
-            { label: "Distanza da La Mora", value: "2 km" },
-            { label: "Parcheggio", value: "Disponibile nei pressi della basilica" },
-            { label: "Consigliato con", value: "Bosco di San Francesco (a piedi, stesso ingresso)" },
+            { label: "Orari della basilica", value: "7:30–12:30 e 14:30–19:00, tutti i giorni" },
+            { label: "Ingresso", value: "Gratuito, come le guide dei frati" },
+            { label: "Museo della Porziuncola", value: "9:00–13:00 e 14:30–17:00, chiuso il mercoledì" },
+            { label: "Distanza da La Mora", value: "2,1 km in auto" },
           ],
         },
+        { type: "p", text: "Orari dal sito ufficiale del santuario, porziuncola.org (ottobre 2026): possono cambiare nei giorni di festa." },
         {
           type: "cta",
           heading: "Prenota direttamente e organizza la visita senza pensieri.",
@@ -3078,6 +3096,9 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           label: "Vai alla prenotazione diretta",
           href: BOOKING_MODAL_HREF,
         },
+        { type: "h2", text: "Una villa vicino a Santa Maria degli Angeli" },
+        { type: "p", text: "Per gruppi e famiglie numerose c'è anche Villa Relax, la villa indipendente della stessa proprietà, a Rivotorto di Assisi, a 5 km dalla basilica: fino a 16 ospiti in 6 camere, con piscina privata e giardino, in locazione esclusiva." },
+        { type: "links", heading: "Per un gruppo", items: [{ label: "Villa Relax, villa indipendente fino a 16 ospiti", href: "/villa-relax-assisi/" }] },
         { type: "h2", text: "Come arrivare da Agriturismo La Mora" },
         {
           type: "p",
@@ -3090,6 +3111,17 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           caption: "Si parte da qui: 2,1 km in auto, o una pedalata in e-bike.",
         },
       ],
+      faq: {
+        heading: "Domande frequenti",
+        items: [
+          { q: "La chiesa di Santa Maria degli Angeli e la Porziuncola sono la stessa cosa?", a: "No: la chiesa di Santa Maria degli Angeli è la grande basilica costruita tra il 1569 e il 1679 su progetto di Galeazzo Alessi; la Porziuncola è la piccola chiesa medievale che la basilica racchiude al centro, sotto la cupola." },
+          { q: "Cos'è la cappella della Porziuncola?", a: "È la chiesetta restaurata da San Francesco: qui comprese la propria vocazione, fondò l'Ordine dei Frati Minori, accolse Santa Chiara nel 1212 e ottenne il Perdono di Assisi." },
+          { q: "Dove morì San Francesco?", a: "Nella Cappella del Transito, dentro la basilica: era una cella dell'infermeria del convento, e Francesco vi morì la sera del 3 ottobre 1226." },
+          { q: "Quanto costa entrare e quali sono gli orari?", a: "L'ingresso al santuario è gratuito. La basilica è aperta tutti i giorni dalle 7:30 alle 12:30 e dalle 14:30 alle 19:00; il Museo della Porziuncola dalle 9:00 alle 13:00 e dalle 14:30 alle 17:00, chiuso il mercoledì (porziuncola.org, ottobre 2026)." },
+          { q: "C'è una villa da affittare vicino a Santa Maria degli Angeli?", a: "Villa Relax, la villa indipendente della stessa proprietà di Agriturismo La Mora, è a Rivotorto di Assisi, a 5 km dalla basilica: fino a 16 ospiti in 6 camere, con piscina privata, in locazione esclusiva." },
+          { q: "Quanto dista la basilica da Agriturismo La Mora?", a: "2,1 km in auto secondo Google Maps: è il luogo francescano più vicino alla struttura." },
+        ],
+      },
       finalCtaHeading: "A 2,1 km da qui, in campagna.",
       finalCtaBody: "Cinque appartamenti indipendenti, una piscina panoramica, e la Basilica a 2,1 km.",
       finalCtaLabel: "Scopri gli appartamenti",
@@ -3155,26 +3187,35 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
     {
       slug: "santuario-san-damiano",
       category: "Territorio",
-      title: "Il Santuario di San Damiano, fuori dalle mura di Assisi",
-      excerpt: "Dove Francesco udì il celebre invito a 'riparare la mia chiesa', e dove Chiara d'Assisi visse gran parte della sua vita.",
-      metaDescription: "San Damiano, Assisi: il santuario dove Francesco ricevette la sua chiamata e Chiara fondò le Clarisse. Come arrivare da Agriturismo La Mora.",
+      title: "San Damiano ad Assisi: il santuario di Francesco e Chiara",
+      excerpt: "Il santuario appena fuori dal centro di Assisi dove il crocifisso parlò a Francesco e dove Chiara visse per 42 anni.",
+      metaDescription: "San Damiano ad Assisi: il santuario dove il crocifisso parlò a Francesco e Chiara visse 42 anni. A 1,5 km a piedi dal centro e a 7,4 km da La Mora.",
       image: "/images/territorio/assisi/san damiano santuario dintorni assisi.jpg",
       alt: "Santuario di San Damiano tra gli ulivi, nei dintorni di Assisi",
+      inBreve: {
+        heading: "In breve",
+        items: [
+          { label: "Cos'è", value: "Santuario francescano, patrimonio UNESCO dal 2000" },
+          { label: "Il crocifisso", value: "L'originale è nella Basilica di Santa Chiara" },
+          { label: "A piedi dal centro", value: "1,5 km · circa 21 min in discesa" },
+          { label: "Da Agriturismo La Mora", value: "7,4 km · circa 11 min in auto" },
+        ],
+      },
       intro:
-        "A circa due chilometri a sud delle mura di Assisi, immerso negli ulivi, un piccolo santuario custodisce due delle storie più importanti del francescanesimo: la conversione di Francesco e la vita di Chiara.",
+        "Appena fuori dal centro di Assisi, a 1,5 km a piedi da Piazza del Comune, tra gli ulivi, il santuario di San Damiano custodisce due delle storie più importanti del francescanesimo: la conversione di Francesco e la vita di Chiara.",
       introCtaHeading: "Un momento di silenzio dopo la Basilica: organizza il soggiorno.",
       introCtaLabel: "Verifica la disponibilità",
       introCtaHref: BOOKING_MODAL_HREF,
       content: [
-        { type: "h2", text: "‘Ripara la mia chiesa’" },
+        { type: "h2", text: "«Va', ripara la mia casa»" },
         {
           type: "p",
-          text: "Secondo la tradizione, è qui che il crocifisso ligneo oggi conservato nella Basilica di Santa Chiara parlò a Francesco, invitandolo a 'riparare la mia chiesa' — l'episodio che segnò l'inizio della sua conversione. Francesco interpretò letteralmente l'invito e restaurò con le proprie mani l'edificio, allora in rovina.",
+          text: "Secondo la tradizione, è qui che il crocifisso dipinto oggi conservato nella Basilica di Santa Chiara parlò a Francesco: «Francesco, va' e ripara la mia casa che, come vedi, è tutta in rovina». Francesco prese l'invito alla lettera e restaurò con le proprie mani la chiesetta, allora in rovina. Sull'altare maggiore di San Damiano oggi c'è una copia del crocifisso.",
         },
-        { type: "h2", text: "Il convento di Chiara" },
+        { type: "h2", text: "Il monastero di Chiara" },
         {
           type: "p",
-          text: "San Damiano è anche il luogo dove Chiara d'Assisi visse per oltre quarant'anni, fondando in questo stesso convento l'ordine delle Clarisse. A differenza della Basilica di San Francesco, San Damiano resta un luogo raccolto e silenzioso, poco battuto dal turismo di massa nonostante la sua importanza storica: probabilmente la tappa più autentica per chi cerca un momento di raccoglimento lontano dai flussi del centro.",
+          text: "San Damiano è anche il luogo dove Chiara d'Assisi visse per 42 anni e dove morì. Dal 2000, con gli altri luoghi francescani di Assisi, è patrimonio mondiale UNESCO. A differenza della Basilica di San Francesco, resta un luogo raccolto e silenzioso: probabilmente la tappa più autentica per chi cerca un momento di raccoglimento lontano dai flussi del centro.",
         },
         {
           type: "image",
@@ -3185,10 +3226,10 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         {
           type: "facts",
           items: [
-            { label: "Distanza dal centro", value: "Circa 2 km" },
-            { label: "A piedi", value: "20-25 minuti in discesa" },
+            { label: "A piedi da Piazza del Comune", value: "1,5 km · circa 21 min in discesa" },
             { label: "In auto da La Mora", value: "7,4 km · circa 11 min" },
-            { label: "Consigliato dopo", value: "La Basilica di San Francesco" },
+            { label: "Patrimonio UNESCO", value: "Dal 2000, con gli altri luoghi francescani" },
+            { label: "Da abbinare a", value: "La Basilica di Santa Chiara, dove è conservato il crocifisso originale" },
           ],
         },
         {
@@ -3201,9 +3242,19 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "Da Agriturismo La Mora" },
         {
           type: "p",
-          text: "San Damiano si raggiunge attraversando il centro di Assisi, quindi il modo più comodo per chi soggiorna a La Mora è combinarlo con una giornata già dedicata al centro storico: si lascia l'auto vicino alle mura e si prosegue a piedi. La salita al ritorno è più impegnativa della discesa — conviene tenerlo a mente per chi cammina con bambini piccoli.",
+          text: "Da La Mora San Damiano è a 7,4 km, circa 11 minuti in auto secondo Google Maps. Si può anche abbinare a una giornata nel centro storico: da Piazza del Comune sono 1,5 km a piedi lungo Via San Damiano, circa 21 minuti in discesa. Al ritorno la salita è più impegnativa, da tenere a mente con bambini piccoli.",
         },
       ],
+      faq: {
+        heading: "Domande frequenti",
+        items: [
+          { q: "Dove si trova San Damiano ad Assisi?", a: "Appena fuori dal centro storico, sotto le mura: da Piazza del Comune sono 1,5 km a piedi lungo Via San Damiano, circa 21 minuti in discesa secondo Google Maps." },
+          { q: "Cosa è successo a San Damiano?", a: "Secondo la tradizione, qui il crocifisso parlò a Francesco chiedendogli di riparare la sua casa. A San Damiano, inoltre, Santa Chiara visse per 42 anni e morì." },
+          { q: "Dove si trova il crocifisso di San Damiano?", a: "L'originale è conservato nella Basilica di Santa Chiara, nel centro di Assisi; sull'altare maggiore di San Damiano c'è una copia." },
+          { q: "San Damiano è patrimonio UNESCO?", a: "Sì, dal 2000, insieme agli altri luoghi francescani di Assisi." },
+          { q: "Come si arriva a San Damiano da Agriturismo La Mora?", a: "In auto sono 7,4 km, circa 11 minuti secondo Google Maps." },
+        ],
+      },
       finalCtaHeading: "Torna a La Mora, e rilassati in piscina.",
       finalCtaBody: "A 6,8 km dal centro di Assisi, la campagna umbra aspetta con calma.",
       finalCtaLabel: "Scopri gli appartamenti",
@@ -3212,29 +3263,39 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
     {
       slug: "cascate-delle-marmore",
       category: "Gita di un giorno",
-      title: "Cascate delle Marmore: come arrivarci da Assisi",
-      excerpt: "Tra le cascate artificiali più alte d'Europa, a circa un'ora d'auto da La Mora: una gita di mezza giornata.",
-      metaDescription: "Guida alle Cascate delle Marmore vicino Terni: altezza, punti panoramici, orari dell'acqua e distanza in auto da Agriturismo La Mora.",
+      title: "Cascate delle Marmore da Assisi: 77 km, poco più di un'ora",
+      excerpt: "A 77,7 km da Assisi e 77,3 km da La Mora, poco più di un'ora d'auto: come arrivare, quando c'è l'acqua e quale belvedere scegliere.",
+      metaDescription: "Cascate delle Marmore da Assisi: 77,7 km, circa 1 ora e 15 minuti d'auto; da Agriturismo La Mora 77,3 km. Come arrivare, orari dell'acqua e belvedere.",
       image: "/images/territorio/dintorni/cascate delle marmore.jpg",
       alt: "Le Cascate delle Marmore in Umbria",
+      inBreve: {
+        heading: "In breve",
+        items: [
+          { label: "Da Assisi (Piazza del Comune)", value: "77,7 km · circa 1 h 15 min" },
+          { label: "Da Agriturismo La Mora", value: "77,3 km · circa 1 h 10 min" },
+          { label: "Altezza", value: "165 m in tre salti" },
+          { label: "Acqua", value: "A orari stabiliti, diversi per mese e giorno" },
+          { label: "Ingressi", value: "Belvedere Inferiore e Belvedere Superiore" },
+        ],
+      },
       intro:
-        "A circa un'ora d'auto da La Mora, vicino Terni, un salto d'acqua di 165 metri creato in epoca romana è oggi tra le cascate artificiali più alte d'Europa — una gita di mezza giornata che si organizza facilmente durante il soggiorno.",
+        "Le Cascate delle Marmore sono a 77,7 km dal centro di Assisi (Piazza del Comune): circa 1 ora e 15 minuti d'auto lungo la SS3, secondo Google Maps. Da Agriturismo La Mora sono 77,3 km, circa 1 ora e 10 minuti, per vedere vicino a Terni un salto d'acqua di 165 metri creato dai Romani.",
       introCtaHeading: "Una gita fuori porta, un ritorno comodo: dove alloggiare nel mezzo.",
       introCtaLabel: "Scopri gli appartamenti",
       introCtaHref: "/alloggi/",
       content: [
-        { type: "h2", text: "Una cascata costruita dai romani" },
+        { type: "h2", text: "Una cascata costruita dai Romani" },
         {
           type: "p",
-          text: "Le Cascate delle Marmore nascono da un'opera di ingegneria romana: il taglio Roscius, realizzato nel 271 a.C. per far defluire le acque del fiume Velino nel Nera e bonificare le paludi della zona. Il risultato, nei secoli, è diventato uno dei salti d'acqua artificiali più alti al mondo, con un dislivello complessivo di 165 metri su tre salti successivi.",
+          text: "La Cascata delle Marmore nasce da un'opera dei Romani: nel 271 a.C. il console Manio Curio Dentato, per liberare la piana di Rieti dalle acque stagnanti, fece defluire il fiume Velino verso il Nera. Il risultato è un salto di 165 metri in tre balzi, che il portale ufficiale del turismo italiano indica come il più alto d'Europa.",
         },
-        { type: "h2", text: "I punti panoramici" },
+        { type: "h2", text: "I belvedere e i sentieri" },
         {
           type: "list",
           items: [
-            "Belvedere Inferiore — il più semplice, vicino al parcheggio, la vista classica sulla cascata.",
-            "Belvedere Superiore e sentiero dei percorsi alti — richiedono più tempo e un po' di allenamento, ma offrono viste dall'alto sul salto e sulla valle.",
-            "Grotta di Nettuno e Grotta della Pulce — percorsi laterali per chi vuole vedere la cascata da vicino, in condizioni di sentiero permettendo.",
+            "Belvedere Inferiore — sulla strada per la Valnerina: da qui si vede l'intera cascata.",
+            "Belvedere Superiore — alla fine del paese di Marmore, affacciato sul primo salto.",
+            "Sentiero dell'Antico Passaggio — sale ripido dal Belvedere Inferiore verso la sommità; lungo il percorso un tunnel porta al Balcone degli Innamorati, a un passo dall'acqua.",
           ],
         },
         {
@@ -3245,7 +3306,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "Quando vedere l'acqua" },
         {
           type: "p",
-          text: "L'acqua delle cascate è regolata: scorre solo in fasce orarie specifiche, decise per bilanciare la produzione idroelettrica con l'apertura al pubblico. Gli orari cambiano per stagione e giorno della settimana — prima di partire conviene sempre controllare il calendario ufficiale del parco, per non trovarsi davanti a un salto asciutto.",
+          text: "La cascata è a flusso controllato: quando il salto non è a pieno regime, l'acqua viene deviata nelle condotte della centrale idroelettrica. Il rilascio avviene solo in alcune fasce orarie, diverse per mese e giorno della settimana (a novembre 2026, per esempio, nei giorni feriali non è previsto): prima di partire controlla il calendario sul sito ufficiale del parco, cascatadellemarmore.info.",
         },
         {
           type: "cta",
@@ -3253,21 +3314,32 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           label: "Verifica la disponibilità",
           href: BOOKING_MODAL_HREF,
         },
-        { type: "h2", text: "Da Agriturismo La Mora" },
+        { type: "h2", text: "Da Assisi e da Agriturismo La Mora" },
         {
           type: "facts",
           items: [
-            { label: "Distanza", value: "Circa 55-60 minuti d'auto" },
-            { label: "Dislivello cascata", value: "165 metri" },
-            { label: "Realizzata", value: "271 a.C., epoca romana" },
+            { label: "Da Assisi (Piazza del Comune)", value: "77,7 km · circa 1 h 15 min" },
+            { label: "Da Agriturismo La Mora", value: "77,3 km · circa 1 h 10 min" },
+            { label: "Percorso alternativo", value: "Con la SS 209 Valnerina, circa 75 km" },
             { label: "Da combinare con", value: "Una sosta a Terni" },
           ],
         },
         {
           type: "p",
-          text: "Il tragitto rende le Marmore una gita fattibile in mezza giornata: si parte al mattino, si visita la cascata con calma, e si può ancora rientrare in tempo per un pomeriggio in piscina, oppure allungare la giornata con una sosta nel centro di Terni.",
+          text: "Con poco più di un'ora di strada per tratta, le Marmore stanno in una mezza giornata: si parte al mattino, si visita la cascata nell'orario di apertura delle acque e si rientra in tempo per il pomeriggio, oppure si allunga la giornata con una sosta nel centro di Terni.",
         },
       ],
+      faq: {
+        heading: "Domande frequenti",
+        items: [
+          { q: "Quanto distano le Cascate delle Marmore da Assisi?", a: "Dal centro di Assisi (Piazza del Comune) 77,7 km, circa 1 ora e 15 minuti in auto; da Agriturismo La Mora 77,3 km, circa 1 ora e 10 minuti (Google Maps, percorso lungo la SS3)." },
+          { q: "Come si arriva alle Cascate delle Marmore da Assisi?", a: "In auto: Google Maps propone il percorso lungo la SS3, circa 77 km, oppure quello con un tratto di SS 209 Valnerina, circa 75 km, entrambi poco più di un'ora. Gli ingressi del parco sono il Belvedere Inferiore e il Belvedere Superiore." },
+          { q: "Quando c'è l'acqua alle Cascate delle Marmore?", a: "Solo in alcune fasce orarie, diverse per mese e giorno della settimana: fuori da quegli orari l'acqua viene deviata alla centrale idroelettrica. Il calendario aggiornato è sul sito ufficiale del parco, cascatadellemarmore.info." },
+          { q: "Quanto è alta la Cascata delle Marmore?", a: "165 metri in tre salti: è il fiume Velino che precipita nel Nera." },
+          { q: "Chi ha creato la Cascata delle Marmore?", a: "I Romani: nel 271 a.C. il console Manio Curio Dentato fece defluire le acque del Velino verso il Nera, per liberare dalle paludi la piana di Rieti." },
+          { q: "Si possono vedere le Marmore in mezza giornata da Assisi?", a: "Sì: con poco più di un'ora di strada per tratta si parte al mattino e si rientra nel primo pomeriggio. Conviene far coincidere la visita con l'orario di apertura delle acque." },
+        ],
+      },
       finalCtaHeading: "Rientra a La Mora per il resto della giornata.",
       finalCtaBody: "Piscina panoramica aperta da maggio a settembre, a due passi dagli appartamenti.",
       finalCtaLabel: "Scopri la piscina",
@@ -3473,13 +3545,22 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
     {
       slug: "basilica-santa-maria-degli-angeli",
       category: "Territory",
-      title: "Basilica di Santa Maria degli Angeli: what to see",
-      excerpt: "The church holding the Porziuncola, birthplace of the Franciscan order, 2.1 km from La Mora.",
-      metaDescription: "Guide to the Basilica di Santa Maria degli Angeli in Assisi: Porziuncola, Chapel of the Transito, Rose Garden, opening hours and distance from Agriturismo La Mora (2 km).",
+      title: "Santa Maria degli Angeli: basilica, Porziuncola and chapel",
+      excerpt: "The basilica that holds the Porziuncola and the Chapel of the Transito, 2.1 km from La Mora: what to see, opening hours and admission.",
+      metaDescription: "Santa Maria degli Angeli in Assisi: the basilica holding the Porziuncola and the Chapel of the Transito. Opening hours, free admission, a stay 2.1 km away.",
       image: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg",
       alt: "Facade of the Basilica di Santa Maria degli Angeli, in Assisi",
+      inBreve: {
+        heading: "At a glance",
+        items: [
+          { label: "Inside the basilica", value: "Porziuncola and Chapel of the Transito" },
+          { label: "Opening hours", value: "Daily 7:30am–12:30pm and 2:30–7pm" },
+          { label: "Admission", value: "Free" },
+          { label: "From Agriturismo La Mora", value: "2.1 km by car" },
+        ],
+      },
       intro:
-        "Two kilometres from Agriturismo La Mora, on the plain below Assisi, stands one of the largest churches in Christendom — built in the 16th century around a much smaller, much older building: the Porziuncola.",
+        "2.1 km from Agriturismo La Mora, on the plain below Assisi, the Basilica of Santa Maria degli Angeli was built between 1569 and 1679, to a design by Galeazzo Alessi, around a much smaller and older church: the Porziuncola.",
       introCtaHeading: "Planning your visit? Choose where to stay 2.1 km from the Basilica.",
       introCtaLabel: "Discover the apartments",
       introCtaHref: "/alloggi/",
@@ -3487,7 +3568,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "The Porziuncola, a heart within a heart" },
         {
           type: "p",
-          text: "The Porziuncola is the small chapel where Saint Francis spent much of his religious life and where he died, on 3 October 1226. In the 16th century, to protect it and welcome the growing flow of pilgrims, an enormous basilica was built around it: today, walking in, you find a tiny chapel beneath an immense dome — a contrast that tells, better than any description, the distance between Francis's original simplicity and how his legacy was later celebrated.",
+          text: "The Porziuncola is the small church Francis restored and where he understood his vocation: here he founded the Order of Friars Minor, welcomed Clare in 1212 and obtained the Pardon of Assisi, the plenary indulgence. To protect it and welcome pilgrims, an enormous basilica was built around it: today, walking in, you find a tiny chapel beneath an immense dome — a contrast that tells, better than any description, the distance between Francis's original simplicity and the way his legacy was later celebrated.",
         },
         {
           type: "image",
@@ -3495,26 +3576,35 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           alt: "Interior of the Porziuncola, inside the Basilica di Santa Maria degli Angeli",
           caption: "The Porziuncola seen from inside the basilica's nave.",
         },
+        { type: "h2", text: "Basilica, Porziuncola and Chapel of the Transito: the difference" },
+        {
+          type: "list",
+          items: [
+            "The basilica is the great church built between 1569 and 1679 to a design by Galeazzo Alessi. The 1832 earthquake destroyed part of its central nave; the facade, topped by Guglielmo Colasanti's gilded statue of the Madonna of the Angels, was rebuilt between 1925 and 1930.",
+            "The Porziuncola is the medieval chapel at the centre of the basilica, under the dome: the 'chapel' people mean when they talk about Santa Maria degli Angeli, the place where the Franciscan order was born.",
+            "The Chapel of the Transito, also inside the basilica, was a cell of the convent infirmary: Francis died here on the evening of 3 October 1226.",
+          ],
+        },
         { type: "h2", text: "What to see beyond the Porziuncola" },
         {
           type: "list",
           items: [
-            "Chapel of the Transito — the cell where Francis died, now a chapel.",
-            "The Rose Garden — thornless roses linked to the legend of Francis throwing himself into brambles to resist temptation.",
-            "The Porziuncola Museum — artefacts and works tied to the history of the place and the Franciscan order.",
-            "The statue of Saint Francis in the square outside, a landmark for arriving visitors.",
+            "The Rose Garden — the thornless roses linked to the miracle told by Franciscan tradition.",
+            "The Porziuncola Museum — devoted to the history of the sanctuary and of the Franciscans, open 9am–1pm and 2:30–5pm, closed on Wednesdays.",
+            "The facade with the gilded statue of the Madonna of the Angels, visible from the square.",
           ],
         },
         { type: "h2", text: "Practical information" },
         {
           type: "facts",
           items: [
-            { label: "Admission", value: "Free" },
-            { label: "Distance from La Mora", value: "2 km" },
-            { label: "Parking", value: "Available near the basilica" },
-            { label: "Pair with", value: "Bosco di San Francesco (on foot, same entrance)" },
+            { label: "Basilica opening hours", value: "7:30am–12:30pm and 2:30–7pm, daily" },
+            { label: "Admission", value: "Free, as are the friars' guided visits" },
+            { label: "Porziuncola Museum", value: "9am–1pm and 2:30–5pm, closed on Wednesdays" },
+            { label: "Distance from La Mora", value: "2.1 km by car" },
           ],
         },
+        { type: "p", text: "Opening hours from the sanctuary's official website, porziuncola.org (October 2026): they may change on feast days." },
         {
           type: "cta",
           heading: "Book directly and plan your visit without a worry.",
@@ -3522,6 +3612,9 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           label: "Go to direct booking",
           href: BOOKING_MODAL_HREF,
         },
+        { type: "h2", text: "A villa near Santa Maria degli Angeli" },
+        { type: "p", text: "For groups and large families there is also Villa Relax, the independent villa owned by the same family, in Rivotorto di Assisi, 5 km from the basilica: up to 16 guests in 6 bedrooms, with a private pool and garden, rented exclusively." },
+        { type: "links", heading: "For a group", items: [{ label: "Villa Relax, an independent villa for up to 16 guests", href: "/villa-relax-assisi/" }] },
         { type: "h2", text: "Getting there from Agriturismo La Mora" },
         {
           type: "p",
@@ -3534,6 +3627,17 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           caption: "It starts here: 2.1 km by car, or a ride on an e-bike.",
         },
       ],
+      faq: {
+        heading: "Frequently asked questions",
+        items: [
+          { q: "Are the church of Santa Maria degli Angeli and the Porziuncola the same thing?", a: "No: the church of Santa Maria degli Angeli is the great basilica built between 1569 and 1679 to a design by Galeazzo Alessi; the Porziuncola is the small medieval church the basilica encloses at its centre, under the dome." },
+          { q: "What is the Porziuncola chapel?", a: "The little church restored by Saint Francis: here he understood his vocation, founded the Order of Friars Minor, welcomed Saint Clare in 1212 and obtained the Pardon of Assisi." },
+          { q: "Where did Saint Francis die?", a: "In the Chapel of the Transito, inside the basilica: it was a cell of the convent infirmary, and Francis died there on the evening of 3 October 1226." },
+          { q: "How much does it cost to visit, and what are the opening hours?", a: "Admission to the sanctuary is free. The basilica is open daily from 7:30am to 12:30pm and from 2:30 to 7pm; the Porziuncola Museum from 9am to 1pm and from 2:30 to 5pm, closed on Wednesdays (porziuncola.org, October 2026)." },
+          { q: "Is there a villa to rent near Santa Maria degli Angeli?", a: "Villa Relax, the independent villa owned by the same family as Agriturismo La Mora, is in Rivotorto di Assisi, 5 km from the basilica: up to 16 guests in 6 bedrooms, with a private pool, rented exclusively." },
+          { q: "How far is the basilica from Agriturismo La Mora?", a: "2.1 km by car according to Google Maps: it's the closest Franciscan site to the property." },
+        ],
+      },
       finalCtaHeading: "2.1 km from here, in the countryside.",
       finalCtaBody: "Five independent apartments, a panoramic pool, and the Basilica 2.1 km away.",
       finalCtaLabel: "Discover the apartments",
@@ -3599,26 +3703,35 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
     {
       slug: "santuario-san-damiano",
       category: "Territory",
-      title: "The Sanctuary of San Damiano, outside Assisi's walls",
-      excerpt: "Where Francis heard the famous call to 'repair my church', and where Clare of Assisi lived most of her life.",
-      metaDescription: "San Damiano, Assisi: the sanctuary where Francis received his calling and Clare founded the Poor Clares. How to get there from Agriturismo La Mora.",
+      title: "San Damiano Sanctuary, Assisi: Francis, Clare and the cross",
+      excerpt: "The sanctuary just outside the centre of Assisi where the crucifix spoke to Francis and where Clare lived for 42 years.",
+      metaDescription: "San Damiano Sanctuary in Assisi: where the crucifix spoke to Francis and Clare lived for 42 years. 1.5 km on foot from the centre, 7.4 km from La Mora.",
       image: "/images/territorio/assisi/san damiano santuario dintorni assisi.jpg",
       alt: "Sanctuary of San Damiano among the olive trees, near Assisi",
+      inBreve: {
+        heading: "At a glance",
+        items: [
+          { label: "What it is", value: "Franciscan sanctuary, UNESCO World Heritage since 2000" },
+          { label: "The crucifix", value: "The original is in the Basilica of Santa Chiara" },
+          { label: "On foot from the centre", value: "1.5 km · about 21 min downhill" },
+          { label: "From Agriturismo La Mora", value: "7.4 km · about 11 min by car" },
+        ],
+      },
       intro:
-        "About two kilometres south of Assisi's walls, surrounded by olive trees, a small sanctuary holds two of the most important stories in Franciscan history: Francis's conversion and Clare's life.",
+        "Just outside the centre of Assisi, 1.5 km on foot from Piazza del Comune, among the olive trees, the Sanctuary of San Damiano holds two of the most important stories in Franciscan history: Francis's conversion and Clare's life.",
       introCtaHeading: "A moment of quiet after the Basilica: plan your stay.",
       introCtaLabel: "Check availability",
       introCtaHref: BOOKING_MODAL_HREF,
       content: [
-        { type: "h2", text: "‘Repair my church’" },
+        { type: "h2", text: "'Go, repair my house'" },
         {
           type: "p",
-          text: "According to tradition, it was here that the wooden crucifix now kept in the Basilica of Santa Chiara spoke to Francis, calling him to 'repair my church' — the episode that marked the start of his conversion. Francis took the call literally and restored the building, then in ruins, with his own hands.",
+          text: "According to tradition, it was here that the painted crucifix now kept in the Basilica of Santa Chiara spoke to Francis: 'Francis, go and repair my house, which, as you see, is falling into ruin.' Francis took the call literally and restored the little church, then in ruins, with his own hands. A copy of the crucifix now hangs over San Damiano's main altar.",
         },
-        { type: "h2", text: "Clare's convent" },
+        { type: "h2", text: "Clare's monastery" },
         {
           type: "p",
-          text: "San Damiano is also where Clare of Assisi lived for over forty years, founding the order of the Poor Clares in this very convent. Unlike the Basilica of San Francesco, San Damiano remains a quiet, intimate place, little touched by mass tourism despite its historical importance — probably the most authentic stop for anyone seeking a moment of quiet away from the crowds in the centre.",
+          text: "San Damiano is also where Clare of Assisi lived for 42 years and where she died. Since 2000, together with Assisi's other Franciscan sites, it has been a UNESCO World Heritage Site. Unlike the Basilica of San Francesco, it remains a quiet, intimate place: probably the most authentic stop for anyone seeking a moment of reflection away from the crowds in the centre.",
         },
         {
           type: "image",
@@ -3629,10 +3742,10 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         {
           type: "facts",
           items: [
-            { label: "Distance from the centre", value: "About 2 km" },
-            { label: "On foot", value: "20-25 minutes downhill" },
+            { label: "On foot from Piazza del Comune", value: "1.5 km · about 21 min downhill" },
             { label: "By car from La Mora", value: "7.4 km · about 11 min" },
-            { label: "Recommended after", value: "The Basilica of San Francesco" },
+            { label: "UNESCO World Heritage", value: "Since 2000, with the other Franciscan sites" },
+            { label: "Pair with", value: "The Basilica of Santa Chiara, home of the original crucifix" },
           ],
         },
         {
@@ -3645,9 +3758,19 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "From Agriturismo La Mora" },
         {
           type: "p",
-          text: "San Damiano is reached by crossing the centre of Assisi, so the easiest way for guests staying at La Mora is to combine it with a day already dedicated to the historic centre: leave the car near the walls and continue on foot. The walk back uphill is more demanding than the way down — worth keeping in mind for anyone walking with small children.",
+          text: "From La Mora, San Damiano is 7.4 km away, about 11 minutes by car according to Google Maps. It also pairs well with a day in the historic centre: from Piazza del Comune it's 1.5 km on foot along Via San Damiano, about 21 minutes downhill. The walk back uphill is more demanding, worth keeping in mind with small children.",
         },
       ],
+      faq: {
+        heading: "Frequently asked questions",
+        items: [
+          { q: "Where is San Damiano in Assisi?", a: "Just outside the historic centre, below the walls: from Piazza del Comune it's 1.5 km on foot along Via San Damiano, about 21 minutes downhill according to Google Maps." },
+          { q: "What happened at San Damiano Sanctuary?", a: "According to tradition, the crucifix spoke to Francis here, asking him to repair his house. Saint Clare also lived at San Damiano for 42 years and died there." },
+          { q: "Where is the San Damiano cross today?", a: "The original is kept in the Basilica of Santa Chiara, in the centre of Assisi; a copy hangs over San Damiano's main altar." },
+          { q: "Is San Damiano a UNESCO World Heritage Site?", a: "Yes, since 2000, together with Assisi's other Franciscan sites." },
+          { q: "How do you get to San Damiano from Agriturismo La Mora?", a: "By car it's 7.4 km, about 11 minutes according to Google Maps." },
+        ],
+      },
       finalCtaHeading: "Back to La Mora, and unwind by the pool.",
       finalCtaBody: "6.8 km from the centre of Assisi, the Umbrian countryside waits with no rush.",
       finalCtaLabel: "Discover the apartments",
@@ -3656,13 +3779,23 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
     {
       slug: "cascate-delle-marmore",
       category: "Day trip",
-      title: "Cascate delle Marmore: how to get there from Assisi",
-      excerpt: "Among the tallest man-made waterfalls in Europe, about an hour's drive from La Mora: a half-day trip.",
-      metaDescription: "Guide to the Cascate delle Marmore near Terni: height, viewpoints, water schedule and driving distance from Agriturismo La Mora.",
+      title: "Marmore Falls from Assisi: 77 km, just over an hour",
+      excerpt: "77.7 km from Assisi and 77.3 km from La Mora, just over an hour's drive: how to get there, when the water flows and which viewpoint to choose.",
+      metaDescription: "Marmore Falls from Assisi: 77.7 km, about 1 hour 15 minutes by car; 77.3 km from Agriturismo La Mora. How to get there, water times and viewpoints.",
       image: "/images/territorio/dintorni/cascate delle marmore.jpg",
       alt: "The Cascate delle Marmore in Umbria",
+      inBreve: {
+        heading: "At a glance",
+        items: [
+          { label: "From Assisi (Piazza del Comune)", value: "77.7 km · about 1 h 15 min" },
+          { label: "From Agriturismo La Mora", value: "77.3 km · about 1 h 10 min" },
+          { label: "Height", value: "165 m in three drops" },
+          { label: "Water", value: "At set times, different by month and day" },
+          { label: "Entrances", value: "Belvedere Inferiore and Belvedere Superiore" },
+        ],
+      },
       intro:
-        "About an hour's drive from La Mora, near Terni, a 165-metre waterfall created in Roman times is today among the tallest man-made falls in Europe — a half-day trip that's easy to fit into your stay.",
+        "The Marmore Falls are 77.7 km from the centre of Assisi (Piazza del Comune): about 1 hour 15 minutes by car along the SS3, according to Google Maps. From Agriturismo La Mora it's 77.3 km, about 1 hour 10 minutes, to see a 165-metre waterfall near Terni created by the Romans.",
       introCtaHeading: "A day trip out and an easy way back: where to stay in between.",
       introCtaLabel: "Discover the apartments",
       introCtaHref: "/alloggi/",
@@ -3670,15 +3803,15 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "A waterfall built by the Romans" },
         {
           type: "p",
-          text: "The Cascate delle Marmore began as a piece of Roman engineering: the Curiano Ditch, cut in 271 BC to channel the waters of the Velino river into the Nera and drain the marshes of the area. Over the centuries, the result became one of the tallest artificial waterfalls in the world, with a total drop of 165 metres across three successive falls.",
+          text: "The Marmore Falls began as a Roman project: in 271 BC the consul Manius Curius Dentatus diverted the Velino river towards the Nera to free the Rieti plain from stagnant water. The result is a 165-metre drop in three leaps, which Italy's official tourism portal describes as the highest in Europe.",
         },
-        { type: "h2", text: "The viewpoints" },
+        { type: "h2", text: "Viewpoints and trails" },
         {
           type: "list",
           items: [
-            "Belvedere Inferiore — the simplest, near the car park, with the classic view of the falls.",
-            "Belvedere Superiore and the upper trails — take more time and a bit of fitness, but offer views down onto the falls and the valley.",
-            "Grotta di Nettuno and Grotta della Pulce — side paths for those who want to see the falls up close, trail conditions permitting.",
+            "Belvedere Inferiore — on the road to the Valnerina: from here you see the whole waterfall.",
+            "Belvedere Superiore — at the end of the village of Marmore, overlooking the first drop.",
+            "Sentiero dell'Antico Passaggio — climbs steeply from the Belvedere Inferiore towards the top; along the way a tunnel leads to the Balcone degli Innamorati, right next to the water.",
           ],
         },
         {
@@ -3689,7 +3822,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "When the water flows" },
         {
           type: "p",
-          text: "The waterfall's flow is regulated: the water runs only during set time slots, decided to balance hydroelectric production with public access. Hours change by season and day of the week — before heading out, it's always worth checking the park's official calendar, so you don't arrive to a dry falls.",
+          text: "The falls have a controlled flow: when the drop is not at full capacity, the water is diverted into the penstocks of the hydroelectric plant. Water is released only in certain time slots, which differ by month and day of the week (in November 2026, for example, there is no release on weekdays): before setting off, check the calendar on the park's official website, cascatadellemarmore.info.",
         },
         {
           type: "cta",
@@ -3697,21 +3830,32 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           label: "Check availability",
           href: BOOKING_MODAL_HREF,
         },
-        { type: "h2", text: "From Agriturismo La Mora" },
+        { type: "h2", text: "From Assisi and from Agriturismo La Mora" },
         {
           type: "facts",
           items: [
-            { label: "Distance", value: "About 55-60 minutes by car" },
-            { label: "Waterfall drop", value: "165 metres" },
-            { label: "Built", value: "271 BC, Roman era" },
+            { label: "From Assisi (Piazza del Comune)", value: "77.7 km · about 1 h 15 min" },
+            { label: "From Agriturismo La Mora", value: "77.3 km · about 1 h 10 min" },
+            { label: "Alternative route", value: "Via the SS 209 Valnerina, about 75 km" },
             { label: "Pair with", value: "A stop in Terni" },
           ],
         },
         {
           type: "p",
-          text: "The drive makes the Marmore falls a feasible half-day trip: leave in the morning, visit the falls at your own pace, and still be back in time for an afternoon at the pool — or extend the day with a stop in the centre of Terni.",
+          text: "With just over an hour's drive each way, the Marmore Falls fit into half a day: leave in the morning, visit during the water-release hours and be back in time for the afternoon — or extend the day with a stop in the centre of Terni.",
         },
       ],
+      faq: {
+        heading: "Frequently asked questions",
+        items: [
+          { q: "How far are the Marmore Falls from Assisi?", a: "From the centre of Assisi (Piazza del Comune) 77.7 km, about 1 hour 15 minutes by car; from Agriturismo La Mora 77.3 km, about 1 hour 10 minutes (Google Maps, route along the SS3)." },
+          { q: "How do you get to the Marmore Falls from Assisi?", a: "By car: Google Maps suggests the route along the SS3, about 77 km, or the one with a stretch of the SS 209 Valnerina, about 75 km, both just over an hour. The park's entrances are the Belvedere Inferiore and the Belvedere Superiore." },
+          { q: "When does the water flow at the Marmore Falls?", a: "Only in certain time slots, which differ by month and day of the week: outside those hours the water is diverted to the hydroelectric plant. The up-to-date calendar is on the park's official website, cascatadellemarmore.info." },
+          { q: "How high are the Marmore Falls?", a: "165 metres in three drops: it's the Velino river plunging into the Nera." },
+          { q: "Who created the Marmore Falls?", a: "The Romans: in 271 BC the consul Manius Curius Dentatus diverted the waters of the Velino towards the Nera, to drain the marshes of the Rieti plain." },
+          { q: "Can you see the Marmore Falls in half a day from Assisi?", a: "Yes: with just over an hour's drive each way you can leave in the morning and be back in the early afternoon. Plan your visit around the water-release hours." },
+        ],
+      },
       finalCtaHeading: "Back to La Mora for the rest of the day.",
       finalCtaBody: "Panoramic pool open from May to September, steps from the apartments.",
       finalCtaLabel: "Discover the pool",
@@ -3917,13 +4061,22 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
     {
       slug: "basilica-santa-maria-degli-angeli",
       category: "Territoire",
-      title: "Basilique Santa Maria degli Angeli : que voir",
-      excerpt: "L'église qui abrite la Portioncule, berceau de l'ordre franciscain, à 2,1 km de La Mora.",
-      metaDescription: "Guide de la basilique Santa Maria degli Angeli à Assise : Portioncule, Chapelle du Transitus, roseraie, horaires et distance depuis Agriturismo La Mora (2 km).",
+      title: "Sainte-Marie-des-Anges : basilique, Portioncule et chapelle",
+      excerpt: "La basilique qui abrite la Portioncule et la chapelle du Transitus, à 2,1 km de La Mora : que voir, horaires et entrée.",
+      metaDescription: "La basilique Sainte-Marie-des-Anges à Assise abrite la Portioncule et la chapelle du Transitus. Horaires, entrée gratuite et où dormir à 2,1 km.",
       image: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg",
       alt: "Façade de la basilique Santa Maria degli Angeli, à Assise",
+      inBreve: {
+        heading: "En bref",
+        items: [
+          { label: "Dans la basilique", value: "Portioncule et chapelle du Transitus" },
+          { label: "Horaires", value: "Tous les jours 7h30–12h30 et 14h30–19h" },
+          { label: "Entrée", value: "Gratuite" },
+          { label: "Depuis Agriturismo La Mora", value: "2,1 km en voiture" },
+        ],
+      },
       intro:
-        "À deux kilomètres d'Agriturismo La Mora, dans la plaine en contrebas d'Assise, se dresse l'une des plus grandes églises de la chrétienté — construite au XVIe siècle autour d'un édifice bien plus petit et bien plus ancien : la Portioncule.",
+        "À 2,1 km d'Agriturismo La Mora, dans la plaine en contrebas d'Assise, la basilique Sainte-Marie-des-Anges (Santa Maria degli Angeli) fut construite entre 1569 et 1679, sur un projet de Galeazzo Alessi, autour d'une église bien plus petite et plus ancienne : la Portioncule.",
       introCtaHeading: "Vous préparez votre visite ? Choisissez où loger à 2,1 km de la basilique.",
       introCtaLabel: "Découvrir les appartements",
       introCtaHref: "/alloggi/",
@@ -3931,7 +4084,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "La Portioncule, un cœur dans le cœur" },
         {
           type: "p",
-          text: "La Portioncule est la petite chapelle où saint François passa une grande partie de sa vie religieuse et où il mourut, le 3 octobre 1226. Au XVIe siècle, pour la protéger et accueillir l'afflux croissant de pèlerins, une immense basilique fut construite tout autour : aujourd'hui, en entrant, on se retrouve face à une chapelle minuscule sous une coupole immense — un contraste qui raconte, mieux que toute description, la distance entre la simplicité originelle de François et la manière dont son héritage a ensuite été célébré.",
+          text: "La Portioncule est la petite église que François restaura et où il comprit sa vocation : ici, il fonda l'ordre des Frères mineurs, accueillit Claire en 1212 et obtint le Pardon d'Assise, l'indulgence plénière. Pour la protéger et accueillir les pèlerins, une immense basilique fut construite tout autour : aujourd'hui, en entrant, on se retrouve face à une chapelle minuscule sous une coupole immense — un contraste qui raconte, mieux que toute description, la distance entre la simplicité originelle de François et la manière dont son héritage a ensuite été célébré.",
         },
         {
           type: "image",
@@ -3939,26 +4092,35 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           alt: "Intérieur de la Portioncule, à l'intérieur de la basilique Santa Maria degli Angeli",
           caption: "La Portioncule vue depuis la nef de la basilique.",
         },
+        { type: "h2", text: "Basilique, Portioncule et chapelle du Transitus : la différence" },
+        {
+          type: "list",
+          items: [
+            "La basilique est la grande église construite entre 1569 et 1679 sur un projet de Galeazzo Alessi. Le séisme de 1832 en détruisit une partie de la nef centrale ; la façade, surmontée de la statue dorée de la Madone des Anges de Guglielmo Colasanti, fut refaite entre 1925 et 1930.",
+            "La Portioncule est la chapelle médiévale au centre de la basilique, sous la coupole : la « chapelle » à laquelle on pense quand on parle de Sainte-Marie-des-Anges, le lieu où naquit l'ordre franciscain.",
+            "La chapelle du Transitus, elle aussi dans la basilique, était une cellule de l'infirmerie du couvent : François y mourut le soir du 3 octobre 1226.",
+          ],
+        },
         { type: "h2", text: "Que voir au-delà de la Portioncule" },
         {
           type: "list",
           items: [
-            "Chapelle du Transitus — la cellule où François mourut, aujourd'hui transformée en chapelle.",
-            "La roseraie — des roses sans épines liées à la légende de François se jetant dans les ronces pour résister à une tentation.",
-            "Le musée de la Portioncule — objets et œuvres liés à l'histoire du lieu et de l'ordre franciscain.",
-            "La statue de saint François sur la place, un repère pour les visiteurs qui arrivent.",
+            "La roseraie — les roses sans épines liées au miracle raconté par la tradition franciscaine.",
+            "Le musée de la Portioncule — consacré à l'histoire du sanctuaire et du franciscanisme, ouvert de 9h à 13h et de 14h30 à 17h, fermé le mercredi.",
+            "La façade avec la statue dorée de la Madone des Anges, visible dès le parvis.",
           ],
         },
         { type: "h2", text: "Informations pratiques" },
         {
           type: "facts",
           items: [
-            { label: "Entrée", value: "Gratuite" },
-            { label: "Distance depuis La Mora", value: "2 km" },
-            { label: "Parking", value: "Disponible près de la basilique" },
-            { label: "À combiner avec", value: "Bosco di San Francesco (à pied, même entrée)" },
+            { label: "Horaires de la basilique", value: "7h30–12h30 et 14h30–19h, tous les jours" },
+            { label: "Entrée", value: "Gratuite, comme les visites guidées des frères" },
+            { label: "Musée de la Portioncule", value: "9h–13h et 14h30–17h, fermé le mercredi" },
+            { label: "Distance depuis La Mora", value: "2,1 km en voiture" },
           ],
         },
+        { type: "p", text: "Horaires du site officiel du sanctuaire, porziuncola.org (octobre 2026) : ils peuvent changer les jours de fête." },
         {
           type: "cta",
           heading: "Réservez en direct et organisez votre visite sans souci.",
@@ -3966,6 +4128,9 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           label: "Aller à la réservation directe",
           href: BOOKING_MODAL_HREF,
         },
+        { type: "h2", text: "Une villa près de Sainte-Marie-des-Anges" },
+        { type: "p", text: "Pour les groupes et les grandes familles, il y a aussi Villa Relax, la villa indépendante des mêmes propriétaires, à Rivotorto di Assisi, à 5 km de la basilique : jusqu'à 16 personnes dans 6 chambres, avec piscine privée et jardin, en location exclusive." },
+        { type: "links", heading: "Pour un groupe", items: [{ label: "Villa Relax, villa indépendante jusqu'à 16 personnes", href: "/villa-relax-assisi/" }] },
         { type: "h2", text: "Comment y aller depuis Agriturismo La Mora" },
         {
           type: "p",
@@ -3978,6 +4143,17 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           caption: "On part d'ici : 2,1 km en voiture, ou un tour en vélo électrique.",
         },
       ],
+      faq: {
+        heading: "Questions fréquentes",
+        items: [
+          { q: "L'église Sainte-Marie-des-Anges et la Portioncule, est-ce la même chose ?", a: "Non : l'église Sainte-Marie-des-Anges est la grande basilique construite entre 1569 et 1679 sur un projet de Galeazzo Alessi ; la Portioncule est la petite église médiévale que la basilique renferme en son centre, sous la coupole." },
+          { q: "Qu'est-ce que la chapelle de la Portioncule ?", a: "La petite église restaurée par saint François : il y comprit sa vocation, fonda l'ordre des Frères mineurs, accueillit sainte Claire en 1212 et obtint le Pardon d'Assise." },
+          { q: "Où mourut saint François ?", a: "Dans la chapelle du Transitus, à l'intérieur de la basilique : c'était une cellule de l'infirmerie du couvent, et François y mourut le soir du 3 octobre 1226." },
+          { q: "Combien coûte l'entrée et quels sont les horaires ?", a: "L'entrée au sanctuaire est gratuite. La basilique est ouverte tous les jours de 7h30 à 12h30 et de 14h30 à 19h ; le musée de la Portioncule de 9h à 13h et de 14h30 à 17h, fermé le mercredi (porziuncola.org, octobre 2026)." },
+          { q: "Y a-t-il une villa à louer près de Sainte-Marie-des-Anges ?", a: "Villa Relax, la villa indépendante des mêmes propriétaires qu'Agriturismo La Mora, se trouve à Rivotorto di Assisi, à 5 km de la basilique : jusqu'à 16 personnes dans 6 chambres, avec piscine privée, en location exclusive." },
+          { q: "À quelle distance d'Agriturismo La Mora se trouve la basilique ?", a: "À 2,1 km en voiture selon Google Maps : c'est le lieu franciscain le plus proche de la structure." },
+        ],
+      },
       finalCtaHeading: "À 2,1 km d'ici, à la campagne.",
       finalCtaBody: "Cinq appartements indépendants, une piscine panoramique, et la basilique à 2,1 km.",
       finalCtaLabel: "Découvrir les appartements",
@@ -4043,26 +4219,35 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
     {
       slug: "santuario-san-damiano",
       category: "Territoire",
-      title: "Le sanctuaire de San Damiano, hors des remparts d'Assise",
-      excerpt: "Où François entendit le célèbre appel à 'réparer mon église', et où Claire d'Assise vécut une grande partie de sa vie.",
-      metaDescription: "San Damiano, Assise : le sanctuaire où François reçut son appel et où Claire fonda les Clarisses. Comment y aller depuis Agriturismo La Mora.",
+      title: "Sanctuaire de San Damiano à Assise : François et Claire",
+      excerpt: "Le sanctuaire juste à la sortie du centre d'Assise où le crucifix parla à François et où Claire vécut 42 ans.",
+      metaDescription: "San Damiano à Assise : le sanctuaire où le crucifix parla à François et où Claire vécut 42 ans. À 1,5 km à pied du centre et à 7,4 km de La Mora.",
       image: "/images/territorio/assisi/san damiano santuario dintorni assisi.jpg",
       alt: "Sanctuaire de San Damiano parmi les oliviers, aux abords d'Assise",
+      inBreve: {
+        heading: "En bref",
+        items: [
+          { label: "Ce que c'est", value: "Sanctuaire franciscain, patrimoine mondial de l'UNESCO depuis 2000" },
+          { label: "Le crucifix", value: "L'original est dans la basilique Sainte-Claire" },
+          { label: "À pied depuis le centre", value: "1,5 km · env. 21 min en descente" },
+          { label: "Depuis Agriturismo La Mora", value: "7,4 km · env. 11 min en voiture" },
+        ],
+      },
       intro:
-        "À environ deux kilomètres au sud des remparts d'Assise, niché parmi les oliviers, un petit sanctuaire abrite deux des histoires les plus importantes du franciscanisme : la conversion de François et la vie de Claire.",
+        "Juste à la sortie du centre d'Assise, à 1,5 km à pied de la Piazza del Comune, parmi les oliviers, le sanctuaire de San Damiano abrite deux des histoires les plus importantes du franciscanisme : la conversion de François et la vie de Claire.",
       introCtaHeading: "Un moment de calme après la basilique : organisez votre séjour.",
       introCtaLabel: "Vérifier les disponibilités",
       introCtaHref: BOOKING_MODAL_HREF,
       content: [
-        { type: "h2", text: "‘Répare mon église’" },
+        { type: "h2", text: "« Va, répare ma maison »" },
         {
           type: "p",
-          text: "Selon la tradition, c'est ici que le crucifix en bois aujourd'hui conservé dans la basilique Santa Chiara parla à François, l'invitant à 'réparer mon église' — l'épisode qui marqua le début de sa conversion. François prit l'appel au pied de la lettre et restaura de ses propres mains l'édifice, alors en ruine.",
+          text: "Selon la tradition, c'est ici que le crucifix peint aujourd'hui conservé dans la basilique Sainte-Claire parla à François : « François, va et répare ma maison qui, comme tu le vois, tombe en ruine ». François prit l'appel au pied de la lettre et restaura de ses propres mains la petite église, alors en ruine. Une copie du crucifix se trouve aujourd'hui au-dessus du maître-autel de San Damiano.",
         },
-        { type: "h2", text: "Le couvent de Claire" },
+        { type: "h2", text: "Le monastère de Claire" },
         {
           type: "p",
-          text: "San Damiano est aussi le lieu où Claire d'Assise vécut plus de quarante ans, fondant dans ce même couvent l'ordre des Clarisses. Contrairement à la basilique Saint-François, San Damiano reste un lieu recueilli et silencieux, peu fréquenté par le tourisme de masse malgré son importance historique : sans doute l'étape la plus authentique pour qui cherche un moment de recueillement loin de l'affluence du centre.",
+          text: "San Damiano est aussi le lieu où Claire d'Assise vécut 42 ans et où elle mourut. Depuis 2000, avec les autres lieux franciscains d'Assise, il est inscrit au patrimoine mondial de l'UNESCO. Contrairement à la basilique Saint-François, il reste un lieu recueilli et silencieux : sans doute l'étape la plus authentique pour qui cherche un moment de recueillement loin de l'affluence du centre.",
         },
         {
           type: "image",
@@ -4073,10 +4258,10 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         {
           type: "facts",
           items: [
-            { label: "Distance depuis le centre", value: "Environ 2 km" },
-            { label: "À pied", value: "20-25 minutes en descente" },
+            { label: "À pied depuis la Piazza del Comune", value: "1,5 km · env. 21 min en descente" },
             { label: "En voiture depuis La Mora", value: "7,4 km · env. 11 min" },
-            { label: "Recommandé après", value: "La basilique Saint-François" },
+            { label: "Patrimoine de l'UNESCO", value: "Depuis 2000, avec les autres lieux franciscains" },
+            { label: "À combiner avec", value: "La basilique Sainte-Claire, où est conservé le crucifix original" },
           ],
         },
         {
@@ -4089,9 +4274,19 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "Depuis Agriturismo La Mora" },
         {
           type: "p",
-          text: "San Damiano se rejoint en traversant le centre d'Assise ; la façon la plus pratique pour les hôtes de La Mora est donc de le combiner avec une journée déjà consacrée au centre historique : on laisse la voiture près des remparts et on continue à pied. La montée au retour est plus exigeante que la descente — à garder à l'esprit pour ceux qui marchent avec de jeunes enfants.",
+          text: "Depuis La Mora, San Damiano est à 7,4 km, environ 11 minutes en voiture selon Google Maps. On peut aussi le combiner avec une journée dans le centre historique : depuis la Piazza del Comune, il y a 1,5 km à pied par la Via San Damiano, environ 21 minutes en descente. La montée au retour est plus exigeante, à garder à l'esprit avec de jeunes enfants.",
         },
       ],
+      faq: {
+        heading: "Questions fréquentes",
+        items: [
+          { q: "Où se trouve San Damiano à Assise ?", a: "Juste à la sortie du centre historique, sous les remparts : depuis la Piazza del Comune, il y a 1,5 km à pied par la Via San Damiano, environ 21 minutes en descente selon Google Maps." },
+          { q: "Que s'est-il passé à San Damiano ?", a: "Selon la tradition, le crucifix y parla à François pour lui demander de réparer sa maison. Sainte Claire vécut aussi 42 ans à San Damiano et y mourut." },
+          { q: "Où se trouve aujourd'hui le crucifix de San Damiano ?", a: "L'original est conservé dans la basilique Sainte-Claire, dans le centre d'Assise ; une copie se trouve au-dessus du maître-autel de San Damiano." },
+          { q: "San Damiano est-il inscrit au patrimoine de l'UNESCO ?", a: "Oui, depuis 2000, avec les autres lieux franciscains d'Assise." },
+          { q: "Comment aller à San Damiano depuis Agriturismo La Mora ?", a: "En voiture, il y a 7,4 km, environ 11 minutes selon Google Maps." },
+        ],
+      },
       finalCtaHeading: "Retour à La Mora, pour se détendre à la piscine.",
       finalCtaBody: "À 6,8 km du centre d'Assise, la campagne ombrienne attend, sans hâte.",
       finalCtaLabel: "Découvrir les appartements",
@@ -4100,13 +4295,23 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
     {
       slug: "cascate-delle-marmore",
       category: "Excursion d'une journée",
-      title: "Cascate delle Marmore : comment y aller depuis Assise",
-      excerpt: "Parmi les plus hautes cascades artificielles d'Europe, à environ une heure de route de La Mora : une excursion d'une demi-journée.",
-      metaDescription: "Guide des Cascate delle Marmore près de Terni : hauteur, points de vue, horaires de l'eau et distance en voiture depuis Agriturismo La Mora.",
+      title: "Cascades des Marmore depuis Assise : 77 km en voiture",
+      excerpt: "À 77,7 km d'Assise et 77,3 km de La Mora, un peu plus d'une heure de route : comment y aller, quand l'eau coule et quel belvédère choisir.",
+      metaDescription: "Cascades des Marmore depuis Assise : 77,7 km, environ 1 h 15 de route ; 77,3 km depuis Agriturismo La Mora. Itinéraire, horaires de l'eau et belvédères.",
       image: "/images/territorio/dintorni/cascate delle marmore.jpg",
       alt: "Les Cascate delle Marmore en Ombrie",
+      inBreve: {
+        heading: "En bref",
+        items: [
+          { label: "Depuis Assise (Piazza del Comune)", value: "77,7 km · env. 1 h 15" },
+          { label: "Depuis Agriturismo La Mora", value: "77,3 km · env. 1 h 10" },
+          { label: "Hauteur", value: "165 m en trois sauts" },
+          { label: "Eau", value: "À heures fixes, différentes selon le mois et le jour" },
+          { label: "Entrées", value: "Belvedere Inferiore et Belvedere Superiore" },
+        ],
+      },
       intro:
-        "À environ une heure de route de La Mora, près de Terni, une chute d'eau de 165 mètres créée à l'époque romaine figure aujourd'hui parmi les plus hautes cascades artificielles d'Europe — une excursion d'une demi-journée facile à organiser pendant le séjour.",
+        "Les cascades des Marmore sont à 77,7 km du centre d'Assise (Piazza del Comune) : environ 1 h 15 en voiture par la SS3, selon Google Maps. Depuis Agriturismo La Mora, il y a 77,3 km, environ 1 h 10, pour découvrir près de Terni une chute d'eau de 165 mètres créée par les Romains.",
       introCtaHeading: "Une excursion hors les murs, un retour tranquille : où loger entre les deux.",
       introCtaLabel: "Découvrir les appartements",
       introCtaHref: "/alloggi/",
@@ -4114,15 +4319,15 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "Une cascade construite par les Romains" },
         {
           type: "p",
-          text: "Les Cascate delle Marmore naissent d'un ouvrage d'ingénierie romain : le canal Curiano, creusé en 271 av. J.-C. pour faire s'écouler les eaux du Velino dans le Nera et assainir les marais de la zone. Le résultat, au fil des siècles, est devenu l'une des plus hautes chutes d'eau artificielles au monde, avec un dénivelé total de 165 mètres réparti sur trois sauts successifs.",
+          text: "La cascade des Marmore est née d'un ouvrage romain : en 271 av. J.-C., le consul Manius Curius Dentatus fit dévier le Velino vers le Nera pour libérer la plaine de Rieti des eaux stagnantes. Le résultat est une chute de 165 mètres en trois sauts, que le portail officiel du tourisme italien présente comme la plus haute d'Europe.",
         },
-        { type: "h2", text: "Les points de vue" },
+        { type: "h2", text: "Les belvédères et les sentiers" },
         {
           type: "list",
           items: [
-            "Belvedere Inferiore — le plus simple, près du parking, la vue classique sur la cascade.",
-            "Belvedere Superiore et les sentiers hauts — demandent plus de temps et un peu d'entraînement, mais offrent des vues en surplomb sur la chute et la vallée.",
-            "Grotta di Nettuno et Grotta della Pulce — parcours latéraux pour voir la cascade de près, selon l'état des sentiers.",
+            "Belvedere Inferiore — sur la route de la Valnerina : on y voit toute la cascade.",
+            "Belvedere Superiore — au bout du village de Marmore, face au premier saut.",
+            "Sentiero dell'Antico Passaggio — monte en pente raide du Belvedere Inferiore vers le sommet ; en chemin, un tunnel mène au Balcone degli Innamorati, tout près de l'eau.",
           ],
         },
         {
@@ -4133,7 +4338,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "Quand voir l'eau" },
         {
           type: "p",
-          text: "Le débit de la cascade est réglementé : l'eau ne coule que sur des plages horaires précises, définies pour équilibrer production hydroélectrique et ouverture au public. Les horaires changent selon la saison et le jour de la semaine — avant de partir, mieux vaut toujours vérifier le calendrier officiel du parc, pour ne pas se retrouver devant une chute à sec.",
+          text: "La cascade est à débit contrôlé : quand le saut n'est pas à plein régime, l'eau est déviée vers les conduites de la centrale hydroélectrique. Elle n'est lâchée qu'à certaines heures, différentes selon le mois et le jour de la semaine (en novembre 2026, par exemple, pas de lâcher en semaine) : avant de partir, consultez le calendrier sur le site officiel du parc, cascatadellemarmore.info.",
         },
         {
           type: "cta",
@@ -4141,21 +4346,32 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           label: "Vérifier les disponibilités",
           href: BOOKING_MODAL_HREF,
         },
-        { type: "h2", text: "Depuis Agriturismo La Mora" },
+        { type: "h2", text: "Depuis Assise et depuis Agriturismo La Mora" },
         {
           type: "facts",
           items: [
-            { label: "Distance", value: "Environ 55-60 minutes en voiture" },
-            { label: "Dénivelé de la cascade", value: "165 mètres" },
-            { label: "Réalisée en", value: "271 av. J.-C., époque romaine" },
+            { label: "Depuis Assise (Piazza del Comune)", value: "77,7 km · env. 1 h 15" },
+            { label: "Depuis Agriturismo La Mora", value: "77,3 km · env. 1 h 10" },
+            { label: "Autre itinéraire", value: "Par la SS 209 Valnerina, environ 75 km" },
             { label: "À combiner avec", value: "Une halte à Terni" },
           ],
         },
         {
           type: "p",
-          text: "Le trajet fait des Marmore une excursion réalisable en une demi-journée : on part le matin, on visite la cascade tranquillement, et on peut encore rentrer à temps pour un après-midi à la piscine, ou prolonger la journée par une halte dans le centre de Terni.",
+          text: "Avec un peu plus d'une heure de route par trajet, les Marmore tiennent en une demi-journée : on part le matin, on visite la cascade pendant les heures de lâcher d'eau et on rentre à temps pour l'après-midi — ou on prolonge la journée par une halte dans le centre de Terni.",
         },
       ],
+      faq: {
+        heading: "Questions fréquentes",
+        items: [
+          { q: "À quelle distance d'Assise se trouvent les cascades des Marmore ?", a: "Depuis le centre d'Assise (Piazza del Comune), 77,7 km, environ 1 h 15 en voiture ; depuis Agriturismo La Mora, 77,3 km, environ 1 h 10 (Google Maps, itinéraire par la SS3)." },
+          { q: "Comment aller aux cascades des Marmore depuis Assise ?", a: "En voiture : Google Maps propose l'itinéraire par la SS3, environ 77 km, ou celui avec un tronçon de la SS 209 Valnerina, environ 75 km, tous deux d'un peu plus d'une heure. Les entrées du parc sont le Belvedere Inferiore et le Belvedere Superiore." },
+          { q: "Quand l'eau coule-t-elle aux cascades des Marmore ?", a: "Seulement à certaines heures, différentes selon le mois et le jour de la semaine : en dehors, l'eau est déviée vers la centrale hydroélectrique. Le calendrier à jour est sur le site officiel du parc, cascatadellemarmore.info." },
+          { q: "Quelle est la hauteur de la cascade des Marmore ?", a: "165 mètres en trois sauts : c'est le Velino qui se jette dans le Nera." },
+          { q: "Qui a créé la cascade des Marmore ?", a: "Les Romains : en 271 av. J.-C., le consul Manius Curius Dentatus fit dévier les eaux du Velino vers le Nera pour assécher les marais de la plaine de Rieti." },
+          { q: "Peut-on voir les Marmore en une demi-journée depuis Assise ?", a: "Oui : avec un peu plus d'une heure de route par trajet, on part le matin et on rentre en début d'après-midi. Mieux vaut caler la visite sur les heures de lâcher d'eau." },
+        ],
+      },
       finalCtaHeading: "Retour à La Mora pour le reste de la journée.",
       finalCtaBody: "Piscine panoramique ouverte de mai à septembre, à deux pas des appartements.",
       finalCtaLabel: "Découvrir la piscine",
@@ -4361,13 +4577,22 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
     {
       slug: "basilica-santa-maria-degli-angeli",
       category: "Umgebung",
-      title: "Basilika Santa Maria degli Angeli: was man sehen sollte",
-      excerpt: "Die Kirche, die die Portiunkula beherbergt, den Geburtsort des Franziskanerordens, nur 2,1 km von La Mora entfernt.",
-      metaDescription: "Führer zur Basilika Santa Maria degli Angeli in Assisi: Portiunkula, Transitus-Kapelle, Rosengarten, Öffnungszeiten und Entfernung von Agriturismo La Mora (2 km).",
+      title: "Santa Maria degli Angeli: Basilika, Portiunkula und Kapelle",
+      excerpt: "Die Basilika mit der Portiunkula und der Transitus-Kapelle, 2,1 km von La Mora: Sehenswertes, Öffnungszeiten und Eintritt.",
+      metaDescription: "Die Basilika Santa Maria degli Angeli in Assisi birgt die Portiunkula und die Transitus-Kapelle. Öffnungszeiten, freier Eintritt, Unterkunft 2,1 km entfernt.",
       image: "/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg",
       alt: "Fassade der Basilika Santa Maria degli Angeli in Assisi",
+      inBreve: {
+        heading: "Auf einen Blick",
+        items: [
+          { label: "In der Basilika", value: "Portiunkula und Transitus-Kapelle" },
+          { label: "Öffnungszeiten", value: "Täglich 7:30–12:30 und 14:30–19:00 Uhr" },
+          { label: "Eintritt", value: "Frei" },
+          { label: "Ab Agriturismo La Mora", value: "2,1 km mit dem Auto" },
+        ],
+      },
       intro:
-        "Zwei Kilometer von Agriturismo La Mora entfernt, in der Ebene unterhalb von Assisi, erhebt sich eine der größten Kirchen der Christenheit — im 16. Jahrhundert um ein viel kleineres, viel älteres Bauwerk herum errichtet: die Portiunkula.",
+        "2,1 km von Agriturismo La Mora entfernt, in der Ebene unterhalb von Assisi, wurde die Basilika Santa Maria degli Angeli zwischen 1569 und 1679 nach Plänen von Galeazzo Alessi errichtet — um eine viel kleinere und ältere Kirche herum: die Portiunkula.",
       introCtaHeading: "Planen Sie den Besuch? Wählen Sie eine Unterkunft 2,1 km von der Basilika entfernt.",
       introCtaLabel: "Die Apartments entdecken",
       introCtaHref: "/alloggi/",
@@ -4375,7 +4600,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "Die Portiunkula, ein Herz im Herzen" },
         {
           type: "p",
-          text: "Die Portiunkula ist die kleine Kapelle, in der der heilige Franziskus einen Großteil seines geistlichen Lebens verbrachte und wo er am 3. Oktober 1226 starb. Im 16. Jahrhundert wurde, um sie zu schützen und den wachsenden Pilgerstrom aufzunehmen, eine riesige Basilika um sie herum errichtet: Wer heute eintritt, findet eine winzige Kapelle unter einer gewaltigen Kuppel vor — ein Kontrast, der besser als jede Beschreibung den Abstand zwischen der ursprünglichen Einfachheit des Franziskus und der Art zeigt, wie sein Erbe später gefeiert wurde.",
+          text: "Die Portiunkula ist die kleine Kirche, die Franziskus restaurierte und in der er seine Berufung erkannte: Hier gründete er den Orden der Minderbrüder, nahm 1212 Klara auf und erlangte den Portiunkula-Ablass, den vollkommenen Ablass. Um sie zu schützen und die Pilger aufzunehmen, wurde eine riesige Basilika um sie herum errichtet: Wer heute eintritt, findet eine winzige Kapelle unter einer gewaltigen Kuppel vor — ein Kontrast, der besser als jede Beschreibung den Abstand zwischen der ursprünglichen Einfachheit des Franziskus und der Art zeigt, wie sein Erbe später gefeiert wurde.",
         },
         {
           type: "image",
@@ -4383,26 +4608,35 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           alt: "Innenansicht der Portiunkula, im Inneren der Basilika Santa Maria degli Angeli",
           caption: "Die Portiunkula, vom Kirchenschiff der Basilika aus gesehen.",
         },
+        { type: "h2", text: "Basilika, Portiunkula und Transitus-Kapelle: der Unterschied" },
+        {
+          type: "list",
+          items: [
+            "Die Basilika ist die große Kirche, die zwischen 1569 und 1679 nach Plänen von Galeazzo Alessi entstand. Das Erdbeben von 1832 zerstörte einen Teil des Mittelschiffs; die Fassade mit der vergoldeten Statue der Madonna degli Angeli von Guglielmo Colasanti wurde zwischen 1925 und 1930 erneuert.",
+            "Die Portiunkula ist die mittelalterliche Kapelle in der Mitte der Basilika, unter der Kuppel: die „Kapelle“, an die man bei Santa Maria degli Angeli denkt, der Ort, an dem der Franziskanerorden entstand.",
+            "Die Transitus-Kapelle, ebenfalls in der Basilika, war eine Zelle der Krankenstation des Klosters: Hier starb Franziskus am Abend des 3. Oktober 1226.",
+          ],
+        },
         { type: "h2", text: "Was man neben der Portiunkula sehen sollte" },
         {
           type: "list",
           items: [
-            "Transitus-Kapelle — die Zelle, in der Franziskus starb, heute eine Kapelle.",
-            "Der Rosengarten — dornenlose Rosen, verbunden mit der Legende, wie Franziskus sich in Dornen warf, um einer Versuchung zu widerstehen.",
-            "Das Portiunkula-Museum — Exponate und Werke zur Geschichte des Ortes und des Franziskanerordens.",
-            "Die Franziskus-Statue auf dem Vorplatz, ein Orientierungspunkt für ankommende Besucher.",
+            "Der Rosengarten — die dornenlosen Rosen, verbunden mit dem Wunder, von dem die franziskanische Überlieferung erzählt.",
+            "Das Portiunkula-Museum — zur Geschichte des Heiligtums und des Franziskanertums, geöffnet 9–13 und 14:30–17 Uhr, mittwochs geschlossen.",
+            "Die Fassade mit der vergoldeten Statue der Madonna degli Angeli, schon vom Vorplatz aus zu sehen.",
           ],
         },
         { type: "h2", text: "Praktische Informationen" },
         {
           type: "facts",
           items: [
-            { label: "Eintritt", value: "Kostenlos" },
-            { label: "Entfernung von La Mora", value: "2 km" },
-            { label: "Parken", value: "In der Nähe der Basilika verfügbar" },
-            { label: "Kombinieren mit", value: "Bosco di San Francesco (zu Fuß, gleicher Eingang)" },
+            { label: "Öffnungszeiten der Basilika", value: "Täglich 7:30–12:30 und 14:30–19:00 Uhr" },
+            { label: "Eintritt", value: "Frei, ebenso die Führungen der Brüder" },
+            { label: "Portiunkula-Museum", value: "9–13 und 14:30–17 Uhr, mittwochs geschlossen" },
+            { label: "Entfernung von La Mora", value: "2,1 km mit dem Auto" },
           ],
         },
+        { type: "p", text: "Öffnungszeiten von der offiziellen Website des Heiligtums, porziuncola.org (Oktober 2026): an Feiertagen können sie sich ändern." },
         {
           type: "cta",
           heading: "Buchen Sie direkt und planen Sie den Besuch ganz ohne Sorgen.",
@@ -4410,6 +4644,9 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           label: "Zur Direktbuchung",
           href: BOOKING_MODAL_HREF,
         },
+        { type: "h2", text: "Eine Villa bei Santa Maria degli Angeli" },
+        { type: "p", text: "Für Gruppen und große Familien gibt es außerdem Villa Relax, die unabhängige Villa derselben Eigentümer in Rivotorto di Assisi, 5 km von der Basilika: bis zu 16 Gäste in 6 Schlafzimmern, mit privatem Pool und Garten, exklusiv vermietet." },
+        { type: "links", heading: "Für Gruppen", items: [{ label: "Villa Relax, unabhängige Villa für bis zu 16 Gäste", href: "/villa-relax-assisi/" }] },
         { type: "h2", text: "Anfahrt von Agriturismo La Mora" },
         {
           type: "p",
@@ -4422,6 +4659,17 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           caption: "Hier startet man: 2,1 km mit dem Auto, oder eine Fahrt mit dem E-Bike.",
         },
       ],
+      faq: {
+        heading: "Häufige Fragen",
+        items: [
+          { q: "Sind die Kirche Santa Maria degli Angeli und die Portiunkula dasselbe?", a: "Nein: Die Kirche Santa Maria degli Angeli ist die große Basilika, die zwischen 1569 und 1679 nach Plänen von Galeazzo Alessi entstand; die Portiunkula ist die kleine mittelalterliche Kirche, die die Basilika in ihrer Mitte unter der Kuppel umschließt." },
+          { q: "Was ist die Portiunkula-Kapelle?", a: "Die kleine Kirche, die der heilige Franziskus restaurierte: Hier erkannte er seine Berufung, gründete den Orden der Minderbrüder, nahm 1212 die heilige Klara auf und erlangte den Portiunkula-Ablass." },
+          { q: "Wo starb der heilige Franziskus?", a: "In der Transitus-Kapelle in der Basilika: Sie war eine Zelle der Krankenstation des Klosters, und Franziskus starb dort am Abend des 3. Oktober 1226." },
+          { q: "Was kostet der Eintritt und wann ist geöffnet?", a: "Der Eintritt in das Heiligtum ist frei. Die Basilika ist täglich von 7:30 bis 12:30 und von 14:30 bis 19:00 Uhr geöffnet, das Portiunkula-Museum von 9 bis 13 und von 14:30 bis 17 Uhr, mittwochs geschlossen (porziuncola.org, Oktober 2026)." },
+          { q: "Gibt es eine Villa zur Miete bei Santa Maria degli Angeli?", a: "Villa Relax, die unabhängige Villa derselben Eigentümer wie Agriturismo La Mora, liegt in Rivotorto di Assisi, 5 km von der Basilika: bis zu 16 Gäste in 6 Schlafzimmern, mit privatem Pool, exklusiv vermietet." },
+          { q: "Wie weit ist die Basilika von Agriturismo La Mora entfernt?", a: "2,1 km mit dem Auto laut Google Maps: Sie ist der franziskanische Ort, der der Unterkunft am nächsten liegt." },
+        ],
+      },
       finalCtaHeading: "2,1 km von hier, mitten auf dem Land.",
       finalCtaBody: "Fünf unabhängige Apartments, ein Panorama-Pool, und die Basilika 2,1 km entfernt.",
       finalCtaLabel: "Die Apartments entdecken",
@@ -4487,26 +4735,35 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
     {
       slug: "santuario-san-damiano",
       category: "Umgebung",
-      title: "Das Heiligtum San Damiano, außerhalb der Mauern von Assisi",
-      excerpt: "Wo Franziskus den berühmten Ruf 'stelle meine Kirche wieder her' vernahm und wo Klara von Assisi den Großteil ihres Lebens verbrachte.",
-      metaDescription: "San Damiano, Assisi: das Heiligtum, in dem Franziskus seine Berufung empfing und Klara die Klarissen gründete. Anfahrt von Agriturismo La Mora.",
+      title: "San Damiano in Assisi: Heiligtum von Franziskus und Klara",
+      excerpt: "Das Heiligtum direkt vor der Altstadt von Assisi, in dem das Kreuz zu Franziskus sprach und Klara 42 Jahre lebte.",
+      metaDescription: "San Damiano in Assisi: das Heiligtum, in dem das Kreuz zu Franziskus sprach und Klara 42 Jahre lebte. 1,5 km zu Fuß vom Zentrum, 7,4 km von La Mora.",
       image: "/images/territorio/assisi/san damiano santuario dintorni assisi.jpg",
       alt: "Heiligtum San Damiano zwischen Olivenbäumen, in der Nähe von Assisi",
+      inBreve: {
+        heading: "Auf einen Blick",
+        items: [
+          { label: "Was es ist", value: "Franziskanisches Heiligtum, UNESCO-Welterbe seit 2000" },
+          { label: "Das Kreuz", value: "Das Original ist in der Basilika Santa Chiara" },
+          { label: "Zu Fuß vom Zentrum", value: "1,5 km · ca. 21 Min. bergab" },
+          { label: "Ab Agriturismo La Mora", value: "7,4 km · ca. 11 Min. mit dem Auto" },
+        ],
+      },
       intro:
-        "Etwa zwei Kilometer südlich der Mauern von Assisi, umgeben von Olivenbäumen, bewahrt ein kleines Heiligtum zwei der wichtigsten Geschichten des Franziskanertums: die Bekehrung des Franziskus und das Leben der Klara.",
+        "Direkt vor der Altstadt von Assisi, 1,5 km zu Fuß von der Piazza del Comune, zwischen Olivenbäumen, bewahrt das Heiligtum San Damiano zwei der wichtigsten Geschichten des Franziskanertums: die Bekehrung des Franziskus und das Leben der Klara.",
       introCtaHeading: "Ein ruhiger Moment nach der Basilika: planen Sie den Aufenthalt.",
       introCtaLabel: "Verfügbarkeit prüfen",
       introCtaHref: BOOKING_MODAL_HREF,
       content: [
-        { type: "h2", text: "‘Stelle meine Kirche wieder her’" },
+        { type: "h2", text: "„Geh, stelle mein Haus wieder her“" },
         {
           type: "p",
-          text: "Der Überlieferung nach sprach hier das heute in der Basilika Santa Chiara aufbewahrte Holzkreuz zu Franziskus und forderte ihn auf, 'meine Kirche wieder herzustellen' — die Episode, die den Beginn seiner Bekehrung markierte. Franziskus nahm den Ruf wörtlich und restaurierte das damals verfallene Gebäude mit eigenen Händen.",
+          text: "Der Überlieferung nach sprach hier das bemalte Kreuz, das heute in der Basilika Santa Chiara aufbewahrt wird, zu Franziskus: „Franziskus, geh und stelle mein Haus wieder her, das, wie du siehst, ganz verfällt.“ Franziskus nahm den Ruf wörtlich und restaurierte die damals verfallene kleine Kirche mit eigenen Händen. Über dem Hauptaltar von San Damiano hängt heute eine Kopie des Kreuzes.",
         },
         { type: "h2", text: "Das Kloster der Klara" },
         {
           type: "p",
-          text: "San Damiano ist auch der Ort, an dem Klara von Assisi über vierzig Jahre lang lebte und in eben diesem Kloster den Orden der Klarissen gründete. Anders als die Basilika San Francesco bleibt San Damiano trotz seiner historischen Bedeutung ein stiller, zurückgezogener Ort, wenig vom Massentourismus berührt — wohl die authentischste Station für alle, die einen Moment der Einkehr abseits des Andrangs im Zentrum suchen.",
+          text: "San Damiano ist auch der Ort, an dem Klara von Assisi 42 Jahre lang lebte und starb. Seit 2000 gehört es mit den übrigen franziskanischen Stätten von Assisi zum UNESCO-Welterbe. Anders als die Basilika San Francesco bleibt es ein stiller, zurückgezogener Ort: wohl die authentischste Station für alle, die einen Moment der Einkehr abseits des Andrangs im Zentrum suchen.",
         },
         {
           type: "image",
@@ -4517,10 +4774,10 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         {
           type: "facts",
           items: [
-            { label: "Entfernung vom Zentrum", value: "Etwa 2 km" },
-            { label: "Zu Fuß", value: "20-25 Minuten bergab" },
+            { label: "Zu Fuß ab der Piazza del Comune", value: "1,5 km · ca. 21 Min. bergab" },
             { label: "Mit dem Auto ab La Mora", value: "7,4 km · ca. 11 Min." },
-            { label: "Empfohlen nach", value: "Der Basilika San Francesco" },
+            { label: "UNESCO-Welterbe", value: "Seit 2000, mit den anderen franziskanischen Stätten" },
+            { label: "Kombinieren mit", value: "Der Basilika Santa Chiara, wo das Originalkreuz hängt" },
           ],
         },
         {
@@ -4533,9 +4790,19 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "Von Agriturismo La Mora aus" },
         {
           type: "p",
-          text: "San Damiano erreicht man, indem man durch das Zentrum von Assisi geht; für Gäste von La Mora ist es daher am praktischsten, den Besuch mit einem Tag zu kombinieren, der bereits der Altstadt gewidmet ist: Auto in der Nähe der Mauern abstellen und zu Fuß weitergehen. Der Aufstieg auf dem Rückweg ist anstrengender als der Abstieg — für Familien mit kleinen Kindern ein wichtiger Hinweis.",
+          text: "Von La Mora aus liegt San Damiano 7,4 km entfernt, laut Google Maps rund 11 Minuten mit dem Auto. Man kann es auch mit einem Tag in der Altstadt verbinden: Von der Piazza del Comune sind es 1,5 km zu Fuß über die Via San Damiano, rund 21 Minuten bergab. Der Rückweg bergauf ist anstrengender — für Familien mit kleinen Kindern ein wichtiger Hinweis.",
         },
       ],
+      faq: {
+        heading: "Häufige Fragen",
+        items: [
+          { q: "Wo liegt San Damiano in Assisi?", a: "Direkt vor der Altstadt, unterhalb der Mauern: Von der Piazza del Comune sind es 1,5 km zu Fuß über die Via San Damiano, laut Google Maps rund 21 Minuten bergab." },
+          { q: "Was geschah in San Damiano?", a: "Der Überlieferung nach sprach hier das Kreuz zu Franziskus und bat ihn, sein Haus wiederherzustellen. Die heilige Klara lebte außerdem 42 Jahre in San Damiano und starb dort." },
+          { q: "Wo ist das Kreuz von San Damiano heute?", a: "Das Original wird in der Basilika Santa Chiara im Zentrum von Assisi aufbewahrt; über dem Hauptaltar von San Damiano hängt eine Kopie." },
+          { q: "Gehört San Damiano zum UNESCO-Welterbe?", a: "Ja, seit 2000, zusammen mit den anderen franziskanischen Stätten von Assisi." },
+          { q: "Wie kommt man von Agriturismo La Mora nach San Damiano?", a: "Mit dem Auto sind es 7,4 km, laut Google Maps rund 11 Minuten." },
+        ],
+      },
       finalCtaHeading: "Zurück nach La Mora, zum Entspannen am Pool.",
       finalCtaBody: "6,8 km vom Zentrum Assisis entfernt wartet die umbrische Landschaft, ganz ohne Eile.",
       finalCtaLabel: "Die Apartments entdecken",
@@ -4544,13 +4811,23 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
     {
       slug: "cascate-delle-marmore",
       category: "Tagesausflug",
-      title: "Cascate delle Marmore: Anfahrt von Assisi",
-      excerpt: "Einer der höchsten künstlichen Wasserfälle Europas, etwa eine Autostunde von La Mora entfernt: ein Halbtagesausflug.",
-      metaDescription: "Führer zu den Cascate delle Marmore bei Terni: Höhe, Aussichtspunkte, Wasserzeiten und Fahrzeit von Agriturismo La Mora.",
+      title: "Marmore-Wasserfälle ab Assisi: 77 km, gut eine Stunde",
+      excerpt: "77,7 km von Assisi und 77,3 km von La Mora, gut eine Stunde Fahrt: Anfahrt, Zeiten des Wasserflusses und welcher Aussichtspunkt.",
+      metaDescription: "Marmore-Wasserfälle ab Assisi: 77,7 km, rund 1 Stunde 15 Minuten mit dem Auto; 77,3 km ab Agriturismo La Mora. Anfahrt, Wasserzeiten, Aussichtspunkte.",
       image: "/images/territorio/dintorni/cascate delle marmore.jpg",
       alt: "Die Cascate delle Marmore in Umbrien",
+      inBreve: {
+        heading: "Auf einen Blick",
+        items: [
+          { label: "Ab Assisi (Piazza del Comune)", value: "77,7 km · ca. 1 Std. 15 Min." },
+          { label: "Ab Agriturismo La Mora", value: "77,3 km · ca. 1 Std. 10 Min." },
+          { label: "Höhe", value: "165 m in drei Stufen" },
+          { label: "Wasser", value: "Zu festen Zeiten, je nach Monat und Wochentag" },
+          { label: "Eingänge", value: "Belvedere Inferiore und Belvedere Superiore" },
+        ],
+      },
       intro:
-        "Etwa eine Autostunde von La Mora entfernt, nahe Terni, zählt ein in römischer Zeit angelegter, 165 Meter hoher Wasserfall heute zu den höchsten künstlichen Wasserfällen Europas — ein Halbtagesausflug, der sich leicht in den Aufenthalt einbauen lässt.",
+        "Die Marmore-Wasserfälle liegen 77,7 km vom Zentrum Assisis (Piazza del Comune) entfernt: laut Google Maps rund 1 Stunde 15 Minuten mit dem Auto über die SS3. Ab Agriturismo La Mora sind es 77,3 km, rund 1 Stunde 10 Minuten, zu einem 165 Meter hohen Wasserfall bei Terni, den die Römer geschaffen haben.",
       introCtaHeading: "Ein Ausflug, eine entspannte Rückfahrt: wo man dazwischen übernachtet.",
       introCtaLabel: "Die Apartments entdecken",
       introCtaHref: "/alloggi/",
@@ -4558,15 +4835,15 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "Ein von den Römern erbauter Wasserfall" },
         {
           type: "p",
-          text: "Die Cascate delle Marmore entstanden aus einem römischen Ingenieursbauwerk: dem Cavo Curiano, 271 v. Chr. angelegt, um das Wasser des Flusses Velino in den Nera abzuleiten und die Sümpfe der Gegend trockenzulegen. Im Laufe der Jahrhunderte wurde daraus einer der höchsten künstlichen Wasserfälle der Welt, mit einem Gesamtgefälle von 165 Metern über drei aufeinanderfolgende Stufen.",
+          text: "Der Marmore-Wasserfall geht auf ein römisches Bauwerk zurück: 271 v. Chr. ließ der Konsul Manius Curius Dentatus den Fluss Velino in den Nera ableiten, um die Ebene von Rieti von stehendem Wasser zu befreien. Das Ergebnis ist ein Fall von 165 Metern in drei Stufen, den das offizielle Tourismusportal Italiens als den höchsten Europas bezeichnet.",
         },
-        { type: "h2", text: "Die Aussichtspunkte" },
+        { type: "h2", text: "Aussichtspunkte und Wege" },
         {
           type: "list",
           items: [
-            "Belvedere Inferiore — der einfachste, nahe dem Parkplatz, mit dem klassischen Blick auf den Wasserfall.",
-            "Belvedere Superiore und die oberen Wege — brauchen mehr Zeit und etwas Kondition, bieten dafür Blicke von oben auf den Fall und das Tal.",
-            "Grotta di Nettuno und Grotta della Pulce — Seitenwege für alle, die den Wasserfall aus der Nähe sehen möchten, je nach Wegzustand.",
+            "Belvedere Inferiore — an der Straße ins Valnerina: Von hier sieht man den ganzen Wasserfall.",
+            "Belvedere Superiore — am Ende des Dorfes Marmore, mit Blick auf die erste Stufe.",
+            "Sentiero dell'Antico Passaggio — steigt steil vom Belvedere Inferiore zur Spitze an; unterwegs führt ein Tunnel zum Balcone degli Innamorati, direkt am Wasser.",
           ],
         },
         {
@@ -4577,7 +4854,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
         { type: "h2", text: "Wann das Wasser fließt" },
         {
           type: "p",
-          text: "Der Wasserfall wird reguliert: Das Wasser fließt nur zu bestimmten Zeiten, festgelegt, um Stromerzeugung und öffentlichen Zugang in Einklang zu bringen. Die Zeiten ändern sich je nach Saison und Wochentag — vor der Fahrt lohnt sich immer ein Blick auf den offiziellen Kalender des Parks, um nicht vor einem trockenen Fall zu stehen.",
+          text: "Der Wasserfall wird reguliert: Wenn er nicht voll läuft, wird das Wasser in die Druckleitungen des Wasserkraftwerks umgeleitet. Freigegeben wird es nur zu bestimmten Zeiten, die je nach Monat und Wochentag wechseln (im November 2026 zum Beispiel werktags gar nicht): Prüfen Sie vor der Fahrt den Kalender auf der offiziellen Website des Parks, cascatadellemarmore.info.",
         },
         {
           type: "cta",
@@ -4585,21 +4862,32 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
           label: "Verfügbarkeit prüfen",
           href: BOOKING_MODAL_HREF,
         },
-        { type: "h2", text: "Von Agriturismo La Mora aus" },
+        { type: "h2", text: "Ab Assisi und ab Agriturismo La Mora" },
         {
           type: "facts",
           items: [
-            { label: "Entfernung", value: "Etwa 55-60 Minuten mit dem Auto" },
-            { label: "Gefälle des Wasserfalls", value: "165 Meter" },
-            { label: "Erbaut", value: "271 v. Chr., römische Epoche" },
+            { label: "Ab Assisi (Piazza del Comune)", value: "77,7 km · ca. 1 Std. 15 Min." },
+            { label: "Ab Agriturismo La Mora", value: "77,3 km · ca. 1 Std. 10 Min." },
+            { label: "Alternative Route", value: "Über die SS 209 Valnerina, rund 75 km" },
             { label: "Kombinieren mit", value: "Einem Halt in Terni" },
           ],
         },
         {
           type: "p",
-          text: "Die Fahrzeit macht die Marmore-Fälle zu einem machbaren Halbtagesausflug: morgens losfahren, den Wasserfall in Ruhe besichtigen und trotzdem rechtzeitig für einen Nachmittag am Pool zurück sein — oder den Tag mit einem Halt im Zentrum von Terni verlängern.",
+          text: "Mit gut einer Stunde Fahrt pro Strecke passen die Marmore-Fälle in einen halben Tag: morgens losfahren, den Wasserfall während der Freigabezeiten besichtigen und rechtzeitig zum Nachmittag zurück sein — oder den Tag mit einem Halt im Zentrum von Terni verlängern.",
         },
       ],
+      faq: {
+        heading: "Häufige Fragen",
+        items: [
+          { q: "Wie weit sind die Marmore-Wasserfälle von Assisi entfernt?", a: "Vom Zentrum Assisis (Piazza del Comune) 77,7 km, rund 1 Stunde 15 Minuten mit dem Auto; ab Agriturismo La Mora 77,3 km, rund 1 Stunde 10 Minuten (Google Maps, Route über die SS3)." },
+          { q: "Wie kommt man von Assisi zu den Marmore-Wasserfällen?", a: "Mit dem Auto: Google Maps schlägt die Route über die SS3 vor, rund 77 km, oder die mit einem Abschnitt der SS 209 Valnerina, rund 75 km, beide gut eine Stunde. Die Eingänge des Parks sind Belvedere Inferiore und Belvedere Superiore." },
+          { q: "Wann fließt das Wasser an den Marmore-Wasserfällen?", a: "Nur zu bestimmten Zeiten, die je nach Monat und Wochentag wechseln: Außerhalb dieser Zeiten wird das Wasser zum Wasserkraftwerk umgeleitet. Der aktuelle Kalender steht auf der offiziellen Website des Parks, cascatadellemarmore.info." },
+          { q: "Wie hoch ist der Marmore-Wasserfall?", a: "165 Meter in drei Stufen: Der Velino stürzt hier in den Nera." },
+          { q: "Wer hat den Marmore-Wasserfall geschaffen?", a: "Die Römer: 271 v. Chr. ließ der Konsul Manius Curius Dentatus das Wasser des Velino in den Nera ableiten, um die Sümpfe der Ebene von Rieti trockenzulegen." },
+          { q: "Kann man die Marmore-Fälle an einem halben Tag ab Assisi sehen?", a: "Ja: Mit gut einer Stunde Fahrt pro Strecke fährt man morgens los und ist am frühen Nachmittag zurück. Den Besuch am besten auf die Zeiten der Wasserfreigabe legen." },
+        ],
+      },
       finalCtaHeading: "Zurück nach La Mora für den Rest des Tages.",
       finalCtaBody: "Panorama-Pool von Mai bis September geöffnet, nur wenige Schritte von den Apartments entfernt.",
       finalCtaLabel: "Den Pool entdecken",

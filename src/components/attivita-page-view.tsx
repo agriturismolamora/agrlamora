@@ -17,15 +17,15 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
     description: "Cosa fare in agriturismo ad Assisi: piscina panoramica, noleggio e-bike, parco giochi per famiglie e i cavalli dell'azienda agricola di Agriturismo La Mora.",
   },
   en: {
-    title: "Activities",
+    title: "Things to do at our farm stay in Assisi",
     description: "What to do at our agriturismo in Assisi: panoramic pool, e-bike rental, family playground and the horses of Agriturismo La Mora's own farm.",
   },
   fr: {
-    title: "Activités",
+    title: "Que faire à l'agritourisme près d'Assise",
     description: "Que faire à l'agriturismo d'Assise : piscine panoramique, location d'e-bike, aire de jeux pour les familles et les chevaux de l'exploitation d'Agriturismo La Mora.",
   },
   de: {
-    title: "Aktivitäten",
+    title: "Aktivitäten im Agriturismo bei Assisi",
     description: "Was man im Agriturismo in Assisi unternehmen kann: Panoramapool, E-Bike-Verleih, Spielplatz für Familien und die Pferde des eigenen Hofs von Agriturismo La Mora.",
   },
 };

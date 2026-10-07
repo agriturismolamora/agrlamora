@@ -11,7 +11,9 @@ import { withLocale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
-import { apartmentNodes } from "@/lib/structured-data";
+import { apartmentNodes, faqPageNode } from "@/lib/structured-data";
+import { PetsSection } from "@/components/pets-section";
+import { PETS_TEXT } from "@/data/pets";
 
 const TEXT: Record<
   Locale,
@@ -19,6 +21,8 @@ const TEXT: Record<
     label: string;
     heading: string;
     intro: string;
+    /* Frase con il link alla piscina (testo prima, link, testo dopo). */
+    pool: [string, string, string];
     petFriendly: string;
     upTo: string;
     guests: string;
@@ -30,6 +34,7 @@ const TEXT: Record<
     label: "I nostri appartamenti",
     heading: "Cinque appartamenti indipendenti, ognuno con la sua storia.",
     intro: "Da due a otto ospiti, tutti con cucina attrezzata e bagno privato. Due — Gemelli e Sagittario — hanno un giardino recintato tutto loro e accettano animali.",
+    pool: ["Per tutti gli ospiti c'è la ","piscina dell'agriturismo",", aperta dal 1° maggio al 28 settembre."],
     petFriendly: "Pet friendly",
     upTo: "Fino a",
     guests: "ospiti",
@@ -40,6 +45,7 @@ const TEXT: Record<
     label: "Our apartments",
     heading: "Five independent apartments, each with its own story.",
     intro: "From two to eight guests, all with an equipped kitchen and private bathroom. Two — Gemelli and Sagittario — have their own fenced garden and accept pets.",
+    pool: ["All guests can use the ","agriturismo's swimming pool",", open from 1 May to 28 September."],
     petFriendly: "Pet friendly",
     upTo: "Up to",
     guests: "guests",
@@ -50,6 +56,7 @@ const TEXT: Record<
     label: "Nos appartements",
     heading: "Cinq appartements indépendants, chacun avec sa propre histoire.",
     intro: "De deux à huit personnes, tous avec cuisine équipée et salle de bain privée. Deux — Gemelli et Sagittario — ont leur propre jardin clôturé et acceptent les animaux.",
+    pool: ["Tous les hôtes profitent de la ","piscine de l'agritourisme",", ouverte du 1er mai au 28 septembre."],
     petFriendly: "Animaux acceptés",
     upTo: "Jusqu'à",
     guests: "personnes",
@@ -60,6 +67,7 @@ const TEXT: Record<
     label: "Unsere Apartments",
     heading: "Fünf unabhängige Apartments, jedes mit seiner eigenen Geschichte.",
     intro: "Für zwei bis acht Gäste, alle mit ausgestatteter Küche und eigenem Bad. Zwei — Gemelli und Sagittario — haben einen eigenen eingezäunten Garten und akzeptieren Haustiere.",
+    pool: ["Allen Gästen steht der ","Pool des Agriturismo"," zur Verfügung, geöffnet vom 1. Mai bis 28. September."],
     petFriendly: "Haustierfreundlich",
     upTo: "Bis zu",
     guests: "Gäste",
@@ -71,19 +79,19 @@ const TEXT: Record<
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
     title: "Appartamenti ad Assisi",
-    description: "Cinque appartamenti indipendenti immersi nel verde umbro, da 2 a 8 ospiti: Gemelli, Bilancia, Pesci, Acquario, Sagittario. Piscina, giardino, cucina attrezzata in ognuno.",
+    description: "Cinque appartamenti indipendenti ad Assisi, da 4 a 8 posti letto, con piscina, giardino e cucina. Prenotazione diretta senza commissioni e con sconti.",
   },
   en: {
-    title: "Apartments in Assisi",
-    description: "Five independent apartments surrounded by Umbrian greenery, for 2 to 8 guests: Gemelli, Bilancia, Pesci, Acquario, Sagittario. Pool, garden, equipped kitchen in every unit.",
+    title: "Self-catering apartments in Assisi, Umbria",
+    description: "Five independent self-catering apartments in Assisi, sleeping 4 to 8, with pool, garden and full kitchen. Book direct: no commission, with exclusive discounts.",
   },
   fr: {
-    title: "Appartements à Assise",
-    description: "Cinq appartements indépendants au cœur de la verdure ombrienne, de 2 à 8 personnes : Gemelli, Bilancia, Pesci, Acquario, Sagittario. Piscine, jardin, cuisine équipée dans chacun.",
+    title: "Location d'appartements à Assise, en Ombrie",
+    description: "Cinq appartements indépendants à Assise, de 4 à 8 couchages, avec piscine, jardin et cuisine équipée. Réservation directe sans commission, avec réductions.",
   },
   de: {
-    title: "Ferienwohnungen in Assisi",
-    description: "Fünf unabhängige Apartments inmitten des umbrischen Grüns, für 2 bis 8 Gäste: Gemelli, Bilancia, Pesci, Acquario, Sagittario. Pool, Garten, ausgestattete Küche in jedem.",
+    title: "Ferienwohnungen in Assisi, Umbrien",
+    description: "Fünf unabhängige Ferienwohnungen in Assisi für 4 bis 8 Personen, mit Pool, Garten und eigener Küche. Direkt buchen: ohne Provision, mit Rabatten.",
   },
 };
 
@@ -98,7 +106,7 @@ export function AlloggiPageView({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <StructuredData locale={locale} path="/alloggi/" nodes={apartmentNodes(locale)} />
+      <StructuredData locale={locale} path="/alloggi/" nodes={[...apartmentNodes(locale), faqPageNode(locale, "/alloggi/", PETS_TEXT[locale].faq)]} />
       <section className="bg-cream pb-4 pt-16 sm:pt-20">
         <div className="mx-auto max-w-[1200px] px-6 text-center sm:px-10">
           <Reveal>
@@ -107,7 +115,11 @@ export function AlloggiPageView({ locale }: { locale: Locale }) {
               {text.heading}
             </h1>
             <p className="mx-auto mt-5 max-w-[560px] text-[15px] leading-[1.75] text-ink-soft">
-              {text.intro}
+              {text.intro} {text.pool[0]}
+              <Link href={withLocale(locale, "/piscina/")} className="text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry">
+                {text.pool[1]}
+              </Link>
+              {text.pool[2]}
             </p>
           </Reveal>
         </div>
@@ -158,6 +170,8 @@ export function AlloggiPageView({ locale }: { locale: Locale }) {
           })}
         </div>
       </section>
+
+      <PetsSection locale={locale} />
 
       <section className="bg-[#1f180e] py-16 text-center sm:py-20">
         <div className="mx-auto max-w-[480px] px-6 sm:px-10">
