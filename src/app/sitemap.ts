@@ -24,6 +24,7 @@ const STATIC_PATHS = [
   "/agriturismo-famiglie-ad-assisi-e-dintorni/",
   "/ottavo-centenario-san-francesco/",
   "/offerte/",
+  "/offerte/offerte-in-corso/",
   "/offerte/cofanetti-regalo/",
   "/offerte/smartbox/",
   "/piscina/",

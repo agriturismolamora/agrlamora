@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n";
+import { EUROCHOCOLATE_2024_PHOTO, type CreditedPhoto } from "@/data/photo-credits";
 
 /* Promozioni a tempo del sito: UNICA fonte per date, condizioni e testi
    delle offerte legate a un evento. Oggi solo Eurochocolate 2026 (offerta
@@ -39,6 +40,10 @@ export type PromoText = {
   facebookCta: string;
   facebookPostCta: string;
   ended: string;
+  /* Pagina /offerte/offerte-in-corso/: 1–2 righe sulla promo e testo del
+     link all'articolo con le condizioni complete. */
+  summary: string;
+  articleCta: string;
 };
 
 export type Promo = {
@@ -53,6 +58,8 @@ export type Promo = {
   /* Ultimo istante di validità dell'offerta, ora italiana. */
   endsAt: string;
   articleSlug: string;
+  /* Foto reale con credito (src/data/photo-credits.ts), per la card. */
+  image: CreditedPhoto;
   text: Record<Locale, PromoText>;
 };
 
@@ -100,6 +107,7 @@ export const EUROCHOCOLATE_2026: Promo = {
      di Eurochocolate, fine giornata a Roma (a novembre CET, +01:00). */
   endsAt: "2026-11-22T23:59:59.999+01:00",
   articleSlug: "eurochocolate-2026-dove-dormire",
+  image: EUROCHOCOLATE_2024_PHOTO,
   text: {
     it: {
       validity: "Valida per tutta la durata di Eurochocolate, dal 13 al 22 novembre 2026",
@@ -116,6 +124,8 @@ export const EUROCHOCOLATE_2026: Promo = {
       facebookCta: "Metti Mi piace alla pagina Facebook",
       facebookPostCta: "Salva il post dell'offerta",
       ended: "Offerta conclusa",
+      summary: "Il festival internazionale del cioccolato nel centro di Perugia, a 21,0 km da La Mora: 10% di sconto sul soggiorno per tutta la durata dell'evento, alle condizioni dell'offerta.",
+      articleCta: "Leggi l'articolo e le condizioni",
     },
     en: {
       validity: "Valid for the whole of Eurochocolate, 13 to 22 November 2026",
@@ -132,6 +142,8 @@ export const EUROCHOCOLATE_2026: Promo = {
       facebookCta: "Like our Facebook page",
       facebookPostCta: "Save the offer post",
       ended: "Offer ended",
+      summary: "The international chocolate festival in the centre of Perugia, 21.0 km from La Mora: 10% off your stay for the whole event, under the offer's conditions.",
+      articleCta: "Read the article and conditions",
     },
     fr: {
       validity: "Valable pendant toute la durée d'Eurochocolate, du 13 au 22 novembre 2026",
@@ -148,6 +160,8 @@ export const EUROCHOCOLATE_2026: Promo = {
       facebookCta: "Aimer notre page Facebook",
       facebookPostCta: "Enregistrer la publication de l'offre",
       ended: "Offre terminée",
+      summary: "Le festival international du chocolat dans le centre de Pérouse, à 21,0 km de La Mora : 10 % de remise sur le séjour pendant toute la durée de l'événement, aux conditions de l'offre.",
+      articleCta: "Lire l'article et les conditions",
     },
     de: {
       validity: "Gültig während der gesamten Eurochocolate, vom 13. bis 22. November 2026",
@@ -164,6 +178,8 @@ export const EUROCHOCOLATE_2026: Promo = {
       facebookCta: "Unsere Facebook-Seite liken",
       facebookPostCta: "Den Angebotsbeitrag speichern",
       ended: "Angebot beendet",
+      summary: "Das internationale Schokoladenfestival im Zentrum von Perugia, 21,0 km von La Mora: 10 % Rabatt auf den Aufenthalt während der gesamten Veranstaltung, zu den Bedingungen des Angebots.",
+      articleCta: "Artikel und Bedingungen lesen",
     },
   },
 };

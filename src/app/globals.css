@@ -137,6 +137,59 @@ body {
   }
 }
 
+/* Puntino "in corso" (pill della pagina Offerte in corso, etichetta
+   nell'header): il puntino pulsa piano e un alone si allarga e svanisce,
+   un ciclo ogni 2 s (0,5 lampeggi al secondo, ben sotto il limite di 3 al
+   secondo di WCAG 2.3.1), solo opacity/transform. Dimensione e colore dal
+   markup (h-/w-, bg-current + text-). Con prefers-reduced-motion resta un
+   puntino fermo, senza alone. */
+@keyframes live-dot-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes live-dot-halo {
+  0% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
+.live-dot {
+  position: relative;
+  flex: none;
+  border-radius: 9999px;
+  animation: live-dot-blink 2s ease-in-out infinite;
+}
+
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: live-dot-halo 2s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot {
+    animation: none;
+  }
+  .live-dot::after {
+    display: none;
+  }
+}
+
 /* Twinkle delle stelle nello sfondo notturno del carousel Appartamenti
    (apartments-carousel.tsx): timing (durata/delay) randomizzato per stella
    direttamente in JS via style inline, qui solo la curva condivisa. Nessuna

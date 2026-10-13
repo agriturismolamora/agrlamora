@@ -23,6 +23,13 @@ export const dict = {
     attivita: { it: "Attività", en: "Activities", fr: "Activités", de: "Aktivitäten" },
     offerte: { it: "Offerte", en: "Offers", fr: "Offres", de: "Angebote" },
     offerteInCorso: { it: "Offerte in corso", en: "Current offers", fr: "Offres en cours", de: "Aktuelle Angebote" },
+    offerteInCorsoBadge: { it: "Offerte in corso!", en: "Current offers!", fr: "Offres en cours\u00a0!", de: "Aktuelle Angebote!" },
+    offerteInCorsoAria: {
+      it: "Offerte in corso! Vedi le promozioni attive",
+      en: "Current offers! See the promotions running now",
+      fr: "Offres en cours ! Voir les promotions du moment",
+      de: "Aktuelle Angebote! Die laufenden Aktionen ansehen",
+    },
     cofanettiRegalo: { it: "Cofanetti regalo", en: "Gift Boxes", fr: "Coffrets Cadeaux", de: "Geschenkboxen" },
     smartbox: { it: "Smartbox", en: "Smartbox", fr: "Smartbox", de: "Smartbox" },
     recensioni: { it: "Recensioni", en: "Reviews", fr: "Avis", de: "Bewertungen" },

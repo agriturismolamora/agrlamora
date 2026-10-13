@@ -64,6 +64,14 @@ const EUROCHOCOLATE_CARD_TEXT: Record<Locale, { label: string; heading: string; 
   },
 };
 
+/* Link alla pagina /offerte/offerte-in-corso/, sotto la card Eurochocolate. */
+const IN_CORSO_LINK: Record<Locale, string> = {
+  it: "Tutte le offerte in corso",
+  en: "All current offers",
+  fr: "Toutes les offres en cours",
+  de: "Alle aktuellen Angebote",
+};
+
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
     title: "Offerte",
@@ -363,11 +371,19 @@ export function OffertePageView({ locale }: { locale: Locale }) {
             <p className="mt-2 text-[11px] leading-[1.5] text-ink-soft">
               <PhotoCreditLine credit={EUROCHOCOLATE_2024_PHOTO.credit} locale={locale} prefix={EUROCHOCOLATE_2024_PHOTO.caption[locale]} />
             </p>
+            <Link
+              href={withLocale(locale, "/offerte/offerte-in-corso/")}
+              className="mt-5 inline-flex items-center gap-2 text-[12px] font-semibold text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry"
+            >
+              {IN_CORSO_LINK[locale]} <span aria-hidden="true">→</span>
+            </Link>
           </Reveal>
         </div>
       </section>
 
-      <section className="bg-cream-dim py-20 sm:py-28">
+      {/* id delle tre sezioni: ancore usate da /offerte/offerte-in-corso/
+          (src/data/standing-offers.ts). */}
+      <section id="sconto-7-notti" className="scroll-mt-24 bg-cream-dim py-20 sm:py-28">
         <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-12 px-6 sm:grid-cols-2 sm:gap-16 sm:px-10">
           <Reveal>
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
@@ -408,7 +424,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className="bg-cream py-20 sm:py-28">
+      <section id="sconto-chi-torna" className="scroll-mt-24 bg-cream py-20 sm:py-28">
         <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-12 px-6 sm:grid-cols-2 sm:gap-16 sm:px-10">
           <Reveal className="order-2 sm:order-1">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-gold/50 px-3.5 py-1.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-olive-950">
@@ -454,7 +470,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className="bg-cream-dim py-20 sm:py-28">
+      <section id="tariffa-non-rimborsabile" className="scroll-mt-24 bg-cream-dim py-20 sm:py-28">
         <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-12 px-6 sm:grid-cols-2 sm:gap-16 sm:px-10">
           <Reveal>
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">

@@ -10,6 +10,8 @@ import { t } from "@/lib/dictionary";
 import { VillaLogoLink } from "@/components/villa-logo-link";
 import { BookingModalButton } from "@/components/booking-modal-button";
 import { NO_DIRECT_BOOKING_PATHS } from "@/components/booking-bar";
+import { getActivePromos } from "@/data/promo";
+import { useNow } from "@/hooks/use-now";
 
 type NavChild = {
   label: string;
@@ -302,6 +304,13 @@ export function SiteHeader({ locale }: { locale: Locale }) {
      rooms-widget-script.tsx). Assente dove la barra di prenotazione è
      nascosta perché non si prenota un soggiorno diretto (cofanetti, Smartbox). */
   const showBookCta = !NO_DIRECT_BOOKING_PATHS.some((p) => bareItalianPath.startsWith(p));
+  /* Etichetta "Offerte in corso!" sopra "Prenota": solo mentre c'è almeno
+     una promo a tempo attiva (src/data/promo.ts), quindi sparisce da sola a
+     promo scaduta. Calcolata dopo il mount (useNow è null sul server): è in
+     posizione assoluta, comparire non sposta nulla. Non sulle pagine Villa:
+     le promo sono di La Mora. */
+  const now = useNow();
+  const showOffersBadge = showBookCta && !onVillaPage && now !== null && getActivePromos(now).length > 0;
   /* Blog (indice e articoli): logo e "Agriturismo La Mora" sempre visibili,
      anche scorrendo; l'header non si nasconde (richiesta del titolare). */
   const onBlog = bareItalianPath.startsWith("/blog/");
@@ -476,9 +485,25 @@ export function SiteHeader({ locale }: { locale: Locale }) {
 
           <div className="flex shrink-0 items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.04em] sm:gap-5">
             {showBookCta && (
-              <BookingModalButton className="whitespace-nowrap rounded-[3px] bg-raspberry px-3.5 py-2.5 text-[10.5px] uppercase tracking-[0.05em] text-cream transition-colors duration-300 hover:bg-[#8a3844] sm:px-4">
-                {onVillaPage ? t("booking", "prenotaVilla", locale) : t("booking", "prenotaOra", locale)}
-              </BookingModalButton>
+              <div className="relative">
+                {/* 16px di altezza a 4px dal pulsante (su telefono allineata al suo
+                    bordo destro, per non finire sopra "Menu"): sta nello spazio sopra
+                    "Prenota" in ogni stato dell'header (misurato), senza
+                    toccare la barra in alto né cambiare l'altezza. */}
+                {showOffersBadge && (
+                  <Link
+                    href={withLocale(locale, "/offerte/offerte-in-corso/")}
+                    aria-label={t("nav", "offerteInCorsoAria", locale)}
+                    className="absolute bottom-[calc(100%+4px)] right-0 inline-flex h-4 items-center gap-1.5 whitespace-nowrap rounded-full bg-olive-950/90 px-2 text-[8.5px] font-semibold uppercase leading-none tracking-[0.08em] max-[399px]:gap-1 max-[399px]:px-1.5 max-[399px]:tracking-[0.04em] md:left-1/2 md:right-auto md:-translate-x-1/2 text-cream ring-1 ring-cream/20 transition-colors hover:text-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+                  >
+                    <span aria-hidden="true" className="live-dot h-1.5 w-1.5 bg-gold" />
+                    {t("nav", "offerteInCorsoBadge", locale)}
+                  </Link>
+                )}
+                <BookingModalButton className="whitespace-nowrap rounded-[3px] bg-raspberry px-3.5 py-2 text-[10.5px] uppercase tracking-[0.05em] text-cream transition-colors duration-300 hover:bg-[#8a3844] sm:px-4 sm:py-2.5">
+                  {onVillaPage ? t("booking", "prenotaVilla", locale) : t("booking", "prenotaOra", locale)}
+                </BookingModalButton>
+              </div>
             )}
 
             <div ref={langRef} className="relative hidden md:block">
