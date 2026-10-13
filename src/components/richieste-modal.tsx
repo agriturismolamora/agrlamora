@@ -52,7 +52,7 @@ type Text = {
   msgNights: (n: number) => string;
   msgAnimale: string;
   colonnina: string;
-  /* Villa Relax: senza potenza, che in villa.ts non è indicata. */
+  /* Villa Relax: colonnina da 7 kW (La Mora: 22 kW). */
   colonninaVilla: string;
   ebike: string;
   ebikeDurata: string;
@@ -92,7 +92,7 @@ const TEXT: Record<Locale, Text> = {
     msgNights: (n) => `${n} ${n === 1 ? "notte" : "notti"}`,
     msgAnimale: "Animale",
     colonnina: "Colonnina di ricarica elettrica (22 kW)",
-    colonninaVilla: "Colonnina di ricarica elettrica",
+    colonninaVilla: "Colonnina di ricarica elettrica (7 kW)",
     ebike: "Noleggio e-bike",
     ebikeDurata: "Durata noleggio",
     ebikeOpzioni: ["Mezza giornata — €15", "Giornata intera — €25", "Weekend — €40", "7 giorni — €90"],
@@ -129,7 +129,7 @@ const TEXT: Record<Locale, Text> = {
     msgNights: (n) => `${n} ${n === 1 ? "night" : "nights"}`,
     msgAnimale: "Pet",
     colonnina: "EV charging point (22 kW)",
-    colonninaVilla: "EV charging point",
+    colonninaVilla: "EV charging point (7 kW)",
     ebike: "E-bike rental",
     ebikeDurata: "Rental length",
     ebikeOpzioni: ["Half day — €15", "Full day — €25", "Weekend — €40", "7 days — €90"],
@@ -166,7 +166,7 @@ const TEXT: Record<Locale, Text> = {
     msgNights: (n) => `${n} ${n === 1 ? "nuit" : "nuits"}`,
     msgAnimale: "Animal",
     colonnina: "Borne de recharge électrique (22 kW)",
-    colonninaVilla: "Borne de recharge électrique",
+    colonninaVilla: "Borne de recharge électrique (7 kW)",
     ebike: "Location de vélo électrique",
     ebikeDurata: "Durée de location",
     ebikeOpzioni: ["Demi-journée — 15 €", "Journée entière — 25 €", "Week-end — 40 €", "7 jours — 90 €"],
@@ -203,7 +203,7 @@ const TEXT: Record<Locale, Text> = {
     msgNights: (n) => `${n} ${n === 1 ? "Nacht" : "Nächte"}`,
     msgAnimale: "Haustier",
     colonnina: "E-Ladestation (22 kW)",
-    colonninaVilla: "E-Ladestation",
+    colonninaVilla: "E-Ladestation (7 kW)",
     ebike: "E-Bike-Verleih",
     ebikeDurata: "Mietdauer",
     ebikeOpzioni: ["Halber Tag — 15 €", "Ganzer Tag — 25 €", "Wochenende — 40 €", "7 Tage — 90 €"],
@@ -556,9 +556,9 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
       </div>
 
       {/* Extra facoltativi. Colonnina di ricarica in entrambi i moduli, da
-          segnalare subito (serve a Paolo per organizzarsi): 22 kW a La Mora
-          (PROJECT-BRIEF.md), senza potenza per Villa Relax (villa.ts non la
-          indica). Noleggio e-bike col listino ufficiale: solo La Mora; la
+          segnalare subito (serve a Paolo per organizzarsi): 22 kW a La Mora,
+          7 kW a Villa Relax (PROJECT-BRIEF.md, villa.ts). Noleggio e-bike col
+          listino ufficiale: solo La Mora; la
           durata è obbligatoria solo se si sceglie l'e-bike. */}
       <div className="space-y-3 rounded-[3px] border border-ink/10 bg-white px-4 py-3">
         <label className="flex items-center gap-2.5 text-[14px] text-ink">

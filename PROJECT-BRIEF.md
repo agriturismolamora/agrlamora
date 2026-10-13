@@ -16,7 +16,7 @@ Sintesi operativa del kick-off, organizzata per sviluppo. Brand identity invaria
   - Servizi della struttura con sezione dedicata in ogni scheda: lavatrice in comune, uso incluso (29/09/2026 — nessuna foto disponibile, nessun altro dettaglio confermato)
 - **Piscina** — pagina dedicata: aperta dal 1° maggio al 28 settembre, orario giornaliero 09:00–19:00; nelle ore più calde viene azionata anche una fontana idromassaggio
 - **Colazione** — pagina dedicata: bio, dalle 08:00 alle 09:30, dolce inclusa/opzionale 5€ p/giorno, supplemento salata +10€ a persona, supplemento senza glutine +5€ (quindi 10€ se richiesta anche la dolce), offerta variabile in base a stagionalità/prodotti locali (dolci tipici umbri di alta pasticceria — non più fatti in casa —, frutta di stagione, caffè/cappuccino/tea/ginseng su richiesta)
-- **Villa Relax** — pagina dedicata: villa indipendente, stessa proprietà/P.IVA di Agriturismo La Mora ma immobile e indirizzo distinti (Via Di Bassano, 19 — Assisi PG), gestita dallo stesso host (Paolo). NON è uno dei 5 appartamenti. Fino a 16 ospiti su 6 camere da letto (bagno/doccia privati ciascuna), prenotabile per intero o in due porzioni (6 e 10 persone). Piscina privata, giardino, gazebo, barbecue, campo da calcetto in erba, ping pong. Booking bar dedicata, separata da quella degli appartamenti. Dati verificati navigando il sito reale https://www.villaassisi.it/it/ il 5 settembre 2026 (dettagli completi in src/data/villa.ts) — non un confronto in tempo reale, non va fatto scraping automatico e continuo.
+- **Villa Relax** — pagina dedicata: villa indipendente, stessa proprietà/P.IVA di Agriturismo La Mora ma immobile e indirizzo distinti (Via Di Bassano, 19 — Assisi PG), gestita dallo stesso host (Paolo). NON è uno dei 5 appartamenti. Fino a 16 ospiti su 6 camere da letto (bagno/doccia privati ciascuna), prenotabile per intero o in due porzioni (6 e 10 persone). Piscina privata, giardino, gazebo, barbecue, campo da calcetto in erba, ping pong, **colonnina di ricarica elettrica da 7 kW** (confermata dal titolare il 13/10/2026; quella di La Mora è da 22 kW, vedi sezione 2). Booking bar dedicata, separata da quella degli appartamenti. Dati verificati navigando il sito reale https://www.villaassisi.it/it/ il 5 settembre 2026 (dettagli completi in src/data/villa.ts) — non un confronto in tempo reale, non va fatto scraping automatico e continuo.
 - **Guida di benvenuto** — creata dal titolare (PDF). NON un link Drive scaricabile dal sito (rimosso su richiesta): il pulsante "Richiedi la guida su WhatsApp", ben visibile in alto su ogni pagina appartamento e nella sezione "Gli appartamenti" della home, apre la chat WhatsApp dell'agriturismo, dove la guida è già pronta (link in src/data/apartments.ts, BROCHURE_WHATSAPP_URL)
 - **Attività & Servizi** — e-bike, cavalli dell'azienda agricola (solo da vedere, vedi nota sezione 3), parco giochi + babysitting, cucina bio (dettaglio sezione 3)
 - **Promozioni & Cofanetti regalo** — vedi sezione 4
@@ -75,7 +75,7 @@ Cartelle immagini per tutti i 5 appartamenti già pronte in `public/images/siste
 **Extra selezionabili in fase di booking:**
 - E-bike a noleggio (listino in sezione 3)
 - Culla: 10€/soggiorno
-- Colonnina di ricarica 22kW: checkbox da selezionare **subito** in fase di prenotazione (serve al proprietario per organizzarsi)
+- Colonnina di ricarica 22kW (La Mora; quella di Villa Relax è da 7 kW): checkbox da selezionare **subito** in fase di prenotazione (serve al proprietario per organizzarsi)
 
 ---
 

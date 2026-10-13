@@ -4,7 +4,7 @@ import { dict, t } from "@/lib/dictionary";
 import { SITE_URL, absoluteUrl } from "@/lib/seo";
 import { APARTMENTS, type Apartment } from "@/data/apartments";
 import { getApartmentDetails } from "@/data/apartment-details";
-import { VILLA_LOGO_BLACK, VILLA_MAX_GUESTS } from "@/data/villa";
+import { VILLA_LOGO_BLACK, VILLA_MAX_GUESTS, getVillaEvCharger } from "@/data/villa";
 
 /* Dati strutturati (JSON-LD) in un unico @graph per pagina, stampato da
    <StructuredData> (src/components/structured-data.tsx). Gli @id sono
@@ -216,6 +216,8 @@ export function villaNode(locale: Locale): JsonLdNode {
     },
     numberOfRooms: 6,
     containsPlace: { "@type": "Accommodation", name: "Villa Relax", occupancy: { "@type": "QuantitativeValue", maxValue: VILLA_MAX_GUESTS } },
+    // Colonnina della Villa: 7 kW (quella di La Mora, nel nodo sopra, è da 22 kW).
+    amenityFeature: [{ "@type": "LocationFeatureSpecification", name: getVillaEvCharger(locale), value: true }],
   };
 }
 

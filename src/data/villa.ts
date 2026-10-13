@@ -81,11 +81,27 @@ export const VILLA_CONFIGURATIONS = VILLA_CONFIGURATIONS_BY_LOCALE.it;
 
 export const VILLA_MAX_GUESTS = 16;
 
+/* Colonnina di ricarica: 7 kW, confermata dal titolare il 13/10/2026 (non
+   presente su villaassisi.it). Quella di La Mora è da 22 kW: le due non
+   vanno mai confuse. */
+export const VILLA_EV_CHARGER_KW = 7;
+
+const VILLA_EV_CHARGER: Record<Locale, string> = {
+  it: `Colonnina di ricarica elettrica da ${VILLA_EV_CHARGER_KW} kW`,
+  en: `${VILLA_EV_CHARGER_KW} kW EV charging station`,
+  fr: `Borne de recharge électrique de ${VILLA_EV_CHARGER_KW} kW`,
+  de: `${VILLA_EV_CHARGER_KW}-kW-Ladestation für Elektroautos`,
+};
+
+export function getVillaEvCharger(locale: Locale) {
+  return VILLA_EV_CHARGER[locale];
+}
+
 const VILLA_AMENITIES_BY_LOCALE: Record<Locale, string[]> = {
-  it: ["Animali ammessi", "Parcheggio privato ombreggiato", "Wi-Fi gratuito", "Giardino", "Angolo cottura", "Televisione", "Piscina privata", "Intera villa"],
-  en: ["Pets allowed", "Private shaded parking", "Free Wi-Fi", "Garden", "Kitchenette", "Television", "Private pool", "Whole villa"],
-  fr: ["Animaux acceptés", "Parking privé ombragé", "Wi-Fi gratuit", "Jardin", "Coin cuisine", "Télévision", "Piscine privée", "Villa entière"],
-  de: ["Haustiere erlaubt", "Privater schattiger Parkplatz", "Kostenloses WLAN", "Garten", "Kochnische", "Fernseher", "Privater Pool", "Ganze Villa"],
+  it: ["Animali ammessi", "Parcheggio privato ombreggiato", "Wi-Fi gratuito", "Giardino", "Angolo cottura", "Televisione", "Piscina privata", "Intera villa", VILLA_EV_CHARGER.it],
+  en: ["Pets allowed", "Private shaded parking", "Free Wi-Fi", "Garden", "Kitchenette", "Television", "Private pool", "Whole villa", VILLA_EV_CHARGER.en],
+  fr: ["Animaux acceptés", "Parking privé ombragé", "Wi-Fi gratuit", "Jardin", "Coin cuisine", "Télévision", "Piscine privée", "Villa entière", VILLA_EV_CHARGER.fr],
+  de: ["Haustiere erlaubt", "Privater schattiger Parkplatz", "Kostenloses WLAN", "Garten", "Kochnische", "Fernseher", "Privater Pool", "Ganze Villa", VILLA_EV_CHARGER.de],
 };
 
 export function getVillaAmenities(locale: Locale) {

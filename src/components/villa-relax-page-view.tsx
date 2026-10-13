@@ -143,7 +143,18 @@ function TvIcon() {
   );
 }
 
-const AMENITY_ICON_BY_INDEX: (() => React.JSX.Element)[] = [PawIcon, ParkingIcon, WifiIcon, GardenIcon, KitchenIcon, TvIcon, PoolIcon, WholeHouseIcon];
+function EvChargerIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+      <rect x="4" y="3.5" width="10" height="17" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M9.6 7 7.4 11h3.2l-2.2 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M14 9h2.5a1.5 1.5 0 0 1 1.5 1.5v5a1.5 1.5 0 0 0 3 0V8l-1.5-2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/* Stesso ordine di getVillaAmenities() in villa.ts. */
+const AMENITY_ICON_BY_INDEX: (() => React.JSX.Element)[] = [PawIcon, ParkingIcon, WifiIcon, GardenIcon, KitchenIcon, TvIcon, PoolIcon, WholeHouseIcon, EvChargerIcon];
 
 const TEXT: Record<
   Locale,
@@ -461,11 +472,11 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
             </h2>
           </Reveal>
           <Reveal delay={80}>
-            <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4">
+            <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
               {amenities.map((label, i) => {
                 const Icon = AMENITY_ICON_BY_INDEX[i];
                 return (
-                  <div key={label} className="flex flex-col items-center gap-3 text-center sm:flex-row sm:text-left">
+                  <div key={label} className="flex flex-col items-center gap-3 text-center odd:last:col-span-2 sm:flex-row sm:text-left sm:odd:last:col-span-1">
                     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-cream text-olive-700">
                       {Icon && <Icon />}
                     </span>

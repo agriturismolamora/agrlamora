@@ -77,7 +77,7 @@ function getRules(locale: Locale): Rule[] {
       },
       {
         keywords: ["elettric", "ricaric", "kw", "colonnina"],
-        reply: "Il parcheggio privato ha una colonnina di ricarica rapida da 22 kW: basta segnalarlo in fase di prenotazione.",
+        reply: "A La Mora il parcheggio privato ha una colonnina di ricarica rapida da 22 kW; a Villa Relax la colonnina è da 7 kW. Basta segnalarlo in fase di prenotazione.",
       },
       {
         keywords: ["ebike", "e-bike", "bici", "cavall", "equitazione", "attività", "esperienz"],
@@ -132,7 +132,7 @@ function getRules(locale: Locale): Rule[] {
       },
       {
         keywords: ["electric", "charging", "kw", "charger"],
-        reply: "The private car park has a fast 22 kW charging station: just flag it when you book.",
+        reply: "At La Mora the private car park has a fast 22 kW charging station; at Villa Relax the charging point is 7 kW. Just flag it when you book.",
       },
       {
         keywords: ["ebike", "e-bike", "bike", "horse", "activit", "experienc"],
@@ -187,7 +187,7 @@ function getRules(locale: Locale): Rule[] {
       },
       {
         keywords: ["électrique", "recharge", "kw", "borne"],
-        reply: "Le parking privé dispose d'une borne de recharge rapide de 22 kW : il suffit de le signaler lors de la réservation.",
+        reply: "À La Mora, le parking privé dispose d'une borne de recharge rapide de 22 kW ; à Villa Relax, la borne est de 7 kW. Il suffit de le signaler lors de la réservation.",
       },
       {
         keywords: ["ebike", "e-bike", "vélo", "cheval", "activité", "expérience"],
@@ -242,7 +242,7 @@ function getRules(locale: Locale): Rule[] {
       },
       {
         keywords: ["elektro", "laden", "kw", "ladestation"],
-        reply: "Der private Parkplatz verfügt über eine schnelle 22-kW-Ladestation: bei der Buchung einfach angeben.",
+        reply: "Bei La Mora verfügt der private Parkplatz über eine schnelle 22-kW-Ladestation, bei Villa Relax ist die Ladestation 7 kW stark. Bei der Buchung einfach angeben.",
       },
       {
         keywords: ["ebike", "e-bike", "fahrrad", "pferd", "aktivität", "erlebnis"],
