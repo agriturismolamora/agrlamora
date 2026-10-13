@@ -14,6 +14,21 @@ Next.js + Tailwind, deploy su Vercel, dominio esistente mantenuto. (Se lo stack 
 - **SEO**: mantieni gli slug URL esistenti dove indicato in `PLAN.md`, scrivi meta title/description unici per pagina, mai duplicati.
 - **Scope**: costruisci solo quanto indicato nella sezione corrente di `PLAN.md`. Se una funzionalità è elencata in "Fuori scope", non implementarla senza che venga chiesto esplicitamente.
 
+## Infrastruttura congelata
+
+- Niente modifiche a DNS, domini, redirect di dominio, Search Console, remote Git o impostazioni Vercel.
+- Canonical sempre su https://www.lamoraassisi.com. I 7 redirect legacy in `next.config.ts` (5 appartamenti, `/recensioni/`, `/contatti/`) restano.
+- Nessun segreto nel repo. Un solo numero di telefono: 393 4363917.
+- Foto: solo reali o Wikimedia Commons con credito visibile (`src/data/photo-credits.ts`), mai stock o generate.
+- Nuovo servizio, cookie o chiave di storage → aggiornare la Cookie Policy (`src/data/privacy-services.ts`) e alzare `CONSENT_VERSION`; altrimenti non alzarla.
+
+## Regole del sito (ottobre 2026)
+
+- **Ordine della navbar**, uguale in nav desktop, pannello MENU e footer: La Mora, Alloggi, Territorio, Esperienze, Offerte, Recensioni, Contatti, Villa Relax — Villa Relax sempre ULTIMA. Nel dropdown Offerte "Offerte in corso" viene prima di "Cofanetti regalo". Nuove larghezze dell'header vanno verificate in tutte e 4 le lingue (il tedesco è il più lungo).
+- **Colonnina di ricarica**: Villa Relax 7 kW, La Mora 22 kW. Mai attribuire alla Villa i 22 kW (dato Villa in `src/data/villa.ts`, `VILLA_EV_CHARGER_KW`).
+- **Promo a tempo** (`src/data/promo.ts`): lo stato si legge solo da `getPromoStatus()` / `getActivePromos()`, calcolato nel browser dopo il mount (`useNow()`). Scadute, spariscono da sole: niente popup (il popup della home esiste solo con una promo attiva, nessun popup di ripiego), niente etichetta "Offerte in corso!" nell'header, "Offerta conclusa" dove restano citate, e passano tra le concluse in `/offerte/offerte-in-corso/`. Mai date o condizioni non confermate: le costanti a `null` restano nascoste.
+- **Pulsanti di prenotazione**: tutti passano da `BookingModalButton`, che applica lo stile condiviso `.booking-sheen` (riflesso animato, `globals.css`). Non duplicare l'effetto altrove; scegliere `sheen="soft" | "strong" | "tint"` in base alla palette perché il contrasto del testo resti AA. Mai applicarlo a pulsanti che non prenotano (WhatsApp, richieste, mappe). Con `prefers-reduced-motion` nessuna animazione.
+
 ## Modo di lavorare
 
 - Prima di scrivere codice per una richiesta ampia, riassumi in poche righe cosa hai capito e aspetta conferma.
