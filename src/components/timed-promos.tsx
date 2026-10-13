@@ -44,7 +44,7 @@ const TEXT: Record<Locale, { live: string; ended: string; none: string; endedLab
    fermo con prefers-reduced-motion. */
 function LivePill({ label }: { label: string }) {
   return (
-    <span className="inline-flex items-center gap-2 self-start rounded-full bg-raspberry/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-raspberry">
+    <span className="inline-flex items-center gap-2 self-start rounded-full bg-cream px-3 py-1 ring-1 ring-raspberry/25 text-[10px] font-semibold uppercase tracking-[0.12em] text-raspberry">
       <span aria-hidden="true" className="live-dot h-1.5 w-1.5 bg-raspberry" />
       {label}
     </span>
