@@ -139,26 +139,64 @@ body {
 
 /* Puntino "in corso" (pill della pagina Offerte in corso, etichetta
    nell'header): il puntino pulsa piano e un alone si allarga e svanisce,
-   un ciclo ogni 2 s (0,5 lampeggi al secondo, ben sotto il limite di 3 al
-   secondo di WCAG 2.3.1), solo opacity/transform. Dimensione e colore dal
-   markup (h-/w-, bg-current + text-). Con prefers-reduced-motion resta un
-   puntino fermo, senza alone. */
+   un lampeggio ogni 2 s (0,5 al secondo, ben sotto il limite di 3 al
+   secondo di WCAG 2.3.1), solo opacity/transform. Otto lampeggi stanno in
+   un unico ciclo da 16 s: ogni fine ciclo costa un ricalcolo di stile
+   dell'intera pagina, e con cicli da 2 s il puntino da solo occupava il
+   main thread ~2,5 volte di più (misurato a CPU 4x su /territorio/).
+   Dimensione e colore dal markup (h-/w-, bg-*). Con prefers-reduced-motion
+   resta un puntino fermo, senza alone. */
 @keyframes live-dot-blink {
   0%,
+  12.5%,
+  25%,
+  37.5%,
+  50%,
+  62.5%,
+  75%,
+  87.5%,
   100% {
     opacity: 1;
   }
-  50% {
+  6.25%,
+  18.75%,
+  31.25%,
+  43.75%,
+  56.25%,
+  68.75%,
+  81.25%,
+  93.75% {
     opacity: 0.45;
   }
 }
 
 @keyframes live-dot-halo {
-  0% {
+  0%,
+  12.5%,
+  25%,
+  37.5%,
+  50%,
+  62.5%,
+  75%,
+  87.5% {
     opacity: 0.55;
     transform: scale(1);
   }
-  70%,
+  8.75%,
+  12.49%,
+  21.25%,
+  24.99%,
+  33.75%,
+  37.49%,
+  46.25%,
+  49.99%,
+  58.75%,
+  62.49%,
+  71.25%,
+  74.99%,
+  83.75%,
+  87.49%,
+  96.25%,
   100% {
     opacity: 0;
     transform: scale(2.6);
@@ -169,7 +207,7 @@ body {
   position: relative;
   flex: none;
   border-radius: 9999px;
-  animation: live-dot-blink 2s ease-in-out infinite;
+  animation: live-dot-blink 16s ease-in-out infinite;
 }
 
 .live-dot::after {
@@ -178,7 +216,7 @@ body {
   inset: 0;
   border-radius: inherit;
   background: inherit;
-  animation: live-dot-halo 2s ease-out infinite;
+  animation: live-dot-halo 16s ease-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -193,8 +231,10 @@ body {
 /* Riflesso dei pulsanti di prenotazione: applicato da BookingModalButton
    (booking-modal-button.tsx) a TUTTI i CTA che aprono la modale, nato dal
    pulsante caramello dell'articolo Eurochocolate. Una banda di luce
-   inclinata attraversa il pulsante, poi una lunga pausa: ciclo di 6,5 s,
-   passaggio in ~2 s, solo transform. La partenza è sfalsata per pulsante
+   inclinata attraversa il pulsante, poi una lunga pausa: un passaggio ogni
+   6,5 s (~2 s di movimento), solo transform; tre passaggi stanno in un
+   unico ciclo da 19,5 s, per lo stesso motivo del puntino qui sopra (meno
+   fine ciclo, meno ricalcoli di stile). La partenza è sfalsata per pulsante
    (--sheen-delay), così più pulsanti visibili insieme non partono nello
    stesso istante. La banda sta DIETRO al testo (z-index -1 nel contesto
    isolato del pulsante) e la sua intensità dipende dalla palette, così il
@@ -207,9 +247,15 @@ body {
    prefers-reduced-motion nessuna banda: pulsante statico. */
 @keyframes sheen-pass {
   0%,
-  70% {
+  23.33%,
+  33.33%,
+  56.66%,
+  66.66%,
+  89.99% {
     transform: translateX(0) skewX(-20deg);
   }
+  33.32%,
+  66.65%,
   100% {
     transform: translateX(420%) skewX(-20deg);
   }
@@ -240,7 +286,7 @@ body {
   width: 45%;
   background: linear-gradient(90deg, transparent 0%, var(--sheen-color) 50%, transparent 100%);
   transform: translateX(0) skewX(-20deg);
-  animation: sheen-pass 6.5s ease-in-out var(--sheen-delay, 1.2s) infinite;
+  animation: sheen-pass 19.5s ease-in-out var(--sheen-delay, 1.2s) infinite;
   pointer-events: none;
 }
 
