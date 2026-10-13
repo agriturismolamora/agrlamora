@@ -32,18 +32,19 @@ const CREDIT: Record<Locale, string> = {
 const CREDIT_URL = "https://agriasystem.com";
 
 /* Stesso ordine della nav dell'header (site-header.tsx): La Mora, Alloggi,
-   Territorio, Esperienze, Villa Relax, poi le altre voci. */
+   Territorio, Esperienze, Offerte, Recensioni, Contatti, Villa Relax sempre
+   ultima. Il Blog (non in nav) sta subito dopo Territorio, il suo tema. */
 function getNav(locale: Locale) {
   return [
     { label: t("nav", "laMora", locale), href: withLocale(locale, "/chi-siamo/") },
     { label: t("nav", "alloggi", locale), href: withLocale(locale, "/alloggi/") },
     { label: t("nav", "territorio", locale), href: withLocale(locale, "/territorio/") },
-    { label: t("nav", "esperienze", locale), href: withLocale(locale, "/agriturismo-famiglie-ad-assisi-e-dintorni/") },
-    { label: t("nav", "villaRelax", locale), href: withLocale(locale, "/villa-relax-assisi/") },
     { label: t("nav", "blog", locale), href: withLocale(locale, "/blog/") },
+    { label: t("nav", "esperienze", locale), href: withLocale(locale, "/agriturismo-famiglie-ad-assisi-e-dintorni/") },
     { label: t("nav", "offerte", locale), href: withLocale(locale, "/offerte/") },
     { label: t("nav", "recensioni", locale), href: withLocale(locale, "/#section-reviews") },
     { label: t("nav", "contatti", locale), href: withLocale(locale, "/#section-map") },
+    { label: t("nav", "villaRelax", locale), href: withLocale(locale, "/villa-relax-assisi/") },
   ];
 }
 

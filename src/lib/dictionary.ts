@@ -22,6 +22,7 @@ export const dict = {
     esperienze: { it: "Esperienze", en: "Experiences", fr: "Expériences", de: "Erlebnisse" },
     attivita: { it: "Attività", en: "Activities", fr: "Activités", de: "Aktivitäten" },
     offerte: { it: "Offerte", en: "Offers", fr: "Offres", de: "Angebote" },
+    offerteInCorso: { it: "Offerte in corso", en: "Current offers", fr: "Offres en cours", de: "Aktuelle Angebote" },
     cofanettiRegalo: { it: "Cofanetti regalo", en: "Gift Boxes", fr: "Coffrets Cadeaux", de: "Geschenkboxen" },
     smartbox: { it: "Smartbox", en: "Smartbox", fr: "Smartbox", de: "Smartbox" },
     recensioni: { it: "Recensioni", en: "Reviews", fr: "Avis", de: "Bewertungen" },

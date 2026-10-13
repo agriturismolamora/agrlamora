@@ -15,6 +15,10 @@ import { openRoomsWidget } from "@/lib/rrp-widget";
    campi Entrata/Uscita/Ospiti né bottom sheet mobile). Il CTA apre il
    modale di bed-and-breakfast.it, il motore di prenotazione reale del
    sito, dove date e ospiti si scelgono direttamente. */
+/* Pagine senza prenotazione diretta di un soggiorno (voucher regalo /
+   redirect esterno): niente barra qui sotto né "Prenota" nell'header. */
+export const NO_DIRECT_BOOKING_PATHS = ["/offerte/cofanetti-regalo", "/offerte/smartbox"];
+
 export function BookingBar({ locale }: { locale: Locale }) {
   const pathname = usePathname();
   const inApartments = useApartmentsSectionActive();
@@ -34,7 +38,7 @@ export function BookingBar({ locale }: { locale: Locale }) {
   // prenotazioni tra Villa Relax e gli appartamenti di Agriturismo La Mora.
   // Cofanetti regalo e Smartbox restano esclusi anche loro: non si prenota
   // un soggiorno diretto in quelle pagine (voucher regalo / redirect esterno).
-  const HIDDEN_ON = ["/villa-relax-assisi", "/offerte/cofanetti-regalo", "/offerte/smartbox"];
+  const HIDDEN_ON = ["/villa-relax-assisi", ...NO_DIRECT_BOOKING_PATHS];
   const { path: barePath } = splitLocaleFromPath(pathname ?? "/");
   if (HIDDEN_ON.some((p) => barePath.startsWith(p))) return null;
 

@@ -8,6 +8,8 @@ import type { Locale } from "@/lib/i18n";
 import { withLocale, splitLocaleFromPath } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
 import { VillaLogoLink } from "@/components/villa-logo-link";
+import { BookingModalButton } from "@/components/booking-modal-button";
+import { NO_DIRECT_BOOKING_PATHS } from "@/components/booking-bar";
 
 type NavChild = {
   label: string;
@@ -24,19 +26,21 @@ type NavItem = {
 
 const APARTMENT_WORD: Record<Locale, string> = { it: "Appartamento", en: "Apartment", fr: "Appartement", de: "Wohnung" };
 
-/* Architettura a 5 voci ispirata a Lasala Plaza: ogni voce è un contenitore
-   di dropdown, così nuove pagine (es. future esperienze) si aggiungono come
-   children senza toccare la struttura dell'header. "Home" non compare più in
-   nav: si torna alla home cliccando il grande logo della Hero, o il logo
-   piccolo dello sticky header (unico punto in cui compare, vedi sotto).
+/* Architettura ispirata a Lasala Plaza: ogni voce con sottopagine è un
+   contenitore di dropdown, così nuove pagine (es. future esperienze) si
+   aggiungono come children senza toccare la struttura dell'header; le voci
+   senza children (Recensioni, Contatti) sono link semplici. "Home" non
+   compare più in nav: si torna alla home cliccando il grande logo della
+   Hero, o il logo piccolo dello sticky header (unico punto in cui compare,
+   vedi sotto).
    Costruita da una funzione (non un array statico) perché label/href
    dipendono dalla lingua corrente — `id` resta stabile tra le lingue per
-   poter identificare le voci (es. NAV_LEFT_TABLET) senza dipendere dal
-   testo visibile.
+   poter identificare le voci (es. NAV_TABLET) senza dipendere dal testo
+   visibile.
    Ordine (richiesta del titolare, ottobre 2026), uguale in nav desktop,
-   pannello MENU e footer: La Mora, Alloggi, Territorio, Esperienze, Villa
-   Relax, Offerte; poi Recensioni e Contatti (getNavRight). */
-function getNavLeft(locale: Locale): NavItem[] {
+   pannello MENU e footer: La Mora, Alloggi, Territorio, Esperienze,
+   Offerte, Recensioni, Contatti, Villa Relax — Villa Relax sempre ULTIMA. */
+function getNav(locale: Locale): NavItem[] {
   const apt = APARTMENT_WORD[locale];
   return [
     {
@@ -76,38 +80,44 @@ function getNavLeft(locale: Locale): NavItem[] {
       children: [{ label: t("nav", "attivita", locale), href: withLocale(locale, "/agriturismo-famiglie-ad-assisi-e-dintorni/") }],
     },
     {
+      id: "offerte",
+      label: t("nav", "offerte", locale),
+      href: withLocale(locale, "/offerte/"),
+      children: [
+        { label: t("nav", "offerteInCorso", locale), href: withLocale(locale, "/offerte/offerte-in-corso/") },
+        { label: t("nav", "cofanettiRegalo", locale), href: withLocale(locale, "/offerte/cofanetti-regalo/") },
+        { label: t("nav", "smartbox", locale), href: withLocale(locale, "/offerte/smartbox/") },
+      ],
+    },
+    { id: "recensioni", label: t("nav", "recensioni", locale), href: withLocale(locale, "/#section-reviews"), children: [] },
+    { id: "contatti", label: t("nav", "contatti", locale), href: withLocale(locale, "/#section-map"), children: [] },
+    {
       id: "villa-relax",
       label: t("nav", "villaRelax", locale),
       href: withLocale(locale, "/villa-relax-assisi/"),
       children: [{ label: t("nav", "villaIndipendente", locale), href: withLocale(locale, "/villa-relax-assisi/") }],
     },
-    {
-      id: "offerte",
-      label: t("nav", "offerte", locale),
-      href: withLocale(locale, "/offerte/"),
-      children: [
-        { label: t("nav", "cofanettiRegalo", locale), href: withLocale(locale, "/offerte/cofanetti-regalo/") },
-        { label: t("nav", "smartbox", locale), href: withLocale(locale, "/offerte/smartbox/") },
-      ],
-    },
   ];
 }
 
-/* Voci mostrate in nav inline solo da 1100px in su; sotto restano comunque
-   raggiungibili dal pannello MENU, che elenca sempre tutto. */
-const NAV_LEFT_TABLET = new Set(["alloggi", "villa-relax", "territorio", "offerte"]);
+/* Nav compatta: solo queste voci; tutte le altre restano raggiungibili dal
+   pannello MENU, che elenca sempre tutto. */
+const NAV_TABLET = new Set(["alloggi", "territorio", "offerte", "villa-relax"]);
+
+/* Larghezze da cui compare la nav inline, misurate in tutte e 4 le lingue
+   (il tedesco è il più lungo) con logo, 8 voci, "Prenota", lingua e MENU:
+   la riga completa sta su una linea solo da 1280px, la compatta da 1024px
+   (sotto, solo logo, "Prenota" e MENU). Sul blog il logo è affiancato dal
+   nome della struttura (richiesta del titolare) e serve un gradino in più. */
+const NAV_BREAKPOINTS = {
+  default: { full: "hidden min-[1280px]:block", compact: "hidden min-[1024px]:max-[1279px]:block", divider: "min-[1024px]:block" },
+  blog: { full: "hidden min-[1440px]:block", compact: "hidden min-[1280px]:max-[1439px]:block", divider: "min-[1280px]:block" },
+};
 
 /* Pagine che iniziano con una sezione chiara, senza foto sotto l'header:
    barra piena anche in cima, altrimenti voci e logo color crema sparivano
    sul fondo crema (bug visto su /alloggi/ e sull'indice del blog). */
 const LIGHT_TOP_PATHS = new Set(["/alloggi/", "/blog/", "/privacy/", "/cookie-policy/", "/termini-e-condizioni/"]);
-
-function getNavRight(locale: Locale): NavChild[] {
-  return [
-    { label: t("nav", "recensioni", locale), href: withLocale(locale, "/#section-reviews") },
-    { label: t("nav", "contatti", locale), href: withLocale(locale, "/#section-map") },
-  ];
-}
 
 const LANGUAGES: { code: Locale; label: string }[] = [
   { code: "it", label: "IT" },
@@ -242,35 +252,38 @@ function DesktopDropdown({ item, align, onVillaPage }: { item: NavItem; align: D
   // link che lo attraversa deve forzare una navigazione piena, vedi
   // rooms-widget-script.tsx per il motivo (document.write dopo il load).
   const crossesBoundary = item.href.includes("/villa-relax-assisi") !== onVillaPage;
-  const itemLinkClassName = "flex items-center gap-1.5 py-2 font-display text-[16px] tracking-[0.01em] transition-colors hover:text-gold";
+  const hasChildren = item.children.length > 0;
+  const itemLinkClassName = "flex items-center gap-1.5 whitespace-nowrap py-2 font-display text-[15px] tracking-[0.01em] transition-colors hover:text-gold 2xl:text-[16px]";
   return (
     <li className="group relative">
       {crossesBoundary ? (
         <a href={item.href} className={itemLinkClassName}>
           {item.label}
-          <ChevronIcon open={false} />
+          {hasChildren && <ChevronIcon open={false} />}
         </a>
       ) : (
         <Link href={item.href} className={itemLinkClassName}>
           {item.label}
-          <ChevronIcon open={false} />
+          {hasChildren && <ChevronIcon open={false} />}
         </Link>
       )}
-      <div
-        className={`invisible absolute top-full z-[200] min-w-[250px] max-w-[calc(100vw-32px)] translate-y-1.5 rounded-[3px] border border-cream/10 bg-olive-950/95 p-2 opacity-0 shadow-[0_18px_40px_-18px_rgba(0,0,0,0.55)] backdrop-blur-md transition-all duration-200 ease-out group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 ${DROPDOWN_ALIGN_CLASS[align]}`}
-      >
-        {item.children.map((child) => (
-          <a
-            key={child.label}
-            href={child.href}
-            target={child.external ? "_blank" : undefined}
-            rel={child.external ? "noopener noreferrer" : undefined}
-            className="block whitespace-nowrap rounded-[2px] px-3 py-2 font-display text-[15px] text-cream/90 transition-colors hover:bg-cream/5 hover:text-gold"
-          >
-            {child.label}
-          </a>
-        ))}
-      </div>
+      {hasChildren && (
+        <div
+          className={`invisible absolute top-full z-[200] min-w-[250px] max-w-[calc(100vw-32px)] translate-y-1.5 rounded-[3px] border border-cream/10 bg-olive-950/95 p-2 opacity-0 shadow-[0_18px_40px_-18px_rgba(0,0,0,0.55)] backdrop-blur-md transition-all duration-200 ease-out group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 ${DROPDOWN_ALIGN_CLASS[align]}`}
+        >
+          {item.children.map((child) => (
+            <a
+              key={child.label}
+              href={child.href}
+              target={child.external ? "_blank" : undefined}
+              rel={child.external ? "noopener noreferrer" : undefined}
+              className="block whitespace-nowrap rounded-[2px] px-3 py-2 font-display text-[15px] text-cream/90 transition-colors hover:bg-cream/5 hover:text-gold"
+            >
+              {child.label}
+            </a>
+          ))}
+        </div>
+      )}
     </li>
   );
 }
@@ -280,15 +293,20 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
   const mode = useHeaderScrollMode(menuOpen);
-  const navLeft = getNavLeft(locale);
-  const navRight = getNavRight(locale);
+  const nav = getNav(locale);
   const pathname = usePathname();
   const { path: bareItalianPath } = splitLocaleFromPath(pathname ?? "/");
   const onVillaPage = bareItalianPath.startsWith("/villa-relax-assisi");
+  /* "Prenota" compatto nell'header: stessa modale di tutti gli altri CTA di
+     prenotazione (sulle pagine Villa apre quella di Villa Relax, vedi
+     rooms-widget-script.tsx). Assente dove la barra di prenotazione è
+     nascosta perché non si prenota un soggiorno diretto (cofanetti, Smartbox). */
+  const showBookCta = !NO_DIRECT_BOOKING_PATHS.some((p) => bareItalianPath.startsWith(p));
   /* Blog (indice e articoli): logo e "Agriturismo La Mora" sempre visibili,
      anche scorrendo; l'header non si nasconde (richiesta del titolare). */
   const onBlog = bareItalianPath.startsWith("/blog/");
   const lightTop = LIGHT_TOP_PATHS.has(bareItalianPath);
+  const navBreakpoints = onBlog ? NAV_BREAKPOINTS.blog : NAV_BREAKPOINTS.default;
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -418,8 +436,12 @@ export function SiteHeader({ locale }: { locale: Locale }) {
                       height={105}
                       className="h-12 w-auto sm:h-[52px]"
                     />
+                    {/* Su telefono va su due righe larghe quanto la parola
+                        più lunga (w-min), per lasciare spazio a "Prenota";
+                        sotto i 360px resta il solo logo, che contiene già
+                        il nome. */}
                     {onBlog && (
-                      <span className="max-w-[118px] font-display text-[16px] leading-[1.1] text-cream sm:max-w-none sm:text-[19px]">
+                      <span className="hidden w-min font-display text-[16px] leading-[1.1] text-cream min-[360px]:block sm:w-auto sm:text-[19px]">
                         Agriturismo La&nbsp;Mora
                       </span>
                     )}
@@ -427,47 +449,37 @@ export function SiteHeader({ locale }: { locale: Locale }) {
                 )}
                 <span
                   aria-hidden="true"
-                  className="ml-5 mr-8 hidden h-11 w-px bg-[#f1f1f1]/35 min-[1100px]:block"
+                  className={`ml-5 mr-6 hidden h-11 w-px bg-[#f1f1f1]/35 2xl:mr-8 ${navBreakpoints.divider}`}
                 />
               </>
             )}
 
-            <nav aria-label={t("nav", "navigazionePrincipale", locale)} className="hidden min-[1100px]:block">
-              <ul className="flex items-center gap-8">
-                {navLeft.map((item, i) => (
-                  <DesktopDropdown key={item.id} item={item} align={getDropdownAlign(i, navLeft.length)} onVillaPage={onVillaPage} />
+            <nav aria-label={t("nav", "navigazionePrincipale", locale)} className={navBreakpoints.full}>
+              <ul className="flex items-center gap-5 2xl:gap-7">
+                {nav.map((item, i) => (
+                  <DesktopDropdown key={item.id} item={item} align={getDropdownAlign(i, nav.length)} onVillaPage={onVillaPage} />
                 ))}
               </ul>
             </nav>
 
-            {/* Nav compatta per tablet (768–1099px): solo le voci essenziali, il resto va in MENU.
-                Range auto-contenuto (md: + max-[1099px]:) per non dipendere dall'ordine con cui
-                Tailwind emette i blocchi @media di min-[1100px] e md: nel foglio di stile. */}
-            <nav aria-label={t("nav", "navigazionePrincipale", locale)} className="hidden md:max-[1099px]:block">
+            {/* Nav compatta: solo le voci essenziali, il resto va in MENU.
+                Range auto-contenuto (min- + max-) per non dipendere dall'ordine con cui
+                Tailwind emette i blocchi @media nel foglio di stile. */}
+            <nav aria-label={t("nav", "navigazionePrincipale", locale)} className={navBreakpoints.compact}>
               <ul className="flex items-center gap-6">
-                {navLeft.filter((item) => NAV_LEFT_TABLET.has(item.id)).map((item, i, arr) => (
+                {nav.filter((item) => NAV_TABLET.has(item.id)).map((item, i, arr) => (
                   <DesktopDropdown key={item.id} item={item} align={getDropdownAlign(i, arr.length)} onVillaPage={onVillaPage} />
                 ))}
               </ul>
             </nav>
           </div>
 
-          <div className="flex items-center gap-5 text-[11px] font-semibold uppercase tracking-[0.04em]">
-            <ul className="hidden items-center gap-5 min-[1100px]:flex">
-              {navRight.map((item) => (
-                <li key={item.label}>
-                  {onVillaPage ? (
-                    <a href={item.href} className="transition-colors hover:text-gold">
-                      {item.label}
-                    </a>
-                  ) : (
-                    <Link href={item.href} className="transition-colors hover:text-gold">
-                      {item.label}
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
+          <div className="flex shrink-0 items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.04em] sm:gap-5">
+            {showBookCta && (
+              <BookingModalButton className="whitespace-nowrap rounded-[3px] bg-raspberry px-3.5 py-2.5 text-[10.5px] uppercase tracking-[0.05em] text-cream transition-colors duration-300 hover:bg-[#8a3844] sm:px-4">
+                {onVillaPage ? t("booking", "prenotaVilla", locale) : t("booking", "prenotaOra", locale)}
+              </BookingModalButton>
+            )}
 
             <div ref={langRef} className="relative hidden md:block">
               <button
@@ -510,7 +522,11 @@ export function SiteHeader({ locale }: { locale: Locale }) {
               aria-controls="site-menu-panel"
               className="-my-3 flex items-center gap-2 py-3 transition-colors hover:text-gold"
             >
-              {t("nav", "menu", locale)}
+              {/* Telefoni stretti: solo l'icona, accanto a logo e "Prenota"
+                  non c'è spazio per la parola (che resta per gli screen
+                  reader). Sul blog, dove il logo ha accanto il nome, già
+                  sotto i 400px. */}
+              <span className={onBlog ? "max-[399px]:sr-only" : "max-[359px]:sr-only"}>{t("nav", "menu", locale)}</span>
               <MenuGlyph open={menuOpen} />
             </button>
           </div>
@@ -572,7 +588,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             className="flex flex-1 flex-col items-center justify-center py-8 text-center"
           >
             <ul className="flex flex-col items-center gap-1 sm:gap-2">
-              {[...navLeft, ...navRight].map((item) => {
+              {nav.map((item) => {
                 const targetIsVilla = item.href.includes("/villa-relax-assisi");
                 const crossesBoundary = targetIsVilla !== onVillaPage;
                 const itemClassName = "inline-block py-1.5 font-display text-[27px] font-normal leading-tight text-cream transition-colors duration-200 hover:text-gold sm:text-[34px]";
