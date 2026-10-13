@@ -70,8 +70,10 @@ export type BlogPost = {
      negli articoli più vecchi, di cui non si conosce una data affidabile. */
   datePublished?: string;
   schemaType?: "Article" | "BlogPosting";
-  /* Blocco "In breve" iniziale: fatti estraibili (date, distanze, tempi). */
-  inBreve?: { heading: string; items: { label: string; value: string }[] };
+  /* Blocco "In breve" iniziale: fatti estraibili (date, distanze, tempi).
+     `promo`: riga che esiste solo per una promo a tempo, "Offerta conclusa"
+     dopo la scadenza (PromoLine). */
+  inBreve?: { heading: string; items: { label: string; value: string; promo?: PromoId }[] };
   /* Riquadro "Dormi a La Mora" dopo "In breve", al posto della CTA A. */
   stayBox?: StayBoxData;
   intro: string;
@@ -155,7 +157,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
         { label: "Tema", value: "«Fate Dolci», 32ª edizione" },
         { label: "Ingresso", value: "Libero" },
         { label: "Da La Mora", value: "21,0 km · circa 23 min in auto" },
-        { label: "Offerta La Mora", value: "-10% durante l'evento" },
+        { label: "Offerta La Mora", value: "-10% durante l'evento", promo: "eurochocolate-2026" },
       ],
     },
     stayBox: {
@@ -165,7 +167,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       benefits: [
         "5 appartamenti indipendenti con cucina, da 4 a 8 posti letto",
         "Parcheggio gratuito: il centro di Perugia è a 21,0 km, circa 23 minuti",
-        "-10% durante Eurochocolate prenotando direttamente, alle condizioni dell'offerta",
+        { text: "-10% durante Eurochocolate prenotando direttamente, alle condizioni dell'offerta", promo: "eurochocolate-2026" },
       ],
       cta: "Prenota all'Agriturismo La Mora",
     },
@@ -331,7 +333,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
         { label: "Theme", value: "“Fate Dolci”, 32nd edition" },
         { label: "Entry", value: "Free" },
         { label: "From La Mora", value: "21.0 km · about 23 min by car" },
-        { label: "La Mora offer", value: "10% off during the event" },
+        { label: "La Mora offer", value: "10% off during the event", promo: "eurochocolate-2026" },
       ],
     },
     stayBox: {
@@ -341,7 +343,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       benefits: [
         "5 independent apartments with a kitchen, sleeping 4 to 8",
         "Free parking: central Perugia is 21.0 km away, about 23 minutes",
-        "10% off during Eurochocolate when you book direct, under the offer's conditions",
+        { text: "10% off during Eurochocolate when you book direct, under the offer's conditions", promo: "eurochocolate-2026" },
       ],
       cta: "Book at Agriturismo La Mora",
     },
@@ -507,7 +509,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
         { label: "Thème", value: "« Fate Dolci », 32e édition" },
         { label: "Entrée", value: "Libre" },
         { label: "Depuis La Mora", value: "21,0 km · env. 23 min en voiture" },
-        { label: "Offre La Mora", value: "-10 % pendant l'événement" },
+        { label: "Offre La Mora", value: "-10 % pendant l'événement", promo: "eurochocolate-2026" },
       ],
     },
     stayBox: {
@@ -517,7 +519,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       benefits: [
         "5 appartements indépendants avec cuisine, de 4 à 8 couchages",
         "Parking gratuit : le centre de Pérouse est à 21,0 km, environ 23 minutes",
-        "-10 % pendant Eurochocolate en réservant en direct, aux conditions de l'offre",
+        { text: "-10 % pendant Eurochocolate en réservant en direct, aux conditions de l'offre", promo: "eurochocolate-2026" },
       ],
       cta: "Réserver à l'Agriturismo La Mora",
     },
@@ -683,7 +685,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
         { label: "Motto", value: "„Fate Dolci“, 32. Ausgabe" },
         { label: "Eintritt", value: "Frei" },
         { label: "Ab La Mora", value: "21,0 km · ca. 23 Min. mit dem Auto" },
-        { label: "Angebot La Mora", value: "-10 % während der Veranstaltung" },
+        { label: "Angebot La Mora", value: "-10 % während der Veranstaltung", promo: "eurochocolate-2026" },
       ],
     },
     stayBox: {
@@ -693,7 +695,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       benefits: [
         "5 unabhängige Ferienwohnungen mit Küche, für 4 bis 8 Personen",
         "Kostenloser Parkplatz: Die Altstadt von Perugia ist 21,0 km entfernt, rund 23 Minuten",
-        "10 % Rabatt während der Eurochocolate bei Direktbuchung, zu den Bedingungen des Angebots",
+        { text: "10 % Rabatt während der Eurochocolate bei Direktbuchung, zu den Bedingungen des Angebots", promo: "eurochocolate-2026" },
       ],
       cta: "Im Agriturismo La Mora buchen",
     },

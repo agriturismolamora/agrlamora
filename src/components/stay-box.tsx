@@ -1,13 +1,20 @@
 import { WatermarkedImage } from "@/components/watermarked-image";
 import { BookingModalButton } from "@/components/booking-modal-button";
+import { PromoLine } from "@/components/promo-line";
 import choco from "@/components/chocolate-theme.module.css";
+import type { PromoId } from "@/data/promo";
+import type { Locale } from "@/lib/i18n";
 
-export type StayBoxData = { heading: string; image: string; alt: string; benefits: string[]; cta: string };
+/* Un vantaggio legato a una promo a tempo diventa "Offerta conclusa" dopo
+   la scadenza (PromoLine). */
+type StayBoxBenefit = string | { text: string; promo: PromoId };
+
+export type StayBoxData = { heading: string; image: string; alt: string; benefits: StayBoxBenefit[]; cta: string };
 
 /* "Dormi a La Mora": foto nostra HD, tre vantaggi e Prenota (modale), dopo
    "In breve" negli articoli che lo prevedono (oggi solo Eurochocolate), al
    posto della CTA A: stesso invito, più chiaro su dove si dorme. */
-export function StayBox({ data, chocolate = false }: { data: StayBoxData; chocolate?: boolean }) {
+export function StayBox({ data, locale, chocolate = false }: { data: StayBoxData; locale: Locale; chocolate?: boolean }) {
   return (
     <section
       aria-labelledby="stay-box-heading"
@@ -24,14 +31,23 @@ export function StayBox({ data, chocolate = false }: { data: StayBoxData; chocol
           {data.heading.replace(/La Mora/g, "La Mora")}
         </h2>
         <ul className="mt-5 space-y-2.5">
-          {data.benefits.map((benefit) => (
-            <li key={benefit} className={`flex items-start gap-2.5 text-[14px] leading-[1.6] ${chocolate ? "text-[var(--crema)]/90" : "text-ink-soft"}`}>
-              <span aria-hidden="true" className={chocolate ? "text-[var(--caramello-chiaro)]" : "text-olive-700"}>
-                ✓
-              </span>
-              {benefit}
-            </li>
-          ))}
+          {data.benefits.map((benefit) => {
+            const text = typeof benefit === "string" ? benefit : benefit.text;
+            return (
+              <li key={text} className={`flex items-start gap-2.5 text-[14px] leading-[1.6] ${chocolate ? "text-[var(--crema)]/90" : "text-ink-soft"}`}>
+                <span aria-hidden="true" className={chocolate ? "text-[var(--caramello-chiaro)]" : "text-olive-700"}>
+                  ✓
+                </span>
+                {typeof benefit === "string" ? (
+                  benefit
+                ) : (
+                  <PromoLine promoId={benefit.promo} locale={locale}>
+                    {benefit.text}
+                  </PromoLine>
+                )}
+              </li>
+            );
+          })}
         </ul>
         <BookingModalButton
           className={`${chocolate ? choco.sheen : "bg-raspberry text-cream hover:bg-[#8a3844]"} mt-6 inline-flex min-h-[46px] items-center gap-2.5 rounded-lg px-7 font-sans text-[11px] font-semibold uppercase tracking-[0.08em]`}

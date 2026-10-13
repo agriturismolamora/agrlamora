@@ -10,12 +10,20 @@ import type { Locale } from "@/lib/i18n";
    come costanti a valore null (DA CONFERMARE) e mai mostrati in pagina.
 
    Le date sono interpretate nel fuso Europe/Rome: `endsAt` è l'ultimo
-   istante di validità (fine giornata, ora italiana). Il sito è statico
-   (SSG), quindi lo stato attiva/conclusa va calcolato nel browser, DOPO il
-   mount (vedi promo-offer-box.tsx e promo-popup.tsx): mai durante il
-   render, altrimenti HTML del server e del client divergerebbero. */
+   istante di validità (fine giornata, ora italiana). Lo stato di una promo
+   si legge SOLO da getPromoStatus() / getActivePromos() qui sotto, mai con
+   confronti di date sparsi nei componenti. Il sito è statico (SSG), quindi
+   lo stato va calcolato nel browser, DOPO il mount (hook useNow(), vedi
+   src/hooks/use-now.ts): mai durante il render statico, altrimenti HTML del
+   server e del client divergerebbero. Scaduta una promo, il sito smette da
+   solo di mostrarla: niente popup, niente etichetta nell'header, "Offerta
+   conclusa" dove resta citata. */
 
 export type PromoId = "eurochocolate-2026";
+
+/* upcoming: non ancora pubblicizzata; active: da mostrare (popup,
+   etichetta nell'header, offerte in corso); expired: conclusa. */
+export type PromoStatus = "upcoming" | "active" | "expired";
 
 export type PromoText = {
   /* Testo datato, presente nell'HTML statico: resta vero anche per chi
@@ -39,8 +47,10 @@ export type Promo = {
   /* Date dell'evento (13–22 novembre 2026, fonte: eurochocolate.com). */
   eventStart: string;
   eventEnd: string;
-  /* Ultimo istante di validità dell'offerta, ora italiana (CET, +01:00 a
-     novembre). Default 22/11/2026, da confermare col titolare. */
+  /* Primo istante in cui la promo si mostra sul sito, ora italiana.
+     Assente: in corso già dalla pubblicazione. */
+  startsAt?: string;
+  /* Ultimo istante di validità dell'offerta, ora italiana. */
   endsAt: string;
   articleSlug: string;
   text: Record<Locale, PromoText>;
@@ -86,7 +96,9 @@ export const EUROCHOCOLATE_2026: Promo = {
   discountPercent: 10,
   eventStart: "2026-11-13",
   eventEnd: "2026-11-22",
-  endsAt: "2026-11-22T23:59:59+01:00",
+  /* Fine dell'offerta confermata dal titolare (13/10/2026): ultimo giorno
+     di Eurochocolate, fine giornata a Roma (a novembre CET, +01:00). */
+  endsAt: "2026-11-22T23:59:59.999+01:00",
   articleSlug: "eurochocolate-2026-dove-dormire",
   text: {
     it: {
@@ -160,14 +172,22 @@ export const PROMOS: Record<PromoId, Promo> = {
   "eurochocolate-2026": EUROCHOCOLATE_2026,
 };
 
-export function isPromoActive(promo: Promo, now: number): boolean {
-  return now <= Date.parse(promo.endsAt);
+const ALL_PROMOS: Promo[] = Object.values(PROMOS);
+
+export function getPromoStatus(promo: Promo, now: number): PromoStatus {
+  if (promo.startsAt && now < Date.parse(promo.startsAt)) return "upcoming";
+  return now <= Date.parse(promo.endsAt) ? "active" : "expired";
 }
 
-/* Promo da mostrare nel popup della home in questo momento, se c'è: finita
-   l'offerta il popup torna da solo a quello di prenotazione diretta. */
-export function getActivePopupPromo(now: number): Promo | null {
-  return isPromoActive(EUROCHOCOLATE_2026, now) ? EUROCHOCOLATE_2026 : null;
+/* Promo a tempo da mostrare adesso (popup, etichetta nell'header, offerte
+   in corso), dalla più vicina alla scadenza. */
+export function getActivePromos(now: number): Promo[] {
+  return ALL_PROMOS.filter((p) => getPromoStatus(p, now) === "active").sort((a, b) => Date.parse(a.endsAt) - Date.parse(b.endsAt));
+}
+
+/* Promo concluse, dalla più recente. */
+export function getExpiredPromos(now: number): Promo[] {
+  return ALL_PROMOS.filter((p) => getPromoStatus(p, now) === "expired").sort((a, b) => Date.parse(b.endsAt) - Date.parse(a.endsAt));
 }
 
 export const WHATSAPP_NUMBER = "393934363917";

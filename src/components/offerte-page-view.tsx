@@ -14,6 +14,7 @@ import { bbitOfferteUrl } from "@/lib/bbit-widget-urls";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { EUROCHOCOLATE_2026 } from "@/data/promo";
+import { PromoLine } from "@/components/promo-line";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
 
@@ -27,33 +28,39 @@ const OFFERS_WIDGET_TEXT: Record<Locale, { label: string; heading: string }> = {
 /* Card dell'offerta Eurochocolate 2026 (src/data/promo.ts): rimanda
    all'articolo, dove stanno programma, distanze e condizioni complete. Stile
    standard del sito: il tema cioccolato resta solo nell'articolo e nel
-   popup. La validità è un testo datato, vero anche a offerta conclusa. Foto
-   reale di Eurochocolate 2024 con licenza CC BY-SA (src/data/photo-credits.ts):
-   niente filigrana, attribuzione completa sotto la card. */
-const EUROCHOCOLATE_CARD_TEXT: Record<Locale, { label: string; heading: string; body: string; cta: string }> = {
+   popup. La validità è un testo datato, vero anche a offerta conclusa; dopo
+   la scadenza (PromoLine) sulla foto compare "Offerta conclusa" e il link
+   diventa solo "Leggi l'articolo". Foto reale di Eurochocolate 2024 con
+   licenza CC BY-SA (src/data/photo-credits.ts): niente filigrana,
+   attribuzione completa sotto la card. */
+const EUROCHOCOLATE_CARD_TEXT: Record<Locale, { label: string; heading: string; body: string; cta: string; ctaEnded: string }> = {
   it: {
     label: "Evento · Perugia",
     heading: "Eurochocolate 2026: -10% per tutta la durata dell'evento",
     body: "Dal 13 al 22 novembre 2026 Perugia ospita il festival internazionale del cioccolato, a 21 km da La Mora. Programma, come arrivare e condizioni dell'offerta sono nell'articolo dedicato.",
     cta: "Leggi l'articolo e le condizioni",
+    ctaEnded: "Leggi l'articolo",
   },
   en: {
     label: "Event · Perugia",
     heading: "Eurochocolate 2026: 10% off for the whole event",
     body: "From 13 to 22 November 2026 Perugia hosts the international chocolate festival, 21 km from La Mora. Programme, how to get there and the offer conditions are in our dedicated article.",
     cta: "Read the article and conditions",
+    ctaEnded: "Read the article",
   },
   fr: {
     label: "Événement · Pérouse",
     heading: "Eurochocolate 2026 : -10 % pendant toute la durée de l'événement",
     body: "Du 13 au 22 novembre 2026, Pérouse accueille le festival international du chocolat, à 21 km de La Mora. Programme, accès et conditions de l'offre sont dans notre article dédié.",
     cta: "Lire l'article et les conditions",
+    ctaEnded: "Lire l'article",
   },
   de: {
     label: "Veranstaltung · Perugia",
     heading: "Eurochocolate 2026: -10 % während der gesamten Veranstaltung",
     body: "Vom 13. bis 22. November 2026 findet in Perugia das internationale Schokoladenfestival statt, 21 km von La Mora entfernt. Programm, Anreise und Angebotsbedingungen stehen in unserem Artikel.",
     cta: "Artikel und Bedingungen lesen",
+    ctaEnded: "Artikel lesen",
   },
 };
 
@@ -326,6 +333,15 @@ export function OffertePageView({ locale }: { locale: Locale }) {
                   sizes="(max-width: 640px) 100vw, 450px"
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 />
+                <PromoLine
+                  promoId={EUROCHOCOLATE_2026.id}
+                  locale={locale}
+                  ended={
+                    <span className="absolute left-4 top-4 rounded-full bg-ink/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-cream">
+                      {EUROCHOCOLATE_2026.text[locale].ended}
+                    </span>
+                  }
+                />
               </div>
               <div className="flex flex-col justify-center px-7 py-8 sm:px-10 sm:py-10">
                 <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-raspberry">{EUROCHOCOLATE_CARD_TEXT[locale].label}</span>
@@ -335,7 +351,9 @@ export function OffertePageView({ locale }: { locale: Locale }) {
                 <p className="mt-2 text-[12px] font-semibold uppercase tracking-[0.06em] text-ink-soft">{EUROCHOCOLATE_2026.text[locale].validity}</p>
                 <p className="mt-4 max-w-[520px] text-[14px] leading-[1.75] text-ink-soft">{EUROCHOCOLATE_CARD_TEXT[locale].body}</p>
                 <span className="mt-6 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.06em] text-raspberry">
-                  {EUROCHOCOLATE_CARD_TEXT[locale].cta}
+                  <PromoLine promoId={EUROCHOCOLATE_2026.id} locale={locale} ended={EUROCHOCOLATE_CARD_TEXT[locale].ctaEnded}>
+                    {EUROCHOCOLATE_CARD_TEXT[locale].cta}
+                  </PromoLine>
                   <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                     →
                   </span>

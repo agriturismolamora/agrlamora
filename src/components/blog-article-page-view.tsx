@@ -12,6 +12,8 @@ import { MapsButton } from "@/components/maps-button";
 import { BlogBookingCta } from "@/components/blog-booking-cta";
 import { getBlogCta, DEFAULT_BLOG_CTA } from "@/data/blog-ctas";
 import { PromoOfferBox } from "@/components/promo-offer-box";
+import { PromoLine } from "@/components/promo-line";
+import type { PromoId } from "@/data/promo";
 import { PhotoCreditLine } from "@/components/photo-credit";
 import { ChocolateDrip, CocoaParticles } from "@/components/chocolate-decor";
 import choco from "@/components/chocolate-theme.module.css";
@@ -117,12 +119,23 @@ function themeClasses(isChocolate: boolean) {
 
 /* Fatti estraibili ("In breve", fatti pratici): sul tema cioccolato una
    tavoletta a segmenti, altrimenti il riquadro crema del sito. */
+function FactValue({ fact, locale }: { fact: { value: string; promo?: PromoId }; locale: Locale }) {
+  if (!fact.promo) return <>{fact.value}</>;
+  return (
+    <PromoLine promoId={fact.promo} locale={locale}>
+      {fact.value}
+    </PromoLine>
+  );
+}
+
 function FactsGrid({
   items,
   variant,
+  locale,
 }: {
-  items: { label: string; value: string }[];
+  items: { label: string; value: string; promo?: PromoId }[];
   variant: "default" | "chocolateDark" | "chocolateMilk";
+  locale: Locale;
 }) {
   if (variant === "default") {
     return (
@@ -130,7 +143,9 @@ function FactsGrid({
         {items.map((f) => (
           <div key={f.label}>
             <dt className="text-[10px] font-semibold uppercase tracking-[0.08em] text-ink-soft">{f.label}</dt>
-            <dd className="mt-1 font-display text-[17px] leading-tight text-ink">{f.value}</dd>
+            <dd className="mt-1 font-display text-[17px] leading-tight text-ink">
+              <FactValue fact={f} locale={locale} />
+            </dd>
           </div>
         ))}
       </dl>
@@ -141,7 +156,9 @@ function FactsGrid({
       {items.map((f) => (
         <div key={f.label} className={choco.segment}>
           <dt className={choco.segmentLabel}>{f.label}</dt>
-          <dd className={choco.segmentValue}>{f.value}</dd>
+          <dd className={choco.segmentValue}>
+            <FactValue fact={f} locale={locale} />
+          </dd>
         </div>
       ))}
     </dl>
@@ -204,7 +221,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
         >
           {post.inBreve.heading}
         </h2>
-        <FactsGrid items={post.inBreve.items} variant={isChocolate ? "chocolateDark" : "default"} />
+        <FactsGrid items={post.inBreve.items} variant={isChocolate ? "chocolateDark" : "default"} locale={locale} />
       </section>
     </Reveal>
   );
@@ -248,7 +265,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
   );
   const stayBox = post.stayBox && (
     <Reveal delay={60}>
-      <StayBox data={post.stayBox} chocolate={isChocolate} />
+      <StayBox data={post.stayBox} locale={locale} chocolate={isChocolate} />
     </Reveal>
   );
 
@@ -296,7 +313,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
       case "facts":
         return (
           <Reveal key={i}>
-            <FactsGrid items={block.items} variant={isChocolate ? "chocolateMilk" : "default"} />
+            <FactsGrid items={block.items} variant={isChocolate ? "chocolateMilk" : "default"} locale={locale} />
           </Reveal>
         );
       case "image":

@@ -44,8 +44,9 @@ export const metadata: Metadata = getHomeMetadata("de");
 
    BenefitMarquee (striscia di testo che scorreva con sconti/servizi) è
    stata rimossa su richiesta esplicita: i due sconti diretti (7+ notti,
-   clienti di ritorno) vivono ora nel PromoPopup, mostrato appena si apre
-   il sito, invece che in una striscia sempre in scorrimento. */
+   clienti di ritorno) stanno nel confronto prezzi qui sotto e nella pagina
+   Offerte. Il PromoPopup compare solo mentre c'è una promo a tempo attiva
+   (src/data/promo.ts). */
 export default function Home() {
   return (
     <>

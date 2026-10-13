@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import styles from "@/components/chocolate-theme.module.css";
-import { PROMOS, FACEBOOK_PAGE_URL, facebookOfferUrl, isPromoActive, promoWhatsappUrl, type PromoId } from "@/data/promo";
+import { PROMOS, FACEBOOK_PAGE_URL, facebookOfferUrl, getPromoStatus, promoWhatsappUrl, type PromoId } from "@/data/promo";
 import { BookingModalButton } from "@/components/booking-modal-button";
+import { useNow } from "@/hooks/use-now";
 import type { Locale } from "@/lib/i18n";
 
 /* Box offerta riutilizzabile, configurato per articolo tramite il campo
@@ -12,9 +12,11 @@ import type { Locale } from "@/lib/i18n";
 
    La validità è un testo DATATO nell'HTML statico ("dal 13 al 22 novembre
    2026"), vero anche senza JavaScript. Lo stato "conclusa" si calcola solo
-   dopo il mount (useEffect): il primo render è identico su server e client
-   (nessun hydration mismatch), e il contenitore delle CTA ha altezza minima
-   fissa, quindi lo scambio CTA → "Offerta conclusa" non sposta il layout.
+   dopo il mount (useNow + getPromoStatus): il primo render è identico su
+   server e client (nessun hydration mismatch), e il contenitore delle CTA
+   ha altezza minima fissa, quindi lo scambio CTA → "Offerta conclusa" non
+   sposta il layout. A offerta conclusa spariscono anche i link Facebook
+   dell'offerta: nessun invito promozionale resta attivo.
 
    "Prenota" apre la stessa modale bed-and-breakfast.it di "Prenota ora"
    (BookingModalButton, vedi lì perché non basta la sola classe). Nessuna promessa sull'applicazione automatica dello sconto nel
@@ -32,12 +34,8 @@ export function PromoOfferBox({
 }) {
   const promo = PROMOS[promoId];
   const text = promo.text[locale];
-  const [ended, setEnded] = useState(false);
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- stato che dipende dall'ora del browser: va letto dopo il mount, mai durante il render statico
-    setEnded(!isPromoActive(promo, Date.now()));
-  }, [promo]);
+  const now = useNow();
+  const ended = now !== null && getPromoStatus(promo, now) === "expired";
 
   const Heading = headingAs;
 
@@ -96,8 +94,9 @@ export function PromoOfferBox({
           </div>
 
           {/* Le due azioni Facebook dell'offerta: "Mi piace" alla pagina e
-              "Salva" sul post dell'offerta, entrambe in una nuova scheda. */}
-          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
+              "Salva" sul post dell'offerta, entrambe in una nuova scheda.
+              Solo finché l'offerta non è conclusa. */}
+          <div className={`mt-5 flex flex-wrap gap-x-6 gap-y-2 ${ended ? "hidden" : ""}`}>
             <a
               href={FACEBOOK_PAGE_URL}
               target="_blank"
