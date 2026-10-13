@@ -534,7 +534,7 @@ function CardFace({
             metà frase ("PRENOTA" / "ORA"). In colonna ogni frase ha sempre
             tutta la larghezza della card per sé, mai spezzata. */}
         <div className="mt-3 flex flex-col items-center gap-2.5">
-          <BookingModalButton className="whitespace-nowrap rounded-[2px] border border-raspberry px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.06em] text-raspberry transition-colors duration-200 hover:bg-raspberry hover:text-cream">
+          <BookingModalButton sheen="tint" className="whitespace-nowrap rounded-[2px] border border-raspberry px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.06em] text-raspberry transition-colors duration-200 hover:bg-raspberry hover:text-cream">
             {TXT[locale].prenotaOra}
           </BookingModalButton>
           <Link

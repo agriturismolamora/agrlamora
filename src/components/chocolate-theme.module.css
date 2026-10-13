@@ -150,38 +150,17 @@
   }
 }
 
-/* CTA principale: caramello con un riflesso che attraversa il pulsante. */
-.sheen {
-  position: relative;
-  overflow: hidden;
+/* CTA principale: caramello. Il riflesso che lo attraversa è lo stile
+   condiviso di tutti i pulsanti di prenotazione (.booking-sheen in
+   globals.css, applicato da BookingModalButton con sheen="strong"). */
+.caramelCta {
   background: linear-gradient(180deg, #d79a4f 0%, var(--caramello) 100%);
   color: var(--cacao);
   box-shadow: 0 10px 24px -12px rgba(201, 138, 62, 0.8);
 }
 
-.sheen::after {
-  content: "";
-  position: absolute;
-  inset: -40% auto -40% -60%;
-  width: 45%;
-  transform: translateX(0) skewX(-20deg);
-  background: linear-gradient(90deg, rgba(255, 244, 225, 0) 0%, rgba(255, 244, 225, 0.55) 50%, rgba(255, 244, 225, 0) 100%);
-  animation: sheen-pass 4.5s ease-in-out 1.2s infinite;
-  pointer-events: none;
-}
-
-@keyframes sheen-pass {
-  0%,
-  55% {
-    transform: translateX(0) skewX(-20deg);
-  }
-  100% {
-    transform: translateX(420%) skewX(-20deg);
-  }
-}
-
-.sheen:hover,
-.sheen:focus-visible {
+.caramelCta:hover,
+.caramelCta:focus-visible {
   background: linear-gradient(180deg, var(--caramello-chiaro) 0%, #d79a4f 100%);
 }
 

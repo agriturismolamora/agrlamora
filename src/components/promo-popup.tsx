@@ -243,7 +243,8 @@ export function PromoPopup({ locale }: { locale: Locale }) {
           <p className="mx-auto mt-3 max-w-[340px] text-[13px] leading-[1.6] text-[var(--crema)]/85">{text.detail}</p>
           <BookingModalButton
             onClick={() => setOpen(false)}
-            className={`${choco.sheen} mt-6 inline-flex min-h-[46px] items-center gap-2.5 rounded-lg px-7 font-sans text-[11px] font-semibold uppercase tracking-[0.08em]`}
+            sheen="strong"
+            className={`${choco.caramelCta} mt-6 inline-flex min-h-[46px] items-center gap-2.5 rounded-lg px-7 font-sans text-[11px] font-semibold uppercase tracking-[0.08em]`}
           >
             {text.book}
             <span aria-hidden="true">→</span>

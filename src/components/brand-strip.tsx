@@ -39,6 +39,7 @@ export function BrandStrip({ locale, dark = false }: { locale: Locale; dark?: bo
       </div>
       <div className="flex flex-wrap gap-2.5 sm:pl-[92px]">
         <BookingModalButton
+          sheen={dark ? "strong" : "soft"}
           className={`inline-flex min-h-[42px] items-center rounded-lg px-5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] transition-colors ${
             dark ? "bg-[var(--caramello-chiaro)] text-[#2b1a10] hover:bg-[var(--crema)]" : "bg-raspberry text-cream hover:bg-[#8a3844]"
           }`}

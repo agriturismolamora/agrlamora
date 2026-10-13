@@ -426,7 +426,7 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
               {t.prenotaDirettamente}
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <BookingModalButton className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-7 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]">
+              <BookingModalButton sheen="strong" className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-7 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]">
                 <HoverFill color="#8f7330" />
                 <span className="relative z-10 inline-flex items-center gap-2.5">
                   {t.verificaDisponibilita}

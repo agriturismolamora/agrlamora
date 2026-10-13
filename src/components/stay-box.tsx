@@ -50,7 +50,8 @@ export function StayBox({ data, locale, chocolate = false }: { data: StayBoxData
           })}
         </ul>
         <BookingModalButton
-          className={`${chocolate ? choco.sheen : "bg-raspberry text-cream hover:bg-[#8a3844]"} mt-6 inline-flex min-h-[46px] items-center gap-2.5 rounded-lg px-7 font-sans text-[11px] font-semibold uppercase tracking-[0.08em]`}
+          sheen={chocolate ? "strong" : "soft"}
+          className={`${chocolate ? choco.caramelCta : "bg-raspberry text-cream hover:bg-[#8a3844]"} mt-6 inline-flex min-h-[46px] items-center gap-2.5 rounded-lg px-7 font-sans text-[11px] font-semibold uppercase tracking-[0.08em]`}
         >
           {data.cta}
           <span aria-hidden="true">→</span>

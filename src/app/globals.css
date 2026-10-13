@@ -190,6 +190,67 @@ body {
   }
 }
 
+/* Riflesso dei pulsanti di prenotazione: applicato da BookingModalButton
+   (booking-modal-button.tsx) a TUTTI i CTA che aprono la modale, nato dal
+   pulsante caramello dell'articolo Eurochocolate. Una banda di luce
+   inclinata attraversa il pulsante, poi una lunga pausa: ciclo di 6,5 s,
+   passaggio in ~2 s, solo transform. La partenza è sfalsata per pulsante
+   (--sheen-delay), così più pulsanti visibili insieme non partono nello
+   stesso istante. La banda sta DIETRO al testo (z-index -1 nel contesto
+   isolato del pulsante) e la sua intensità dipende dalla palette, così il
+   contrasto del testo resta AA anche al passaggio:
+   - default: bianco 9% (testo crema su lampone: minimo 4,6:1);
+   - .booking-sheen-strong: testo scuro su oro/caramello, schiarire il fondo
+     aumenta il contrasto;
+   - .booking-sheen-tint: pulsanti a contorno su fondo chiaro, tinta lampone.
+   Layout invariato (position/overflow non cambiano dimensioni). Con
+   prefers-reduced-motion nessuna banda: pulsante statico. */
+@keyframes sheen-pass {
+  0%,
+  70% {
+    transform: translateX(0) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(420%) skewX(-20deg);
+  }
+}
+
+.booking-sheen {
+  --sheen-color: rgba(255, 255, 255, 0.09);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.booking-sheen-strong {
+  --sheen-color: rgba(255, 248, 235, 0.5);
+}
+
+.booking-sheen-tint {
+  --sheen-color: rgba(159, 65, 79, 0.12);
+}
+
+.booking-sheen::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -40%;
+  bottom: -40%;
+  left: -60%;
+  width: 45%;
+  background: linear-gradient(90deg, transparent 0%, var(--sheen-color) 50%, transparent 100%);
+  transform: translateX(0) skewX(-20deg);
+  animation: sheen-pass 6.5s ease-in-out var(--sheen-delay, 1.2s) infinite;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booking-sheen::before {
+    display: none;
+    animation: none;
+  }
+}
+
 /* Twinkle delle stelle nello sfondo notturno del carousel Appartamenti
    (apartments-carousel.tsx): timing (durata/delay) randomizzato per stella
    direttamente in JS via style inline, qui solo la curva condivisa. Nessuna

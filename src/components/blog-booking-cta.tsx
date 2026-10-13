@@ -100,7 +100,7 @@ function Arrow() {
 function BookButton({ label, tone, theme }: { label: string; tone: "gold" | "raspberry"; theme: Theme }) {
   if (theme === "chocolate") {
     return (
-      <BookingModalButton className={`${choco.sheen} ${BTN}`}>
+      <BookingModalButton sheen="strong" className={`${choco.caramelCta} ${BTN}`}>
         <span className="relative z-10 inline-flex items-center gap-2.5">
           {label}
           <Arrow />
@@ -109,7 +109,10 @@ function BookButton({ label, tone, theme }: { label: string; tone: "gold" | "ras
     );
   }
   return (
-    <BookingModalButton className={`${BTN} ${tone === "raspberry" ? "bg-raspberry text-cream" : "bg-gold text-[#1f180e]"}`}>
+    <BookingModalButton
+      sheen={tone === "raspberry" ? "soft" : "strong"}
+      className={`${BTN} ${tone === "raspberry" ? "bg-raspberry text-cream" : "bg-gold text-[#1f180e]"}`}
+    >
       <HoverFill color={tone === "raspberry" ? "#8a3844" : "#8f7330"} />
       <span className="relative z-10 inline-flex items-center gap-2.5">
         {label}

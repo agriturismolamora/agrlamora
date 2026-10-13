@@ -77,7 +77,8 @@ export function PromoOfferBox({
             ) : (
               <>
                 <BookingModalButton
-                  className={`${styles.sheen} inline-flex min-h-[48px] items-center rounded-lg px-7 font-sans text-[11px] font-semibold uppercase tracking-[0.08em]`}
+                  sheen="strong"
+                  className={`${styles.caramelCta} inline-flex min-h-[48px] items-center rounded-lg px-7 font-sans text-[11px] font-semibold uppercase tracking-[0.08em]`}
                 >
                   {text.bookCta}
                 </BookingModalButton>

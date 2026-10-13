@@ -154,7 +154,7 @@ export function OttavoCentenarioPageView({ locale }: { locale: Locale }) {
               {/* Apre il modale di prenotazione di bed-and-breakfast.it come
                   il resto del sito (BookingModalButton), non più WhatsApp: la
                   promo vale proprio per chi prenota direttamente. */}
-              <BookingModalButton className="group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]">
+              <BookingModalButton sheen="strong" className="group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-lg bg-gold px-6 py-3.5 font-sans text-[10px] font-semibold uppercase tracking-[0.05em] text-[#1f180e]">
                 <HoverFill color="#8f7330" />
                 <span className="relative z-10 inline-flex items-center gap-2.5">
                   {text.promoCta}
