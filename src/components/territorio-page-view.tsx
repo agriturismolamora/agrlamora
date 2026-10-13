@@ -889,15 +889,17 @@ export function TerritorioPageView({ locale }: { locale: Locale }) {
             return (
               <div key={group.id} className="mt-12 border-t border-ink/10 pt-10">
                 <h3 className="font-display text-[24px] font-normal leading-[1.2] text-ink">{blog.groups[group.id]}</h3>
-                <ul className="mt-6 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-                  {posts.map((post, i) => (
-                    <li key={post.slug}>
-                      <Reveal delay={(i % 3) * 60} className="h-full">
+                {/* Un solo Reveal per gruppo, non uno per card: meno
+                    componenti client da idratare in una pagina già lunga. */}
+                <Reveal>
+                  <ul className="mt-6 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+                    {posts.map((post) => (
+                      <li key={post.slug}>
                         <BlogCard post={post} locale={locale} readMore={blog.readMore} />
-                      </Reveal>
-                    </li>
-                  ))}
-                </ul>
+                      </li>
+                    ))}
+                  </ul>
+                </Reveal>
               </div>
             );
           })}
