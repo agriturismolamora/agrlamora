@@ -762,7 +762,7 @@ export function TerritorioPageView({ locale }: { locale: Locale }) {
                     {place.article && <PlaceArticleLink slug={place.article} locale={locale} label={guide.onBlog} />}
                     {place.maps && <MapsButton place={getPlace(place.maps)} locale={locale} className="mt-4" />}
                     {place.credit && (
-                      <p className="mt-3 text-[11px] text-ink-soft/60">
+                      <p className="mt-3 text-[11px] text-ink-soft">
                         {text.fotoWord}: {place.credit}
                       </p>
                     )}
