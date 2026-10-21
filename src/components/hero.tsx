@@ -41,7 +41,7 @@ export function Hero({ locale }: { locale: Locale }) {
         preload="auto"
         aria-hidden="true"
         tabIndex={-1}
-        poster="/videos/hero/agriturismo-la-mora-hero-poster.jpg"
+        poster="/videos/hero/agriturismo-la-mora-hero-poster.webp"
       >
         <source src="/videos/hero/agriturismo-la-mora-hero.webm" type="video/webm" />
         <source src="/videos/hero/agriturismo-la-mora-hero.mp4" type="video/mp4" />

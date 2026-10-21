@@ -38,6 +38,7 @@ Next.js + Tailwind, deploy su Vercel, dominio esistente mantenuto. (Se lo stack 
 - **Menù Capodanno Carfagna: da pubblicare quando arriva** (`CARFAGNA_CAPODANNO_MENU`, oggi `null` in `src/data/ristorante-carfagna.ts`). Finché è `null` non si scrive nulla, nemmeno "in arrivo".
 - **Culla**: 15 € a soggiorno sia a La Mora sia a Villa Relax (`getVillaCot()` in `src/data/villa.ts`).
 - **Blog, cluster animali e famiglie** (`src/data/blog-posts-cluster.ts`): ogni articolo ha "Ultima verifica: <data>" (campo `disclaimer`) e nel commento le fonti ufficiali e i fatti tolti. Aggiornando orari o prezzi, aggiornare anche la data.
+- **Prestazioni della home (mobile)**: mai importare `src/data/blog-posts.ts` (o altri dati grandi) in un componente `"use client"`: il testo di tutti gli articoli finirebbe nel JavaScript della pagina; i componenti client ricevono solo i campi che mostrano (es. `blog-section.tsx` server → `blog-section-view.tsx` client). Il sipario d'apertura (`home-intro.module.css`) resta solo CSS, senza timer in JavaScript. Le sezioni della home sotto la piega stanno in un `<Suspense>` ciascuna (hydration a pezzi). Poster della hero in WebP.
 - **Widget esterni che scrivono nel DOM prima dell'hydration** (es. Octorate): il loro contenitore non deve avere figli gestiti da React (`dangerouslySetInnerHTML` vuoto + `suppressHydrationWarning`), altrimenti su Safari l'hydration fallisce e la pagina viene ricostruita nel browser.
 
 ## Modo di lavorare

@@ -1,0 +1,193 @@
+/* Sipario d'apertura della homepage (home-intro.tsx), interamente in CSS:
+   le animazioni partono dal primo paint, senza aspettare il JavaScript.
+   Prima i tempi erano scanditi da timer avviati dopo l'hydration: su un
+   telefono lento il sipario restava chiuso per secondi e con lui la hero
+   (era la causa principale dell'LCP alto della home). Tempi, curve e
+   colori identici alla versione a timer:
+   - mobile (≤640px): logo 20 ms, linea 310, testo 530, apertura 900,
+     fine 1350;
+   - desktop: logo 20, linea 380, testo 650, apertura 1100, fine 1650;
+   - prefers-reduced-motion: logo e testo subito, dissolvenza a 520 ms,
+     fine 920. */
+
+.root {
+  --line-at: 310ms;
+  --text-at: 530ms;
+  --open-at: 900ms;
+  --done-at: 1350ms;
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  /* I clic passano solo dove il sipario non copre più la pagina: le due
+     metà (finché coprono) li bloccano, il resto no. */
+  pointer-events: none;
+  animation: intro-done 0s linear var(--done-at) forwards;
+}
+
+@media (min-width: 641px) {
+  .root {
+    --line-at: 380ms;
+    --text-at: 650ms;
+    --open-at: 1100ms;
+    --done-at: 1650ms;
+  }
+}
+
+@keyframes intro-done {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Le due metà: la linea centrale è il loro punto di distacco. */
+.half {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background-color: var(--color-olive-950);
+  pointer-events: auto;
+  will-change: transform;
+  animation-duration: 650ms;
+  animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+  animation-delay: var(--open-at);
+  animation-fill-mode: both;
+}
+
+.top {
+  top: 0;
+  animation-name: intro-open-up;
+}
+
+.bottom {
+  bottom: 0;
+  animation-name: intro-open-down;
+}
+
+@keyframes intro-open-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes intro-open-down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  animation: intro-fade-out 350ms ease var(--open-at) both;
+}
+
+@keyframes intro-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.logo {
+  animation: intro-logo-in 480ms cubic-bezier(0.16, 1, 0.3, 1) 20ms both;
+}
+
+@keyframes intro-logo-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.line {
+  height: 1px;
+  margin-top: 28px;
+  background-color: rgba(241, 241, 241, 0.3);
+  animation: intro-line-in 380ms cubic-bezier(0.16, 1, 0.3, 1) var(--line-at) both;
+}
+
+@media (min-width: 640px) {
+  .line {
+    margin-top: 32px;
+  }
+}
+
+@keyframes intro-line-in {
+  from {
+    width: 0;
+  }
+  to {
+    width: 84px;
+  }
+}
+
+.text {
+  animation: intro-fade-in 320ms ease var(--text-at) both;
+}
+
+@keyframes intro-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Riduci movimento: niente sipario che scorre, logo e scritta subito
+   visibili su fondo pieno, poi una dissolvenza (come la vecchia variante
+   "reduced" a timer: logo 140/170 px, scritta con tracking 0,35em). */
+@media (prefers-reduced-motion: reduce) {
+  .root {
+    --done-at: 920ms;
+    pointer-events: auto;
+    background-color: var(--color-olive-950);
+    animation:
+      intro-fade-out 400ms ease 520ms both,
+      intro-done 0s linear var(--done-at) forwards;
+  }
+
+  .half,
+  .line {
+    display: none;
+  }
+
+  .content,
+  .logo,
+  .text {
+    animation: none;
+  }
+
+  .logo img {
+    width: 140px;
+  }
+
+  .content .text {
+    margin-top: 24px;
+    letter-spacing: 0.35em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (min-width: 640px) {
+  .logo img {
+    width: 170px;
+  }
+}

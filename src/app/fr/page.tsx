@@ -25,6 +25,7 @@ import { SectionProgressDots } from "@/components/section-progress-dots";
 import { SectionSnapScroll } from "@/components/section-snap-scroll";
 import { getHomeMetadata } from "@/data/home-metadata";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { HomeFaq } from "@/components/home-faq";
 import { StructuredData } from "@/components/structured-data";
 import { apartmentNodes, faqPageNode } from "@/lib/structured-data";
@@ -53,26 +54,29 @@ export default function Home() {
       <StructuredData locale="fr" path="/" nodes={[...apartmentNodes("fr"), faqPageNode("fr", "/", HOME_FAQ.fr.items)]} />
       <HomeIntro />
       <Hero locale="fr" />
-      <ImmersiveStory locale="fr" />
-      <ApartmentsCarousel locale="fr" />
-      <StructureHighlights locale="fr" />
-      <PriceComparisonSection locale="fr" />
-      <LastMinuteSection struttura="lamora" locale="fr" fallbackToOffers />
-      <RankingSection locale="fr" />
-      <BlogSection locale="fr" />
-      <OutdoorLife locale="fr" />
-      <SustainabilitySection locale="fr" />
-      <TerritorySection locale="fr" />
-      <DistancesSection locale="fr" />
-      <ReviewsSection locale="fr" />
-      <ReviewGate writeReviewUrl={getWriteReviewUrl()} locale="fr" />
-      <LaMoraDaVivere locale="fr" />
-      <VillaTeaser locale="fr" />
-      <LocationMap locale="fr" />
-      <HomeFaq locale="fr" />
-      <FacebookFeed locale="fr" />
-      <NewsletterSection locale="fr" />
-      <CertificationsMarquee locale="fr" />
+      {/* Ogni sezione sotto la piega in un <Suspense>: stesso HTML, ma React
+          la idrata a parte, cedendo il thread tra una sezione e l'altra
+          invece di un unico blocco lungo (meno TBT su mobile). */}
+      <Suspense><ImmersiveStory locale="fr" /></Suspense>
+      <Suspense><ApartmentsCarousel locale="fr" /></Suspense>
+      <Suspense><StructureHighlights locale="fr" /></Suspense>
+      <Suspense><PriceComparisonSection locale="fr" /></Suspense>
+      <Suspense><LastMinuteSection struttura="lamora" locale="fr" fallbackToOffers /></Suspense>
+      <Suspense><RankingSection locale="fr" /></Suspense>
+      <Suspense><BlogSection locale="fr" /></Suspense>
+      <Suspense><OutdoorLife locale="fr" /></Suspense>
+      <Suspense><SustainabilitySection locale="fr" /></Suspense>
+      <Suspense><TerritorySection locale="fr" /></Suspense>
+      <Suspense><DistancesSection locale="fr" /></Suspense>
+      <Suspense><ReviewsSection locale="fr" /></Suspense>
+      <Suspense><ReviewGate writeReviewUrl={getWriteReviewUrl()} locale="fr" /></Suspense>
+      <Suspense><LaMoraDaVivere locale="fr" /></Suspense>
+      <Suspense><VillaTeaser locale="fr" /></Suspense>
+      <Suspense><LocationMap locale="fr" /></Suspense>
+      <Suspense><HomeFaq locale="fr" /></Suspense>
+      <Suspense><FacebookFeed locale="fr" /></Suspense>
+      <Suspense><NewsletterSection locale="fr" /></Suspense>
+      <Suspense><CertificationsMarquee locale="fr" /></Suspense>
       <PromoPopup locale="fr" />
       <SectionProgressDots locale="fr" />
       <SectionSnapScroll />
