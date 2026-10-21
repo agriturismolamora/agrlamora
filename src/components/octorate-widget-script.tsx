@@ -18,7 +18,13 @@
    Contenitore fuori schermo (left:-9999px, MAI display:none: molti widget
    smettono di funzionare senza un'area di layout reale), aria-hidden e
    inert: invisibile e non raggiungibile da tastiera o screen reader.
-   Registrato in src/data/privacy-services.ts ("octorate-widget"). */
+   Registrato in src/data/privacy-services.ts ("octorate-widget").
+
+   Il contenuto del contenitore NON è di React (dangerouslySetInnerHTML
+   vuoto + suppressHydrationWarning): form.js può riempirlo prima che la
+   pagina sia idratata (succede su Safari/WebKit) e React, trovando figli
+   inattesi, falliva l'hydration (errore #418) e ricostruiva da zero l'intera
+   pagina nel browser. Così i figli non vengono confrontati né toccati. */
 const OCTORATE_SRC = "https://resx.octorate.com/octobook/resources/widget/js/form.js";
 const OCTORATE_SITEKEY = "92568f100426d377bdde748789653e9b";
 const CONTAINER_ID = "octorate-widget";
@@ -26,7 +32,14 @@ const CONTAINER_ID = "octorate-widget";
 export function OctorateWidgetScript() {
   return (
     <>
-      <div id={CONTAINER_ID} aria-hidden="true" inert style={{ position: "absolute", left: "-9999px", top: 0, width: "360px" }} />
+      <div
+        id={CONTAINER_ID}
+        aria-hidden="true"
+        inert
+        style={{ position: "absolute", left: "-9999px", top: 0, width: "360px" }}
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: "" }}
+      />
       {/* eslint-disable-next-line @next/next/no-sync-scripts */}
       <script type="text/javascript" src={OCTORATE_SRC} data-sitekey={OCTORATE_SITEKEY} data-container={CONTAINER_ID} />
     </>
