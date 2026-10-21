@@ -147,14 +147,14 @@ const THEME_CLASSES: Record<
     p: "text-[15px] leading-[1.85] text-ink-soft",
     li: "flex items-start gap-2.5 text-[15px] leading-[1.7] text-ink-soft",
     bullet: "mt-2.5 h-1 w-1 shrink-0 rounded-full bg-raspberry",
-    caption: "mt-2 block text-[11.5px] leading-[1.5] text-ink-soft/70",
+    caption: "mt-2 block text-[11.5px] leading-[1.5] text-ink-soft",
     link: "text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry",
     label: "text-[10px] font-semibold uppercase tracking-[0.18em] text-olive-950",
     faqItem: "rounded-[6px] border border-ink/10 bg-cream-dim px-5 py-4",
     faqQ: "text-ink",
     faqA: "text-ink-soft",
     places: "border border-ink/10 bg-cream-dim",
-    disclaimer: "text-ink-soft/80",
+    disclaimer: "text-ink-soft",
     intro: "text-ink",
     inBreveHeading: "text-olive-950",
     factsTop: "default",
@@ -389,7 +389,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
         >
           {post.notice.linkLabel} ↗
         </a>
-        <p className={`mt-3 text-[12px] ${isNight ? "text-[var(--avorio)]/70" : "text-ink-soft/80"}`}>{post.notice.lastChecked}</p>
+        <p className={`mt-3 text-[12px] ${isNight ? "text-[var(--avorio)]/70" : "text-ink-soft"}`}>{post.notice.lastChecked}</p>
       </aside>
     </Reveal>
   );
