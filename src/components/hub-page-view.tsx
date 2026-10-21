@@ -326,7 +326,7 @@ export function HubPageView({ id, locale }: { id: HubId; locale: Locale }) {
               <ul className="mt-8 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
                 {posts.map((post) => (
                   <li key={post.slug}>
-                    <BlogCard post={post} locale={locale} readMore={ui.readMore} />
+                    <BlogCard post={post} locale={locale} readMore={ui.readMore} heading="h3" />
                   </li>
                 ))}
               </ul>
