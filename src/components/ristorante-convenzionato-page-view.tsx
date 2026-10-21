@@ -359,6 +359,26 @@ export function RistoranteConvenzionatoPageView({ locale }: { locale: Locale }) 
           className="absolute inset-0"
           style={{ background: "linear-gradient(180deg, rgba(20,14,7,.08) 0%, rgba(20,14,7,.35) 55%, rgba(20,14,7,.8) 100%)" }}
         />
+        {/* Logo La Mora piccolo in alto a sinistra, sotto l'header (che sulla
+            hero non mostra il logo): porta alla home nella lingua corrente.
+            Velatura radiale scura dietro (come il logo Villa Relax) per il
+            contrasto su cielo e foglie; assoluto e con misure fisse, nessun
+            layout shift. */}
+        <Link href={withLocale(locale, "/")} className="absolute left-6 top-[100px] z-[2] block sm:left-10 sm:top-[116px]">
+          <span
+            aria-hidden="true"
+            className="absolute -inset-x-[45%] -inset-y-[40%] rounded-full bg-[radial-gradient(closest-side,rgba(20,14,7,0.5),rgba(20,14,7,0))]"
+          />
+          <Image
+            src="/images/logo/logo-bianco-agriturismo-la-mora.png"
+            alt="Agriturismo La Mora"
+            width={1448}
+            height={1086}
+            sizes="(max-width: 640px) 54px, 86px"
+            loading="eager"
+            className="relative h-10 w-auto sm:h-16"
+          />
+        </Link>
         <div className="relative z-[1] mx-auto w-full max-w-[900px] px-6 pb-14 text-center sm:px-10 sm:pb-16">
           <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-cream/80">{text.heroLabel}</span>
           <h1 className="mt-4 font-display text-[clamp(30px,4.8vw,52px)] font-normal leading-[1.12] text-cream [text-wrap:balance]">{text.heroTitle}</h1>

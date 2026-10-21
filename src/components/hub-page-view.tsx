@@ -19,7 +19,14 @@ const WHATSAPP_NUMBER = "393934363917";
 export function getHubMetadata(id: HubId, locale: Locale) {
   const hub = HUBS[id];
   const text = hub.text[locale];
-  return pageMetadata({ locale, path: hub.path, title: text.metaTitle, description: text.metaDescription });
+  const og = hub.heroImage.og;
+  return pageMetadata({
+    locale,
+    path: hub.path,
+    title: text.metaTitle,
+    description: text.metaDescription,
+    ...(og ? { image: { src: hub.heroImage.src, alt: text.heroAlt, width: og.width, height: og.height } } : {}),
+  });
 }
 
 const UI: Record<Locale, { guests: (n: number) => string; readMore: string; open: string }> = {

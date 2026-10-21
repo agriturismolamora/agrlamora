@@ -50,7 +50,9 @@ export type Hub = {
   id: HubId;
   path: string;
   topic: BlogTopic;
-  heroImage: { src: string; position?: string };
+  /* og: la stessa foto anche come immagine Open Graph della pagina (con le
+     sue misure reali, nessun ritaglio né ingrandimento). */
+  heroImage: { src: string; position?: string; og?: { width: number; height: number } };
   /* Slug degli appartamenti da mostrare, nell'ordine (apartments.ts). */
   apartments: string[];
   text: Record<Locale, HubText>;
@@ -344,7 +346,10 @@ export const FAMILY_HUB: Hub = {
   id: "family",
   path: "/vacanza-in-famiglia/",
   topic: "family",
-  heroImage: { src: "/images/piscina/foto piscina di giorno.webp" },
+  /* Parco giochi (foto del titolare, 1236×573: nessuna versione ≥1600 px
+     disponibile, serve l'HD). Centrata su altalene e scivolo per il
+     ritaglio verticale su mobile. */
+  heroImage: { src: "/images/piscina/parco giochi agriturismo ad assisi.jpeg", position: "40% 60%", og: { width: 1236, height: 573 } },
   apartments: ["bilancia", "sagittario", "gemelli", "pesci", "acquario"],
   text: {
     it: {
@@ -352,7 +357,7 @@ export const FAMILY_HUB: Hub = {
       metaDescription:
         "Agriturismo per famiglie ad Assisi: appartamenti con cucina fino a 8 ospiti, piscina, parco giochi, culla e riduzioni per i bambini da 0 a 11 anni.",
       heroLabel: "Vacanza in famiglia",
-      heroAlt: "La piscina di Agriturismo La Mora in una giornata di sole",
+      heroAlt: "Il parco giochi di Agriturismo La Mora: altalene, scivolo giallo, tavolo da ping-pong e porta da calcetto sul prato, tra siepi e pioppi",
       h1: "Agriturismo per famiglie ad Assisi",
       intro: [
         "Cinque appartamenti indipendenti con cucina, una piscina, il parco giochi e tanto prato: Agriturismo La Mora, nella campagna di Assisi, è pensato anche per chi viaggia con i bambini. Per le famiglie numerose c'è Bilancia, fino a 8 ospiti.",
@@ -418,7 +423,7 @@ export const FAMILY_HUB: Hub = {
       metaDescription:
         "Family-friendly agriturismo in Assisi: apartments with kitchen for up to 8 guests, pool, playground, cot and reductions for children aged 0 to 11.",
       heroLabel: "Family holidays",
-      heroAlt: "Agriturismo La Mora's pool on a sunny day",
+      heroAlt: "The playground at Agriturismo La Mora: swings, a yellow slide, a table-tennis table and a football goal on the lawn, among hedges and poplars",
       h1: "Family-friendly agriturismo in Assisi",
       intro: [
         "Five independent apartments with kitchen, a pool, the playground and plenty of lawn: Agriturismo La Mora, in the Assisi countryside, is made for travelling with children too. For large families there's Bilancia, for up to 8 guests.",
@@ -483,7 +488,7 @@ export const FAMILY_HUB: Hub = {
       metaDescription:
         "Agritourisme pour familles à Assise : appartements avec cuisine jusqu'à 8 personnes, piscine, aire de jeux, lit bébé et réductions pour les enfants de 0 à 11 ans.",
       heroLabel: "Vacances en famille",
-      heroAlt: "La piscine de l'Agriturismo La Mora par une journée ensoleillée",
+      heroAlt: "L'aire de jeux de l'Agriturismo La Mora : balançoires, toboggan jaune, table de ping-pong et cage de football sur la pelouse, entre haies et peupliers",
       h1: "Agritourisme pour familles à Assise",
       intro: [
         "Cinq appartements indépendants avec cuisine, une piscine, l'aire de jeux et beaucoup de pelouse : l'Agriturismo La Mora, dans la campagne d'Assise, est aussi pensé pour ceux qui voyagent avec des enfants. Pour les familles nombreuses, il y a Bilancia, jusqu'à 8 personnes.",
@@ -548,7 +553,7 @@ export const FAMILY_HUB: Hub = {
       metaDescription:
         "Familienfreundlicher Agriturismo in Assisi: Apartments mit Küche für bis zu 8 Gäste, Pool, Spielplatz, Babybett und Ermäßigungen für Kinder von 0 bis 11 Jahren.",
       heroLabel: "Familienurlaub",
-      heroAlt: "Der Pool des Agriturismo La Mora an einem sonnigen Tag",
+      heroAlt: "Der Spielplatz des Agriturismo La Mora: Schaukeln, gelbe Rutsche, Tischtennisplatte und Fußballtor auf der Wiese, zwischen Hecken und Pappeln",
       h1: "Familienfreundlicher Agriturismo in Assisi",
       intro: [
         "Fünf unabhängige Apartments mit Küche, ein Pool, der Spielplatz und viel Wiese: Das Agriturismo La Mora in der Landschaft von Assisi ist auch für Reisen mit Kindern gemacht. Für große Familien gibt es Bilancia, für bis zu 8 Gäste.",
