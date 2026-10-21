@@ -8,7 +8,7 @@ import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
 import { StructuredData } from "@/components/structured-data";
 import { getBlogPost } from "@/data/blog-posts";
 import { RISTORANTE_CARFAGNA_PHOTO_CREDIT } from "@/data/photo-credits";
-import { CARFAGNA, CARFAGNA_OFFERS, CARFAGNA_PAGE_PATH, CARFAGNA_PHOTOS, CARFAGNA_SHOW_TEXT, type CarfagnaOffer } from "@/data/ristorante-carfagna";
+import { CARFAGNA, CARFAGNA_OFFERS, CARFAGNA_PAGE_PATH, CARFAGNA_PHOTOS, CARFAGNA_SHOW_TEXT, carfagnaPdfHref, type CarfagnaOffer } from "@/data/ristorante-carfagna";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { SITE_URL, absoluteUrl, pageMetadata } from "@/lib/seo";
@@ -47,6 +47,7 @@ type Text = {
   taste: string;
   offerLabel: string;
   offerHeading: string;
+  ctaPdf: string;
   ctaWhatsapp: string;
   whatsappMessage: string;
   ctaBook: string;
@@ -80,6 +81,7 @@ const TEXT: Record<Locale, Text> = {
       "Il gusto dell'Umbria a tavola: un menù fisso e le proposte alla carta, dall'antipasto al dolce, con i prodotti tipici del territorio. È l'indirizzo giusto per un pranzo dopo una passeggiata ad Assisi o per una cena in compagnia, con la Basilica davanti agli occhi.",
     offerLabel: "La convenzione",
     offerHeading: "La convenzione per gli ospiti de La Mora",
+    ctaPdf: "Scarica il menù convenzione (PDF)",
     ctaWhatsapp: "Chiedi informazioni su WhatsApp",
     whatsappMessage: "Ciao Paolo! Vorrei informazioni sulla convenzione con il Ristorante Carfagna.",
     ctaBook: "Prenota il tuo soggiorno",
@@ -125,6 +127,7 @@ const TEXT: Record<Locale, Text> = {
       "The taste of Umbria at the table: a set menu and à la carte dishes, from starter to dessert, with the typical products of the area. It's the right place for lunch after a walk around Assisi or for dinner with friends, with the Basilica right in front of you.",
     offerLabel: "The agreement",
     offerHeading: "The agreement for La Mora's guests",
+    ctaPdf: "Download the agreement menu (PDF)",
     ctaWhatsapp: "Ask for information on WhatsApp",
     whatsappMessage: "Hi Paolo! I'd like some information about the agreement with Ristorante Carfagna.",
     ctaBook: "Book your stay",
@@ -170,6 +173,7 @@ const TEXT: Record<Locale, Text> = {
       "Le goût de l'Ombrie à table : un menu fixe et des plats à la carte, de l'entrée au dessert, avec les produits typiques du territoire. C'est l'adresse idéale pour un déjeuner après une promenade dans Assise ou pour un dîner entre amis, avec la basilique sous les yeux.",
     offerLabel: "La convention",
     offerHeading: "La convention pour les hôtes de La Mora",
+    ctaPdf: "Télécharger le menu de la convention (PDF)",
     ctaWhatsapp: "Demander des informations sur WhatsApp",
     whatsappMessage: "Bonjour Paolo ! J'aimerais des informations sur la convention avec le Ristorante Carfagna.",
     ctaBook: "Réservez votre séjour",
@@ -215,6 +219,7 @@ const TEXT: Record<Locale, Text> = {
       "Der Geschmack Umbriens auf dem Tisch: ein festes Menü und Gerichte à la carte, von der Vorspeise bis zum Dessert, mit den typischen Produkten der Gegend. Die richtige Adresse für ein Mittagessen nach einem Spaziergang durch Assisi oder ein Abendessen in Gesellschaft, mit der Basilika vor Augen.",
     offerLabel: "Die Vereinbarung",
     offerHeading: "Die Vereinbarung für die Gäste von La Mora",
+    ctaPdf: "Menü der Vereinbarung herunterladen (PDF)",
     ctaWhatsapp: "Per WhatsApp nachfragen",
     whatsappMessage: "Hallo Paolo! Ich hätte gerne Informationen zur Vereinbarung mit dem Ristorante Carfagna.",
     ctaBook: "Buchen Sie Ihren Aufenthalt",
@@ -396,6 +401,17 @@ export function RistoranteConvenzionatoPageView({ locale }: { locale: Locale }) 
           </ul>
           <p className="mt-8 rounded-[4px] border-l-2 border-gold bg-cream/70 px-5 py-4 text-[15px] font-semibold leading-[1.6] text-ink">{CARFAGNA_SHOW_TEXT[locale].page}</p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
+            {/* PDF statico in public/downloads/ (scripts/build-carfagna-pdf.mjs). */}
+            <a
+              href={carfagnaPdfHref(locale)}
+              download
+              className="inline-flex min-h-[46px] items-center gap-2.5 rounded-lg bg-olive-950 px-6 font-sans text-[11px] font-semibold uppercase tracking-[0.06em] text-cream transition-colors hover:bg-olive-900"
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+                <path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              {text.ctaPdf}
+            </a>
             <a
               href={whatsappHref}
               target="_blank"
