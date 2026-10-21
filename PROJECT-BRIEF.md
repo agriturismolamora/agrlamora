@@ -16,7 +16,7 @@ Sintesi operativa del kick-off, organizzata per sviluppo. Brand identity invaria
   - Servizi della struttura con sezione dedicata in ogni scheda: lavatrice in comune, uso incluso (29/09/2026 — nessuna foto disponibile, nessun altro dettaglio confermato)
 - **Piscina** — pagina dedicata: aperta dal 1° maggio al 28 settembre, orario giornaliero 09:00–19:00; nelle ore più calde viene azionata anche una fontana idromassaggio
 - **Colazione** — pagina dedicata: bio, dalle 08:00 alle 09:30, dolce inclusa/opzionale 5€ p/giorno, supplemento salata +10€ a persona, supplemento senza glutine +5€ (quindi 10€ se richiesta anche la dolce), offerta variabile in base a stagionalità/prodotti locali (dolci tipici umbri di alta pasticceria — non più fatti in casa —, frutta di stagione, caffè/cappuccino/tea/ginseng su richiesta)
-- **Villa Relax** — pagina dedicata: villa indipendente, stessa proprietà/P.IVA di Agriturismo La Mora ma immobile e indirizzo distinti (Via Di Bassano, 19 — Assisi PG), gestita dallo stesso host (Paolo). NON è uno dei 5 appartamenti. Fino a 16 ospiti su 6 camere da letto (bagno/doccia privati ciascuna), prenotabile per intero o in due porzioni (6 e 10 persone). Piscina privata, giardino, gazebo, barbecue, campo da calcetto in erba, ping pong, **colonnina di ricarica elettrica da 7 kW** (confermata dal titolare il 13/10/2026; quella di La Mora è da 22 kW, vedi sezione 2). Booking bar dedicata, separata da quella degli appartamenti. Dati verificati navigando il sito reale https://www.villaassisi.it/it/ il 5 settembre 2026 (dettagli completi in src/data/villa.ts) — non un confronto in tempo reale, non va fatto scraping automatico e continuo.
+- **Villa Relax** — pagina dedicata: villa indipendente, stessa proprietà/P.IVA di Agriturismo La Mora ma immobile e indirizzo distinti (Via Di Bassano, 19 — Assisi PG), gestita dallo stesso host (Paolo). NON è uno dei 5 appartamenti. Fino a 16 ospiti su 6 camere da letto (bagno/doccia privati ciascuna), prenotabile per intero o in due porzioni (6 e 10 persone). Piscina privata, giardino, gazebo, barbecue, campo da calcetto in erba, ping pong, **colonnina di ricarica elettrica da 7 kW** (confermata dal titolare il 13/10/2026; quella di La Mora è da 22 kW, vedi sezione 2), culla su richiesta a 15 € a soggiorno (confermata il 21/10/2026). Booking bar dedicata, separata da quella degli appartamenti. Dati verificati navigando il sito reale https://www.villaassisi.it/it/ il 5 settembre 2026 (dettagli completi in src/data/villa.ts) — non un confronto in tempo reale, non va fatto scraping automatico e continuo.
 - **Guida di benvenuto** — creata dal titolare (PDF). NON un link Drive scaricabile dal sito (rimosso su richiesta): il pulsante "Richiedi la guida su WhatsApp", ben visibile in alto su ogni pagina appartamento e nella sezione "Gli appartamenti" della home, apre la chat WhatsApp dell'agriturismo, dove la guida è già pronta (link in src/data/apartments.ts, BROCHURE_WHATSAPP_URL)
 - **Attività & Servizi** — e-bike, cavalli dell'azienda agricola (solo da vedere, vedi nota sezione 3), parco giochi + babysitting, cucina bio (dettaglio sezione 3)
 - **Promozioni & Cofanetti regalo** — vedi sezione 4
@@ -74,7 +74,7 @@ Cartelle immagini per tutti i 5 appartamenti già pronte in `public/images/siste
 
 **Extra selezionabili in fase di booking:**
 - E-bike a noleggio (listino in sezione 3)
-- Culla: 15 € a soggiorno (aggiornato dal titolare a ottobre 2026; prima 10 €). Nessun seggiolone da dichiarare.
+- Culla: 15 € a soggiorno (aggiornato dal titolare a ottobre 2026; prima 10 €), **anche a Villa Relax** (confermato il 21/10/2026). Nessun seggiolone da dichiarare.
 - Colonnina di ricarica 22kW (La Mora; quella di Villa Relax è da 7 kW): checkbox da selezionare **subito** in fase di prenotazione (serve al proprietario per organizzarsi)
 
 ---
@@ -120,7 +120,7 @@ Cartelle immagini per tutti i 5 appartamenti già pronte in `public/images/siste
 Pagine sul sito: `/vacanza-con-animali/` e `/vacanza-in-famiglia/` (dati in `src/data/hubs.ts`).
 
 - **Supplemento animali**: 25 € a soggiorno. Appartamenti pet friendly: solo Gemelli e Sagittario (negli altri, piccola taglia previo accordo, vedi sezione 2). Il modulo richieste ha taglia e tipo di animale. **Non dichiarare "giardini recintati".**
-- **Culla**: 15 € a soggiorno (sostituisce i 10 € precedenti). **Non menzionare i seggioloni.**
+- **Culla**: 15 € a soggiorno (sostituisce i 10 € precedenti), su richiesta, **anche a Villa Relax** (21/10/2026: `src/data/villa.ts`, pagina Villa, JSON-LD, chat). **Non menzionare i seggioloni.**
 - **Riduzioni bambini** (gestite nella sezione sconti di bed-and-breakfast.it): 0–2 anni gratis; da 3 a 8 anni non compiuti 50%; da 8 a 11 anni non compiuti 30%. Il titolare non ha detto su quale voce si applicano: sul sito solo "riduzioni per i bambini" con le fasce e l'invito a indicare le età in prenotazione, senza dire che il motore le applica da solo. Da chiarire: confine a 8 anni (un bambino di 2 anni e mezzo? e chi ha esattamente 8 anni ricade nella fascia 30%?) e base di applicazione.
 - **Parco giochi**: sempre libero, sotto la supervisione degli adulti.
 - **Piscina**: cuffia obbligatoria per i bambini fino a 16 anni, scritta come regola della struttura (interpretazione "regola della piscina" da confermare).
@@ -153,6 +153,14 @@ Verificato il 21/10/2026 (programma 2026/27 non ancora pubblicato, quindi sul si
 - Porziuncola, 31/12/2025: 18:00 incontro giovani, 19:15 Vespri e Te Deum, 23:30 Messa di fine anno; 1/1/2026 Messa solenne 11:30 (assisiofm.it).
 - Presepe vivente di Petrignano 2025/26: anche l'1/1, 17:15–19:30 (provincia.perugia.it). Armenzano: date solo di edizioni passate.
 - **Non confermati, quindi non citati**: fuochi d'artificio sulla Rocca Maggiore, radio locale al concerto, concerti gospel, "cammini" dei giovani.
+
+**Pacchetto Capodanno La Mora** (confermato dal titolare il 21/10/2026, dati in `src/data/promo.ts`, `CAPODANNO_PACKAGE_2027`):
+- 4 notti con colazione inclusa. **Per 2 persone 450 €; per 3 persone 500 €; per 4 persone 550 €.**
+- Date esatte, appartamenti inclusi e altre condizioni: **non indicati** (costanti `dates` e `apartments` a `null`, mai mostrate). Sul sito: "4 notti per Capodanno" e "Date e disponibilità: chiedi a Paolo".
+- **Non ancora nel motore di prenotazione** (lo crea il titolare): `inMotore: false` → CTA WhatsApp "Chiedi il pacchetto a Paolo". Quando è nel motore: `inMotore: true` e la CTA diventa da sola "Prenota" (BookingModalButton).
+- Visibilità sul sito: da subito fino a fine giornata del **02/01/2027** (ora italiana) — valore predefinito, **da confermare** col titolare. Tiene accesa l'etichetta "Offerte in corso!" nell'header; nessun popup in home; nessun JSON-LD Offer.
+
+**Menù di Capodanno del Ristorante Carfagna**: il ristorante ne preparerà uno, **non ancora ricevuto** (21/10/2026). Non pubblicare nulla, nemmeno "in arrivo": slot `CARFAGNA_CAPODANNO_MENU = null` in `src/data/ristorante-carfagna.ts`.
 
 ## 5. Segmenti target (per copy e struttura contenuti)
 
