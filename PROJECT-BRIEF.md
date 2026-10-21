@@ -142,6 +142,18 @@ Confermato dal titolare (ottobre 2026). Ristorante **indipendente** (gestito da 
 - Distanza da La Mora: 7,0 km, circa 12 min in auto (Google Maps, 21/10/2026, primo percorso senza strade a traffico limitato).
 - Foto: fornite dal ristorante tramite il titolare, **senza filigrana La Mora**, con credito "Foto: Ristorante Carfagna".
 
+## 4-quater. Articolo "Capodanno ad Assisi" — da aggiornare ogni anno
+
+Pagina: `/blog/capodanno-assisi-2027/` (testo in `src/data/blog-posts.ts`, `CAPODANNO_POST`; date del conto alla rovescia, ultima verifica e fonti in `src/data/capodanno.ts`). **Ogni anno**: nuovo anno nello slug e nel titolo, programma aggiornato dal Comune, `dateModified` / ultima verifica.
+
+Verificato il 21/10/2026 (programma 2026/27 non ancora pubblicato, quindi sul sito sempre con l'anno):
+- 31/12/2025, Piazza del Comune: Antonio Ballarano Band e DJ set, 22:00–03:00 (visit-assisi.it, tuttoggi.info).
+- Ordinanze anti-botti 2024 e 2025 nel centro storico (2025: dalle 20 del 31/12 alle 8 dell'1/1, anche divieto di vetro e lattine; tra i motivi la tranquillità degli animali).
+- Basilica di San Francesco: Messa con Te Deum il 31/12 alle 17 nella Basilica inferiore (2024, 2025); veglia di Capodanno del Centro Francescano Giovani alle 23 (2024).
+- Porziuncola, 31/12/2025: 18:00 incontro giovani, 19:15 Vespri e Te Deum, 23:30 Messa di fine anno; 1/1/2026 Messa solenne 11:30 (assisiofm.it).
+- Presepe vivente di Petrignano 2025/26: anche l'1/1, 17:15–19:30 (provincia.perugia.it). Armenzano: date solo di edizioni passate.
+- **Non confermati, quindi non citati**: fuochi d'artificio sulla Rocca Maggiore, radio locale al concerto, concerti gospel, "cammini" dei giovani.
+
 ## 5. Segmenti target (per copy e struttura contenuti)
 
 - **Famiglie** → collegare a parco giochi bambini + piscina bambini + babysitting
