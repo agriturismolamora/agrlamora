@@ -153,8 +153,18 @@ function EvChargerIcon() {
   );
 }
 
+function CotIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+      <path d="M4 10h16v5a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M7 10V6.5M10.5 10V6M14 10V6M17 10V6.5M4 6h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M6 20.5 8 18M18 20.5 16 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 /* Stesso ordine di getVillaAmenities() in villa.ts. */
-const AMENITY_ICON_BY_INDEX: (() => React.JSX.Element)[] = [PawIcon, ParkingIcon, WifiIcon, GardenIcon, KitchenIcon, TvIcon, PoolIcon, WholeHouseIcon, EvChargerIcon];
+const AMENITY_ICON_BY_INDEX: (() => React.JSX.Element)[] = [PawIcon, ParkingIcon, WifiIcon, GardenIcon, KitchenIcon, TvIcon, PoolIcon, WholeHouseIcon, EvChargerIcon, CotIcon];
 
 const TEXT: Record<
   Locale,

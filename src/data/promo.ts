@@ -2,8 +2,10 @@ import type { Locale } from "@/lib/i18n";
 import { EUROCHOCOLATE_2024_PHOTO, type CreditedPhoto } from "@/data/photo-credits";
 
 /* Promozioni a tempo del sito: UNICA fonte per date, condizioni e testi
-   delle offerte legate a un evento. Oggi solo Eurochocolate 2026 (offerta
-   del titolare pubblicata sulla pagina Facebook della struttura).
+   delle offerte legate a un evento. Due tipi (`kind`):
+   - "discount": sconto legato a un evento (Eurochocolate 2026, offerta del
+     titolare pubblicata sulla pagina Facebook della struttura);
+   - "package": pacchetto a prezzo fisso (Capodanno, più sotto).
 
    Le condizioni sono riportate ESATTAMENTE come nel post del titolare: niente
    cumulabilità, minimo notti, appartamenti esclusi o applicazione automatica
@@ -21,6 +23,7 @@ import { EUROCHOCOLATE_2024_PHOTO, type CreditedPhoto } from "@/data/photo-credi
    conclusa" dove resta citata. */
 
 export type PromoId = "eurochocolate-2026";
+export type PackageId = "capodanno-2027";
 
 /* upcoming: non ancora pubblicizzata; active: da mostrare (popup,
    etichetta nell'header, offerte in corso); expired: conclusa. */
@@ -47,6 +50,7 @@ export type PromoText = {
 };
 
 export type Promo = {
+  kind: "discount";
   id: PromoId;
   discountPercent: number;
   /* Date dell'evento (13–22 novembre 2026, fonte: eurochocolate.com). */
@@ -99,6 +103,7 @@ export const EUROCHOCOLATE_APPLICAZIONE_NEL_MOTORE: "automatica" | "manuale" | n
       titolare. */
 
 export const EUROCHOCOLATE_2026: Promo = {
+  kind: "discount",
   id: "eurochocolate-2026",
   discountPercent: 10,
   eventStart: "2026-11-13",
@@ -188,26 +193,184 @@ export const PROMOS: Record<PromoId, Promo> = {
   "eurochocolate-2026": EUROCHOCOLATE_2026,
 };
 
-const ALL_PROMOS: Promo[] = Object.values(PROMOS);
+/* Pacchetto a prezzo fisso: niente sconto, niente popup della home (scelta
+   del 21/10/2026), ma è una promo a tempo a tutti gli effetti: tiene accesa
+   l'etichetta "Offerte in corso!" nell'header, compare tra le offerte
+   attive di /offerte/offerte-in-corso/ e, scaduto, passa tra le concluse. */
+export type PackageText = {
+  kicker: string;
+  title: string;
+  /* "4 notti per Capodanno, colazione inclusa": sotto il titolo e
+     nell'elenco delle concluse. Nessuna data: non confermate. */
+  validity: string;
+  /* "4 notti", nelle card dei prezzi. */
+  nightsShort: string;
+  summary: string;
+  availability: string;
+  /* Etichetta della fascia di prezzo, {n} = numero di persone. */
+  guests: string;
+  whatsappCta: string;
+  whatsappMessage: string;
+  /* Solo quando il pacchetto è nel motore (inMotore: true). */
+  bookCta: string;
+  ended: string;
+  articleCta: string;
+};
 
-export function getPromoStatus(promo: Promo, now: number): PromoStatus {
+export type PackagePromo = {
+  kind: "package";
+  id: PackageId;
+  nights: number;
+  breakfastIncluded: boolean;
+  /* Prezzo del pacchetto per numero di persone, in euro. */
+  prices: { guests: number; price: number }[];
+  /* false finché il titolare non crea il pacchetto nel motore
+     bed-and-breakfast.it: CTA WhatsApp. true: la CTA diventa
+     BookingModalButton (capodanno-package.tsx), senza altre modifiche. */
+  inMotore: boolean;
+  /* NON confermati dal titolare: restano null e non si mostrano. */
+  dates: { from: string; to: string } | null;
+  apartments: string[] | null;
+  startsAt?: string;
+  endsAt: string;
+  articleSlug: string;
+  /* Ancora della sezione del pacchetto nell'articolo. */
+  articleAnchor: string;
+  /* Foto reale del titolare (con filigrana fuori dal blog). */
+  image: { src: string; position?: string; alt: Record<Locale, string> };
+  text: Record<Locale, PackageText>;
+};
+
+/* Pacchetto Capodanno, confermato dal titolare il 21/10/2026: 4 notti con
+   colazione inclusa; per 2 persone 450 €, per 3 persone 500 €, per 4
+   persone 550 €. Date, appartamenti e altre condizioni NON indicati (null,
+   mai mostrati); non ancora nel motore di prenotazione (lo crea il
+   titolare). Visibile da subito fino a fine giornata del 02/01/2027 (ora
+   italiana, CET): valore predefinito, da confermare col titolare. */
+export const CAPODANNO_PACKAGE_2027: PackagePromo = {
+  kind: "package",
+  id: "capodanno-2027",
+  nights: 4,
+  breakfastIncluded: true,
+  prices: [
+    { guests: 2, price: 450 },
+    { guests: 3, price: 500 },
+    { guests: 4, price: 550 },
+  ],
+  inMotore: false,
+  dates: null,
+  apartments: null,
+  endsAt: "2027-01-02T23:59:59.999+01:00",
+  articleSlug: "capodanno-assisi-2027",
+  articleAnchor: "pacchetto-capodanno",
+  image: {
+    src: "/images/territorio/assisi/assisi con tramonto.jpg",
+    position: "62% 50%",
+    alt: {
+      it: "Assisi al tramonto, con la Basilica di San Francesco e il Sacro Convento",
+      en: "Assisi at sunset, with the Basilica of St. Francis and the Sacro Convento",
+      fr: "Assise au coucher du soleil, avec la basilique Saint-François et le Sacro Convento",
+      de: "Assisi im Sonnenuntergang, mit der Basilika San Francesco und dem Sacro Convento",
+    },
+  },
+  text: {
+    it: {
+      kicker: "Il nostro pacchetto",
+      title: "Pacchetto Capodanno a La Mora",
+      validity: "4 notti per Capodanno, colazione inclusa",
+      nightsShort: "4 notti",
+      summary: "Per 2 persone 450 €, per 3 persone 500 €, per 4 persone 550 €.",
+      availability: "Date e disponibilità: chiedi a Paolo.",
+      guests: "{n} persone",
+      whatsappCta: "Chiedi il pacchetto a Paolo su WhatsApp",
+      whatsappMessage: "Ciao Paolo! Mi interessa il pacchetto Capodanno di La Mora (4 notti con colazione inclusa). Quali date sono disponibili? Saremmo in: ",
+      bookCta: "Prenota il pacchetto Capodanno",
+      ended: "Offerta conclusa",
+      articleCta: "Il pacchetto nell'articolo sul Capodanno",
+    },
+    en: {
+      kicker: "Our package",
+      title: "New Year package at La Mora",
+      validity: "4 nights for New Year, breakfast included",
+      nightsShort: "4 nights",
+      summary: "€450 for 2 people, €500 for 3 people, €550 for 4 people.",
+      availability: "Dates and availability: ask Paolo.",
+      guests: "{n} people",
+      whatsappCta: "Ask Paolo about the package on WhatsApp",
+      whatsappMessage: "Hi Paolo! I'm interested in La Mora's New Year package (4 nights with breakfast included). Which dates are available? We would be: ",
+      bookCta: "Book the New Year package",
+      ended: "Offer ended",
+      articleCta: "The package in our New Year article",
+    },
+    fr: {
+      kicker: "Notre forfait",
+      title: "Forfait Nouvel An à La Mora",
+      validity: "4 nuits pour le Nouvel An, petit-déjeuner inclus",
+      nightsShort: "4 nuits",
+      summary: "450 € pour 2 personnes, 500 € pour 3 personnes, 550 € pour 4 personnes.",
+      availability: "Dates et disponibilités : demandez à Paolo.",
+      guests: "{n} personnes",
+      whatsappCta: "Demander le forfait à Paolo sur WhatsApp",
+      whatsappMessage: "Bonjour Paolo ! Le forfait Nouvel An de La Mora (4 nuits avec petit-déjeuner inclus) m'intéresse. Quelles dates sont disponibles ? Nous serions : ",
+      bookCta: "Réserver le forfait Nouvel An",
+      ended: "Offre terminée",
+      articleCta: "Le forfait dans notre article sur le Nouvel An",
+    },
+    de: {
+      kicker: "Unser Paket",
+      title: "Silvesterpaket im La Mora",
+      validity: "4 Nächte zu Silvester, Frühstück inklusive",
+      nightsShort: "4 Nächte",
+      summary: "Für 2 Personen 450 €, für 3 Personen 500 €, für 4 Personen 550 €.",
+      availability: "Termine und Verfügbarkeit: fragen Sie Paolo.",
+      guests: "{n} Personen",
+      whatsappCta: "Paolo auf WhatsApp nach dem Paket fragen",
+      whatsappMessage: "Hallo Paolo! Ich interessiere mich für das Silvesterpaket im La Mora (4 Nächte mit Frühstück inklusive). Welche Termine sind frei? Wir wären: ",
+      bookCta: "Silvesterpaket buchen",
+      ended: "Angebot beendet",
+      articleCta: "Das Paket in unserem Silvester-Artikel",
+    },
+  },
+};
+
+export const PACKAGES: Record<PackageId, PackagePromo> = {
+  "capodanno-2027": CAPODANNO_PACKAGE_2027,
+};
+
+/* Prezzo nel formato del sito: "450 €" (it, fr, de; spazio non
+   separabile), "€450" (en). */
+export function formatEuro(amount: number, locale: Locale): string {
+  return locale === "en" ? `€${amount}` : `${amount} €`;
+}
+
+export type TimedPromo = Promo | PackagePromo;
+
+const ALL_PROMOS: TimedPromo[] = [...Object.values(PROMOS), ...Object.values(PACKAGES)];
+
+export function getPromoStatus(promo: { startsAt?: string; endsAt: string }, now: number): PromoStatus {
   if (promo.startsAt && now < Date.parse(promo.startsAt)) return "upcoming";
   return now <= Date.parse(promo.endsAt) ? "active" : "expired";
 }
 
-/* Promo a tempo da mostrare adesso (popup, etichetta nell'header, offerte
-   in corso), dalla più vicina alla scadenza. */
-export function getActivePromos(now: number): Promo[] {
+/* Promo a tempo da mostrare adesso (etichetta nell'header, offerte in
+   corso; il popup solo per le "discount"), dalla più vicina alla scadenza. */
+export function getActivePromos(now: number): TimedPromo[] {
   return ALL_PROMOS.filter((p) => getPromoStatus(p, now) === "active").sort((a, b) => Date.parse(a.endsAt) - Date.parse(b.endsAt));
 }
 
 /* Promo concluse, dalla più recente. */
-export function getExpiredPromos(now: number): Promo[] {
+export function getExpiredPromos(now: number): TimedPromo[] {
   return ALL_PROMOS.filter((p) => getPromoStatus(p, now) === "expired").sort((a, b) => Date.parse(b.endsAt) - Date.parse(a.endsAt));
 }
 
 export const WHATSAPP_NUMBER = "393934363917";
 
-export function promoWhatsappUrl(promo: Promo, locale: Locale): string {
+/* Link all'articolo della promo (con l'ancora della sezione, per i
+   pacchetti), path italiano: la lingua la aggiunge withLocale(). */
+export function promoArticlePath(promo: TimedPromo): string {
+  return `/blog/${promo.articleSlug}/${promo.kind === "package" ? `#${promo.articleAnchor}` : ""}`;
+}
+
+export function promoWhatsappUrl(promo: { text: Record<Locale, { whatsappMessage: string }> }, locale: Locale): string {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(promo.text[locale].whatsappMessage)}`;
 }

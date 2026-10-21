@@ -21,6 +21,7 @@ import ny from "@/components/newyear-theme.module.css";
 import { StarField, StaticFireworks, NightHorizon } from "@/components/newyear-decor";
 import { FireworksCanvas, FireworksControls, FireworksIntro } from "@/components/fireworks";
 import { NewYearCountdown } from "@/components/newyear-countdown";
+import { CapodannoPackageSection } from "@/components/capodanno-package";
 import type { BlogPost, BlogTheme } from "@/data/blog-posts";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
@@ -393,6 +394,13 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
     </Reveal>
   );
 
+  /* Pacchetto a prezzo fisso (Capodanno): subito dopo "In breve". */
+  const packageSection = post.packageBox && (
+    <Reveal delay={60}>
+      <CapodannoPackageSection packageId={post.packageBox} locale={locale} />
+    </Reveal>
+  );
+
   const offerTop = post.offerBox && (
     <Reveal delay={100}>
       <div className="mt-10">
@@ -640,6 +648,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
               {intro}
               {brandStrip}
               {inBreve}
+              {packageSection}
               {notice}
               {stayBox}
               {offerTop}
@@ -659,6 +668,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
               {intro}
               {brandStrip}
               {inBreve}
+              {packageSection}
               {notice}
               {stayBox}
               {offerTop}
@@ -688,6 +698,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
             {intro}
             {brandStrip}
             {inBreve}
+            {packageSection}
             {notice}
             {stayBox}
             {offerTop}

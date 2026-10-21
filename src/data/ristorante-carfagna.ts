@@ -37,6 +37,11 @@ export const CARFAGNA_PAGE_PATH = "/ristorante-convenzionato/";
    sola dopo questa data (fine giornata, ora di Roma), calcolo nel browser. */
 export const CARFAGNA_NEW_UNTIL = "2026-12-31T23:59:59.999+01:00";
 
+/* Menù dedicato a Capodanno: il ristorante lo preparerà, ma NON è ancora
+   arrivato (ottobre 2026). Finché resta null non si pubblica nulla, nemmeno
+   un "in arrivo". Da compilare quando arriva (vedi CLAUDE.md). */
+export const CARFAGNA_CAPODANNO_MENU: { title: Record<Locale, string>; courses: Record<Locale, string[]>; price: number } | null = null;
+
 /* PDF della convenzione, uno per lingua (generati da scripts/). */
 export function carfagnaPdfHref(locale: Locale): string {
   return `/downloads/la-mora-convenzione-ristorante-carfagna-${locale}.pdf`;

@@ -116,7 +116,8 @@ export function PromoPopup({ locale }: { locale: Locale }) {
   const previousFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const [activePromo] = getActivePromos(Date.now());
+    // Solo le promo "discount": i pacchetti (Capodanno) non hanno popup.
+    const activePromo = getActivePromos(Date.now()).find((p): p is Promo => p.kind === "discount");
     if (!activePromo || shownThisSession.has(activePromo.id)) return;
     const key = promoStorageKey(activePromo);
 

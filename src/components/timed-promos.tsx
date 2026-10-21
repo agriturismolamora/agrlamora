@@ -5,7 +5,9 @@ import Link from "next/link";
 import { BookingModalButton } from "@/components/booking-modal-button";
 import { LivePill } from "@/components/live-pill";
 import { PhotoCreditLine } from "@/components/photo-credit";
-import { getActivePromos, getExpiredPromos, type Promo } from "@/data/promo";
+import { WatermarkedImage } from "@/components/watermarked-image";
+import { PackageCta } from "@/components/capodanno-package";
+import { getActivePromos, getExpiredPromos, promoArticlePath, type PackagePromo, type Promo } from "@/data/promo";
 import { useNow } from "@/hooks/use-now";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
@@ -75,6 +77,51 @@ function ActivePromoCard({ promo, locale }: { promo: Promo; locale: Locale }) {
   );
 }
 
+/* Pacchetto a prezzo fisso (Capodanno): stessa card, con le fasce di
+   prezzo, "date e disponibilità: chiedi a Paolo" (nessuna data inventata) e
+   la CTA del pacchetto (WhatsApp, o Prenota quando è nel motore). Foto
+   reale del titolare, con filigrana. */
+function ActivePackageCard({ pkg, locale }: { pkg: PackagePromo; locale: Locale }) {
+  const text = pkg.text[locale];
+  return (
+    <article>
+      <div className="grid grid-cols-1 overflow-hidden rounded-[6px] border border-ink/10 bg-cream-dim sm:grid-cols-[2fr_3fr]">
+        <div className="relative aspect-[16/10] overflow-hidden sm:aspect-auto sm:min-h-[320px]">
+          <WatermarkedImage
+            src={pkg.image.src}
+            alt={pkg.image.alt[locale]}
+            fill
+            sizes="(max-width: 640px) 100vw, 450px"
+            className="object-cover"
+            style={{ objectPosition: pkg.image.position }}
+          />
+        </div>
+        <div className="flex flex-col justify-center px-7 py-8 sm:px-10 sm:py-10">
+          <LivePill label={TEXT[locale].live} />
+          <h3 className="mt-4 font-display text-[clamp(24px,2.8vw,32px)] font-normal leading-[1.2] text-ink [text-wrap:balance]">{text.title}</h3>
+          <p className="mt-2 text-[12px] font-semibold uppercase tracking-[0.06em] text-ink-soft">{text.validity}</p>
+          <p className="mt-4 max-w-[520px] text-[14px] leading-[1.75] text-ink-soft">{text.summary}</p>
+          <p className="mt-2 max-w-[520px] text-[14px] font-semibold leading-[1.75] text-ink">{text.availability}</p>
+          <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4">
+            <PackageCta
+              pkg={pkg}
+              locale={locale}
+              bookClassName="inline-flex min-h-[46px] items-center gap-2.5 rounded-lg bg-raspberry px-6 font-sans text-[11px] font-semibold uppercase tracking-[0.06em] text-cream transition-colors hover:bg-[#8a3844]"
+              whatsappClassName="inline-flex min-h-[46px] items-center gap-2.5 rounded-lg border border-ink/20 px-6 font-sans text-[11px] font-semibold uppercase tracking-[0.06em] text-ink transition-colors duration-200 hover:border-raspberry hover:text-raspberry"
+            />
+            <Link
+              href={withLocale(locale, promoArticlePath(pkg))}
+              className="text-[12px] font-semibold text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry"
+            >
+              {text.articleCta}
+            </Link>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 /* Promo a tempo della pagina /offerte/offerte-in-corso/: `show="active"` le
    attive in evidenza (pill "In corso", Prenota, link all'articolo),
    `show="expired"` le concluse in una sezione più sobria (grigie, più
@@ -92,9 +139,13 @@ export function TimedPromos({ locale, builtAt, show }: { locale: Locale; builtAt
     if (promos.length === 0) return <p className="text-[15px] leading-[1.8] text-ink-soft">{text.none}</p>;
     return (
       <div className="space-y-12">
-        {promos.map((promo) => (
-          <ActivePromoCard key={promo.id} promo={promo} locale={locale} />
-        ))}
+        {promos.map((promo) =>
+          promo.kind === "package" ? (
+            <ActivePackageCard key={promo.id} pkg={promo} locale={locale} />
+          ) : (
+            <ActivePromoCard key={promo.id} promo={promo} locale={locale} />
+          ),
+        )}
       </div>
     );
   }

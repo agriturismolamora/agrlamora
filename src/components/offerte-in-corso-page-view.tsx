@@ -4,7 +4,7 @@ import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import { TimedPromos } from "@/components/timed-promos";
 import { StructuredData } from "@/components/structured-data";
-import { getActivePromos } from "@/data/promo";
+import { getActivePromos, promoArticlePath } from "@/data/promo";
 import { STANDING_OFFERS } from "@/data/standing-offers";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
@@ -114,7 +114,7 @@ function collectionPageNode(locale: Locale, builtAt: number): JsonLdNode {
   const url = `${SITE_URL}${withLocale(locale, PATH)}`;
   const m = METADATA_TEXT[locale];
   const items = [
-    ...getActivePromos(builtAt).map((p) => ({ name: p.text[locale].title, url: `${SITE_URL}${withLocale(locale, `/blog/${p.articleSlug}/`)}` })),
+    ...getActivePromos(builtAt).map((p) => ({ name: p.text[locale].title, url: `${SITE_URL}${withLocale(locale, promoArticlePath(p))}` })),
     ...STANDING_OFFERS.map((o) => ({ name: o.text[locale].title, url: `${SITE_URL}${withLocale(locale, o.href)}` })),
   ];
   return {

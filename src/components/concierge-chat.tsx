@@ -76,6 +76,12 @@ function getRules(locale: Locale): Rule[] {
         reply: "Sì, siamo pet friendly: gli appartamenti Gemelli e Sagittario, con giardino privato, accolgono animali (25€/soggiorno). Negli altri tre — Pesci, Acquario e Bilancia — sono ammessi solo animali di piccola taglia, previo accordo con il proprietario, sempre a 25€/soggiorno.",
       },
       {
+        // Culla: 15 € a soggiorno a La Mora e a Villa Relax (brief, ottobre 2026).
+        keywords: ["culla", "lettino", "neonat"],
+        reply: "Sì, la culla è disponibile su richiesta a 15 € a soggiorno, sia negli appartamenti di La Mora sia a Villa Relax: segnalala quando prenoti.",
+        cta: { label: "Vacanza in famiglia", href: withLocale(locale, "/vacanza-in-famiglia/") },
+      },
+      {
         keywords: ["elettric", "ricaric", "kw", "colonnina"],
         reply: "A La Mora il parcheggio privato ha una colonnina di ricarica rapida da 22 kW; a Villa Relax la colonnina è da 7 kW. Basta segnalarlo in fase di prenotazione.",
       },
@@ -129,6 +135,12 @@ function getRules(locale: Locale): Rule[] {
       {
         keywords: ["dog", "cat", "pet", "animal"],
         reply: "Yes, we're pet friendly: Gemelli and Sagittario, with a private garden, welcome pets (€25/stay). In the other three — Pesci, Acquario and Bilancia — only small pets are allowed, subject to the owner's agreement, also at €25/stay.",
+      },
+      {
+        // Culla: 15 € a soggiorno a La Mora e a Villa Relax (brief, ottobre 2026).
+        keywords: ["crib", " cot", "cot ", "baby"],
+        reply: "Yes, a cot is available on request for €15 per stay, both in La Mora's apartments and at Villa Relax: just let us know when you book.",
+        cta: { label: "Family holidays", href: withLocale(locale, "/vacanza-in-famiglia/") },
       },
       {
         keywords: ["electric", "charging", "kw", "charger"],
@@ -186,6 +198,12 @@ function getRules(locale: Locale): Rule[] {
         reply: "Oui, nous acceptons les animaux : Gemelli et Sagittario, avec jardin privé, accueillent les animaux (25€/séjour). Dans les trois autres — Pesci, Acquario et Bilancia — seuls les animaux de petite taille sont admis, avec l'accord préalable du propriétaire, toujours à 25€/séjour.",
       },
       {
+        // Culla: 15 € a soggiorno a La Mora e a Villa Relax (brief, ottobre 2026).
+        keywords: ["berceau", "lit bébé", "bébé"],
+        reply: "Oui, un lit bébé est disponible sur demande pour 15 € par séjour, aussi bien dans les appartements de La Mora qu'à Villa Relax : signalez-le lors de la réservation.",
+        cta: { label: "Vacances en famille", href: withLocale(locale, "/vacanza-in-famiglia/") },
+      },
+      {
         keywords: ["électrique", "recharge", "kw", "borne"],
         reply: "À La Mora, le parking privé dispose d'une borne de recharge rapide de 22 kW ; à Villa Relax, la borne est de 7 kW. Il suffit de le signaler lors de la réservation.",
       },
@@ -239,6 +257,12 @@ function getRules(locale: Locale): Rule[] {
       {
         keywords: ["hund", "katze", "haustier", "tier"],
         reply: "Ja, wir sind haustierfreundlich: Gemelli und Sagittario mit privatem Garten nehmen Haustiere auf (25€/Aufenthalt). In den anderen drei — Pesci, Acquario und Bilancia — sind nur kleine Haustiere erlaubt, nach Absprache mit dem Eigentümer, ebenfalls für 25€/Aufenthalt.",
+      },
+      {
+        // Culla: 15 € a soggiorno a La Mora e a Villa Relax (brief, ottobre 2026).
+        keywords: ["babybett", "kinderbett", "baby"],
+        reply: "Ja, ein Babybett gibt es auf Anfrage für 15 € pro Aufenthalt, sowohl in den Apartments von La Mora als auch in der Villa Relax: bitte bei der Buchung angeben.",
+        cta: { label: "Familienurlaub", href: withLocale(locale, "/vacanza-in-famiglia/") },
       },
       {
         keywords: ["elektro", "laden", "kw", "ladestation"],

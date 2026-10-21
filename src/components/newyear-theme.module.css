@@ -210,6 +210,57 @@
   background-color: rgba(246, 238, 219, 0.08);
 }
 
+/* Card dei prezzi del pacchetto Capodanno (capodanno-package.tsx): notte
+   con filo oro, alone dorato in alto e una stella oro sul bordo. */
+.priceCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border-radius: 10px;
+  padding: 24px 4px 16px;
+  text-align: center;
+  background:
+    radial-gradient(90% 60% at 50% 0%, rgba(227, 194, 120, 0.24) 0%, rgba(227, 194, 120, 0) 70%),
+    linear-gradient(170deg, #1d2560 0%, var(--notte) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(227, 194, 120, 0.45),
+    0 18px 40px -24px rgba(0, 0, 0, 0.8);
+}
+
+.priceCard::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translateX(-50%);
+  background: var(--oro);
+  clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%);
+}
+
+.priceGuests {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--champagne);
+}
+
+.priceValue {
+  font-family: var(--font-display), serif;
+  font-size: clamp(26px, 7vw, 40px);
+  line-height: 1;
+  color: var(--avorio);
+}
+
+.priceNote {
+  font-size: 11px;
+  color: rgba(246, 238, 219, 0.78);
+}
+
 /* Elenchi puntati: piccola stella a quattro punte oro. */
 .sparkle {
   flex: none;

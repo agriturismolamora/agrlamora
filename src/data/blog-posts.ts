@@ -1,5 +1,5 @@
 import type { Locale } from "@/lib/i18n";
-import type { PromoId } from "@/data/promo";
+import type { PackageId, PromoId } from "@/data/promo";
 import type { StayBoxData } from "@/components/stay-box";
 import {
   EUROCHOCOLATE_2024_PHOTO,
@@ -106,6 +106,9 @@ export type BlogPost = {
   faq?: { heading: string; items: { q: string; a: string }[] };
   /* Box offerta di src/data/promo.ts, mostrato in alto e in fondo. */
   offerBox?: PromoId;
+  /* Pacchetto a prezzo fisso di src/data/promo.ts (Capodanno): sezione con
+     ancora dopo "In breve" (capodanno-package.tsx). */
+  packageBox?: PackageId;
   /* Tema grafico dedicato: solo dove indicato esplicitamente
      ("chocolate": Eurochocolate; "newyear": Capodanno). */
   theme?: "chocolate" | "newyear";
@@ -3123,6 +3126,7 @@ const CAPODANNO_POST: Record<Locale, BlogPost> = {
     dateModified: CAPODANNO_LAST_CHECKED,
     schemaType: "BlogPosting",
     theme: "newyear",
+    packageBox: "capodanno-2027",
     inBreve: {
       heading: "In breve",
       items: [
@@ -3254,6 +3258,10 @@ const CAPODANNO_POST: Record<Locale, BlogPost> = {
           a: "Sì: a Petrignano di Assisi il presepe vivente nell'edizione 2025/26 era aperto anche il 1° gennaio, dalle 17:15 alle 19:30; ad Armenzano in passato si è svolto anche il 1° gennaio. Le date 2026/27 vanno verificate.",
         },
         {
+          q: "C'è un pacchetto per Capodanno?",
+          a: "Sì: il pacchetto Capodanno di La Mora comprende 4 notti con colazione inclusa. Per 2 persone 450 €, per 3 persone 500 €, per 4 persone 550 €. Per date e disponibilità chiedi a Paolo su WhatsApp.",
+        },
+        {
           q: "Si può passare il Capodanno a La Mora con il cane?",
           a: "Sì, negli appartamenti Gemelli e Sagittario, al piano terra con giardino privato, con un supplemento di 25 € a soggiorno.",
         },
@@ -3284,6 +3292,7 @@ const CAPODANNO_POST: Record<Locale, BlogPost> = {
     dateModified: CAPODANNO_LAST_CHECKED,
     schemaType: "BlogPosting",
     theme: "newyear",
+    packageBox: "capodanno-2027",
     inBreve: {
       heading: "At a glance",
       items: [
@@ -3415,6 +3424,10 @@ const CAPODANNO_POST: Record<Locale, BlogPost> = {
           a: "Yes: in Petrignano di Assisi the living nativity was open on 1 January in its 2025/26 edition, from 5:15 pm to 7:30 pm; in Armenzano it has also been held on 1 January in the past. The 2026/27 dates need to be checked.",
         },
         {
+          q: "Is there a New Year package?",
+          a: "Yes: La Mora's New Year package includes 4 nights with breakfast included. €450 for 2 people, €500 for 3 people, €550 for 4 people. For dates and availability, ask Paolo on WhatsApp.",
+        },
+        {
           q: "Can I spend New Year at La Mora with my dog?",
           a: "Yes, in the Gemelli and Sagittario apartments, on the ground floor with a private garden, for a supplement of €25 per stay.",
         },
@@ -3445,6 +3458,7 @@ const CAPODANNO_POST: Record<Locale, BlogPost> = {
     dateModified: CAPODANNO_LAST_CHECKED,
     schemaType: "BlogPosting",
     theme: "newyear",
+    packageBox: "capodanno-2027",
     inBreve: {
       heading: "En bref",
       items: [
@@ -3576,6 +3590,10 @@ const CAPODANNO_POST: Record<Locale, BlogPost> = {
           a: "Oui : à Petrignano di Assisi, la crèche vivante était ouverte le 1er janvier lors de l'édition 2025/26, de 17 h 15 à 19 h 30 ; à Armenzano, elle a aussi eu lieu le 1er janvier par le passé. Les dates 2026/27 sont à vérifier.",
         },
         {
+          q: "Y a-t-il un forfait pour le Nouvel An ?",
+          a: "Oui : le forfait Nouvel An de La Mora comprend 4 nuits avec petit-déjeuner inclus. 450 € pour 2 personnes, 500 € pour 3 personnes, 550 € pour 4 personnes. Pour les dates et les disponibilités, demandez à Paolo sur WhatsApp.",
+        },
+        {
           q: "Peut-on passer le Nouvel An à La Mora avec son chien ?",
           a: "Oui, dans les appartements Gemelli et Sagittario, au rez-de-chaussée avec jardin privatif, moyennant un supplément de 25 € par séjour.",
         },
@@ -3606,6 +3624,7 @@ const CAPODANNO_POST: Record<Locale, BlogPost> = {
     dateModified: CAPODANNO_LAST_CHECKED,
     schemaType: "BlogPosting",
     theme: "newyear",
+    packageBox: "capodanno-2027",
     inBreve: {
       heading: "Kurz gefasst",
       items: [
@@ -3735,6 +3754,10 @@ const CAPODANNO_POST: Record<Locale, BlogPost> = {
         {
           q: "Gibt es an Neujahr lebende Krippen in der Nähe von Assisi?",
           a: "Ja: In Petrignano di Assisi war die lebende Krippe in der Ausgabe 2025/26 auch am 1. Januar geöffnet, von 17:15 bis 19:30 Uhr; in Armenzano fand sie früher ebenfalls am 1. Januar statt. Die Termine 2026/27 sollten Sie prüfen.",
+        },
+        {
+          q: "Gibt es ein Silvesterpaket?",
+          a: "Ja: Das Silvesterpaket im La Mora umfasst 4 Nächte mit Frühstück inklusive. Für 2 Personen 450 €, für 3 Personen 500 €, für 4 Personen 550 €. Für Termine und Verfügbarkeit fragen Sie Paolo auf WhatsApp.",
         },
         {
           q: "Kann ich Silvester mit Hund im La Mora verbringen?",

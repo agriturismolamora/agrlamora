@@ -97,11 +97,25 @@ export function getVillaEvCharger(locale: Locale) {
   return VILLA_EV_CHARGER[locale];
 }
 
+/* Culla: su richiesta, 15 € a soggiorno, come negli appartamenti di La
+   Mora (confermato dal titolare, ottobre 2026; non presente su
+   villaassisi.it). Niente seggioloni. */
+export const VILLA_COT_PRICE_EUR = 15;
+const VILLA_COT: Record<Locale, string> = {
+  it: `Culla su richiesta, ${VILLA_COT_PRICE_EUR} € a soggiorno`,
+  en: `Cot on request, €${VILLA_COT_PRICE_EUR} per stay`,
+  fr: `Lit bébé sur demande, ${VILLA_COT_PRICE_EUR} € par séjour`,
+  de: `Babybett auf Anfrage, ${VILLA_COT_PRICE_EUR} € pro Aufenthalt`,
+};
+export function getVillaCot(locale: Locale) {
+  return VILLA_COT[locale];
+}
+
 const VILLA_AMENITIES_BY_LOCALE: Record<Locale, string[]> = {
-  it: ["Animali ammessi", "Parcheggio privato ombreggiato", "Wi-Fi gratuito", "Giardino", "Angolo cottura", "Televisione", "Piscina privata", "Intera villa", VILLA_EV_CHARGER.it],
-  en: ["Pets allowed", "Private shaded parking", "Free Wi-Fi", "Garden", "Kitchenette", "Television", "Private pool", "Whole villa", VILLA_EV_CHARGER.en],
-  fr: ["Animaux acceptés", "Parking privé ombragé", "Wi-Fi gratuit", "Jardin", "Coin cuisine", "Télévision", "Piscine privée", "Villa entière", VILLA_EV_CHARGER.fr],
-  de: ["Haustiere erlaubt", "Privater schattiger Parkplatz", "Kostenloses WLAN", "Garten", "Kochnische", "Fernseher", "Privater Pool", "Ganze Villa", VILLA_EV_CHARGER.de],
+  it: ["Animali ammessi", "Parcheggio privato ombreggiato", "Wi-Fi gratuito", "Giardino", "Angolo cottura", "Televisione", "Piscina privata", "Intera villa", VILLA_EV_CHARGER.it, VILLA_COT.it],
+  en: ["Pets allowed", "Private shaded parking", "Free Wi-Fi", "Garden", "Kitchenette", "Television", "Private pool", "Whole villa", VILLA_EV_CHARGER.en, VILLA_COT.en],
+  fr: ["Animaux acceptés", "Parking privé ombragé", "Wi-Fi gratuit", "Jardin", "Coin cuisine", "Télévision", "Piscine privée", "Villa entière", VILLA_EV_CHARGER.fr, VILLA_COT.fr],
+  de: ["Haustiere erlaubt", "Privater schattiger Parkplatz", "Kostenloses WLAN", "Garten", "Kochnische", "Fernseher", "Privater Pool", "Ganze Villa", VILLA_EV_CHARGER.de, VILLA_COT.de],
 };
 
 export function getVillaAmenities(locale: Locale) {
