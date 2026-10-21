@@ -8,7 +8,9 @@ const MARKS = {
   lamora: { src: "/images/logo/logo-bianco-agriturismo-la-mora.png", width: 1448, height: 1086 },
   villa: VILLA_LOGO_WHITE,
 };
-export type WatermarkMark = keyof typeof MARKS;
+/* "none": foto di terzi (es. il Ristorante Carfagna) mostrate con i
+   componenti che normalmente aggiungono la filigrana: nessun logo sopra. */
+export type WatermarkMark = keyof typeof MARKS | "none";
 
 /* next/image + logo in filigrana, in basso a destra: piccolo,
    opacità 45%, pointer-events:none (non intercetta click, hover o zoom
@@ -22,6 +24,7 @@ export type WatermarkMark = keyof typeof MARKS;
    dell'immagine (che next/image già richiede); senza `fill` l'immagine
    viene avvolta in uno span relativo inline-block. */
 export function WatermarkedImage({ className, alt, mark: markKind = "lamora", ...props }: ImageProps & { mark?: WatermarkMark }) {
+  if (markKind === "none") return <Image className={className} alt={alt} {...props} />;
   const logo = MARKS[markKind];
   const mark = (
     <span

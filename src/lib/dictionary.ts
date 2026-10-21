@@ -16,6 +16,7 @@ export const dict = {
     laMora: { it: "La Mora", en: "La Mora", fr: "La Mora", de: "La Mora" },
     chiSiamo: { it: "Chi Siamo", en: "About Us", fr: "Qui Sommes-Nous", de: "Über Uns" },
     colazioneBio: { it: "Colazione Bio", en: "Organic Breakfast", fr: "Petit-Déjeuner Bio", de: "Bio-Frühstück" },
+    ristoranteConvenzionato: { it: "Ristorante convenzionato", en: "Partner restaurant", fr: "Restaurant partenaire", de: "Partnerrestaurant" },
     territorio: { it: "Territorio", en: "The Area", fr: "Le Territoire", de: "Die Umgebung" },
     blog: { it: "Blog", en: "Blog", fr: "Blog", de: "Blog" },
     ottavoCentenario: { it: "Ottavo Centenario San Francesco", en: "8th Centenary of St. Francis", fr: "8e Centenaire de Saint François", de: "800. Todestag des Heiligen Franziskus" },
@@ -42,6 +43,7 @@ export const dict = {
     torna: { it: "Torna alla home", en: "Back to home", fr: "Retour à l'accueil", de: "Zurück zur Startseite" },
     navigazionePrincipale: { it: "Navigazione principale", en: "Main navigation", fr: "Navigation principale", de: "Hauptnavigation" },
     navigazioneCompleta: { it: "Navigazione completa", en: "Full navigation", fr: "Navigation complète", de: "Vollständige Navigation" },
+    sottomenu: { it: "Sottomenu", en: "Submenu", fr: "Sous-menu", de: "Untermenü" },
   },
   footer: {
     linkUtili: { it: "Link utili", en: "Useful links", fr: "Liens utiles", de: "Nützliche Links" },

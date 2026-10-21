@@ -52,6 +52,7 @@ function getNav(locale: Locale): NavItem[] {
       children: [
         { label: t("nav", "chiSiamo", locale), href: withLocale(locale, "/chi-siamo/") },
         { label: t("nav", "colazioneBio", locale), href: withLocale(locale, "/agriturismo-con-colazione-inclusa-assisi/") },
+        { label: t("nav", "ristoranteConvenzionato", locale), href: withLocale(locale, "/ristorante-convenzionato/") },
       ],
     },
     {
@@ -188,7 +189,7 @@ function WhatsAppIcon() {
   );
 }
 
-function ChevronIcon({ open }: { open: boolean }) {
+function ChevronIcon({ open, className = "" }: { open: boolean; className?: string }) {
   return (
     <svg
       viewBox="0 0 12 8"
@@ -196,7 +197,7 @@ function ChevronIcon({ open }: { open: boolean }) {
       height="9"
       fill="none"
       aria-hidden="true"
-      className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+      className={`transition-transform duration-200 ${open ? "rotate-180" : ""} ${className}`}
     >
       <path d="M1 1.5 6 6.5 11 1.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
@@ -290,9 +291,38 @@ function DesktopDropdown({ item, align, onVillaPage }: { item: NavItem; align: D
   );
 }
 
+/* Link del pannello MENU: <a> pieno se attraversa il confine La Mora <->
+   Villa Relax (vedi DesktopDropdown), altrimenti <Link>. */
+function PanelLink({
+  href,
+  onVillaPage,
+  onNavigate,
+  className,
+  children,
+}: {
+  href: string;
+  onVillaPage: boolean;
+  onNavigate: () => void;
+  className: string;
+  children: React.ReactNode;
+}) {
+  const crossesBoundary = href.includes("/villa-relax-assisi") !== onVillaPage;
+  return crossesBoundary ? (
+    <a href={href} onClick={onNavigate} className={className}>
+      {children}
+    </a>
+  ) : (
+    <Link href={href} onClick={onNavigate} className={className}>
+      {children}
+    </Link>
+  );
+}
+
 export function SiteHeader({ locale }: { locale: Locale }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  /* Pannello MENU: id della voce con il sottomenu aperto (uno alla volta). */
+  const [openSub, setOpenSub] = useState<string | null>(null);
   const langRef = useRef<HTMLDivElement>(null);
   const mode = useHeaderScrollMode(menuOpen);
   const nav = getNav(locale);
@@ -613,20 +643,47 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             className="flex flex-1 flex-col items-center justify-center py-8 text-center"
           >
             <ul className="flex flex-col items-center gap-1 sm:gap-2">
+              {/* Le voci con sottopagine hanno una freccia che apre il loro
+                  sottomenu (uno alla volta), come i dropdown su desktop. La
+                  freccia è fuori dal flusso: le voci restano centrate. */}
               {nav.map((item) => {
-                const targetIsVilla = item.href.includes("/villa-relax-assisi");
-                const crossesBoundary = targetIsVilla !== onVillaPage;
                 const itemClassName = "inline-block py-1.5 font-display text-[27px] font-normal leading-tight text-cream transition-colors duration-200 hover:text-gold sm:text-[34px]";
+                const subId = `menu-sub-${item.id}`;
+                const expanded = openSub === item.id;
                 return (
                   <li key={item.label}>
-                    {crossesBoundary ? (
-                      <a href={item.href} onClick={() => setMenuOpen(false)} className={itemClassName}>
+                    <span className="relative inline-block">
+                      <PanelLink href={item.href} onVillaPage={onVillaPage} onNavigate={() => setMenuOpen(false)} className={itemClassName}>
                         {item.label}
-                      </a>
-                    ) : (
-                      <Link href={item.href} onClick={() => setMenuOpen(false)} className={itemClassName}>
-                        {item.label}
-                      </Link>
+                      </PanelLink>
+                      {item.children.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => setOpenSub(expanded ? null : item.id)}
+                          aria-expanded={expanded}
+                          aria-controls={subId}
+                          aria-label={`${t("nav", "sottomenu", locale)}: ${item.label}`}
+                          className="absolute left-full top-1/2 ml-1 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full text-cream/70 transition-colors hover:text-gold"
+                        >
+                          <ChevronIcon open={expanded} className="h-3.5 w-3.5" />
+                        </button>
+                      )}
+                    </span>
+                    {item.children.length > 0 && (
+                      <ul id={subId} hidden={!expanded} className="mb-3 mt-1 flex flex-col items-center gap-0.5">
+                        {item.children.map((child) => (
+                          <li key={child.label}>
+                            <PanelLink
+                              href={child.href}
+                              onVillaPage={onVillaPage}
+                              onNavigate={() => setMenuOpen(false)}
+                              className="inline-block py-1.5 font-display text-[19px] leading-tight text-cream/80 transition-colors duration-200 hover:text-gold sm:text-[22px]"
+                            >
+                              {child.label}
+                            </PanelLink>
+                          </li>
+                        ))}
+                      </ul>
                     )}
                   </li>
                 );

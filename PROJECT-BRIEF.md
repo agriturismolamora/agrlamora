@@ -115,6 +115,22 @@ Cartelle immagini per tutti i 5 appartamenti già pronte in `public/images/siste
 
 ---
 
+## 4-bis. Ristorante convenzionato — Ristorante Carfagna (Assisi)
+
+Confermato dal titolare (ottobre 2026). Ristorante **indipendente** (gestito da L'Arte del Gusto s.r.l.), convenzionato con La Mora. Pagina sul sito: `/ristorante-convenzionato/` (dati in `src/data/ristorante-carfagna.ts`).
+
+| Proposta | Prezzo | Dettaglio |
+|---|---|---|
+| Menù bambini (3–10 anni) | 15 € | Da concordare in base alle esigenze dei bambini |
+| Menù del giorno | 25 € a persona | Scelta dal menù del giorno; bevande, caffè e dolce della casa inclusi |
+| Menù dalla carta | 35 € a persona | Dalla carta: 1 antipasto (escluso l'antipasto Carfagna), 1 primo (escluso il tartufo), 1 secondo, 1 contorno, 1 dolce; bevande e caffè inclusi |
+
+- **Nessuno sconto sul menù alla carta** (politica aziendale del ristorante): non va mai menzionato, né sul sito né nei PDF.
+- Per usare la convenzione basta mostrare il PDF (`public/downloads/la-mora-convenzione-ristorante-carfagna-<lingua>.pdf`) o la pagina del sito: il ristorante conosce già le condizioni. Il ristorante pubblicherà il PDF sulla sua pagina Facebook.
+- Indirizzo e sito verificati sulla pagina ufficiale https://www.lartedelgustosrl.com/carfagna-assisi/ (21/10/2026): Via Campiglione 1, 06081 Assisi (PG). Facebook: https://www.facebook.com/ristorantecarfagna/ — album "Assisi dal Ristorante Carfagna": https://www.facebook.com/ristorantecarfagna/albums/775284610395634/
+- Distanza da La Mora: 7,0 km, circa 12 min in auto (Google Maps, 21/10/2026, primo percorso senza strade a traffico limitato).
+- Foto: fornite dal ristorante tramite il titolare, **senza filigrana La Mora**, con credito "Foto: Ristorante Carfagna".
+
 ## 5. Segmenti target (per copy e struttura contenuti)
 
 - **Famiglie** → collegare a parco giochi bambini + piscina bambini + babysitting

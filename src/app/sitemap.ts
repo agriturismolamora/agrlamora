@@ -21,6 +21,7 @@ const STATIC_PATHS = [
   "/territorio/",
   "/alloggi/",
   "/agriturismo-con-colazione-inclusa-assisi/",
+  "/ristorante-convenzionato/",
   "/agriturismo-famiglie-ad-assisi-e-dintorni/",
   "/ottavo-centenario-san-francesco/",
   "/offerte/",

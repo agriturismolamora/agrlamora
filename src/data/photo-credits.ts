@@ -24,6 +24,16 @@ export type PhotoCredit = {
   cropped?: boolean;
 };
 
+/* Foto del Ristorante Carfagna (ristorante convenzionato, di terzi),
+   fornite dal titolare: senza filigrana La Mora, sempre con questo credito
+   visibile in pagina (src/data/ristorante-carfagna.ts). */
+export const RISTORANTE_CARFAGNA_PHOTO_CREDIT: Record<Locale, string> = {
+  it: "Foto: Ristorante Carfagna",
+  en: "Photos: Ristorante Carfagna",
+  fr: "Photos : Ristorante Carfagna",
+  de: "Fotos: Ristorante Carfagna",
+};
+
 export type CreditedPhoto = {
   src: string;
   width: number;

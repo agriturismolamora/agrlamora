@@ -33,10 +33,13 @@ const CREDIT_URL = "https://agriasystem.com";
 
 /* Stesso ordine della nav dell'header (site-header.tsx): La Mora, Alloggi,
    Territorio, Esperienze, Offerte, Recensioni, Contatti, Villa Relax sempre
-   ultima. Il Blog (non in nav) sta subito dopo Territorio, il suo tema. */
+   ultima. Il Blog (non in nav) sta subito dopo Territorio, il suo tema;
+   le sottovoci elencate qui seguono la loro voce (Ristorante convenzionato
+   dopo La Mora). */
 function getNav(locale: Locale) {
   return [
     { label: t("nav", "laMora", locale), href: withLocale(locale, "/chi-siamo/") },
+    { label: t("nav", "ristoranteConvenzionato", locale), href: withLocale(locale, "/ristorante-convenzionato/") },
     { label: t("nav", "alloggi", locale), href: withLocale(locale, "/alloggi/") },
     { label: t("nav", "territorio", locale), href: withLocale(locale, "/territorio/") },
     { label: t("nav", "blog", locale), href: withLocale(locale, "/blog/") },
