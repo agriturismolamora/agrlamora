@@ -31,6 +31,35 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   },
 };
 
+/* "Per pranzo e cena": rimando al ristorante convenzionato (src/data/
+   ristorante-carfagna.ts), unica fonte per nome e condizioni. */
+const LUNCH_TEXT: Record<Locale, { label: string; heading: string; body: string; cta: string }> = {
+  it: {
+    label: "Per pranzo e cena",
+    heading: "La colazione è da noi. Per pranzo e cena, il ristorante convenzionato.",
+    body: "Il Ristorante Carfagna, ai piedi di Assisi sotto il Sacro Convento, è convenzionato con La Mora: per i nostri ospiti ha un menù bambini e due menù a prezzo fisso.",
+    cta: "Scopri il ristorante convenzionato",
+  },
+  en: {
+    label: "For lunch and dinner",
+    heading: "Breakfast is with us. For lunch and dinner, our partner restaurant.",
+    body: "Ristorante Carfagna, at the foot of Assisi below the Sacro Convento, has an agreement with La Mora: for our guests it offers a children's menu and two fixed-price menus.",
+    cta: "Discover the partner restaurant",
+  },
+  fr: {
+    label: "Pour le déjeuner et le dîner",
+    heading: "Le petit-déjeuner, c'est chez nous. Pour le déjeuner et le dîner, le restaurant partenaire.",
+    body: "Le Ristorante Carfagna, au pied d'Assise sous le Sacro Convento, est partenaire de La Mora : pour nos hôtes, il propose un menu enfants et deux menus à prix fixe.",
+    cta: "Découvrir le restaurant partenaire",
+  },
+  de: {
+    label: "Für Mittag- und Abendessen",
+    heading: "Das Frühstück gibt es bei uns. Mittag- und Abendessen im Partnerrestaurant.",
+    body: "Das Ristorante Carfagna am Fuß von Assisi, unterhalb des Sacro Convento, ist Partner von La Mora: Für unsere Gäste gibt es ein Kindermenü und zwei Festpreismenüs.",
+    cta: "Das Partnerrestaurant entdecken",
+  },
+};
+
 export function getColazioneMetadata(locale: Locale) {
   const m = METADATA_TEXT[locale];
   return pageMetadata({ locale, path: "/agriturismo-con-colazione-inclusa-assisi/", title: m.title, description: m.description });
@@ -408,6 +437,24 @@ export function ColazionePageView({ locale }: { locale: Locale }) {
                   →
                 </span>
               </span>
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      <section aria-labelledby="pranzo-cena-heading" className="bg-cream-dim py-16 sm:py-20">
+        <div className="mx-auto max-w-[760px] px-6 text-center sm:px-10">
+          <Reveal>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-olive-950">{LUNCH_TEXT[locale].label}</span>
+            <h2 id="pranzo-cena-heading" className="mt-4 font-display text-[clamp(24px,2.8vw,32px)] font-normal leading-[1.25] text-ink [text-wrap:balance]">
+              {LUNCH_TEXT[locale].heading}
+            </h2>
+            <p className="mx-auto mt-4 max-w-[600px] text-[14px] leading-[1.75] text-ink-soft">{LUNCH_TEXT[locale].body}</p>
+            <Link
+              href={withLocale(locale, "/ristorante-convenzionato/")}
+              className="mt-6 inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.06em] text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry"
+            >
+              {LUNCH_TEXT[locale].cta} <span aria-hidden="true">→</span>
             </Link>
           </Reveal>
         </div>

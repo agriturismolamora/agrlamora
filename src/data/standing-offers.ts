@@ -50,6 +50,19 @@ export const STANDING_OFFERS: StandingOffer[] = [
     },
   },
   {
+    /* Fasce confermate dal titolare (ottobre 2026), gestite nella sezione
+       sconti di bed-and-breakfast.it: non si dice su quale voce si
+       applicano né che il motore le calcola da solo (non confermato). */
+    id: "riduzioni-bambini",
+    href: "/vacanza-in-famiglia/",
+    text: {
+      it: { title: "Riduzioni per i bambini", body: "Da 0 a 2 anni gratis; da 3 a 8 anni non compiuti riduzione del 50%; da 8 a 11 anni non compiuti riduzione del 30%. Indica le età dei bambini quando prenoti." },
+      en: { title: "Reductions for children", body: "Ages 0 to 2 free; from 3 to under 8, 50% reduction; from 8 to under 11, 30% reduction. Tell us the children's ages when you book." },
+      fr: { title: "Réductions pour les enfants", body: "De 0 à 2 ans gratuit ; de 3 ans à moins de 8 ans, réduction de 50 % ; de 8 ans à moins de 11 ans, réduction de 30 %. Indiquez l'âge des enfants lors de la réservation." },
+      de: { title: "Ermäßigungen für Kinder", body: "0 bis 2 Jahre kostenlos; 3 bis unter 8 Jahre 50 % Ermäßigung; 8 bis unter 11 Jahre 30 % Ermäßigung. Geben Sie bei der Buchung das Alter der Kinder an." },
+    },
+  },
+  {
     id: "ottavo-centenario",
     href: "/ottavo-centenario-san-francesco/",
     text: {

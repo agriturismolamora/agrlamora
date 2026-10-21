@@ -10,6 +10,7 @@ import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
 import { pageMetadata } from "@/lib/seo";
+import { StayLinksBand } from "@/components/stay-links";
 import { StructuredData } from "@/components/structured-data";
 import { apartmentNodes, faqPageNode } from "@/lib/structured-data";
 import { PetsSection } from "@/components/pets-section";
@@ -124,6 +125,8 @@ export function AlloggiPageView({ locale }: { locale: Locale }) {
           </Reveal>
         </div>
       </section>
+
+      <StayLinksBand locale={locale} />
 
       <section className="bg-cream py-14 sm:py-16">
         <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-8 px-6 sm:grid-cols-2 sm:px-10 lg:grid-cols-3">

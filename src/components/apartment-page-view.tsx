@@ -15,6 +15,7 @@ import { ScrollDog } from "@/components/scroll-dog";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
+import { StayLinksRow } from "@/components/stay-links";
 import { StructuredData } from "@/components/structured-data";
 import { apartmentName, apartmentNode, faqPageNode } from "@/lib/structured-data";
 import { PetsSection } from "@/components/pets-section";
@@ -344,6 +345,7 @@ export async function ApartmentPageView({ locale, params }: { locale: Locale; pa
               })}
             </div>
           </Reveal>
+          <StayLinksRow locale={locale} />
         </div>
       </section>
 
