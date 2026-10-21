@@ -20,6 +20,14 @@ import {
   type PhotoCredit,
 } from "@/data/photo-credits";
 import { CAPODANNO_LAST_CHECKED, CAPODANNO_SOURCES } from "@/data/capodanno";
+import {
+  ASSISI_DOG_POST,
+  ASSISI_KIDS_POST,
+  FAMILY_CHOICE_POST,
+  MARMORE_DOG_POST,
+  PET_FRIENDLY_POST,
+  UMBRIA_KIDS_POST,
+} from "@/data/blog-posts-cluster";
 
 /* Contenuto editoriale del blog: non semplici paragrafi ma un piccolo
    sistema di blocchi (ContentBlock), per poter alternare titoli, immagini,
@@ -3780,6 +3788,13 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
   it: [
     EUROCHOCOLATE_POST.it,
     CAPODANNO_POST.it,
+    /* Cluster animali e famiglie (src/data/blog-posts-cluster.ts). */
+    ASSISI_DOG_POST.it,
+    ASSISI_KIDS_POST.it,
+    PET_FRIENDLY_POST.it,
+    FAMILY_CHOICE_POST.it,
+    MARMORE_DOG_POST.it,
+    UMBRIA_KIDS_POST.it,
     CARLO_ACUTIS_POST.it,
     NATALE_UMBRIA_POST.it,
     ALBERO_TRASIMENO_POST.it,
@@ -4298,6 +4313,13 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
   en: [
     EUROCHOCOLATE_POST.en,
     CAPODANNO_POST.en,
+    /* Cluster animali e famiglie (src/data/blog-posts-cluster.ts). */
+    ASSISI_DOG_POST.en,
+    ASSISI_KIDS_POST.en,
+    PET_FRIENDLY_POST.en,
+    FAMILY_CHOICE_POST.en,
+    MARMORE_DOG_POST.en,
+    UMBRIA_KIDS_POST.en,
     CARLO_ACUTIS_POST.en,
     NATALE_UMBRIA_POST.en,
     ALBERO_TRASIMENO_POST.en,
@@ -4816,6 +4838,13 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
   fr: [
     EUROCHOCOLATE_POST.fr,
     CAPODANNO_POST.fr,
+    /* Cluster animali e famiglie (src/data/blog-posts-cluster.ts). */
+    ASSISI_DOG_POST.fr,
+    ASSISI_KIDS_POST.fr,
+    PET_FRIENDLY_POST.fr,
+    FAMILY_CHOICE_POST.fr,
+    MARMORE_DOG_POST.fr,
+    UMBRIA_KIDS_POST.fr,
     CARLO_ACUTIS_POST.fr,
     NATALE_UMBRIA_POST.fr,
     ALBERO_TRASIMENO_POST.fr,
@@ -5334,6 +5363,13 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
   de: [
     EUROCHOCOLATE_POST.de,
     CAPODANNO_POST.de,
+    /* Cluster animali e famiglie (src/data/blog-posts-cluster.ts). */
+    ASSISI_DOG_POST.de,
+    ASSISI_KIDS_POST.de,
+    PET_FRIENDLY_POST.de,
+    FAMILY_CHOICE_POST.de,
+    MARMORE_DOG_POST.de,
+    UMBRIA_KIDS_POST.de,
     CARLO_ACUTIS_POST.de,
     NATALE_UMBRIA_POST.de,
     ALBERO_TRASIMENO_POST.de,

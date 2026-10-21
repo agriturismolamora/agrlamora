@@ -241,6 +241,112 @@ const BLOG_CTAS: Record<string, BlogCtaCopy> = {
       },
     },
   },
+  /* Cluster animali e famiglie (blog-posts-cluster.ts). */
+  "assisi-con-il-cane": {
+    intro: {
+      it: "Ad Assisi con il cane? Gemelli e Sagittario hanno il giardino privato: controlla la disponibilità.",
+      en: "Visiting Assisi with your dog? Gemelli and Sagittario have a private garden: check availability.",
+      fr: "À Assise avec votre chien ? Gemelli et Sagittario ont un jardin privé : vérifiez les disponibilités.",
+      de: "Mit Hund nach Assisi? Gemelli und Sagittario haben einen eigenen Garten: Prüfen Sie die Verfügbarkeit.",
+    },
+    distance: fromPlace(
+      "piazzaDelComune",
+      { it: "da Piazza del Comune", en: "from Piazza del Comune", fr: "de la Piazza del Comune", de: "von der Piazza del Comune" },
+      {
+        it: "Assisi a piedi con il cane, poi la campagna e il giardino privato.",
+        en: "Assisi on foot with your dog, then the countryside and a private garden.",
+        fr: "Assise à pied avec votre chien, puis la campagne et un jardin privé.",
+        de: "Assisi zu Fuß mit Hund, danach das Land und ein eigener Garten.",
+      },
+    ),
+  },
+  "agriturismo-pet-friendly-umbria": {
+    intro: {
+      it: "Viaggi con il cane? Gemelli e Sagittario lo accolgono a 25 € a soggiorno: controlla la disponibilità.",
+      en: "Travelling with your dog? Gemelli and Sagittario welcome it for €25 per stay: check availability.",
+      fr: "Vous voyagez avec votre chien ? Gemelli et Sagittario l'accueillent pour 25 € par séjour : vérifiez les disponibilités.",
+      de: "Mit Hund unterwegs? Gemelli und Sagittario nehmen ihn für 25 € pro Aufenthalt auf: Prüfen Sie die Verfügbarkeit.",
+    },
+    distance: fromPlace(
+      "piazzaDelComune",
+      { it: "da Piazza del Comune", en: "from Piazza del Comune", fr: "de la Piazza del Comune", de: "von der Piazza del Comune" },
+      {
+        it: "Campagna intorno, il centro di Assisi a pochi minuti.",
+        en: "Countryside all around, the centre of Assisi a few minutes away.",
+        fr: "La campagne autour, le centre d'Assise à quelques minutes.",
+        de: "Ringsum das Land, das Zentrum von Assisi wenige Minuten entfernt.",
+      },
+    ),
+  },
+  "cascata-delle-marmore-con-il-cane": {
+    intro: {
+      it: "Una gita alla Cascata con il cane e la sera in campagna? Controlla la disponibilità di Gemelli e Sagittario.",
+      en: "A day at the Falls with your dog and evenings in the countryside? Check availability for Gemelli and Sagittario.",
+      fr: "Une sortie à la cascade avec votre chien et le soir à la campagne ? Vérifiez les disponibilités de Gemelli et Sagittario.",
+      de: "Ein Tag am Wasserfall mit Hund und abends auf dem Land? Prüfen Sie die Verfügbarkeit von Gemelli und Sagittario.",
+    },
+    distance: {
+      km: "77,3",
+      minutes: 61,
+      from: { it: "dalle Cascate delle Marmore", en: "from the Marmore Falls", fr: "des cascades des Marmore", de: "von den Marmore-Wasserfällen" },
+      line: {
+        it: "Una gita in giornata, e al ritorno il giardino privato per te e il tuo cane.",
+        en: "An easy day trip, and back home a private garden for you and your dog.",
+        fr: "Une excursion à la journée, et au retour un jardin privé pour vous et votre chien.",
+        de: "Ein Tagesausflug, und zurück ein eigener Garten für Sie und Ihren Hund.",
+      },
+    },
+  },
+  "assisi-con-i-bambini": {
+    intro: {
+      it: "Assisi con i bambini e la sera in campagna, con parco giochi e cucina? Controlla la disponibilità.",
+      en: "Assisi with the children and evenings in the countryside, with a playground and a kitchen? Check availability.",
+      fr: "Assise avec les enfants et le soir à la campagne, avec aire de jeux et cuisine ? Vérifiez les disponibilités.",
+      de: "Assisi mit Kindern und abends auf dem Land, mit Spielplatz und Küche? Prüfen Sie die Verfügbarkeit.",
+    },
+    distance: fromPlace(
+      "piazzaDelComune",
+      { it: "da Piazza del Comune", en: "from Piazza del Comune", fr: "de la Piazza del Comune", de: "von der Piazza del Comune" },
+      {
+        it: "La mattina in città, il pomeriggio al parco giochi.",
+        en: "Mornings in town, afternoons at the playground.",
+        fr: "Le matin en ville, l'après-midi à l'aire de jeux.",
+        de: "Vormittags in der Stadt, nachmittags auf dem Spielplatz.",
+      },
+    ),
+  },
+  "agriturismo-con-bambini-come-scegliere": {
+    intro: {
+      it: "Cerchi un agriturismo per tutta la famiglia? Scegli le date e controlla la disponibilità.",
+      en: "Looking for an agriturismo for the whole family? Choose your dates and check availability.",
+      fr: "Vous cherchez un agritourisme pour toute la famille ? Choisissez vos dates et vérifiez les disponibilités.",
+      de: "Sie suchen einen Agriturismo für die ganze Familie? Wählen Sie Ihre Daten und prüfen Sie die Verfügbarkeit.",
+    },
+    distance: fromPlace(
+      "piazzaDelComune",
+      { it: "da Piazza del Comune", en: "from Piazza del Comune", fr: "de la Piazza del Comune", de: "von der Piazza del Comune" },
+      {
+        it: "Cinque appartamenti con cucina, il parco giochi e la piscina d'estate.",
+        en: "Five apartments with a kitchen, the playground and the pool in summer.",
+        fr: "Cinq appartements avec cuisine, l'aire de jeux et la piscine en été.",
+        de: "Fünf Ferienwohnungen mit Küche, der Spielplatz und im Sommer der Pool.",
+      },
+    ),
+  },
+  "umbria-con-i-bambini-weekend": {
+    intro: {
+      it: "Un weekend in Umbria con i bambini, con una base in campagna? Controlla la disponibilità.",
+      en: "A weekend in Umbria with the children, with a base in the countryside? Check availability.",
+      fr: "Un week-end en Ombrie avec les enfants, avec un camp de base à la campagne ? Vérifiez les disponibilités.",
+      de: "Ein Wochenende in Umbrien mit Kindern, mit einer Basis auf dem Land? Prüfen Sie die Verfügbarkeit.",
+    },
+    distance: fromPlace("perugia", PERUGIA_FROM, {
+      it: "Perugia di giorno, la sera il silenzio della campagna di Assisi.",
+      en: "Perugia by day, the quiet of the Assisi countryside in the evening.",
+      fr: "Pérouse le jour, le soir le calme de la campagne d'Assise.",
+      de: "Tagsüber Perugia, abends die Ruhe auf dem Land bei Assisi.",
+    }),
+  },
   "agriumbria-umbriafiere": {
     intro: {
       it: "Vieni ad Agriumbria? Controlla la disponibilità per i giorni della fiera.",
