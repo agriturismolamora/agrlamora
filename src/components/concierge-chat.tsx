@@ -58,7 +58,7 @@ function getRules(locale: Locale): Rule[] {
     it: [
       {
         keywords: ["appartament", "camera", "stanz", "alloggi", "gemelli", "bilancia", "pesci", "acquario", "sagittario"],
-        reply: "Abbiamo 5 appartamenti indipendenti: Gemelli, Bilancia, Pesci, Acquario e Sagittario. Gemelli e Sagittario hanno giardino privato recintato e sono pet friendly.",
+        reply: "Abbiamo 5 appartamenti indipendenti: Gemelli, Bilancia, Pesci, Acquario e Sagittario. Gemelli e Sagittario hanno un giardino privato e sono pet friendly.",
         cta: { label: "Vedi tutti gli appartamenti", href: withLocale(locale, "/alloggi/") },
       },
       {
@@ -73,7 +73,7 @@ function getRules(locale: Locale): Rule[] {
       },
       {
         keywords: ["cane", "cani", "gatt", "animal", "pet"],
-        reply: "Sì, siamo pet friendly: gli appartamenti Gemelli e Sagittario hanno giardino recintato (25€/soggiorno). Negli altri tre — Pesci, Acquario e Bilancia — sono ammessi solo animali di piccola taglia, previo accordo con il proprietario, sempre a 25€/soggiorno.",
+        reply: "Sì, siamo pet friendly: gli appartamenti Gemelli e Sagittario, con giardino privato, accolgono animali (25€/soggiorno). Negli altri tre — Pesci, Acquario e Bilancia — sono ammessi solo animali di piccola taglia, previo accordo con il proprietario, sempre a 25€/soggiorno.",
       },
       {
         keywords: ["elettric", "ricaric", "kw", "colonnina"],
@@ -113,7 +113,7 @@ function getRules(locale: Locale): Rule[] {
     en: [
       {
         keywords: ["apartment", "room", "flat", "gemelli", "bilancia", "pesci", "acquario", "sagittario"],
-        reply: "We have 5 independent apartments: Gemelli, Bilancia, Pesci, Acquario and Sagittario. Gemelli and Sagittario have a fenced private garden and are pet friendly.",
+        reply: "We have 5 independent apartments: Gemelli, Bilancia, Pesci, Acquario and Sagittario. Gemelli and Sagittario have a private garden and are pet friendly.",
         cta: { label: "See all apartments", href: withLocale(locale, "/alloggi/") },
       },
       {
@@ -128,7 +128,7 @@ function getRules(locale: Locale): Rule[] {
       },
       {
         keywords: ["dog", "cat", "pet", "animal"],
-        reply: "Yes, we're pet friendly: Gemelli and Sagittario have a fenced garden (€25/stay). In the other three — Pesci, Acquario and Bilancia — only small pets are allowed, subject to the owner's agreement, also at €25/stay.",
+        reply: "Yes, we're pet friendly: Gemelli and Sagittario, with a private garden, welcome pets (€25/stay). In the other three — Pesci, Acquario and Bilancia — only small pets are allowed, subject to the owner's agreement, also at €25/stay.",
       },
       {
         keywords: ["electric", "charging", "kw", "charger"],
@@ -168,7 +168,7 @@ function getRules(locale: Locale): Rule[] {
     fr: [
       {
         keywords: ["appartement", "chambre", "logement", "gemelli", "bilancia", "pesci", "acquario", "sagittario"],
-        reply: "Nous avons 5 appartements indépendants : Gemelli, Bilancia, Pesci, Acquario et Sagittario. Gemelli et Sagittario ont un jardin privé clôturé et acceptent les animaux.",
+        reply: "Nous avons 5 appartements indépendants : Gemelli, Bilancia, Pesci, Acquario et Sagittario. Gemelli et Sagittario ont un jardin privé et acceptent les animaux.",
         cta: { label: "Voir tous les appartements", href: withLocale(locale, "/alloggi/") },
       },
       {
@@ -183,7 +183,7 @@ function getRules(locale: Locale): Rule[] {
       },
       {
         keywords: ["chien", "chat", "animal", "animaux"],
-        reply: "Oui, nous acceptons les animaux : Gemelli et Sagittario ont un jardin clôturé (25€/séjour). Dans les trois autres — Pesci, Acquario et Bilancia — seuls les animaux de petite taille sont admis, avec l'accord préalable du propriétaire, toujours à 25€/séjour.",
+        reply: "Oui, nous acceptons les animaux : Gemelli et Sagittario, avec jardin privé, accueillent les animaux (25€/séjour). Dans les trois autres — Pesci, Acquario et Bilancia — seuls les animaux de petite taille sont admis, avec l'accord préalable du propriétaire, toujours à 25€/séjour.",
       },
       {
         keywords: ["électrique", "recharge", "kw", "borne"],
@@ -223,7 +223,7 @@ function getRules(locale: Locale): Rule[] {
     de: [
       {
         keywords: ["apartment", "wohnung", "zimmer", "gemelli", "bilancia", "pesci", "acquario", "sagittario"],
-        reply: "Wir haben 5 unabhängige Apartments: Gemelli, Bilancia, Pesci, Acquario und Sagittario. Gemelli und Sagittario haben einen eingezäunten privaten Garten und sind haustierfreundlich.",
+        reply: "Wir haben 5 unabhängige Apartments: Gemelli, Bilancia, Pesci, Acquario und Sagittario. Gemelli und Sagittario haben einen privaten Garten und sind haustierfreundlich.",
         cta: { label: "Alle Apartments ansehen", href: withLocale(locale, "/alloggi/") },
       },
       {
@@ -238,7 +238,7 @@ function getRules(locale: Locale): Rule[] {
       },
       {
         keywords: ["hund", "katze", "haustier", "tier"],
-        reply: "Ja, wir sind haustierfreundlich: Gemelli und Sagittario haben einen eingezäunten Garten (25€/Aufenthalt). In den anderen drei — Pesci, Acquario und Bilancia — sind nur kleine Haustiere erlaubt, nach Absprache mit dem Eigentümer, ebenfalls für 25€/Aufenthalt.",
+        reply: "Ja, wir sind haustierfreundlich: Gemelli und Sagittario mit privatem Garten nehmen Haustiere auf (25€/Aufenthalt). In den anderen drei — Pesci, Acquario und Bilancia — sind nur kleine Haustiere erlaubt, nach Absprache mit dem Eigentümer, ebenfalls für 25€/Aufenthalt.",
       },
       {
         keywords: ["elektro", "laden", "kw", "ladestation"],

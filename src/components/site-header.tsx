@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import type { Locale } from "@/lib/i18n";
 import { withLocale, splitLocaleFromPath } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
@@ -17,6 +17,8 @@ type NavChild = {
   label: string;
   href: string;
   external?: boolean;
+  /* Linea di separazione prima della voce (es. sotto i 5 appartamenti). */
+  dividerBefore?: boolean;
 };
 
 type NavItem = {
@@ -65,6 +67,8 @@ function getNav(locale: Locale): NavItem[] {
         { label: `${apt} Sagittario`, href: withLocale(locale, "/alloggi/sagittario/") },
         { label: `${apt} Gemelli`, href: withLocale(locale, "/alloggi/gemelli/") },
         { label: `${apt} Bilancia`, href: withLocale(locale, "/alloggi/bilancia/") },
+        { label: t("nav", "vacanzaAnimali", locale), href: withLocale(locale, "/vacanza-con-animali/"), dividerBefore: true },
+        { label: t("nav", "vacanzaFamiglia", locale), href: withLocale(locale, "/vacanza-in-famiglia/") },
       ],
     },
     {
@@ -275,15 +279,17 @@ function DesktopDropdown({ item, align, onVillaPage }: { item: NavItem; align: D
           className={`invisible absolute top-full z-[200] min-w-[250px] max-w-[calc(100vw-32px)] translate-y-1.5 rounded-[3px] border border-cream/10 bg-olive-950/95 p-2 opacity-0 shadow-[0_18px_40px_-18px_rgba(0,0,0,0.55)] backdrop-blur-md transition-all duration-200 ease-out group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 ${DROPDOWN_ALIGN_CLASS[align]}`}
         >
           {item.children.map((child) => (
-            <a
-              key={child.label}
-              href={child.href}
-              target={child.external ? "_blank" : undefined}
-              rel={child.external ? "noopener noreferrer" : undefined}
-              className="block whitespace-nowrap rounded-[2px] px-3 py-2 font-display text-[15px] text-cream/90 transition-colors hover:bg-cream/5 hover:text-gold"
-            >
-              {child.label}
-            </a>
+            <Fragment key={child.label}>
+              {child.dividerBefore && <span role="separator" className="mx-3 my-1.5 block h-px bg-cream/15" />}
+              <a
+                href={child.href}
+                target={child.external ? "_blank" : undefined}
+                rel={child.external ? "noopener noreferrer" : undefined}
+                className="block whitespace-nowrap rounded-[2px] px-3 py-2 font-display text-[15px] text-cream/90 transition-colors hover:bg-cream/5 hover:text-gold"
+              >
+                {child.label}
+              </a>
+            </Fragment>
           ))}
         </div>
       )}
@@ -672,7 +678,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
                     {item.children.length > 0 && (
                       <ul id={subId} hidden={!expanded} className="mb-3 mt-1 flex flex-col items-center gap-0.5">
                         {item.children.map((child) => (
-                          <li key={child.label}>
+                          <li key={child.label} className={child.dividerBefore ? "mt-2 border-t border-cream/15 pt-2" : undefined}>
                             <PanelLink
                               href={child.href}
                               onVillaPage={onVillaPage}

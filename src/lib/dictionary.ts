@@ -17,6 +17,8 @@ export const dict = {
     chiSiamo: { it: "Chi Siamo", en: "About Us", fr: "Qui Sommes-Nous", de: "Über Uns" },
     colazioneBio: { it: "Colazione Bio", en: "Organic Breakfast", fr: "Petit-Déjeuner Bio", de: "Bio-Frühstück" },
     ristoranteConvenzionato: { it: "Ristorante convenzionato", en: "Partner restaurant", fr: "Restaurant partenaire", de: "Partnerrestaurant" },
+    vacanzaAnimali: { it: "Vacanza con animali", en: "Holidays with pets", fr: "Vacances avec animaux", de: "Urlaub mit Haustieren" },
+    vacanzaFamiglia: { it: "Vacanza in famiglia", en: "Family holidays", fr: "Vacances en famille", de: "Familienurlaub" },
     territorio: { it: "Territorio", en: "The Area", fr: "Le Territoire", de: "Die Umgebung" },
     blog: { it: "Blog", en: "Blog", fr: "Blog", de: "Blog" },
     ottavoCentenario: { it: "Ottavo Centenario San Francesco", en: "8th Centenary of St. Francis", fr: "8e Centenaire de Saint François", de: "800. Todestag des Heiligen Franziskus" },

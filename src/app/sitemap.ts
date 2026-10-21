@@ -20,6 +20,8 @@ const STATIC_PATHS = [
   "/chi-siamo/",
   "/territorio/",
   "/alloggi/",
+  "/vacanza-con-animali/",
+  "/vacanza-in-famiglia/",
   "/agriturismo-con-colazione-inclusa-assisi/",
   "/ristorante-convenzionato/",
   "/agriturismo-famiglie-ad-assisi-e-dintorni/",

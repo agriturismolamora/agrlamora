@@ -35,12 +35,14 @@ const CREDIT_URL = "https://agriasystem.com";
    Territorio, Esperienze, Offerte, Recensioni, Contatti, Villa Relax sempre
    ultima. Il Blog (non in nav) sta subito dopo Territorio, il suo tema;
    le sottovoci elencate qui seguono la loro voce (Ristorante convenzionato
-   dopo La Mora). */
+   dopo La Mora, Vacanza con animali e in famiglia dopo Alloggi). */
 function getNav(locale: Locale) {
   return [
     { label: t("nav", "laMora", locale), href: withLocale(locale, "/chi-siamo/") },
     { label: t("nav", "ristoranteConvenzionato", locale), href: withLocale(locale, "/ristorante-convenzionato/") },
     { label: t("nav", "alloggi", locale), href: withLocale(locale, "/alloggi/") },
+    { label: t("nav", "vacanzaAnimali", locale), href: withLocale(locale, "/vacanza-con-animali/") },
+    { label: t("nav", "vacanzaFamiglia", locale), href: withLocale(locale, "/vacanza-in-famiglia/") },
     { label: t("nav", "territorio", locale), href: withLocale(locale, "/territorio/") },
     { label: t("nav", "blog", locale), href: withLocale(locale, "/blog/") },
     { label: t("nav", "esperienze", locale), href: withLocale(locale, "/agriturismo-famiglie-ad-assisi-e-dintorni/") },

@@ -9,8 +9,8 @@ Sintesi operativa del kick-off, organizzata per sviluppo. Brand identity invaria
 - **Sistemazioni** — pagina di elenco + dettaglio per ognuno dei 5 appartamenti:
   - Appartamento Pesci — piano terra
   - Appartamento Acquario — primo piano
-  - Appartamento Sagittario — **pet-friendly**, piano terra, giardino privato recintato e gazebo esterno
-  - Appartamento Gemelli — **pet-friendly**, piano terra, giardino privato recintato
+  - Appartamento Sagittario — **pet-friendly**, piano terra, giardino privato e gazebo esterno
+  - Appartamento Gemelli — **pet-friendly**, piano terra, giardino privato
   - Appartamento Bilancia — primo piano, giardino privato e gazebo privato
   - Dotazioni comuni a tutte le unità (da riportare in ogni scheda): TV satellitare, specchi, porta valigie, biancheria da letto e da bagno, cucina attrezzata, cassaforte, aria condizionata, Wi-Fi, parcheggio gratuito all'interno della struttura, barbecue in comune (incluso) — ultimi due aggiunti su indicazione del titolare il 29/09/2026
   - Servizi della struttura con sezione dedicata in ogni scheda: lavatrice in comune, uso incluso (29/09/2026 — nessuna foto disponibile, nessun altro dettaglio confermato)
@@ -65,7 +65,7 @@ Cartelle immagini per tutti i 5 appartamenti già pronte in `public/images/siste
 - Checkbox presenza animali → se selezionata, redirect automatico alle sole unità pet-friendly (**confermato: solo Gemelli e Sagittario**)
 
 **Animali:**
-- 25€/soggiorno, in Gemelli e Sagittario (gli unici due con giardino privato recintato)
+- 25€/soggiorno, in Gemelli e Sagittario (gli unici due con giardino privato). Su indicazione del titolare (ottobre 2026) il giardino NON va descritto come "recintato" in nessun testo.
 - Dropdown taglia + razza, con blacklist per razze considerate pericolose (sistema segnala "non accettato")
 - Nota obbligatoria: guinzaglio all'interno della struttura
 - Negli altri tre appartamenti (Pesci, Acquario, Bilancia): ammessi solo animali di piccola taglia, previo accordo diretto col proprietario, sempre a 25€/soggiorno (confermato dal titolare)
@@ -74,7 +74,7 @@ Cartelle immagini per tutti i 5 appartamenti già pronte in `public/images/siste
 
 **Extra selezionabili in fase di booking:**
 - E-bike a noleggio (listino in sezione 3)
-- Culla: 10€/soggiorno
+- Culla: 15 € a soggiorno (aggiornato dal titolare a ottobre 2026; prima 10 €). Nessun seggiolone da dichiarare.
 - Colonnina di ricarica 22kW (La Mora; quella di Villa Relax è da 7 kW): checkbox da selezionare **subito** in fase di prenotazione (serve al proprietario per organizzarsi)
 
 ---
@@ -114,6 +114,17 @@ Cartelle immagini per tutti i 5 appartamenti già pronte in `public/images/siste
 | Due notti romantiche | 2 | 2 notti Bilocale + 2 colazioni + drink di benvenuto | €159,90 | Pulizia finale €25 + tassa soggiorno €3/persona/giorno |
 
 ---
+
+## 4-ter. Famiglie, animali e piscina — fatti confermati dal titolare (ottobre 2026)
+
+Pagine sul sito: `/vacanza-con-animali/` e `/vacanza-in-famiglia/` (dati in `src/data/hubs.ts`).
+
+- **Supplemento animali**: 25 € a soggiorno. Appartamenti pet friendly: solo Gemelli e Sagittario (negli altri, piccola taglia previo accordo, vedi sezione 2). Il modulo richieste ha taglia e tipo di animale. **Non dichiarare "giardini recintati".**
+- **Culla**: 15 € a soggiorno (sostituisce i 10 € precedenti). **Non menzionare i seggioloni.**
+- **Riduzioni bambini** (gestite nella sezione sconti di bed-and-breakfast.it): 0–2 anni gratis; da 3 a 8 anni non compiuti 50%; da 8 a 11 anni non compiuti 30%. Il titolare non ha detto su quale voce si applicano: sul sito solo "riduzioni per i bambini" con le fasce e l'invito a indicare le età in prenotazione, senza dire che il motore le applica da solo. Da chiarire: confine a 8 anni (un bambino di 2 anni e mezzo? e chi ha esattamente 8 anni ricade nella fascia 30%?) e base di applicazione.
+- **Parco giochi**: sempre libero, sotto la supervisione degli adulti.
+- **Piscina**: cuffia obbligatoria per i bambini fino a 16 anni, scritta come regola della struttura (interpretazione "regola della piscina" da confermare).
+- **Menù bambini** al Ristorante Carfagna: 15 € (3–10 anni), vedi sezione 4-bis.
 
 ## 4-bis. Ristorante convenzionato — Ristorante Carfagna (Assisi)
 

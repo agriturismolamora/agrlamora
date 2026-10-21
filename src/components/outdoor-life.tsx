@@ -25,8 +25,8 @@ const TEXT: Record<
     facts: [
       { label: "Piscina panoramica", detail: "6×12 metri, aperta dal 1° maggio al 28 settembre, 9:00–19:00" },
       { label: "Fontana idromassaggio", detail: "azionata nelle ore più calde, per rinfrescarsi" },
-      { label: "Giardino recintato", detail: "negli appartamenti Gemelli e Sagittario" },
-      { label: "Parco giochi e sport", detail: "altalene, scivoli, campo da calcetto in erba naturale, ping-pong; culla (10€/soggiorno) e seggiolone su richiesta" },
+      { label: "Giardino privato", detail: "negli appartamenti Gemelli e Sagittario" },
+      { label: "Parco giochi e sport", detail: "altalene, scivoli, campo da calcetto in erba naturale, ping-pong; culla su richiesta (15 € a soggiorno)" },
     ],
   },
   en: {
@@ -36,8 +36,8 @@ const TEXT: Record<
     facts: [
       { label: "Panoramic pool", detail: "6×12 metres, open May 1st to September 28th, 9am–7pm" },
       { label: "Hydromassage fountain", detail: "turned on during the hottest hours, for a quick cool-down" },
-      { label: "Fenced garden", detail: "in the Gemelli and Sagittario apartments" },
-      { label: "Playground and sports", detail: "swings, slides, natural-grass five-a-side pitch, table tennis; cot (€10/stay) and high chair on request" },
+      { label: "Private garden", detail: "in the Gemelli and Sagittario apartments" },
+      { label: "Playground and sports", detail: "swings, slides, natural-grass five-a-side pitch, table tennis; cot on request (€15 per stay)" },
     ],
   },
   fr: {
@@ -47,8 +47,8 @@ const TEXT: Record<
     facts: [
       { label: "Piscine panoramique", detail: "6×12 mètres, ouverte du 1er mai au 28 septembre, 9h–19h" },
       { label: "Fontaine hydromassante", detail: "activée aux heures les plus chaudes, pour se rafraîchir" },
-      { label: "Jardin clôturé", detail: "dans les appartements Gemelli et Sagittario" },
-      { label: "Aire de jeux et sport", detail: "balançoires, toboggans, terrain de foot à cinq en gazon naturel, ping-pong ; lit bébé (10€/séjour) et chaise haute sur demande" },
+      { label: "Jardin privé", detail: "dans les appartements Gemelli et Sagittario" },
+      { label: "Aire de jeux et sport", detail: "balançoires, toboggans, terrain de foot à cinq en gazon naturel, ping-pong ; lit bébé sur demande (15 € par séjour)" },
     ],
   },
   de: {
@@ -58,8 +58,8 @@ const TEXT: Record<
     facts: [
       { label: "Panorama-Pool", detail: "6×12 Meter, geöffnet vom 1. Mai bis 28. September, 9–19 Uhr" },
       { label: "Hydromassage-Brunnen", detail: "wird in den heißesten Stunden zur Abkühlung eingeschaltet" },
-      { label: "Eingezäunter Garten", detail: "in den Apartments Gemelli und Sagittario" },
-      { label: "Spielplatz und Sport", detail: "Schaukeln, Rutschen, Fünf-gegen-fünf-Feld aus Naturrasen, Tischtennis; Babybett (10€/Aufenthalt) und Hochstuhl auf Anfrage" },
+      { label: "Privater Garten", detail: "in den Apartments Gemelli und Sagittario" },
+      { label: "Spielplatz und Sport", detail: "Schaukeln, Rutschen, Fünf-gegen-fünf-Feld aus Naturrasen, Tischtennis; Babybett auf Anfrage (15 € pro Aufenthalt)" },
     ],
   },
 };

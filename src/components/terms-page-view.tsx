@@ -73,7 +73,7 @@ function buildSections(locale: Locale): LegalSection[] {
         heading: "5. Animali al seguito",
         body: (
           <p>
-            Gli appartamenti Gemelli e Sagittario, entrambi con giardino privato recintato, accettano animali al costo di 25€ a
+            Gli appartamenti Gemelli e Sagittario, entrambi con giardino privato, accettano animali al costo di 25€ a
             soggiorno (guinzaglio obbligatorio negli spazi comuni). Negli appartamenti Pesci, Acquario e Bilancia sono ammessi solo
             animali di piccola taglia, previo accordo diretto con noi, allo stesso costo.
           </p>
@@ -174,7 +174,7 @@ function buildSections(locale: Locale): LegalSection[] {
         heading: "5. Pets",
         body: (
           <p>
-            The Gemelli and Sagittario apartments, both with a private fenced garden, accept pets for €25 per stay (leash required in
+            The Gemelli and Sagittario apartments, both with a private garden, accept pets for €25 per stay (leash required in
             common areas). In the Pesci, Acquario, and Bilancia apartments, only small pets are allowed, subject to direct agreement
             with us, at the same cost.
           </p>
@@ -275,7 +275,7 @@ function buildSections(locale: Locale): LegalSection[] {
         heading: "5. Animaux",
         body: (
           <p>
-            Les appartements Gemelli et Sagittario, tous deux avec jardin privé clôturé, acceptent les animaux pour 25€ par séjour
+            Les appartements Gemelli et Sagittario, tous deux avec jardin privé, acceptent les animaux pour 25€ par séjour
             (laisse obligatoire dans les espaces communs). Dans les appartements Pesci, Acquario et Bilancia, seuls les petits animaux
             sont admis, sous réserve d’accord direct avec nous, au même tarif.
           </p>
@@ -376,7 +376,7 @@ function buildSections(locale: Locale): LegalSection[] {
         heading: "5. Haustiere",
         body: (
           <p>
-            Die Apartments Gemelli und Sagittario, beide mit eigenem eingezäuntem Garten, akzeptieren Haustiere für 25€ pro Aufenthalt
+            Die Apartments Gemelli und Sagittario, beide mit eigenem Garten, akzeptieren Haustiere für 25€ pro Aufenthalt
             (Leinenpflicht in Gemeinschaftsbereichen). In den Apartments Pesci, Acquario und Bilancia sind nur kleine Haustiere erlaubt,
             nach direkter Absprache mit uns, zu denselben Kosten.
           </p>

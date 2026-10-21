@@ -246,6 +246,8 @@ const NAV_LABEL: Record<string, keyof (typeof dict)["nav"]> = {
   "/territorio/": "territorio",
   "/agriturismo-con-colazione-inclusa-assisi/": "colazioneBio",
   "/ristorante-convenzionato/": "ristoranteConvenzionato",
+  "/vacanza-con-animali/": "vacanzaAnimali",
+  "/vacanza-in-famiglia/": "vacanzaFamiglia",
   "/offerte/": "offerte",
   "/offerte/offerte-in-corso/": "offerteInCorso",
   "/offerte/cofanetti-regalo/": "cofanettiRegalo",

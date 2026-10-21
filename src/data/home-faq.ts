@@ -17,7 +17,7 @@ export const HOME_FAQ: Record<Locale, { label: string; heading: string; items: F
       },
       {
         question: "Si possono portare animali?",
-        answer: "Sì, negli appartamenti Gemelli e Sagittario, che hanno un giardino privato recintato: il supplemento è di 25 € a soggiorno e nella struttura gli animali vanno tenuti al guinzaglio. Negli altri appartamenti sono ammessi solo animali di piccola taglia, previo accordo con il proprietario, sempre a 25 € a soggiorno.",
+        answer: "Sì, negli appartamenti Gemelli e Sagittario, che hanno un giardino privato: il supplemento è di 25 € a soggiorno e nella struttura gli animali vanno tenuti al guinzaglio. Negli altri appartamenti sono ammessi solo animali di piccola taglia, previo accordo con il proprietario, sempre a 25 € a soggiorno.",
       },
       {
         question: "La colazione è inclusa?",
@@ -51,7 +51,7 @@ export const HOME_FAQ: Record<Locale, { label: string; heading: string; items: F
       },
       {
         question: "Can I bring my pet?",
-        answer: "Yes, in the Gemelli and Sagittario apartments, which have a private fenced garden: the supplement is €25 per stay and pets must be kept on a lead on the property. The other apartments accept small pets only, by prior agreement with the owner, also at €25 per stay.",
+        answer: "Yes, in the Gemelli and Sagittario apartments, which have a private garden: the supplement is €25 per stay and pets must be kept on a lead on the property. The other apartments accept small pets only, by prior agreement with the owner, also at €25 per stay.",
       },
       {
         question: "Is breakfast included?",
@@ -85,7 +85,7 @@ export const HOME_FAQ: Record<Locale, { label: string; heading: string; items: F
       },
       {
         question: "Peut-on venir avec un animal ?",
-        answer: "Oui, dans les appartements Gemelli et Sagittario, qui ont un jardin privé clôturé : le supplément est de 25 € par séjour et, dans la structure, les animaux doivent être tenus en laisse. Les autres appartements acceptent uniquement les animaux de petite taille, après accord avec le propriétaire, également à 25 € par séjour.",
+        answer: "Oui, dans les appartements Gemelli et Sagittario, qui ont un jardin privé : le supplément est de 25 € par séjour et, dans la structure, les animaux doivent être tenus en laisse. Les autres appartements acceptent uniquement les animaux de petite taille, après accord avec le propriétaire, également à 25 € par séjour.",
       },
       {
         question: "Le petit-déjeuner est-il inclus ?",
@@ -119,7 +119,7 @@ export const HOME_FAQ: Record<Locale, { label: string; heading: string; items: F
       },
       {
         question: "Sind Haustiere erlaubt?",
-        answer: "Ja, in den Apartments Gemelli und Sagittario mit privatem, eingezäuntem Garten: Der Aufpreis beträgt 25 € pro Aufenthalt, und auf dem Gelände sind Tiere an der Leine zu führen. In den übrigen Apartments sind nur kleine Haustiere nach vorheriger Absprache mit dem Eigentümer erlaubt, ebenfalls für 25 € pro Aufenthalt.",
+        answer: "Ja, in den Apartments Gemelli und Sagittario mit privatem Garten: Der Aufpreis beträgt 25 € pro Aufenthalt, und auf dem Gelände sind Tiere an der Leine zu führen. In den übrigen Apartments sind nur kleine Haustiere nach vorheriger Absprache mit dem Eigentümer erlaubt, ebenfalls für 25 € pro Aufenthalt.",
       },
       {
         question: "Ist das Frühstück inbegriffen?",

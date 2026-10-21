@@ -51,8 +51,14 @@ export type ContentBlock =
 
 export const BOOKING_MODAL_HREF = "#prenota";
 
+/* Temi per le pagine hub: "pets" → /vacanza-con-animali/, "family" →
+   /vacanza-in-famiglia/, che elencano da sole gli articoli del loro tema.
+   Solo dove l'articolo parla davvero di quel tema. */
+export type BlogTopic = "pets" | "family";
+
 export type BlogPost = {
   slug: string;
+  topics?: BlogTopic[];
   category: string;
   title: string;
   excerpt: string;
@@ -136,6 +142,7 @@ const EUROCHOCOLATE_OFFICIAL_URL = "https://www.eurochocolate.com/perugia2026/";
 const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
   it: {
     slug: "eurochocolate-2026-dove-dormire",
+    topics: ["family"],
     category: "Eventi",
     title: "Eurochocolate 2026: dormi in agriturismo vicino a Perugia",
     excerpt: "Date, programma e consigli pratici per Eurochocolate 2026 (Perugia, 13–22 novembre) e un -10% per chi soggiorna ad Agriturismo La Mora, a 21 km dal centro.",
@@ -277,7 +284,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "p",
-        text: "Dalla stessa base, la Basilica di San Francesco ad Assisi è a 7,5 km, circa 18 minuti in auto: un weekend a Eurochocolate si abbina facilmente a una giornata ad Assisi. Gemelli e Sagittario, con giardino privato recintato, accolgono anche chi viaggia con animali.",
+        text: "Dalla stessa base, la Basilica di San Francesco ad Assisi è a 7,5 km, circa 18 minuti in auto: un weekend a Eurochocolate si abbina facilmente a una giornata ad Assisi. Gemelli e Sagittario, con giardino privato, accolgono anche chi viaggia con animali.",
       },
       { type: "p", text: "Per chi arriva con i bambini, magari reduci dal Fate Lab, nel giardino c'è un parco giochi con scivolo e giostrina." },
       {
@@ -312,6 +319,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
   },
   en: {
     slug: "eurochocolate-2026-dove-dormire",
+    topics: ["family"],
     category: "Events",
     title: "Eurochocolate 2026: stay at an agriturismo near Perugia",
     excerpt: "Dates, programme and practical tips for Eurochocolate 2026 (Perugia, 13–22 November), plus 10% off at Agriturismo La Mora, 21 km from the centre.",
@@ -453,7 +461,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "p",
-        text: "From the same base, the Basilica of San Francesco in Assisi is 7.5 km away, about 18 minutes by car: a Eurochocolate weekend pairs easily with a day in Assisi. Gemelli and Sagittario, with a private fenced garden, also welcome guests travelling with pets.",
+        text: "From the same base, the Basilica of San Francesco in Assisi is 7.5 km away, about 18 minutes by car: a Eurochocolate weekend pairs easily with a day in Assisi. Gemelli and Sagittario, with a private garden, also welcome guests travelling with pets.",
       },
       { type: "p", text: "If you're travelling with children, perhaps fresh from the Fate Lab, there's a playground with a slide and a small roundabout in the garden." },
       {
@@ -488,6 +496,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
   },
   fr: {
     slug: "eurochocolate-2026-dove-dormire",
+    topics: ["family"],
     category: "Événements",
     title: "Eurochocolate 2026 : dormir en agritourisme près de Pérouse",
     excerpt: "Dates, programme et conseils pratiques pour Eurochocolate 2026 (Pérouse, 13–22 novembre), et -10 % pour un séjour à l'Agriturismo La Mora, à 21 km du centre.",
@@ -629,7 +638,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "p",
-        text: "Depuis la même base, la basilique Saint-François d'Assise est à 7,5 km, environ 18 minutes en voiture : un week-end à Eurochocolate se combine facilement avec une journée à Assise. Gemelli et Sagittario, avec jardin privé clôturé, accueillent aussi les voyageurs avec leurs animaux.",
+        text: "Depuis la même base, la basilique Saint-François d'Assise est à 7,5 km, environ 18 minutes en voiture : un week-end à Eurochocolate se combine facilement avec une journée à Assise. Gemelli et Sagittario, avec jardin privé, accueillent aussi les voyageurs avec leurs animaux.",
       },
       { type: "p", text: "Pour ceux qui voyagent avec des enfants, peut-être tout juste sortis du Fate Lab, le jardin a une aire de jeux avec toboggan et petit manège." },
       {
@@ -664,6 +673,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
   },
   de: {
     slug: "eurochocolate-2026-dove-dormire",
+    topics: ["family"],
     category: "Veranstaltungen",
     title: "Eurochocolate 2026: im Agriturismo bei Perugia übernachten",
     excerpt: "Termine, Programm und praktische Tipps zur Eurochocolate 2026 (Perugia, 13.–22. November) – dazu 10 % Rabatt im Agriturismo La Mora, 21 km vom Zentrum.",
@@ -805,7 +815,7 @@ const EUROCHOCOLATE_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "p",
-        text: "Vom selben Ausgangspunkt ist die Basilika San Francesco in Assisi 7,5 km entfernt, rund 18 Minuten mit dem Auto: Ein Eurochocolate-Wochenende lässt sich leicht mit einem Tag in Assisi verbinden. Gemelli und Sagittario mit privatem, eingezäuntem Garten nehmen auch Gäste mit Haustieren auf.",
+        text: "Vom selben Ausgangspunkt ist die Basilika San Francesco in Assisi 7,5 km entfernt, rund 18 Minuten mit dem Auto: Ein Eurochocolate-Wochenende lässt sich leicht mit einem Tag in Assisi verbinden. Gemelli und Sagittario mit privatem Garten nehmen auch Gäste mit Haustieren auf.",
       },
       { type: "p", text: "Für Familien mit Kindern, vielleicht frisch aus dem Fate Lab, gibt es im Garten einen Spielplatz mit Rutsche und kleinem Karussell." },
       {
@@ -1017,7 +1027,7 @@ const CARLO_ACUTIS_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "p",
-        text: "Per i gruppi più numerosi l'appartamento Bilancia ospita fino a 8 persone; Gemelli e Sagittario, con giardino privato recintato, accolgono anche chi viaggia con animali.",
+        text: "Per i gruppi più numerosi l'appartamento Bilancia ospita fino a 8 persone; Gemelli e Sagittario, con giardino privato, accolgono anche chi viaggia con animali.",
       },
       {
         type: "links",
@@ -1192,7 +1202,7 @@ const CARLO_ACUTIS_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "p",
-        text: "For larger groups, the Bilancia apartment sleeps up to 8; Gemelli and Sagittario, with a private fenced garden, also welcome guests travelling with pets.",
+        text: "For larger groups, the Bilancia apartment sleeps up to 8; Gemelli and Sagittario, with a private garden, also welcome guests travelling with pets.",
       },
       {
         type: "links",
@@ -1367,7 +1377,7 @@ const CARLO_ACUTIS_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "p",
-        text: "Pour les groupes plus nombreux, l'appartement Bilancia accueille jusqu'à 8 personnes ; Gemelli et Sagittario, avec jardin privé clôturé, accueillent aussi les voyageurs avec leurs animaux.",
+        text: "Pour les groupes plus nombreux, l'appartement Bilancia accueille jusqu'à 8 personnes ; Gemelli et Sagittario, avec jardin privé, accueillent aussi les voyageurs avec leurs animaux.",
       },
       {
         type: "links",
@@ -1542,7 +1552,7 @@ const CARLO_ACUTIS_POST: Record<Locale, BlogPost> = {
       },
       {
         type: "p",
-        text: "Für größere Gruppen bietet die Ferienwohnung Bilancia Platz für bis zu 8 Personen; Gemelli und Sagittario mit privatem, eingezäuntem Garten nehmen auch Gäste mit Haustieren auf.",
+        text: "Für größere Gruppen bietet die Ferienwohnung Bilancia Platz für bis zu 8 Personen; Gemelli und Sagittario mit privatem Garten nehmen auch Gäste mit Haustieren auf.",
       },
       {
         type: "links",
@@ -1583,6 +1593,7 @@ const VISIT_ASSISI_URL = "https://www.visit-assisi.it/";
 const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
   it: {
     slug: "mercatini-di-natale-umbria",
+    topics: ["family"],
     category: "Eventi",
     title: "Mercatini di Natale in Umbria: Perugia, Gubbio e il Trasimeno",
     excerpt: "Mercatini e luci di Natale in Umbria: Perugia, l'albero di Gubbio, l'albero sull'acqua del Trasimeno e il presepe vivente di Rasiglia, con date e distanze da Assisi.",
@@ -1703,6 +1714,7 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
   },
   en: {
     slug: "mercatini-di-natale-umbria",
+    topics: ["family"],
     category: "Events",
     title: "Christmas markets in Umbria: Perugia, Gubbio and Lake Trasimeno",
     excerpt: "Christmas markets and lights in Umbria: Perugia, the Gubbio tree, the tree drawn on Lake Trasimeno and the living nativity of Rasiglia, with dates and distances from Assisi.",
@@ -1823,6 +1835,7 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
   },
   fr: {
     slug: "mercatini-di-natale-umbria",
+    topics: ["family"],
     category: "Événements",
     title: "Marchés de Noël en Ombrie : Pérouse, Gubbio et le lac Trasimène",
     excerpt: "Marchés et lumières de Noël en Ombrie : Pérouse, le sapin de Gubbio, le sapin dessiné sur le lac Trasimène et la crèche vivante de Rasiglia, avec dates et distances depuis Assise.",
@@ -1943,6 +1956,7 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
   },
   de: {
     slug: "mercatini-di-natale-umbria",
+    topics: ["family"],
     category: "Veranstaltungen",
     title: "Weihnachtsmärkte in Umbrien: Perugia, Gubbio und der Trasimenische See",
     excerpt: "Weihnachtsmärkte und Lichter in Umbrien: Perugia, der Baum von Gubbio, der auf den Trasimenischen See gezeichnete Baum und die lebende Krippe von Rasiglia – mit Terminen und Entfernungen ab Assisi.",
@@ -2068,6 +2082,7 @@ const LUCI_TRASIMENO_URL = "https://www.lucisultrasimeno.it/";
 const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
   it: {
     slug: "albero-di-natale-lago-trasimeno",
+    topics: ["family"],
     category: "Eventi",
     title: "Albero di Natale sul lago Trasimeno: date, biglietti e come vederlo",
     excerpt: "A Castiglione del Lago un albero di Natale di luci lungo 1.080 metri disegnato sull'acqua del Trasimeno: date 2026/27, biglietti, da dove si vede e come arrivare da Assisi.",
@@ -2179,6 +2194,7 @@ const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
   },
   en: {
     slug: "albero-di-natale-lago-trasimeno",
+    topics: ["family"],
     category: "Events",
     title: "Christmas tree on Lake Trasimeno: dates, tickets and how to see it",
     excerpt: "At Castiglione del Lago, a Christmas tree of lights 1,080 metres long drawn on the water of Lake Trasimeno: 2026/27 dates, tickets, where to see it from and how to get there from Assisi.",
@@ -2290,6 +2306,7 @@ const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
   },
   fr: {
     slug: "albero-di-natale-lago-trasimeno",
+    topics: ["family"],
     category: "Événements",
     title: "Sapin de Noël sur le lac Trasimène : dates, billets et où le voir",
     excerpt: "À Castiglione del Lago, un sapin de Noël de lumières long de 1 080 mètres dessiné sur l'eau du lac Trasimène : dates 2026/27, billets, d'où le voir et comment venir depuis Assise.",
@@ -2401,6 +2418,7 @@ const ALBERO_TRASIMENO_POST: Record<Locale, BlogPost> = {
   },
   de: {
     slug: "albero-di-natale-lago-trasimeno",
+    topics: ["family"],
     category: "Veranstaltungen",
     title: "Weihnachtsbaum auf dem Trasimenischen See: Termine, Tickets und Aussicht",
     excerpt: "In Castiglione del Lago ein 1.080 Meter langer Weihnachtsbaum aus Lichtern auf dem Wasser des Trasimenischen Sees: Termine 2026/27, Tickets, von wo man ihn sieht und Anreise ab Assisi.",
@@ -5118,6 +5136,10 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
 
 export function getBlogPosts(locale: Locale): BlogPost[] {
   return BLOG_POSTS_BY_LOCALE[locale];
+}
+
+export function getBlogPostsByTopic(locale: Locale, topic: BlogTopic): BlogPost[] {
+  return BLOG_POSTS_BY_LOCALE[locale].filter((p) => p.topics?.includes(topic));
 }
 
 export function getBlogPost(locale: Locale, slug: string): BlogPost | undefined {

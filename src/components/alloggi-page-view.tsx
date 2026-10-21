@@ -34,7 +34,7 @@ const TEXT: Record<
   it: {
     label: "I nostri appartamenti",
     heading: "Cinque appartamenti indipendenti, ognuno con la sua storia.",
-    intro: "Da due a otto ospiti, tutti con cucina attrezzata e bagno privato. Due — Gemelli e Sagittario — hanno un giardino recintato tutto loro e accettano animali.",
+    intro: "Da due a otto ospiti, tutti con cucina attrezzata e bagno privato. Due — Gemelli e Sagittario — hanno un giardino privato tutto loro e accettano animali.",
     pool: ["Per tutti gli ospiti c'è la ","piscina dell'agriturismo",", aperta dal 1° maggio al 28 settembre."],
     petFriendly: "Pet friendly",
     upTo: "Fino a",
@@ -45,7 +45,7 @@ const TEXT: Record<
   en: {
     label: "Our apartments",
     heading: "Five independent apartments, each with its own story.",
-    intro: "From two to eight guests, all with an equipped kitchen and private bathroom. Two — Gemelli and Sagittario — have their own fenced garden and accept pets.",
+    intro: "From two to eight guests, all with an equipped kitchen and private bathroom. Two — Gemelli and Sagittario — have their own private garden and accept pets.",
     pool: ["All guests can use the ","agriturismo's swimming pool",", open from 1 May to 28 September."],
     petFriendly: "Pet friendly",
     upTo: "Up to",
@@ -56,7 +56,7 @@ const TEXT: Record<
   fr: {
     label: "Nos appartements",
     heading: "Cinq appartements indépendants, chacun avec sa propre histoire.",
-    intro: "De deux à huit personnes, tous avec cuisine équipée et salle de bain privée. Deux — Gemelli et Sagittario — ont leur propre jardin clôturé et acceptent les animaux.",
+    intro: "De deux à huit personnes, tous avec cuisine équipée et salle de bain privée. Deux — Gemelli et Sagittario — ont leur propre jardin privé et acceptent les animaux.",
     pool: ["Tous les hôtes profitent de la ","piscine de l'agritourisme",", ouverte du 1er mai au 28 septembre."],
     petFriendly: "Animaux acceptés",
     upTo: "Jusqu'à",
@@ -67,7 +67,7 @@ const TEXT: Record<
   de: {
     label: "Unsere Apartments",
     heading: "Fünf unabhängige Apartments, jedes mit seiner eigenen Geschichte.",
-    intro: "Für zwei bis acht Gäste, alle mit ausgestatteter Küche und eigenem Bad. Zwei — Gemelli und Sagittario — haben einen eigenen eingezäunten Garten und akzeptieren Haustiere.",
+    intro: "Für zwei bis acht Gäste, alle mit ausgestatteter Küche und eigenem Bad. Zwei — Gemelli und Sagittario — haben einen eigenen privaten Garten und akzeptieren Haustiere.",
     pool: ["Allen Gästen steht der ","Pool des Agriturismo"," zur Verfügung, geöffnet vom 1. Mai bis 28. September."],
     petFriendly: "Haustierfreundlich",
     upTo: "Bis zu",
