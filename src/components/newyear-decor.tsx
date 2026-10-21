@@ -53,7 +53,7 @@ export function StarField({ className, twinkle = false }: { className: string; t
   );
 }
 
-/* Fuochi statici (solo con prefers-reduced-motion, al posto del canvas):
+/* Fuochi statici (solo con "Pausa animazioni", al posto del canvas):
    raggi e scintille in oro e champagne nella parte alta della sezione. */
 const BURSTS = [
   { cx: 230, cy: 120, r: 78, color: "#e3c278" },

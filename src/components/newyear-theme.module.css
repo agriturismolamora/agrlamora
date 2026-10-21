@@ -10,8 +10,9 @@
    Il testo non sta mai sopra un'animazione: i fuochi (canvas, vedi
    fireworks.tsx) e le stelle che brillano sono solo nell'hero (sopra il
    titolo, con maschera) e nel finale, dove il contenuto è in card opache.
-   Con prefers-reduced-motion niente canvas né scintillio: stelle ferme e
-   un'illustrazione statica dei fuochi. */
+   Con prefers-reduced-motion stelle ferme e fuochi in modalità "morbida"
+   (lenti, piccoli, senza lampi); con "Pausa animazioni" tutto fermo e
+   un'illustrazione statica dei fuochi al posto dei canvas. */
 
 .root {
   --notte: #0b1030;
@@ -121,8 +122,8 @@
   height: 100%;
 }
 
-/* Illustrazione statica dei fuochi: visibile solo con
-   prefers-reduced-motion, al posto del canvas. */
+/* Illustrazione statica dei fuochi: visibile solo con "Pausa animazioni",
+   al posto del canvas. */
 .staticBursts {
   position: absolute;
   inset: 0;
@@ -277,18 +278,102 @@
   box-shadow: inset 0 0 0 1px var(--oro);
 }
 
+/* Interruttori "Suono" e "Pausa animazioni" (aria-pressed): stessa forma
+   del pulsante dei fuochi, più sobri; premuti = fondo oro tenue. */
+.fxToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: rgba(11, 16, 48, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(246, 238, 219, 0.35);
+  color: var(--avorio);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fxToggle[aria-pressed="true"] {
+  background: rgba(227, 194, 120, 0.2);
+  box-shadow: inset 0 0 0 1px var(--oro);
+  color: var(--champagne);
+}
+
+.fxToggle:hover,
+.fxToggle:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--oro);
+}
+
+/* Invito "Tocca per i fuochi con il suono": pillola OPACA in cima al cielo
+   dell'hero (il testo non sta mai sopra l'animazione), chiudibile. */
+.invite {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  border-radius: 999px;
+  background: var(--notte);
+  box-shadow:
+    inset 0 0 0 1px rgba(227, 194, 120, 0.55),
+    0 12px 30px -14px rgba(0, 0, 0, 0.7);
+}
+
+.inviteButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  min-width: 0;
+  padding: 8px 4px 8px 16px;
+  color: var(--champagne);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-align: left;
+}
+
+.inviteClose {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  color: var(--avorio);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.inviteButton:hover,
+.inviteButton:focus-visible,
+.inviteClose:hover,
+.inviteClose:focus-visible {
+  color: #fff;
+}
+
+/* Con prefers-reduced-motion le stelle restano ferme; i fuochi restano, in
+   modalità "morbida" (fireworks.tsx). */
 @media (prefers-reduced-motion: reduce) {
   .star {
     animation: none !important;
   }
+}
 
-  .heroCanvas,
-  .finaleCanvas,
-  .fireButton {
-    display: none;
-  }
+/* "Pausa animazioni" (attributo su <html>, fireworks.tsx): stelle ferme,
+   canvas nascosti, al loro posto l'illustrazione statica dei fuochi. */
+:global(html[data-fx-paused]) .star {
+  animation-play-state: paused !important;
+}
 
-  .staticBursts {
-    display: block;
-  }
+:global(html[data-fx-paused]) .heroCanvas,
+:global(html[data-fx-paused]) .finaleCanvas {
+  visibility: hidden;
+}
+
+:global(html[data-fx-paused]) .staticBursts {
+  display: block;
 }

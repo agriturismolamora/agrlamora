@@ -19,7 +19,7 @@ import { ChocolateDrip, CocoaParticles } from "@/components/chocolate-decor";
 import choco from "@/components/chocolate-theme.module.css";
 import ny from "@/components/newyear-theme.module.css";
 import { StarField, StaticFireworks, NightHorizon } from "@/components/newyear-decor";
-import { FireworksCanvas, FireworksButton } from "@/components/fireworks";
+import { FireworksCanvas, FireworksControls, FireworksIntro } from "@/components/fireworks";
 import { NewYearCountdown } from "@/components/newyear-countdown";
 import type { BlogPost, BlogTheme } from "@/data/blog-posts";
 import { pageMetadata } from "@/lib/seo";
@@ -66,34 +66,26 @@ export async function blogArticleMetadata(locale: Locale, params: Promise<Params
   });
 }
 
-const TEXT: Record<Locale, { allArticles: string; otherArticles: string; placesMentioned: string; fireworks: string; fireworksLabel: string }> = {
+const TEXT: Record<Locale, { allArticles: string; otherArticles: string; placesMentioned: string }> = {
   it: {
     allArticles: "Tutti gli articoli",
     otherArticles: "Altri articoli",
     placesMentioned: "Luoghi citati nell'articolo",
-    fireworks: "Fai partire i fuochi",
-    fireworksLabel: "Fai partire i fuochi: animazione senza audio",
   },
   en: {
     allArticles: "All articles",
     otherArticles: "More articles",
     placesMentioned: "Places mentioned in this article",
-    fireworks: "Launch the fireworks",
-    fireworksLabel: "Launch the fireworks: silent animation",
   },
   fr: {
     allArticles: "Tous les articles",
     otherArticles: "Autres articles",
     placesMentioned: "Lieux cités dans l'article",
-    fireworks: "Lancer le feu d'artifice",
-    fireworksLabel: "Lancer le feu d'artifice : animation sans son",
   },
   de: {
     allArticles: "Alle Artikel",
     otherArticles: "Weitere Artikel",
     placesMentioned: "Im Artikel erwähnte Orte",
-    fireworks: "Feuerwerk starten",
-    fireworksLabel: "Feuerwerk starten: Animation ohne Ton",
   },
 };
 
@@ -608,6 +600,8 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
             <StaticFireworks />
           </div>
         )}
+        {/* Invito al suono in cima al cielo (pillola opaca, dopo il mount). */}
+        {isNight && <FireworksIntro locale={locale} className="absolute inset-x-0 top-[120px] z-[2] flex justify-center px-6 sm:top-[142px]" />}
         {post.imageCredit && (
           <PhotoCreditLine
             credit={post.imageCredit}
@@ -634,7 +628,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
           <h1 className="mt-3 font-display text-[clamp(28px,4.4vw,44px)] font-normal leading-[1.15] text-cream [text-wrap:balance]">
             {post.title}
           </h1>
-          {isNight && <FireworksButton target="hero" label={text.fireworks} ariaLabel={text.fireworksLabel} className={`${ny.fireButton} mt-6`} />}
+          {isNight && <FireworksControls target="hero" locale={locale} className="mt-6" />}
         </div>
       </section>
 
@@ -684,9 +678,7 @@ export async function BlogArticlePageView({ locale, params }: { locale: Locale; 
             <StaticFireworks />
             <div className="relative mx-auto max-w-[680px] px-6 pb-14 pt-36 sm:px-10 sm:pb-20 sm:pt-52">
               {finalCta}
-              <div className="flex justify-center">
-                <FireworksButton target="finale" label={text.fireworks} ariaLabel={text.fireworksLabel} className={ny.fireButton} />
-              </div>
+              <FireworksControls target="finale" locale={locale} className="justify-center" />
             </div>
           </section>
         </>
