@@ -52,7 +52,9 @@ export function RootShell({ locale, children }: { locale: Locale; children: Reac
         <main id="main" tabIndex={-1}>
           {children}
         </main>
-        <SiteFooter locale={locale} />
+        {/* Anno del ©: quello della build nell'HTML statico (stesso valore
+            al server e all'hydration), poi l'anno del browser (site-footer). */}
+        <SiteFooter locale={locale} buildYear={new Date().getFullYear()} />
         {/* Widget di prenotazione persistente: fixed, indipendente dal flusso
             della pagina, resta visibile dalla hero fino in fondo (si dissolve
             in prossimità del footer, vedi booking-bar.tsx). Globale: presente

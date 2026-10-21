@@ -11,6 +11,7 @@ import { CONSENT_TEXT } from "@/data/consent-text";
 import { openCookiePreferences } from "@/lib/consent";
 import { RecensioniBadge } from "@/components/recensioni-badge";
 import { VillaLogoLink } from "@/components/villa-logo-link";
+import { useNow } from "@/hooks/use-now";
 
 const ADDRESS = "Via Fonte Citerna, 7 — 06081 Assisi (PG)";
 const MAPS_URL =
@@ -120,7 +121,7 @@ const CONTACT = "flex items-start gap-3 text-cream/80 transition-colors hover:te
    pannello del banner (vedi cookie-consent-manager.tsx) tramite un evento
    globale. "Torna su": qui dentro perché il pulsante fisso si dissolve
    vicino al footer, come gli altri elementi fissi (back-to-top.tsx). */
-export function SiteFooter({ locale }: { locale: Locale }) {
+export function SiteFooter({ locale, buildYear }: { locale: Locale; buildYear: number }) {
   const nav = getNav(locale);
   const consentText = CONSENT_TEXT[locale];
   // Confine La Mora <-> Villa Relax: due account bed-and-breakfast.it
@@ -131,6 +132,12 @@ export function SiteFooter({ locale }: { locale: Locale }) {
   const pathname = usePathname();
   const { path: barePath } = splitLocaleFromPath(pathname ?? "/");
   const onVillaPage = barePath.startsWith("/villa-relax-assisi");
+  // Le pagine sono statiche: calcolare l'anno qui con new Date() durante il
+  // render darebbe un errore di hydration dal 1° gennaio fino al deploy
+  // successivo. Si parte dall'anno della build e si passa a quello del
+  // browser dopo il mount (useNow).
+  const now = useNow();
+  const year = now === null ? buildYear : new Date(now).getFullYear();
 
   function scrollToTop() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -240,7 +247,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             <button type="button" onClick={openCookiePreferences} className="underline decoration-cream/30 underline-offset-4 hover:text-cream/80">
               {consentText.footerLink}
             </button>
-            <span>© {new Date().getFullYear()} Agriturismo La Mora</span>
+            <span>© {year} Agriturismo La Mora</span>
             <button type="button" onClick={scrollToTop} className="inline-flex items-center gap-1.5 text-cream/70 transition-colors hover:text-cream">
               <ArrowUpIcon />
               {t("common", "tornaSu", locale)}
