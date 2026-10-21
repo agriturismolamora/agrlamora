@@ -6,8 +6,10 @@ import { t } from "@/lib/dictionary";
 import { BookingModalButton } from "@/components/booking-modal-button";
 import { HoverFill } from "@/components/hover-fill";
 import choco from "@/components/chocolate-theme.module.css";
+import ny from "@/components/newyear-theme.module.css";
 import { WHATSAPP_NUMBER } from "@/data/promo";
 import type { BlogCtaDistance } from "@/data/blog-ctas";
+import type { BlogTheme } from "@/data/blog-posts";
 
 /* CTA di prenotazione degli articoli del blog, in tre varianti:
    - "intro"    (A) dopo l'intro e "In breve": riga contestuale + Prenota
@@ -23,9 +25,10 @@ import type { BlogCtaDistance } from "@/data/blog-ctas";
    Server component: markup identico tra SSR e client (BookingModalButton è
    un pulsante normale), pulsanti con flex-wrap e altezza minima fissa, quindi
    niente layout shift né overflow su telefono. Tema "chocolate" solo per
-   l'articolo Eurochocolate. */
+   l'articolo Eurochocolate, "newyear" solo per quello di Capodanno: pannelli
+   opachi, quindi leggibili anche sopra il cielo con i fuochi. */
 
-type Theme = "default" | "chocolate";
+type Theme = BlogTheme;
 
 const UI: Record<
   Locale,
@@ -98,9 +101,9 @@ function Arrow() {
 }
 
 function BookButton({ label, tone, theme }: { label: string; tone: "gold" | "raspberry"; theme: Theme }) {
-  if (theme === "chocolate") {
+  if (theme !== "default") {
     return (
-      <BookingModalButton sheen="strong" className={`${choco.caramelCta} ${BTN}`}>
+      <BookingModalButton sheen="strong" className={`${theme === "chocolate" ? choco.caramelCta : ny.goldCta} ${BTN}`}>
         <span className="relative z-10 inline-flex items-center gap-2.5">
           {label}
           <Arrow />
@@ -138,12 +141,44 @@ function Box({ theme, variant, children }: { theme: Theme; variant: "light" | "p
       </div>
     );
   }
+  if (theme === "newyear") {
+    return <div className={`${ny.root} ${ny.panel} my-10 rounded-[10px] px-6 py-7 sm:px-8 sm:py-8`}>{children}</div>;
+  }
   return (
     <div className={`my-10 rounded-[6px] px-6 py-7 sm:px-8 sm:py-8 ${variant === "panel" ? "border border-ink/10 bg-cream-dim" : "bg-cream-dim"}`}>
       {children}
     </div>
   );
 }
+
+/* Colori di testo, spunte e link per tema (le variabili CSS vengono dal
+   .root del modulo del tema, applicato da Box). */
+const THEME_CLASSES: Record<Theme, { text: string; soft: string; kicker: string; ghost: string | null; check: string; offers: string }> = {
+  default: {
+    text: "text-ink",
+    soft: "text-ink-soft",
+    kicker: "text-olive-950",
+    ghost: null,
+    check: "bg-olive-950 text-cream",
+    offers: "text-raspberry decoration-raspberry/30 hover:decoration-raspberry",
+  },
+  chocolate: {
+    text: "text-[var(--crema)]",
+    soft: "text-[var(--crema)]/85",
+    kicker: "text-[var(--caramello-chiaro)]",
+    ghost: choco.ghost,
+    check: "bg-[var(--caramello)] text-[var(--cacao)]",
+    offers: "text-[var(--caramello-chiaro)] decoration-[var(--caramello-chiaro)]/40",
+  },
+  newyear: {
+    text: "text-[var(--avorio)]",
+    soft: "text-[var(--avorio)]/85",
+    kicker: "text-[var(--oro)]",
+    ghost: ny.ghost,
+    check: "bg-[var(--oro)] text-[var(--notte)]",
+    offers: "text-[var(--oro)] decoration-[var(--oro)]/40",
+  },
+};
 
 type Common = { locale: Locale; theme?: Theme };
 
@@ -156,13 +191,11 @@ export function BlogBookingCta(
   const { locale } = props;
   const theme = props.theme ?? "default";
   const ui = UI[locale];
-  const isChoco = theme === "chocolate";
-  const text = isChoco ? "text-[var(--crema)]" : "text-ink";
-  const soft = isChoco ? "text-[var(--crema)]/85" : "text-ink-soft";
-  const kicker = `text-[10px] font-semibold uppercase tracking-[0.18em] ${isChoco ? "text-[var(--caramello-chiaro)]" : "text-olive-950"}`;
-  const secondary = isChoco
-    ? `${choco.ghost} ${BTN}`
-    : `${BTN} border border-ink/20 text-ink transition-colors duration-200 hover:border-raspberry hover:text-raspberry`;
+  const c = THEME_CLASSES[theme];
+  const text = c.text;
+  const soft = c.soft;
+  const kicker = `text-[10px] font-semibold uppercase tracking-[0.18em] ${c.kicker}`;
+  const secondary = c.ghost ? `${c.ghost} ${BTN}` : `${BTN} border border-ink/20 text-ink transition-colors duration-200 hover:border-raspberry hover:text-raspberry`;
 
   if (props.variant === "intro") {
     return (
@@ -211,9 +244,7 @@ export function BlogBookingCta(
           <li key={b} className={`flex items-start gap-2.5 text-[14.5px] leading-[1.6] ${soft}`}>
             <span
               aria-hidden="true"
-              className={`mt-[3px] inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${
-                isChoco ? "bg-[var(--caramello)] text-[var(--cacao)]" : "bg-olive-950 text-cream"
-              }`}
+              className={`mt-[3px] inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${c.check}`}
             >
               ✓
             </span>
@@ -230,9 +261,7 @@ export function BlogBookingCta(
       </div>
       <Link
         href={withLocale(locale, "/offerte/")}
-        className={`mt-4 inline-block text-[13px] underline underline-offset-4 ${
-          isChoco ? "text-[var(--caramello-chiaro)] decoration-[var(--caramello-chiaro)]/40" : "text-raspberry decoration-raspberry/30 hover:decoration-raspberry"
-        }`}
+        className={`mt-4 inline-block text-[13px] underline underline-offset-4 ${c.offers}`}
       >
         {ui.offers} →
       </Link>

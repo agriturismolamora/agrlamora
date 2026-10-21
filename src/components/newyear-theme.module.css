@@ -1,0 +1,294 @@
+/* Tema "newyear": usato SOLO dall'articolo di Capodanno (theme: "newyear"
+   in blog-posts.ts). CSS module, quindi non entra nel CSS globale delle
+   altre pagine. Stessa struttura del tema cioccolato
+   (chocolate-theme.module.css): cambiano solo colori e decorazioni.
+
+   Palette notte / indaco / oro / champagne / avorio. Contrasti (WCAG AA):
+   avorio su notte ~15:1, oro su notte ~9:1, notte su oro ~9:1, testo
+   #3b3f5c su carta ~9:1, oro scuro su carta ~6,5:1.
+
+   Il testo non sta mai sopra un'animazione: i fuochi (canvas, vedi
+   fireworks.tsx) e le stelle che brillano sono solo nell'hero (sopra il
+   titolo, con maschera) e nel finale, dove il contenuto è in card opache.
+   Con prefers-reduced-motion niente canvas né scintillio: stelle ferme e
+   un'illustrazione statica dei fuochi. */
+
+.root {
+  --notte: #0b1030;
+  --notte-2: #141a45;
+  --indaco: #262c6b;
+  --oro: #e3c278;
+  --oro-scuro: #6e5212;
+  --champagne: #f1dfb4;
+  --avorio: #f6eedb;
+  --carta: #f8f3e8;
+}
+
+/* Cielo notturno sotto l'hero: intro, striscia La Mora, "In breve",
+   "Dormi a La Mora". Stelle ferme, nessuna animazione dietro al testo. */
+.night {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--notte);
+  background-image:
+    radial-gradient(110% 60% at 85% 0%, rgba(38, 44, 107, 0.75) 0%, rgba(38, 44, 107, 0) 65%),
+    radial-gradient(80% 50% at 10% 40%, rgba(227, 194, 120, 0.08) 0%, rgba(227, 194, 120, 0) 70%),
+    linear-gradient(180deg, var(--notte) 0%, var(--notte-2) 100%);
+  color: var(--avorio);
+}
+
+/* Corpo dell'articolo: carta avorio con una velatura indaco in alto,
+   dove arriva l'orizzonte delle colline. */
+.paper {
+  background-color: var(--carta);
+  background-image: linear-gradient(180deg, rgba(38, 44, 107, 0.07) 0%, rgba(38, 44, 107, 0) 260px);
+  color: #20233a;
+}
+
+/* Finale: il cielo dei fuochi intorno alla CTA di chiusura (card opaca). */
+.finale {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--notte);
+  background-image:
+    radial-gradient(90% 70% at 50% 100%, rgba(38, 44, 107, 0.9) 0%, rgba(38, 44, 107, 0) 70%),
+    linear-gradient(180deg, var(--notte-2) 0%, var(--notte) 100%);
+  color: var(--avorio);
+}
+
+/* Orizzonte di colline tra il cielo e il corpo: SVG a larghezza piena e
+   altezza fissa (niente layout shift), colore currentColor = notte. */
+.horizon {
+  display: block;
+  width: 100%;
+  height: 48px;
+  margin-top: -1px;
+  color: var(--notte-2);
+}
+
+@media (min-width: 640px) {
+  .horizon {
+    height: 72px;
+  }
+}
+
+/* Strati decorativi a tutta sezione (stelle, canvas, fuochi statici):
+   assoluti, aria-hidden, mai cliccabili. */
+.starLayer {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Stelle dell'hero: sopra la foto, solo nella parte alta (stessa maschera
+   del canvas), mai dietro al titolo. */
+.heroStars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 34%, transparent 54%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 34%, transparent 54%);
+}
+
+.star {
+  position: absolute;
+  border-radius: 999px;
+  background: var(--champagne);
+  box-shadow: 0 0 6px rgba(241, 223, 180, 0.65);
+}
+
+/* Canvas dei fuochi nell'hero: sfuma prima della zona del titolo, così
+   nessuna particella passa dietro al testo. */
+.heroCanvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 34%, transparent 54%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 34%, transparent 54%);
+}
+
+.finaleCanvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+
+/* Illustrazione statica dei fuochi: visibile solo con
+   prefers-reduced-motion, al posto del canvas. */
+.staticBursts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: none;
+}
+
+/* Fatti estraibili ("In breve", fatti pratici): card notte con
+   etichette oro, sia sul cielo sia sulla carta. */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+@media (min-width: 640px) {
+  .facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.fact {
+  border-radius: 8px;
+  padding: 16px 16px 18px;
+  background: linear-gradient(160deg, #1b2257 0%, var(--notte-2) 100%);
+  box-shadow: inset 0 0 0 1px rgba(227, 194, 120, 0.22);
+}
+
+.factLabel {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+
+.factValue {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-display), serif;
+  font-size: 19px;
+  line-height: 1.25;
+  color: var(--avorio);
+}
+
+/* Pannello opaco notte con filo oro: box "Dormi a La Mora", CTA, riquadro
+   del programma ufficiale. */
+.panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(227, 194, 120, 0.14) 0%, rgba(227, 194, 120, 0) 55%),
+    linear-gradient(160deg, #1b2257 0%, var(--notte-2) 60%, var(--notte) 100%);
+  color: var(--avorio);
+  box-shadow:
+    0 30px 70px -35px rgba(0, 0, 0, 0.75),
+    inset 0 0 0 1px rgba(227, 194, 120, 0.3);
+}
+
+/* CTA principale oro. Il riflesso è lo stile condiviso dei pulsanti di
+   prenotazione (.booking-sheen in globals.css, sheen="strong"). */
+.goldCta {
+  background: linear-gradient(180deg, #ecd394 0%, var(--oro) 100%);
+  color: var(--notte);
+  box-shadow: 0 10px 24px -12px rgba(227, 194, 120, 0.75);
+}
+
+.goldCta:hover,
+.goldCta:focus-visible {
+  background: linear-gradient(180deg, var(--champagne) 0%, #ecd394 100%);
+}
+
+.ghost {
+  border: 1px solid rgba(246, 238, 219, 0.45);
+  color: var(--avorio);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.ghost:hover,
+.ghost:focus-visible {
+  border-color: var(--avorio);
+  background-color: rgba(246, 238, 219, 0.08);
+}
+
+/* Elenchi puntati: piccola stella a quattro punte oro. */
+.sparkle {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin-top: 8px;
+  background: #b8912f;
+  clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%);
+}
+
+.faqItem {
+  border-radius: 8px;
+  border-left: 3px solid var(--oro);
+  background: rgba(255, 255, 255, 0.6);
+  padding: 18px 20px;
+}
+
+.link {
+  color: var(--oro-scuro);
+  text-decoration: underline;
+  text-decoration-color: rgba(110, 82, 18, 0.35);
+  text-underline-offset: 4px;
+}
+
+.link:hover {
+  color: var(--notte);
+}
+
+/* Pillola del conto alla rovescia e pulsante "Fai partire i fuochi". */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  border-radius: 999px;
+  padding: 4px 12px;
+  background: rgba(11, 16, 48, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(227, 194, 120, 0.45);
+  color: var(--champagne);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fireButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  border-radius: 999px;
+  padding: 8px 18px;
+  background: rgba(11, 16, 48, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(227, 194, 120, 0.55);
+  color: var(--champagne);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fireButton:hover,
+.fireButton:focus-visible {
+  background: rgba(38, 44, 107, 0.9);
+  box-shadow: inset 0 0 0 1px var(--oro);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star {
+    animation: none !important;
+  }
+
+  .heroCanvas,
+  .finaleCanvas,
+  .fireButton {
+    display: none;
+  }
+
+  .staticBursts {
+    display: block;
+  }
+}

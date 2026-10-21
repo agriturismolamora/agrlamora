@@ -19,6 +19,7 @@ import {
   type CreditedPhoto,
   type PhotoCredit,
 } from "@/data/photo-credits";
+import { CAPODANNO_LAST_CHECKED, CAPODANNO_SOURCES } from "@/data/capodanno";
 
 /* Contenuto editoriale del blog: non semplici paragrafi ma un piccolo
    sistema di blocchi (ContentBlock), per poter alternare titoli, immagini,
@@ -56,6 +57,10 @@ export const BOOKING_MODAL_HREF = "#prenota";
    Solo dove l'articolo parla davvero di quel tema. */
 export type BlogTopic = "pets" | "family";
 
+/* Tema grafico di un articolo, "default" se BlogPost.theme manca:
+   condiviso da pagina articolo, BrandStrip, StayBox e BlogBookingCta. */
+export type BlogTheme = "default" | "chocolate" | "newyear";
+
 export type BlogPost = {
   slug: string;
   topics?: BlogTopic[];
@@ -75,6 +80,9 @@ export type BlogPost = {
   /* Data reale di pubblicazione (YYYY-MM-DD), per il JSON-LD. Assente
      negli articoli più vecchi, di cui non si conosce una data affidabile. */
   datePublished?: string;
+  /* Ultimo aggiornamento sostanziale (YYYY-MM-DD), per il JSON-LD: negli
+     articoli su eventi che si ripetono ogni anno (es. Capodanno). */
+  dateModified?: string;
   schemaType?: "Article" | "BlogPosting";
   /* Blocco "In breve" iniziale: fatti estraibili (date, distanze, tempi).
      `promo`: riga che esiste solo per una promo a tempo, "Offerta conclusa"
@@ -82,6 +90,10 @@ export type BlogPost = {
   inBreve?: { heading: string; items: { label: string; value: string; promo?: PromoId }[] };
   /* Riquadro "Dormi a La Mora" dopo "In breve", al posto della CTA A. */
   stayBox?: StayBoxData;
+  /* Riquadro visibile dopo "In breve": per gli eventi il cui programma
+     dell'anno non è ancora uscito, rimanda alla fonte ufficiale e dice
+     quando abbiamo verificato le informazioni l'ultima volta. */
+  notice?: { heading: string; text: string; linkLabel: string; href: string; lastChecked: string };
   intro: string;
   /* introCtaHeading: riga della CTA A solo se l'articolo non ha testi in
      src/data/blog-ctas.ts; label/href non sono più mostrati (la CTA A ha
@@ -94,8 +106,9 @@ export type BlogPost = {
   faq?: { heading: string; items: { q: string; a: string }[] };
   /* Box offerta di src/data/promo.ts, mostrato in alto e in fondo. */
   offerBox?: PromoId;
-  /* Tema grafico dedicato: solo dove indicato esplicitamente. */
-  theme?: "chocolate";
+  /* Tema grafico dedicato: solo dove indicato esplicitamente
+     ("chocolate": Eurochocolate; "newyear": Capodanno). */
+  theme?: "chocolate" | "newyear";
   /* Nota legale in fondo all'articolo (es. marchi di terzi). */
   disclaimer?: string;
   /* finalCtaHeading: titolo della CTA C (chiusura). Body, label e href
@@ -1690,6 +1703,7 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
           { label: "Guida all'albero di Natale sul lago Trasimeno", href: "/blog/albero-di-natale-lago-trasimeno/" },
           { label: "Guida a Rasiglia, la piccola Venezia dell'Umbria", href: "/blog/rasiglia-piccola-venezia-umbria/" },
           { label: "Eurochocolate 2026 a Perugia", href: "/blog/eurochocolate-2026-dove-dormire/" },
+          { label: "Capodanno ad Assisi 2027: piazza, basiliche e presepi viventi", href: "/blog/capodanno-assisi-2027/" },
           { label: "Natale a Gubbio su italia.it", href: ITALIA_GUBBIO_URL },
           { label: "Umbria Tourism, portale ufficiale della Regione", href: UMBRIA_TOURISM_URL },
           { label: "Eventi ad Assisi su visit-assisi.it", href: VISIT_ASSISI_URL },
@@ -1811,6 +1825,7 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
           { label: "Guide to the Christmas tree on Lake Trasimeno", href: "/blog/albero-di-natale-lago-trasimeno/" },
           { label: "Guide to Rasiglia, the little Venice of Umbria", href: "/blog/rasiglia-piccola-venezia-umbria/" },
           { label: "Eurochocolate 2026 in Perugia", href: "/blog/eurochocolate-2026-dove-dormire/" },
+          { label: "New Year's Eve in Assisi 2027: the square, the basilicas and living nativity scenes", href: "/blog/capodanno-assisi-2027/" },
           { label: "Christmas in Gubbio on italia.it", href: ITALIA_GUBBIO_URL },
           { label: "Umbria Tourism, the region's official website", href: UMBRIA_TOURISM_URL },
           { label: "Events in Assisi on visit-assisi.it", href: VISIT_ASSISI_URL },
@@ -1932,6 +1947,7 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
           { label: "Guide du sapin de Noël sur le lac Trasimène", href: "/blog/albero-di-natale-lago-trasimeno/" },
           { label: "Guide de Rasiglia, la petite Venise de l'Ombrie", href: "/blog/rasiglia-piccola-venezia-umbria/" },
           { label: "Eurochocolate 2026 à Pérouse", href: "/blog/eurochocolate-2026-dove-dormire/" },
+          { label: "Nouvel An à Assise 2027 : la place, les basiliques et les crèches vivantes", href: "/blog/capodanno-assisi-2027/" },
           { label: "Noël à Gubbio sur italia.it", href: ITALIA_GUBBIO_URL },
           { label: "Umbria Tourism, site officiel de la région", href: UMBRIA_TOURISM_URL },
           { label: "Événements à Assise sur visit-assisi.it", href: VISIT_ASSISI_URL },
@@ -2053,6 +2069,7 @@ const NATALE_UMBRIA_POST: Record<Locale, BlogPost> = {
           { label: "Leitfaden zum Weihnachtsbaum auf dem Trasimenischen See", href: "/blog/albero-di-natale-lago-trasimeno/" },
           { label: "Leitfaden zu Rasiglia, dem kleinen Venedig Umbriens", href: "/blog/rasiglia-piccola-venezia-umbria/" },
           { label: "Eurochocolate 2026 in Perugia", href: "/blog/eurochocolate-2026-dove-dormire/" },
+          { label: "Silvester in Assisi 2027: Piazza, Basiliken und lebende Krippen", href: "/blog/capodanno-assisi-2027/" },
           { label: "Weihnachten in Gubbio auf italia.it", href: ITALIA_GUBBIO_URL },
           { label: "Umbria Tourism, offizielles Portal der Region", href: UMBRIA_TOURISM_URL },
           { label: "Veranstaltungen in Assisi auf visit-assisi.it", href: VISIT_ASSISI_URL },
@@ -3063,9 +3080,683 @@ const RASIGLIA_POST: Record<Locale, BlogPost> = {
   },
 };
 
+/* Capodanno ad Assisi 2027 (tema "newyear", src/data/capodanno.ts per date
+   del conto alla rovescia e fonti). Il programma 2026/27 non era ancora
+   pubblicato all'ultima verifica (21/10/2026): solo ciò che si è svolto
+   negli anni scorsi, sempre datato, con il riquadro che rimanda al Comune.
+   Fonti verificate il 21/10/2026:
+   - festa in Piazza del Comune 31/12/2025 (Antonio Ballarano Band, DJ set,
+     22:00–03:00), ordinanze anti-botti 2024 e 2025, modifiche alla
+     viabilità: visit-assisi.it, tuttoggi.info (30/12/2025), ladige.it;
+   - Te Deum ore 17 nella Basilica inferiore (2024, 2025) e veglia di
+     Capodanno ore 23 del Centro Francescano Giovani (2024):
+     sanfrancescoassisi.org, sanfrancescopatronoditalia.it, Vatican News;
+   - Porziuncola 31/12/2025 (18:00 giovani, 19:15 Vespri e Te Deum, 23:30
+     Messa di fine anno; 1/1/2026 Messa solenne 11:30): assisiofm.it;
+   - presepe vivente di Petrignano 2025/26 (43ª edizione, date e orari):
+     provincia.perugia.it; Armenzano (26/12, 1/1, 3/1, 16:30–19:00, torce):
+     provincia.perugia.it, edizione 2015, quindi "in passato";
+   - proiezioni luminose sulle facciate a Natale 2024 e 2025: Wanted in
+     Rome, Artribune, FamilyGo;
+   - Natale a Perugia 2025/26: già nell'articolo sui mercatini (Umbria
+     Tourism). Distanze: src/data/places.ts e blog-ctas.ts (Google Maps).
+   TOLTI perché non confermati: fuochi d'artificio sulla Rocca Maggiore (anzi,
+   negli ultimi anni i botti in centro sono vietati), radio locale al
+   concerto, concerti gospel (centro storico, Abbazia di San Pietro),
+   "cammini" dei giovani, riscaldamento autonomo (non nel brief). */
+const CAPODANNO_COVER = "/images/territorio/assisi/assisi con tramonto.jpg";
+
+const CAPODANNO_POST: Record<Locale, BlogPost> = {
+  it: {
+    slug: "capodanno-assisi-2027",
+    topics: ["pets", "family"],
+    category: "Eventi",
+    title: "Capodanno ad Assisi 2027: eventi in piazza, spiritualità e dove alloggiare in totale relax",
+    excerpt:
+      "La notte di San Silvestro ad Assisi tra la festa in Piazza del Comune, il Te Deum nelle basiliche e i presepi viventi dei primi giorni dell'anno, con una base tranquilla in campagna a 14 minuti dal centro.",
+    metaDescription:
+      "Capodanno 2027 ad Assisi: festa in Piazza del Comune, Te Deum e veglie nelle basiliche, presepi viventi. Dormi in agriturismo a 14 minuti dal centro.",
+    image: CAPODANNO_COVER,
+    alt: "La Basilica di San Francesco e il Sacro Convento di Assisi al tramonto, con le prime finestre illuminate",
+    imagePosition: "62% 50%",
+    datePublished: "2026-10-21",
+    dateModified: CAPODANNO_LAST_CHECKED,
+    schemaType: "BlogPosting",
+    theme: "newyear",
+    inBreve: {
+      heading: "In breve",
+      items: [
+        { label: "Quando", value: "31 dicembre 2026 – 2 gennaio 2027" },
+        { label: "Festa in piazza", value: "Piazza del Comune, la sera del 31" },
+        { label: "Te Deum", value: "Il 31 dicembre nelle basiliche" },
+        { label: "Botti in centro", value: "Vietati nel 2024 e nel 2025" },
+        { label: "Piazza del Comune", value: "6,8 km da La Mora · circa 14 min" },
+        { label: "Santa Maria degli Angeli", value: "2,1 km · circa 3 min" },
+      ],
+    },
+    notice: {
+      heading: "Il programma ufficiale di quest'anno",
+      text: "Il programma ufficiale di quest'anno viene pubblicato dal Comune: controlla le date aggiornate. In questa guida trovi ciò che si è svolto negli anni scorsi, sempre con l'anno indicato: artisti, orari e luoghi del Capodanno 2027 possono cambiare.",
+      linkLabel: "Eventi su visit-assisi.it, il portale turistico del Comune di Assisi",
+      href: CAPODANNO_SOURCES.visitAssisiEvents,
+      lastChecked: "Ultima verifica: 21 ottobre 2026",
+    },
+    stayBox: {
+      heading: "Dormi a La Mora, in campagna a 14 minuti dal centro di Assisi",
+      image: LAMORA_ESTERNO,
+      alt: "Esterno di Agriturismo La Mora: un vecchio carretto agricolo tra i fiori, davanti alla casa e a un grande olivo",
+      benefits: [
+        "5 appartamenti indipendenti con cucina, da 4 a 8 posti letto",
+        "Parcheggio gratuito: Piazza del Comune è a 6,8 km, circa 14 minuti",
+        "Animali ammessi in Gemelli e Sagittario (25 € a soggiorno), culla su richiesta (15 € a soggiorno)",
+      ],
+      cta: "Prenota il tuo Capodanno a La Mora",
+    },
+    intro:
+      "Ad Assisi le feste hanno una luce speciale: negli ultimi Natali le facciate di chiese e monumenti, dalla Basilica di San Francesco a Piazza del Comune, si sono accese di proiezioni luminose, e le vie medievali in pietra rosa diventano lo sfondo più bello per salutare l'anno. Dal 31 dicembre al 2 gennaio ti raccontiamo cosa si è fatto negli anni scorsi in piazza e nelle basiliche, e cosa vedere nei primi giorni del 2027. Agriturismo La Mora è a 6,8 km dal centro, circa 14 minuti in auto: la sera la festa, la mattina il risveglio nella quiete della campagna umbra.",
+    content: [
+      { type: "h2", text: "Com'è la notte di San Silvestro in Piazza del Comune?" },
+      {
+        type: "p",
+        text: "Negli ultimi anni la festa del 31 dicembre si è tenuta in Piazza del Comune, il cuore della città medievale, tra il Tempio di Minerva e la Torre del Popolo. Per salutare il 2026 il programma prevedeva musica dal vivo con la Antonio Ballarano Band e DJ set in apertura e in chiusura, dalle 22 alle 3 di notte. Il programma per il 2027 non è ancora uscito: artisti e orari possono cambiare.",
+      },
+      { type: "h3", text: "Niente botti in centro" },
+      {
+        type: "p",
+        text: "Sia nel 2024 sia nel 2025 il Comune ha vietato con un'ordinanza fuochi d'artificio, petardi e botti nel centro storico la notte di Capodanno: nel 2025 dalle 20 del 31 dicembre alle 8 del 1° gennaio, nelle aree intorno a Piazza del Comune, insieme al divieto di vendere bevande in vetro e lattine. Tra i motivi, la sicurezza del pubblico, la tutela del patrimonio e la tranquillità dei cittadini e degli animali. Per chi viaggia con bambini piccoli o con il cane è un dettaglio che conta.",
+      },
+      {
+        type: "p",
+        text: "Per la festa, nel 2025 la Polizia locale ha modificato la viabilità del centro storico, che è comunque in buona parte zona a traffico limitato (ZTL): conviene lasciare l'auto in uno dei parcheggi indicati dal Comune e salire a piedi. Da La Mora, Piazza del Comune è a 6,8 km, circa 14 minuti in auto secondo Google Maps.",
+      },
+      { type: "h2", text: "Un Capodanno diverso: il Te Deum e le veglie nelle basiliche" },
+      {
+        type: "p",
+        text: "Assisi è anche il luogo per chiudere l'anno in raccoglimento. Il 31 dicembre, nella Basilica inferiore di San Francesco, i frati del Sacro Convento celebrano la Messa di ringraziamento con il canto del Te Deum: nel 2024 e nel 2025 alle 17. Nel 2024, alle 23, la basilica ha ospitato anche la veglia di Capodanno del Centro Francescano Giovani.",
+      },
+      {
+        type: "image",
+        src: LAMORA_BASILICA,
+        alt: "La Basilica di San Francesco ad Assisi con il campanile e il loggiato della piazza inferiore",
+        caption: "La Basilica di San Francesco, dove il 31 dicembre si canta il Te Deum.",
+      },
+      {
+        type: "p",
+        text: "A Santa Maria degli Angeli, a 2,1 km da La Mora, la Basilica della Porziuncola ha il suo programma. Il 31 dicembre 2025 prevedeva alle 18 un incontro per i giovani, «Capodanno alla Porziuncola», alle 19:15 i primi Vespri con il Te Deum e alle 23:30 la Santa Messa di fine anno. Il 1° gennaio, solennità di Maria Madre di Dio e Giornata mondiale della pace, la Messa solenne era alle 11:30.",
+      },
+      {
+        type: "p",
+        text: "Gli orari cambiano di anno in anno: quelli del 2026 escono sui siti della Basilica di San Francesco e dei Frati Minori della Porziuncola, che trovi in fondo all'articolo.",
+      },
+      { type: "h2", text: "Cosa fare il 1° e il 2 gennaio intorno ad Assisi?" },
+      { type: "h3", text: "I presepi viventi" },
+      {
+        type: "p",
+        text: "A Petrignano di Assisi il presepe vivente, che gli organizzatori presentano come il più antico dell'Umbria, nell'edizione 2025/26 (la 43ª) era aperto anche il 1° gennaio, dalle 17:15 alle 19:30, oltre che il 25, il 26 e il 28 dicembre e il 4 gennaio, con la sfilata dell'Epifania il 6. Ad Armenzano, piccolo borgo di montagna del comune di Assisi, in passato il presepe vivente si è svolto il 26 dicembre, il 1° e il 3 gennaio, nel pomeriggio, con il borgo illuminato solo da torce e piccoli fuochi. Le date 2026/27 non sono ancora state pubblicate: verificale prima di partire.",
+      },
+      { type: "h3", text: "Perugia e Spello per una mezza giornata" },
+      {
+        type: "p",
+        text: "Perugia è a 21,0 km, circa 23 minuti: nell'edizione 2025/26 il Natale in città è durato fino al 6 gennaio, con luci e installazioni d'artista nel centro storico e i mercatini lungo corso Vannucci. Ne parliamo nella nostra guida ai mercatini di Natale in Umbria. Spello, a 15,1 km (circa 18 minuti), è un borgo in pietra rosa affacciato sulla valle, da girare a piedi senza fretta il primo giorno dell'anno.",
+      },
+      {
+        type: "p",
+        text: "Negli anni scorsi il programma di Natale ad Assisi ha incluso anche concerti: date e luoghi escono con il calendario ufficiale del Comune.",
+      },
+      { type: "h2", text: "Dove dormire a Capodanno vicino ad Assisi?" },
+      {
+        type: "p",
+        text: "Agriturismo La Mora è in via Fonte Citerna 7, nella campagna di Assisi: cinque appartamenti indipendenti con cucina attrezzata, da 4 a 8 posti letto, e parcheggio gratuito all'interno della struttura, lontano dalla ZTL del centro. Dopo la festa in piazza o la Messa di fine anno si torna in pochi minuti in un appartamento tutto per sé, e il 1° gennaio ci si sveglia nella campagna umbra.",
+      },
+      {
+        type: "p",
+        text: "In viaggio con i bambini? Il parco giochi è sempre libero, sotto la supervisione degli adulti, la culla è disponibile su richiesta (15 € a soggiorno) e per i più piccoli ci sono riduzioni per età: le trovi nella pagina Vacanza in famiglia. Con il cane? Gemelli e Sagittario, i due appartamenti pet friendly, al piano terra con giardino privato, lo accolgono con un supplemento di 25 € a soggiorno: tutti i dettagli nella pagina Vacanza con animali.",
+      },
+      {
+        type: "image",
+        src: LAMORA_SALOTTO_GEMELLI,
+        alt: "Soggiorno con angolo cottura dell'appartamento Gemelli di Agriturismo La Mora: divano, tavolo con tovaglia a quadri e finestra sul verde",
+        caption: "Il soggiorno con angolo cottura dell'appartamento Gemelli, uno dei due pet friendly.",
+      },
+      {
+        type: "links",
+        heading: "Organizza il tuo Capodanno ad Assisi",
+        items: [
+          { label: "Gli appartamenti di La Mora", href: "/alloggi/" },
+          { label: "Vacanza in famiglia a La Mora", href: "/vacanza-in-famiglia/" },
+          { label: "Vacanza con animali a La Mora", href: "/vacanza-con-animali/" },
+          { label: "Le offerte per chi prenota diretto", href: "/offerte/" },
+          { label: "Mercatini di Natale in Umbria: Perugia, Gubbio e il Trasimeno", href: "/blog/mercatini-di-natale-umbria/" },
+          { label: "Guida alla Basilica di Santa Maria degli Angeli", href: "/blog/basilica-santa-maria-degli-angeli/" },
+          { label: "Eventi su visit-assisi.it, portale turistico del Comune", href: CAPODANNO_SOURCES.visitAssisiEvents },
+          { label: "Basilica e Sacro Convento di San Francesco", href: CAPODANNO_SOURCES.sacroConvento },
+          { label: "Frati Minori della Porziuncola", href: CAPODANNO_SOURCES.porziuncola },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Domande frequenti sul Capodanno ad Assisi",
+      items: [
+        {
+          q: "Cosa si fa a Capodanno ad Assisi?",
+          a: "Negli ultimi anni la sera del 31 dicembre c'è stata una festa in Piazza del Comune con musica dal vivo e DJ set (per salutare il 2026, dalle 22 alle 3), mentre nelle basiliche si celebra il Te Deum di ringraziamento. Il programma 2026/27 viene pubblicato dal Comune su visit-assisi.it.",
+        },
+        {
+          q: "Ad Assisi ci sono i fuochi d'artificio a Capodanno?",
+          a: "Nel 2024 e nel 2025 un'ordinanza del Comune ha vietato fuochi d'artificio, petardi e botti nel centro storico la notte di San Silvestro, anche per la tranquillità degli animali. Per quest'anno controlla le ordinanze sul sito del Comune.",
+        },
+        {
+          q: "A che ora è il Te Deum nella Basilica di San Francesco?",
+          a: "Nel 2024 e nel 2025 la Messa con il Te Deum è stata celebrata il 31 dicembre alle 17, nella Basilica inferiore. Gli orari del 2026 vengono pubblicati dal Sacro Convento.",
+        },
+        {
+          q: "Ci sono presepi viventi vicino ad Assisi a Capodanno?",
+          a: "Sì: a Petrignano di Assisi il presepe vivente nell'edizione 2025/26 era aperto anche il 1° gennaio, dalle 17:15 alle 19:30; ad Armenzano in passato si è svolto anche il 1° gennaio. Le date 2026/27 vanno verificate.",
+        },
+        {
+          q: "Si può passare il Capodanno a La Mora con il cane?",
+          a: "Sì, negli appartamenti Gemelli e Sagittario, al piano terra con giardino privato, con un supplemento di 25 € a soggiorno.",
+        },
+        {
+          q: "Quanto dista La Mora dal centro di Assisi?",
+          a: "Piazza del Comune è a 6,8 km, circa 14 minuti in auto secondo Google Maps; la Basilica di Santa Maria degli Angeli a 2,1 km. Il parcheggio a La Mora è gratuito.",
+        },
+      ],
+    },
+    finalCtaHeading: "Il primo risveglio del 2027, nella campagna di Assisi.",
+    finalCtaBody: "Scegli l'appartamento per il tuo Capodanno.",
+    finalCtaLabel: "Prenota",
+    finalCtaHref: BOOKING_MODAL_HREF,
+  },
+  en: {
+    slug: "capodanno-assisi-2027",
+    topics: ["pets", "family"],
+    category: "Events",
+    title: "New Year's Eve in Assisi 2027: the square, the basilicas and a relaxing place to stay",
+    excerpt:
+      "New Year's Eve in Assisi: the party in Piazza del Comune, the Te Deum in the basilicas and the living nativity scenes of the first days of the year, with a quiet countryside base 14 minutes from the centre.",
+    metaDescription:
+      "New Year's Eve 2027 in Assisi: the party in Piazza del Comune, Te Deum and vigils in the basilicas, living nativity scenes. Stay in an agriturismo 14 min away.",
+    image: CAPODANNO_COVER,
+    alt: "The Basilica of St. Francis and the Sacro Convento in Assisi at sunset, with the first windows lit",
+    imagePosition: "62% 50%",
+    datePublished: "2026-10-21",
+    dateModified: CAPODANNO_LAST_CHECKED,
+    schemaType: "BlogPosting",
+    theme: "newyear",
+    inBreve: {
+      heading: "At a glance",
+      items: [
+        { label: "When", value: "31 December 2026 – 2 January 2027" },
+        { label: "Party in the square", value: "Piazza del Comune, on the evening of the 31st" },
+        { label: "Te Deum", value: "On 31 December in the basilicas" },
+        { label: "Fireworks in the centre", value: "Banned in 2024 and 2025" },
+        { label: "Piazza del Comune", value: "6.8 km from La Mora · about 14 min" },
+        { label: "Santa Maria degli Angeli", value: "2.1 km · about 3 min" },
+      ],
+    },
+    notice: {
+      heading: "This year's official programme",
+      text: "This year's official programme is published by the town council: check the updated dates. This guide covers what took place in previous years, always with the year stated: performers, times and venues for New Year 2027 may change.",
+      linkLabel: "Events on visit-assisi.it, the Assisi town council's tourism website",
+      href: CAPODANNO_SOURCES.visitAssisiEvents,
+      lastChecked: "Last checked: 21 October 2026",
+    },
+    stayBox: {
+      heading: "Stay at La Mora, in the countryside 14 minutes from central Assisi",
+      image: LAMORA_ESTERNO,
+      alt: "Outside Agriturismo La Mora: an old farm cart among the flowers, in front of the house and a large olive tree",
+      benefits: [
+        "5 independent apartments with a kitchen, sleeping 4 to 8",
+        "Free parking: Piazza del Comune is 6.8 km away, about 14 minutes",
+        "Pets welcome in Gemelli and Sagittario (€25 per stay), cot on request (€15 per stay)",
+      ],
+      cta: "Book your New Year at La Mora",
+    },
+    intro:
+      "The holidays have a special light in Assisi: in recent Christmas seasons the façades of churches and monuments, from the Basilica of St. Francis to Piazza del Comune, have glowed with light projections, and the medieval streets of pink stone make the loveliest backdrop to see in the new year. From 31 December to 2 January, here is what has happened in previous years in the square and in the basilicas, and what to see in the first days of 2027. Agriturismo La Mora is 6.8 km from the centre, about 14 minutes by car: the party at night, and in the morning you wake up to the quiet of the Umbrian countryside.",
+    content: [
+      { type: "h2", text: "What is New Year's Eve like in Piazza del Comune?" },
+      {
+        type: "p",
+        text: "In recent years the 31 December party has been held in Piazza del Comune, the heart of the medieval town, between the Temple of Minerva and the Torre del Popolo. To welcome 2026 the programme featured live music from the Antonio Ballarano Band, with DJ sets to open and close the night, from 10 pm to 3 am. The programme for 2027 has not been published yet: performers and times may change.",
+      },
+      { type: "h3", text: "No fireworks in the centre" },
+      {
+        type: "p",
+        text: "In both 2024 and 2025 the town council issued an ordinance banning fireworks, firecrackers and bangers in the historic centre on New Year's Eve: in 2025 from 8 pm on 31 December to 8 am on 1 January, in the areas around Piazza del Comune, together with a ban on selling drinks in glass bottles and cans. The reasons included public safety, protecting the town's heritage and peace and quiet for residents and animals. If you travel with small children or a dog, it makes a difference.",
+      },
+      {
+        type: "p",
+        text: "For the party, in 2025 the local police changed the traffic arrangements in the historic centre, much of which is a limited traffic zone (ZTL) anyway: it's best to leave the car in one of the car parks listed by the town and walk up. From La Mora, Piazza del Comune is 6.8 km away, about 14 minutes by car according to Google Maps.",
+      },
+      { type: "h2", text: "A different New Year: the Te Deum and vigils in the basilicas" },
+      {
+        type: "p",
+        text: "Assisi is also a place to end the year in reflection. On 31 December, in the Lower Basilica of St. Francis, the friars of the Sacro Convento celebrate a Mass of thanksgiving with the singing of the Te Deum: at 5 pm in both 2024 and 2025. In 2024, at 11 pm, the basilica also hosted the New Year's vigil of the Centro Francescano Giovani, the friars' youth centre.",
+      },
+      {
+        type: "image",
+        src: LAMORA_BASILICA,
+        alt: "The Basilica of St. Francis in Assisi with its bell tower and the arcades of the lower square",
+        caption: "The Basilica of St. Francis, where the Te Deum is sung on 31 December.",
+      },
+      {
+        type: "p",
+        text: "In Santa Maria degli Angeli, 2.1 km from La Mora, the Basilica of the Porziuncola has its own programme. On 31 December 2025 it included a gathering for young people at 6 pm, “Capodanno alla Porziuncola”, First Vespers with the Te Deum at 7:15 pm and the end-of-year Mass at 11:30 pm. On 1 January, the Solemnity of Mary, Mother of God and World Day of Peace, the solemn Mass was at 11:30 am.",
+      },
+      {
+        type: "p",
+        text: "Times change from year to year: the 2026 ones are published on the websites of the Basilica of St. Francis and of the Franciscan friars of the Porziuncola, linked at the end of this article.",
+      },
+      { type: "h2", text: "What to do on 1 and 2 January around Assisi?" },
+      { type: "h3", text: "Living nativity scenes" },
+      {
+        type: "p",
+        text: "In Petrignano di Assisi, the living nativity scene — presented by its organisers as the oldest in Umbria — was open on 1 January in its 2025/26 edition (the 43rd), from 5:15 pm to 7:30 pm, as well as on 25, 26 and 28 December and 4 January, with the Epiphany parade on the 6th. In Armenzano, a small mountain village within the municipality of Assisi, the living nativity has in the past been held on 26 December and on 1 and 3 January in the afternoon, with the village lit only by torches and small fires. The 2026/27 dates have not been published yet: check them before you go.",
+      },
+      { type: "h3", text: "Perugia and Spello for half a day" },
+      {
+        type: "p",
+        text: "Perugia is 21.0 km away, about 23 minutes: in its 2025/26 edition, Christmas in the city lasted until 6 January, with lights and art installations in the historic centre and the Christmas market along Corso Vannucci. We cover it in our guide to Umbria's Christmas markets. Spello, 15.1 km away (about 18 minutes), is a pink-stone village overlooking the valley, perfect for an unhurried walk on the first day of the year.",
+      },
+      {
+        type: "p",
+        text: "In previous years the Christmas programme in Assisi has also included concerts: dates and venues are announced with the town's official calendar.",
+      },
+      { type: "h2", text: "Where to stay for New Year's Eve near Assisi?" },
+      {
+        type: "p",
+        text: "Agriturismo La Mora is at Via Fonte Citerna 7, in the countryside outside Assisi: five independent apartments with a fully equipped kitchen, sleeping 4 to 8, and free parking on site, away from the ZTL in the centre. After the party in the square or the end-of-year Mass, you are back in a few minutes in an apartment all to yourselves, and on 1 January you wake up in the Umbrian countryside.",
+      },
+      {
+        type: "p",
+        text: "Travelling with children? The playground is always open, under adult supervision, a cot is available on request (€15 per stay) and there are age-based reductions for children: you'll find them on our Family holidays page. Bringing your dog? Gemelli and Sagittario, the two pet-friendly apartments on the ground floor with a private garden, welcome dogs for a supplement of €25 per stay: all the details are on our Holidays with pets page.",
+      },
+      {
+        type: "image",
+        src: LAMORA_SALOTTO_GEMELLI,
+        alt: "Living room with kitchenette in the Gemelli apartment at Agriturismo La Mora: sofa, table with a checked tablecloth and a window onto the greenery",
+        caption: "The living room and kitchenette of the Gemelli apartment, one of the two pet-friendly ones.",
+      },
+      {
+        type: "links",
+        heading: "Plan your New Year in Assisi",
+        items: [
+          { label: "La Mora's apartments", href: "/alloggi/" },
+          { label: "Family holidays at La Mora", href: "/vacanza-in-famiglia/" },
+          { label: "Holidays with pets at La Mora", href: "/vacanza-con-animali/" },
+          { label: "Offers for direct bookings", href: "/offerte/" },
+          { label: "Christmas markets in Umbria: Perugia, Gubbio and Lake Trasimeno", href: "/blog/mercatini-di-natale-umbria/" },
+          { label: "Guide to the Basilica of Santa Maria degli Angeli", href: "/blog/basilica-santa-maria-degli-angeli/" },
+          { label: "Events on visit-assisi.it, the town's tourism website", href: CAPODANNO_SOURCES.visitAssisiEvents },
+          { label: "Basilica and Sacro Convento of St. Francis", href: CAPODANNO_SOURCES.sacroConvento },
+          { label: "Franciscan friars of the Porziuncola", href: CAPODANNO_SOURCES.porziuncola },
+        ],
+      },
+    ],
+    faq: {
+      heading: "FAQ about New Year's Eve in Assisi",
+      items: [
+        {
+          q: "What happens on New Year's Eve in Assisi?",
+          a: "In recent years there has been a party in Piazza del Comune on the evening of 31 December, with live music and DJ sets (to welcome 2026, from 10 pm to 3 am), while the basilicas celebrate the Te Deum of thanksgiving. The 2026/27 programme is published by the town council on visit-assisi.it.",
+        },
+        {
+          q: "Are there fireworks in Assisi on New Year's Eve?",
+          a: "In 2024 and 2025 a town ordinance banned fireworks, firecrackers and bangers in the historic centre on New Year's Eve, partly for the sake of animals. For this year, check the ordinances on the town council's website.",
+        },
+        {
+          q: "What time is the Te Deum at the Basilica of St. Francis?",
+          a: "In 2024 and 2025 the Mass with the Te Deum was celebrated on 31 December at 5 pm in the Lower Basilica. The 2026 times are published by the Sacro Convento.",
+        },
+        {
+          q: "Are there living nativity scenes near Assisi at New Year?",
+          a: "Yes: in Petrignano di Assisi the living nativity was open on 1 January in its 2025/26 edition, from 5:15 pm to 7:30 pm; in Armenzano it has also been held on 1 January in the past. The 2026/27 dates need to be checked.",
+        },
+        {
+          q: "Can I spend New Year at La Mora with my dog?",
+          a: "Yes, in the Gemelli and Sagittario apartments, on the ground floor with a private garden, for a supplement of €25 per stay.",
+        },
+        {
+          q: "How far is La Mora from the centre of Assisi?",
+          a: "Piazza del Comune is 6.8 km away, about 14 minutes by car according to Google Maps; the Basilica of Santa Maria degli Angeli is 2.1 km away. Parking at La Mora is free.",
+        },
+      ],
+    },
+    finalCtaHeading: "Your first morning of 2027, in the countryside outside Assisi.",
+    finalCtaBody: "Choose the apartment for your New Year.",
+    finalCtaLabel: "Book",
+    finalCtaHref: BOOKING_MODAL_HREF,
+  },
+  fr: {
+    slug: "capodanno-assisi-2027",
+    topics: ["pets", "family"],
+    category: "Événements",
+    title: "Nouvel An à Assise 2027 : la fête sur la place, la spiritualité et un séjour en toute sérénité",
+    excerpt:
+      "La Saint-Sylvestre à Assise : la fête sur la Piazza del Comune, le Te Deum dans les basiliques et les crèches vivantes des premiers jours de l'année, avec une base tranquille à la campagne à 14 minutes du centre.",
+    metaDescription:
+      "Nouvel An 2027 à Assise : fête sur la Piazza del Comune, Te Deum et veillées dans les basiliques, crèches vivantes. Dormez en agritourisme à 14 min du centre.",
+    image: CAPODANNO_COVER,
+    alt: "La basilique Saint-François et le Sacro Convento d'Assise au coucher du soleil, avec les premières fenêtres éclairées",
+    imagePosition: "62% 50%",
+    datePublished: "2026-10-21",
+    dateModified: CAPODANNO_LAST_CHECKED,
+    schemaType: "BlogPosting",
+    theme: "newyear",
+    inBreve: {
+      heading: "En bref",
+      items: [
+        { label: "Quand", value: "31 décembre 2026 – 2 janvier 2027" },
+        { label: "Fête sur la place", value: "Piazza del Comune, le soir du 31" },
+        { label: "Te Deum", value: "Le 31 décembre dans les basiliques" },
+        { label: "Pétards en centre-ville", value: "Interdits en 2024 et 2025" },
+        { label: "Piazza del Comune", value: "6,8 km de La Mora · environ 14 min" },
+        { label: "Santa Maria degli Angeli", value: "2,1 km · environ 3 min" },
+      ],
+    },
+    notice: {
+      heading: "Le programme officiel de cette année",
+      text: "Le programme officiel de cette année est publié par la commune : vérifiez les dates à jour. Ce guide présente ce qui s'est déroulé les années précédentes, toujours avec l'année indiquée : artistes, horaires et lieux du Nouvel An 2027 peuvent changer.",
+      linkLabel: "Événements sur visit-assisi.it, le site touristique de la commune d'Assise",
+      href: CAPODANNO_SOURCES.visitAssisiEvents,
+      lastChecked: "Dernière vérification : 21 octobre 2026",
+    },
+    stayBox: {
+      heading: "Dormez à La Mora, à la campagne à 14 minutes du centre d'Assise",
+      image: LAMORA_ESTERNO,
+      alt: "L'extérieur de l'Agriturismo La Mora : une ancienne charrette agricole parmi les fleurs, devant la maison et un grand olivier",
+      benefits: [
+        "5 appartements indépendants avec cuisine, de 4 à 8 couchages",
+        "Parking gratuit : la Piazza del Comune est à 6,8 km, environ 14 minutes",
+        "Animaux acceptés à Gemelli et Sagittario (25 € par séjour), lit bébé sur demande (15 € par séjour)",
+      ],
+      cta: "Réservez votre Nouvel An à La Mora",
+    },
+    intro:
+      "À Assise, les fêtes ont une lumière particulière : ces derniers Noëls, les façades des églises et des monuments, de la basilique Saint-François à la Piazza del Comune, se sont illuminées de projections lumineuses, et les ruelles médiévales en pierre rose offrent le plus beau décor pour fêter la nouvelle année. Du 31 décembre au 2 janvier, voici ce qui s'est fait les années précédentes sur la place et dans les basiliques, et ce qu'il faut voir les premiers jours de 2027. L'Agriturismo La Mora est à 6,8 km du centre, environ 14 minutes en voiture : la fête le soir, et le matin le réveil dans le calme de la campagne ombrienne.",
+    content: [
+      { type: "h2", text: "Comment se passe la Saint-Sylvestre sur la Piazza del Comune ?" },
+      {
+        type: "p",
+        text: "Ces dernières années, la fête du 31 décembre a eu lieu sur la Piazza del Comune, le cœur de la ville médiévale, entre le temple de Minerve et la Torre del Popolo. Pour accueillir 2026, le programme prévoyait de la musique live avec l'Antonio Ballarano Band et des DJ sets en ouverture et en clôture, de 22 h à 3 h du matin. Le programme pour 2027 n'est pas encore paru : artistes et horaires peuvent changer.",
+      },
+      { type: "h3", text: "Pas de pétards en centre-ville" },
+      {
+        type: "p",
+        text: "En 2024 comme en 2025, la commune a interdit par arrêté les feux d'artifice, pétards et artifices dans le centre historique la nuit du Nouvel An : en 2025 de 20 h le 31 décembre à 8 h le 1er janvier, dans les zones autour de la Piazza del Comune, avec l'interdiction de vendre des boissons en verre et en canette. Parmi les raisons : la sécurité du public, la protection du patrimoine et la tranquillité des habitants et des animaux. Pour qui voyage avec de jeunes enfants ou un chien, c'est un détail qui compte.",
+      },
+      {
+        type: "p",
+        text: "Pour la fête, en 2025 la police municipale a modifié la circulation dans le centre historique, qui est de toute façon en grande partie en zone à trafic limité (ZTL) : mieux vaut laisser la voiture dans l'un des parkings indiqués par la commune et monter à pied. Depuis La Mora, la Piazza del Comune est à 6,8 km, environ 14 minutes en voiture selon Google Maps.",
+      },
+      { type: "h2", text: "Un Nouvel An différent : le Te Deum et les veillées dans les basiliques" },
+      {
+        type: "p",
+        text: "Assise est aussi un lieu pour terminer l'année dans le recueillement. Le 31 décembre, dans la basilique inférieure Saint-François, les frères du Sacro Convento célèbrent la messe d'action de grâce avec le chant du Te Deum : à 17 h en 2024 comme en 2025. En 2024, à 23 h, la basilique a aussi accueilli la veillée du Nouvel An du Centro Francescano Giovani, le centre des jeunes des frères.",
+      },
+      {
+        type: "image",
+        src: LAMORA_BASILICA,
+        alt: "La basilique Saint-François d'Assise avec son campanile et les arcades de la place inférieure",
+        caption: "La basilique Saint-François, où l'on chante le Te Deum le 31 décembre.",
+      },
+      {
+        type: "p",
+        text: "À Santa Maria degli Angeli, à 2,1 km de La Mora, la basilique de la Portioncule a son propre programme. Le 31 décembre 2025, il prévoyait à 18 h une rencontre pour les jeunes, « Capodanno alla Porziuncola », à 19 h 15 les premières Vêpres avec le Te Deum et à 23 h 30 la messe de fin d'année. Le 1er janvier, solennité de Marie Mère de Dieu et Journée mondiale de la paix, la messe solennelle était à 11 h 30.",
+      },
+      {
+        type: "p",
+        text: "Les horaires changent d'une année à l'autre : ceux de 2026 paraissent sur les sites de la basilique Saint-François et des frères mineurs de la Portioncule, en lien à la fin de l'article.",
+      },
+      { type: "h2", text: "Que faire les 1er et 2 janvier autour d'Assise ?" },
+      { type: "h3", text: "Les crèches vivantes" },
+      {
+        type: "p",
+        text: "À Petrignano di Assisi, la crèche vivante, présentée par ses organisateurs comme la plus ancienne d'Ombrie, était ouverte le 1er janvier lors de l'édition 2025/26 (la 43e), de 17 h 15 à 19 h 30, ainsi que les 25, 26 et 28 décembre et le 4 janvier, avec le défilé de l'Épiphanie le 6. À Armenzano, petit village de montagne de la commune d'Assise, la crèche vivante a eu lieu par le passé le 26 décembre, les 1er et 3 janvier, l'après-midi, avec le village éclairé seulement par des torches et de petits feux. Les dates 2026/27 ne sont pas encore publiées : vérifiez-les avant de partir.",
+      },
+      { type: "h3", text: "Pérouse et Spello pour une demi-journée" },
+      {
+        type: "p",
+        text: "Pérouse est à 21,0 km, environ 23 minutes : lors de l'édition 2025/26, Noël en ville a duré jusqu'au 6 janvier, avec des lumières et des installations d'artistes dans le centre historique et le marché de Noël le long du corso Vannucci. Nous en parlons dans notre guide des marchés de Noël en Ombrie. Spello, à 15,1 km (environ 18 minutes), est un village en pierre rose tourné vers la vallée, à parcourir à pied sans se presser le premier jour de l'année.",
+      },
+      {
+        type: "p",
+        text: "Les années précédentes, le programme de Noël à Assise a aussi compté des concerts : dates et lieux sont annoncés avec le calendrier officiel de la commune.",
+      },
+      { type: "h2", text: "Où dormir pour le Nouvel An près d'Assise ?" },
+      {
+        type: "p",
+        text: "L'Agriturismo La Mora se trouve via Fonte Citerna 7, dans la campagne d'Assise : cinq appartements indépendants avec cuisine équipée, de 4 à 8 couchages, et parking gratuit dans la propriété, loin de la ZTL du centre. Après la fête sur la place ou la messe de fin d'année, on rentre en quelques minutes dans un appartement rien qu'à soi, et le 1er janvier on se réveille dans la campagne ombrienne.",
+      },
+      {
+        type: "p",
+        text: "Vous voyagez avec des enfants ? L'aire de jeux est toujours accessible, sous la surveillance des adultes, un lit bébé est disponible sur demande (15 € par séjour) et des réductions selon l'âge s'appliquent aux enfants : vous les trouverez sur notre page Vacances en famille. Avec votre chien ? Gemelli et Sagittario, les deux appartements qui acceptent les animaux, au rez-de-chaussée avec jardin privatif, l'accueillent moyennant un supplément de 25 € par séjour : tous les détails sur notre page Vacances avec animaux.",
+      },
+      {
+        type: "image",
+        src: LAMORA_SALOTTO_GEMELLI,
+        alt: "Séjour avec coin cuisine de l'appartement Gemelli à l'Agriturismo La Mora : canapé, table à nappe à carreaux et fenêtre sur la verdure",
+        caption: "Le séjour avec coin cuisine de l'appartement Gemelli, l'un des deux qui acceptent les animaux.",
+      },
+      {
+        type: "links",
+        heading: "Organisez votre Nouvel An à Assise",
+        items: [
+          { label: "Les appartements de La Mora", href: "/alloggi/" },
+          { label: "Vacances en famille à La Mora", href: "/vacanza-in-famiglia/" },
+          { label: "Vacances avec animaux à La Mora", href: "/vacanza-con-animali/" },
+          { label: "Les offres pour une réservation directe", href: "/offerte/" },
+          { label: "Marchés de Noël en Ombrie : Pérouse, Gubbio et le Trasimène", href: "/blog/mercatini-di-natale-umbria/" },
+          { label: "Guide de la basilique Santa Maria degli Angeli", href: "/blog/basilica-santa-maria-degli-angeli/" },
+          { label: "Événements sur visit-assisi.it, le site touristique de la commune", href: CAPODANNO_SOURCES.visitAssisiEvents },
+          { label: "Basilique et Sacro Convento de Saint-François", href: CAPODANNO_SOURCES.sacroConvento },
+          { label: "Frères mineurs de la Portioncule", href: CAPODANNO_SOURCES.porziuncola },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Questions fréquentes sur le Nouvel An à Assise",
+      items: [
+        {
+          q: "Que fait-on pour le Nouvel An à Assise ?",
+          a: "Ces dernières années, une fête a eu lieu sur la Piazza del Comune le soir du 31 décembre, avec musique live et DJ sets (pour accueillir 2026, de 22 h à 3 h), tandis que les basiliques célèbrent le Te Deum d'action de grâce. Le programme 2026/27 est publié par la commune sur visit-assisi.it.",
+        },
+        {
+          q: "Y a-t-il des feux d'artifice à Assise pour le Nouvel An ?",
+          a: "En 2024 et en 2025, un arrêté municipal a interdit feux d'artifice, pétards et artifices dans le centre historique la nuit de la Saint-Sylvestre, notamment pour la tranquillité des animaux. Pour cette année, consultez les arrêtés sur le site de la commune.",
+        },
+        {
+          q: "À quelle heure est le Te Deum à la basilique Saint-François ?",
+          a: "En 2024 et en 2025, la messe avec le Te Deum a été célébrée le 31 décembre à 17 h, dans la basilique inférieure. Les horaires de 2026 sont publiés par le Sacro Convento.",
+        },
+        {
+          q: "Y a-t-il des crèches vivantes près d'Assise au Nouvel An ?",
+          a: "Oui : à Petrignano di Assisi, la crèche vivante était ouverte le 1er janvier lors de l'édition 2025/26, de 17 h 15 à 19 h 30 ; à Armenzano, elle a aussi eu lieu le 1er janvier par le passé. Les dates 2026/27 sont à vérifier.",
+        },
+        {
+          q: "Peut-on passer le Nouvel An à La Mora avec son chien ?",
+          a: "Oui, dans les appartements Gemelli et Sagittario, au rez-de-chaussée avec jardin privatif, moyennant un supplément de 25 € par séjour.",
+        },
+        {
+          q: "À quelle distance se trouve La Mora du centre d'Assise ?",
+          a: "La Piazza del Comune est à 6,8 km, environ 14 minutes en voiture selon Google Maps ; la basilique Santa Maria degli Angeli à 2,1 km. Le parking à La Mora est gratuit.",
+        },
+      ],
+    },
+    finalCtaHeading: "Votre premier matin de 2027, dans la campagne d'Assise.",
+    finalCtaBody: "Choisissez l'appartement pour votre Nouvel An.",
+    finalCtaLabel: "Réserver",
+    finalCtaHref: BOOKING_MODAL_HREF,
+  },
+  de: {
+    slug: "capodanno-assisi-2027",
+    topics: ["pets", "family"],
+    category: "Veranstaltungen",
+    title: "Silvester in Assisi 2027: Fest auf der Piazza, Spiritualität und entspannt übernachten",
+    excerpt:
+      "Silvester in Assisi: das Fest auf der Piazza del Comune, das Te Deum in den Basiliken und die lebenden Krippen der ersten Tage des Jahres, mit einer ruhigen Unterkunft auf dem Land, 14 Minuten vom Zentrum.",
+    metaDescription:
+      "Silvester 2027 in Assisi: Fest auf der Piazza del Comune, Te Deum und Andachten in den Basiliken, lebende Krippen. Agriturismo 14 Min. vom Zentrum.",
+    image: CAPODANNO_COVER,
+    alt: "Die Basilika des Heiligen Franziskus und der Sacro Convento in Assisi bei Sonnenuntergang, mit den ersten erleuchteten Fenstern",
+    imagePosition: "62% 50%",
+    datePublished: "2026-10-21",
+    dateModified: CAPODANNO_LAST_CHECKED,
+    schemaType: "BlogPosting",
+    theme: "newyear",
+    inBreve: {
+      heading: "Kurz gefasst",
+      items: [
+        { label: "Wann", value: "31. Dezember 2026 – 2. Januar 2027" },
+        { label: "Fest auf der Piazza", value: "Piazza del Comune, am Abend des 31." },
+        { label: "Te Deum", value: "Am 31. Dezember in den Basiliken" },
+        { label: "Böller in der Altstadt", value: "2024 und 2025 verboten" },
+        { label: "Piazza del Comune", value: "6,8 km vom La Mora · rund 14 Min." },
+        { label: "Santa Maria degli Angeli", value: "2,1 km · rund 3 Min." },
+      ],
+    },
+    notice: {
+      heading: "Das offizielle Programm dieses Jahres",
+      text: "Das offizielle Programm dieses Jahres veröffentlicht die Stadt: Prüfen Sie die aktuellen Termine. Dieser Leitfaden beschreibt, was in den Vorjahren stattfand, immer mit Jahresangabe: Künstler, Uhrzeiten und Orte für Silvester 2027 können sich ändern.",
+      linkLabel: "Veranstaltungen auf visit-assisi.it, dem Tourismusportal der Stadt Assisi",
+      href: CAPODANNO_SOURCES.visitAssisiEvents,
+      lastChecked: "Zuletzt geprüft: 21. Oktober 2026",
+    },
+    stayBox: {
+      heading: "Übernachten im La Mora, auf dem Land 14 Minuten von Assisis Zentrum",
+      image: LAMORA_ESTERNO,
+      alt: "Außenbereich des Agriturismo La Mora: ein alter Bauernkarren zwischen Blumen vor dem Haus und einem großen Olivenbaum",
+      benefits: [
+        "5 unabhängige Ferienwohnungen mit Küche, für 4 bis 8 Personen",
+        "Kostenloser Parkplatz: Die Piazza del Comune ist 6,8 km entfernt, rund 14 Minuten",
+        "Haustiere in Gemelli und Sagittario willkommen (25 € pro Aufenthalt), Babybett auf Anfrage (15 € pro Aufenthalt)",
+      ],
+      cta: "Silvester im La Mora buchen",
+    },
+    intro:
+      "In Assisi haben die Feiertage ein besonderes Licht: In den letzten Weihnachtszeiten leuchteten die Fassaden von Kirchen und Monumenten, von der Basilika des Heiligen Franziskus bis zur Piazza del Comune, mit Lichtprojektionen, und die mittelalterlichen Gassen aus rosa Stein sind die schönste Kulisse, um das neue Jahr zu begrüßen. Vom 31. Dezember bis 2. Januar erzählen wir, was in den Vorjahren auf der Piazza und in den Basiliken stattfand und was es in den ersten Tagen von 2027 zu sehen gibt. Das Agriturismo La Mora liegt 6,8 km vom Zentrum, rund 14 Minuten mit dem Auto: abends das Fest, morgens das Aufwachen in der Ruhe der umbrischen Landschaft.",
+    content: [
+      { type: "h2", text: "Wie wird Silvester auf der Piazza del Comune gefeiert?" },
+      {
+        type: "p",
+        text: "In den letzten Jahren fand das Fest am 31. Dezember auf der Piazza del Comune statt, dem Herzen der mittelalterlichen Stadt, zwischen dem Minervatempel und der Torre del Popolo. Zur Begrüßung von 2026 gab es Livemusik mit der Antonio Ballarano Band und DJ-Sets zum Auftakt und zum Ausklang, von 22 bis 3 Uhr. Das Programm für 2027 ist noch nicht erschienen: Künstler und Uhrzeiten können sich ändern.",
+      },
+      { type: "h3", text: "Keine Böller in der Altstadt" },
+      {
+        type: "p",
+        text: "Sowohl 2024 als auch 2025 hat die Stadt per Verordnung Feuerwerk, Knallkörper und Böller in der Altstadt in der Silvesternacht verboten: 2025 von 20 Uhr am 31. Dezember bis 8 Uhr am 1. Januar, in den Bereichen rund um die Piazza del Comune, zusammen mit einem Verkaufsverbot für Getränke in Glasflaschen und Dosen. Zu den Gründen zählten die Sicherheit der Besucher, der Schutz des Kulturerbes sowie die Ruhe der Anwohner und der Tiere. Wer mit kleinen Kindern oder mit Hund reist, weiß das zu schätzen.",
+      },
+      {
+        type: "p",
+        text: "Für das Fest hat die Stadtpolizei 2025 die Verkehrsführung in der Altstadt geändert, die ohnehin großenteils verkehrsberuhigte Zone (ZTL) ist: Am besten parken Sie auf einem der von der Stadt angegebenen Parkplätze und gehen zu Fuß hinauf. Vom La Mora ist die Piazza del Comune 6,8 km entfernt, laut Google Maps rund 14 Minuten mit dem Auto.",
+      },
+      { type: "h2", text: "Ein anderes Silvester: Te Deum und Andachten in den Basiliken" },
+      {
+        type: "p",
+        text: "Assisi ist auch ein Ort, um das Jahr in Besinnung zu beenden. Am 31. Dezember feiern die Brüder des Sacro Convento in der Unterkirche der Basilika des Heiligen Franziskus die Dankmesse mit dem Te Deum: 2024 und 2025 jeweils um 17 Uhr. 2024 fand um 23 Uhr in der Basilika außerdem die Silvesterandacht des Centro Francescano Giovani statt, des Jugendzentrums der Brüder.",
+      },
+      {
+        type: "image",
+        src: LAMORA_BASILICA,
+        alt: "Die Basilika des Heiligen Franziskus in Assisi mit Glockenturm und den Arkaden des unteren Platzes",
+        caption: "Die Basilika des Heiligen Franziskus, in der am 31. Dezember das Te Deum gesungen wird.",
+      },
+      {
+        type: "p",
+        text: "In Santa Maria degli Angeli, 2,1 km vom La Mora, hat die Basilika der Portiuncula ihr eigenes Programm. Am 31. Dezember 2025 gab es um 18 Uhr ein Treffen für junge Leute, „Capodanno alla Porziuncola“, um 19:15 Uhr die Ersten Vesper mit dem Te Deum und um 23:30 Uhr die Messe zum Jahresende. Am 1. Januar, dem Hochfest der Gottesmutter Maria und Weltfriedenstag, war die feierliche Messe um 11:30 Uhr.",
+      },
+      {
+        type: "p",
+        text: "Die Uhrzeiten ändern sich von Jahr zu Jahr: Die für 2026 erscheinen auf den Websites der Basilika des Heiligen Franziskus und der Franziskaner der Portiuncula, verlinkt am Ende des Artikels.",
+      },
+      { type: "h2", text: "Was tun am 1. und 2. Januar rund um Assisi?" },
+      { type: "h3", text: "Lebende Krippen" },
+      {
+        type: "p",
+        text: "In Petrignano di Assisi war die lebende Krippe, die die Veranstalter als älteste Umbriens bezeichnen, in der Ausgabe 2025/26 (der 43.) auch am 1. Januar geöffnet, von 17:15 bis 19:30 Uhr, außerdem am 25., 26. und 28. Dezember und am 4. Januar, mit dem Dreikönigsumzug am 6. In Armenzano, einem kleinen Bergdorf der Gemeinde Assisi, fand die lebende Krippe früher am 26. Dezember sowie am 1. und 3. Januar am Nachmittag statt, das Dorf nur von Fackeln und kleinen Feuern beleuchtet. Die Termine 2026/27 sind noch nicht veröffentlicht: Prüfen Sie sie vor der Fahrt.",
+      },
+      { type: "h3", text: "Perugia und Spello für einen halben Tag" },
+      {
+        type: "p",
+        text: "Perugia liegt 21,0 km entfernt, rund 23 Minuten: In der Ausgabe 2025/26 dauerte Weihnachten in der Stadt bis zum 6. Januar, mit Lichtern und Kunstinstallationen in der Altstadt und dem Weihnachtsmarkt entlang des Corso Vannucci. Mehr dazu in unserem Leitfaden zu den Weihnachtsmärkten in Umbrien. Spello, 15,1 km entfernt (rund 18 Minuten), ist ein Dorf aus rosa Stein über dem Tal, ideal für einen gemächlichen Spaziergang am ersten Tag des Jahres.",
+      },
+      {
+        type: "p",
+        text: "In den Vorjahren umfasste das Weihnachtsprogramm in Assisi auch Konzerte: Termine und Orte erscheinen mit dem offiziellen Kalender der Stadt.",
+      },
+      { type: "h2", text: "Wo übernachten an Silvester in der Nähe von Assisi?" },
+      {
+        type: "p",
+        text: "Das Agriturismo La Mora liegt in der Via Fonte Citerna 7, auf dem Land bei Assisi: fünf unabhängige Ferienwohnungen mit voll ausgestatteter Küche, für 4 bis 8 Personen, und kostenloser Parkplatz auf dem Gelände, fern der ZTL der Altstadt. Nach dem Fest auf der Piazza oder der Messe zum Jahresende sind Sie in wenigen Minuten zurück in Ihrer eigenen Ferienwohnung und wachen am 1. Januar in der umbrischen Landschaft auf.",
+      },
+      {
+        type: "p",
+        text: "Mit Kindern unterwegs? Der Spielplatz ist jederzeit frei zugänglich, unter Aufsicht der Erwachsenen, ein Babybett gibt es auf Anfrage (15 € pro Aufenthalt) und für Kinder gelten altersabhängige Ermäßigungen: Sie finden sie auf unserer Seite Familienurlaub. Mit Hund? Gemelli und Sagittario, die beiden haustierfreundlichen Ferienwohnungen im Erdgeschoss mit eigenem Garten, nehmen ihn gegen einen Zuschlag von 25 € pro Aufenthalt auf: alle Details auf unserer Seite Urlaub mit Haustieren.",
+      },
+      {
+        type: "image",
+        src: LAMORA_SALOTTO_GEMELLI,
+        alt: "Wohnraum mit Kochecke der Ferienwohnung Gemelli im Agriturismo La Mora: Sofa, Tisch mit karierter Tischdecke und Fenster ins Grüne",
+        caption: "Wohnraum mit Kochecke der Ferienwohnung Gemelli, einer der beiden haustierfreundlichen.",
+      },
+      {
+        type: "links",
+        heading: "Planen Sie Ihr Silvester in Assisi",
+        items: [
+          { label: "Die Ferienwohnungen des La Mora", href: "/alloggi/" },
+          { label: "Familienurlaub im La Mora", href: "/vacanza-in-famiglia/" },
+          { label: "Urlaub mit Haustieren im La Mora", href: "/vacanza-con-animali/" },
+          { label: "Angebote bei Direktbuchung", href: "/offerte/" },
+          { label: "Weihnachtsmärkte in Umbrien: Perugia, Gubbio und der Trasimenische See", href: "/blog/mercatini-di-natale-umbria/" },
+          { label: "Leitfaden zur Basilika Santa Maria degli Angeli", href: "/blog/basilica-santa-maria-degli-angeli/" },
+          { label: "Veranstaltungen auf visit-assisi.it, dem Tourismusportal der Stadt", href: CAPODANNO_SOURCES.visitAssisiEvents },
+          { label: "Basilika und Sacro Convento des Heiligen Franziskus", href: CAPODANNO_SOURCES.sacroConvento },
+          { label: "Franziskaner der Portiuncula", href: CAPODANNO_SOURCES.porziuncola },
+        ],
+      },
+    ],
+    faq: {
+      heading: "Häufige Fragen zu Silvester in Assisi",
+      items: [
+        {
+          q: "Was ist an Silvester in Assisi los?",
+          a: "In den letzten Jahren gab es am Abend des 31. Dezember ein Fest auf der Piazza del Comune mit Livemusik und DJ-Sets (zur Begrüßung von 2026 von 22 bis 3 Uhr), während in den Basiliken das Te Deum gefeiert wird. Das Programm 2026/27 veröffentlicht die Stadt auf visit-assisi.it.",
+        },
+        {
+          q: "Gibt es an Silvester in Assisi ein Feuerwerk?",
+          a: "2024 und 2025 hat eine Verordnung der Stadt Feuerwerk, Knallkörper und Böller in der Altstadt in der Silvesternacht verboten, auch zum Schutz der Tiere. Für dieses Jahr prüfen Sie die Verordnungen auf der Website der Stadt.",
+        },
+        {
+          q: "Wann ist das Te Deum in der Basilika des Heiligen Franziskus?",
+          a: "2024 und 2025 wurde die Messe mit dem Te Deum am 31. Dezember um 17 Uhr in der Unterkirche gefeiert. Die Uhrzeiten für 2026 veröffentlicht der Sacro Convento.",
+        },
+        {
+          q: "Gibt es an Neujahr lebende Krippen in der Nähe von Assisi?",
+          a: "Ja: In Petrignano di Assisi war die lebende Krippe in der Ausgabe 2025/26 auch am 1. Januar geöffnet, von 17:15 bis 19:30 Uhr; in Armenzano fand sie früher ebenfalls am 1. Januar statt. Die Termine 2026/27 sollten Sie prüfen.",
+        },
+        {
+          q: "Kann ich Silvester mit Hund im La Mora verbringen?",
+          a: "Ja, in den Ferienwohnungen Gemelli und Sagittario, im Erdgeschoss mit eigenem Garten, gegen einen Zuschlag von 25 € pro Aufenthalt.",
+        },
+        {
+          q: "Wie weit ist das La Mora vom Zentrum Assisis entfernt?",
+          a: "Die Piazza del Comune ist 6,8 km entfernt, laut Google Maps rund 14 Minuten mit dem Auto; die Basilika Santa Maria degli Angeli 2,1 km. Der Parkplatz im La Mora ist kostenlos.",
+        },
+      ],
+    },
+    finalCtaHeading: "Ihr erster Morgen 2027, auf dem Land bei Assisi.",
+    finalCtaBody: "Wählen Sie die Ferienwohnung für Ihr Silvester.",
+    finalCtaLabel: "Buchen",
+    finalCtaHref: BOOKING_MODAL_HREF,
+  },
+};
+
 const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
   it: [
     EUROCHOCOLATE_POST.it,
+    CAPODANNO_POST.it,
     CARLO_ACUTIS_POST.it,
     NATALE_UMBRIA_POST.it,
     ALBERO_TRASIMENO_POST.it,
@@ -3583,6 +4274,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
   ],
   en: [
     EUROCHOCOLATE_POST.en,
+    CAPODANNO_POST.en,
     CARLO_ACUTIS_POST.en,
     NATALE_UMBRIA_POST.en,
     ALBERO_TRASIMENO_POST.en,
@@ -4100,6 +4792,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
   ],
   fr: [
     EUROCHOCOLATE_POST.fr,
+    CAPODANNO_POST.fr,
     CARLO_ACUTIS_POST.fr,
     NATALE_UMBRIA_POST.fr,
     ALBERO_TRASIMENO_POST.fr,
@@ -4617,6 +5310,7 @@ const BLOG_POSTS_BY_LOCALE: Record<Locale, BlogPost[]> = {
   ],
   de: [
     EUROCHOCOLATE_POST.de,
+    CAPODANNO_POST.de,
     CARLO_ACUTIS_POST.de,
     NATALE_UMBRIA_POST.de,
     ALBERO_TRASIMENO_POST.de,

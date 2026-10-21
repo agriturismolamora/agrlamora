@@ -79,6 +79,24 @@ const BLOG_CTAS: Record<string, BlogCtaCopy> = {
       },
     ),
   },
+  "capodanno-assisi-2027": {
+    intro: {
+      it: "Per Capodanno gli appartamenti si prenotano presto: scegli le date e controlla la disponibilità.",
+      en: "Apartments for New Year's Eve get booked early: choose your dates and check availability.",
+      fr: "Pour le Nouvel An, les appartements se réservent tôt : choisissez vos dates et vérifiez les disponibilités.",
+      de: "Für Silvester sind die Ferienwohnungen früh gebucht: Wählen Sie Ihre Daten und prüfen Sie die Verfügbarkeit.",
+    },
+    distance: fromPlace(
+      "piazzaDelComune",
+      { it: "da Piazza del Comune", en: "from Piazza del Comune", fr: "de la Piazza del Comune", de: "von der Piazza del Comune" },
+      {
+        it: "La sera la festa o il Te Deum, la mattina il silenzio della campagna.",
+        en: "The party or the Te Deum at night, the quiet of the countryside in the morning.",
+        fr: "La fête ou le Te Deum le soir, le calme de la campagne le matin.",
+        de: "Abends das Fest oder das Te Deum, morgens die Stille der Landschaft.",
+      },
+    ),
+  },
   "mercatini-di-natale-umbria": {
     intro: {
       it: "Un weekend tra mercatini e luci di Natale? Scegli le date e controlla la disponibilità.",

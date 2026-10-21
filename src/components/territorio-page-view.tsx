@@ -406,7 +406,7 @@ const BLOG_GROUPS: { id: string; slugs: string[] }[] = [
   { id: "natura", slugs: ["monte-subasio", "bosco-san-francesco", "cascate-delle-marmore", "rasiglia-piccola-venezia-umbria"] },
   {
     id: "eventi",
-    slugs: ["eurochocolate-2026-dove-dormire", "mercatini-di-natale-umbria", "albero-di-natale-lago-trasimeno", "agriumbria-umbriafiere", "caccia-village-umbriafiere"],
+    slugs: ["eurochocolate-2026-dove-dormire", "capodanno-assisi-2027", "mercatini-di-natale-umbria", "albero-di-natale-lago-trasimeno", "agriumbria-umbriafiere", "caccia-village-umbriafiere"],
   },
 ];
 

@@ -53,6 +53,7 @@ export function pageMetadata({
   absoluteTitle = false,
   locales = LOCALES,
   publishedTime,
+  modifiedTime,
 }: {
   locale: Locale;
   /* Path italiano della pagina, con barra finale (es. "/piscina/"). */
@@ -65,6 +66,7 @@ export function pageMetadata({
   absoluteTitle?: boolean;
   locales?: readonly Locale[];
   publishedTime?: string;
+  modifiedTime?: string;
 }): Metadata {
   const url = `${SITE_URL}${withLocale(locale, path)}`;
   const fullTitle = absoluteTitle ? title : `${title} | ${SITE_NAME}`;
@@ -88,6 +90,7 @@ export function pageMetadata({
       description,
       images: [ogImage],
       ...(type === "article" && publishedTime ? { publishedTime } : {}),
+      ...(type === "article" && modifiedTime ? { modifiedTime } : {}),
     },
     twitter: {
       card: "summary_large_image",
