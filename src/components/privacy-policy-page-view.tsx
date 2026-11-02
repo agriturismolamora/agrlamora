@@ -13,10 +13,10 @@ const PAGE_TITLE: Record<Locale, string> = {
 };
 
 const UPDATED_LABEL: Record<Locale, string> = {
-  it: "Ultimo aggiornamento: 24 settembre 2026",
-  en: "Last updated: 24 September 2026",
-  fr: "Dernière mise à jour : 24 septembre 2026",
-  de: "Zuletzt aktualisiert: 24. September 2026",
+  it: "Ultimo aggiornamento: 2 novembre 2026",
+  en: "Last updated: 2 November 2026",
+  fr: "Dernière mise à jour : 2 novembre 2026",
+  de: "Zuletzt aktualisiert: 2. November 2026",
 };
 
 const LABEL: Record<Locale, string> = { it: "Informativa privacy", en: "Privacy notice", fr: "Politique de confidentialité", de: "Datenschutzhinweis" };
@@ -39,10 +39,10 @@ function buildSections(locale: Locale): LegalSection[] {
         body: (
           <>
             <p>
-              <strong>Richieste di prenotazione o informazioni.</strong> Se ci scrivi su WhatsApp (anche tramite il modulo di richiesta
-              del sito, che prepara il messaggio senza salvarlo), per email o ci chiami per chiedere disponibilità o informazioni, tratti
-              direttamente con noi: il sito non salva questi dati in un proprio database, ti mette
-              solo in contatto con noi. Nome, contatti, date del soggiorno ed eventuali richieste particolari (es. esigenze alimentari,
+              <strong>Richieste di prenotazione o informazioni.</strong> Se ci scrivi su WhatsApp o per email, o ci chiami per chiedere disponibilità o informazioni, tratti direttamente con noi.
+              Il modulo di richiesta del sito prepara soltanto il riepilogo: sei tu a inviarlo, dalla tua app WhatsApp o dalla tua app di
+              posta (o da Gmail, se scegli quell&apos;opzione); i dati non passano dai server del sito e il sito non li salva in un proprio
+              database. Nome, contatti, date del soggiorno ed eventuali richieste particolari (es. esigenze alimentari,
               animali al seguito) vengono trattati manualmente da chi gestisce la struttura per rispondere alla richiesta, organizzare il
               soggiorno e adempiere agli obblighi di legge legati all’ospitalità (es. comunicazioni alla Questura, tassa di soggiorno).
               Base giuridica: esecuzione di misure precontrattuali o contrattuali su tua richiesta (art. 6.1.b GDPR) e, per gli obblighi
@@ -224,10 +224,10 @@ function buildSections(locale: Locale): LegalSection[] {
         body: (
           <>
             <p>
-              <strong>Booking or information requests.</strong> If you write to us on WhatsApp (including through the site&apos;s
-              request form, which prepares the message without storing it), by email, or call us to ask about availability or
-              information, you deal directly with us: the site does not store this data in its own database, it only
-              connects you with us. Name, contact details, stay dates, and any special requests (e.g. dietary needs, pets) are handled
+              <strong>Booking or information requests.</strong> If you write to us on WhatsApp or by email, or call us to ask about availability or information, you deal directly with us.
+              The site&apos;s request form only prepares the summary: you send it yourself, from your WhatsApp app or your email app (or
+              Gmail, if you choose that option); the data does not pass through the site&apos;s servers and the site does not store it in
+              its own database. Name, contact details, stay dates, and any special requests (e.g. dietary needs, pets) are handled
               manually by the property’s staff to reply to the request, organise the stay, and comply with hospitality-related legal
               obligations (e.g. reporting to local authorities, tourist tax). Legal basis: performance of pre-contractual or contractual
               measures at your request (Art. 6.1.b GDPR), and, for legal obligations, Art. 6.1.c GDPR.
@@ -407,10 +407,10 @@ function buildSections(locale: Locale): LegalSection[] {
         body: (
           <>
             <p>
-              <strong>Demandes de réservation ou d’informations.</strong> Si vous nous écrivez sur WhatsApp (y compris via le
-              formulaire de demande du site, qui prépare le message sans l’enregistrer), par email ou nous appelez pour demander des
-              disponibilités ou des informations, vous traitez directement avec nous : le site ne stocke pas ces
-              données dans sa propre base, il ne fait que vous mettre en contact avec nous. Le nom, les coordonnées, les dates du séjour
+              <strong>Demandes de réservation ou d’informations.</strong> Si vous nous écrivez sur WhatsApp ou par e-mail, ou nous appelez pour demander des disponibilités ou des informations, vous
+              traitez directement avec nous. Le formulaire de demande du site prépare seulement le récapitulatif : c’est vous qui
+              l’envoyez, depuis votre application WhatsApp ou votre messagerie (ou Gmail, si vous choisissez cette option) ; les données ne
+              transitent pas par les serveurs du site et le site ne les stocke pas dans sa propre base. Le nom, les coordonnées, les dates du séjour
               et toute demande particulière (par ex. besoins alimentaires, animaux) sont traités manuellement par le personnel de
               l’établissement pour répondre à la demande, organiser le séjour et respecter les obligations légales liées à l’hébergement
               touristique (par ex. déclarations aux autorités, taxe de séjour). Base juridique : exécution de mesures précontractuelles
@@ -600,10 +600,10 @@ function buildSections(locale: Locale): LegalSection[] {
         body: (
           <>
             <p>
-              <strong>Buchungs- oder Informationsanfragen.</strong> Wenn Sie uns per WhatsApp (auch über das Anfrageformular der
-              Website, das die Nachricht vorbereitet, ohne sie zu speichern), E-Mail oder Telefon nach Verfügbarkeit oder Informationen
-              fragen, handeln Sie direkt mit uns: die Website speichert diese Daten nicht in einer eigenen Datenbank,
-              sie stellt lediglich den Kontakt zu uns her. Name, Kontaktdaten, Aufenthaltsdaten und etwaige besondere Wünsche (z. B.
+              <strong>Buchungs- oder Informationsanfragen.</strong> Wenn Sie uns per WhatsApp, E-Mail oder Telefon nach Verfügbarkeit oder Informationen fragen, handeln Sie direkt mit uns.
+              Das Anfrageformular der Website bereitet nur die Zusammenfassung vor: Sie senden sie selbst, über Ihre WhatsApp-App oder Ihr
+              E-Mail-Programm (oder Gmail, wenn Sie diese Option wählen); die Daten laufen nicht über die Server der Website, und die
+              Website speichert sie nicht in einer eigenen Datenbank. Name, Kontaktdaten, Aufenthaltsdaten und etwaige besondere Wünsche (z. B.
               Ernährungsbedürfnisse, Haustiere) werden manuell vom Personal der Unterkunft verarbeitet, um die Anfrage zu beantworten,
               den Aufenthalt zu organisieren und gesetzliche Pflichten im Zusammenhang mit der Beherbergung zu erfüllen (z. B. Meldungen
               an Behörden, Kurtaxe). Rechtsgrundlage: Erfüllung vorvertraglicher oder vertraglicher Maßnahmen auf Ihre Anfrage (Art.

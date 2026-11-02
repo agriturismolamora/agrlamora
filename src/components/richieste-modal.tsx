@@ -11,6 +11,67 @@ import { splitLocaleFromPath, withLocale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
 
 const WHATSAPP_NUMBER = "393934363917";
+
+/* Email della struttura già pubblicata (footer, menu, JSON-LD di La Mora e
+   di Villa Relax): la Villa non ha un indirizzo proprio verificato, usa
+   questo. Composta solo nel browser, al passo finale: non compare
+   nell'HTML statico del modulo. */
+const EMAIL_USER = "agriturismolamora";
+const EMAIL_DOMAIN = "gmail.com";
+function contactEmail() {
+  return `${EMAIL_USER}@${EMAIL_DOMAIN}`;
+}
+
+/* Oltre questa lunghezza alcuni client di posta (o Windows) troncano o
+   ignorano il link mailto. */
+const MAILTO_MAX = 1800;
+
+/* A capo CRLF nei corpi email (RFC 6068). */
+function toCrlf(value: string) {
+  return value.replace(/\r?\n/g, "\r\n");
+}
+
+function mailtoHref(subject: string, body: string) {
+  return `mailto:${contactEmail()}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(toCrlf(body))}`;
+}
+
+/* Apre un link (mailto) come un clic su <a>: stesso effetto di
+   location.href, ma il link resta solo in memoria il tempo del clic. */
+function openLink(href: string) {
+  const link = document.createElement("a");
+  link.href = href;
+  link.rel = "noopener";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
+/* Copia negli appunti: Clipboard API, altrimenti textarea nascosta +
+   execCommand (browser vecchi o contesti non sicuri). */
+async function copyText(value: string): Promise<boolean> {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(value);
+      return true;
+    }
+  } catch {
+    // si prova il metodo di ripiego
+  }
+  try {
+    const area = document.createElement("textarea");
+    area.value = value;
+    area.setAttribute("readonly", "");
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+    const ok = document.execCommand("copy");
+    area.remove();
+    return ok;
+  } catch {
+    return false;
+  }
+}
 const INTL_TAG: Record<Locale, string> = { it: "it-IT", en: "en-GB", fr: "fr-FR", de: "de-DE" };
 /* Capienza massima di una richiesta: somma reale dei 5 appartamenti per
    La Mora, capienza della villa intera per Villa Relax. */
@@ -20,6 +81,23 @@ const CHILD_MAX_AGE = 17;
    carousel in APARTMENTS); i nomi vengono comunque da APARTMENTS. */
 const APARTMENT_ORDER = ["pesci", "gemelli", "sagittario", "acquario", "bilancia"];
 const APARTMENT_NAMES = APARTMENT_ORDER.flatMap((slug) => APARTMENTS.filter((a) => a.slug === slug).map((a) => a.name));
+
+type ShortLabels = {
+  nome: string;
+  cognome: string;
+  telefono: string;
+  email: string;
+  arrivo: string;
+  partenza: string;
+  adulti: string;
+  bambini: string;
+  appartamento: string;
+  soluzione: string;
+  animale: string;
+  colonnina: string;
+  colonninaVilla: string;
+  ebike: string;
+};
 
 type Text = {
   fab: string;
@@ -41,12 +119,28 @@ type Text = {
   tipi: [string, string, string];
   messaggio: string;
   invia: string;
-  whatsappNote: string;
+  inviaNote: string;
   privacyPrefix: string;
   privacyLink: string;
-  sentHeading: string;
-  sentBody: string;
-  sentRetry: string;
+  /* Passo finale "Come vuoi inviare la richiesta?". */
+  reviewHeading: string;
+  reviewIntro: string;
+  summaryLabel: string;
+  sendWhatsapp: string;
+  sendEmail: string;
+  openedNote: string;
+  gmail: string;
+  copySummary: string;
+  copyAddress: string;
+  copied: string;
+  copyFailed: string;
+  addressLabel: string;
+  tooLong: string;
+  pasteHere: string;
+  emailSubject: (struttura: string) => string;
+  /* Etichette accorciate, solo per il corpo dell'email quando il link
+     mailto supererebbe MAILTO_MAX caratteri. */
+  short: ShortLabels;
   sentEdit: string;
   msgIntro: (struttura: string) => string;
   msgNights: (n: number) => string;
@@ -80,13 +174,26 @@ const TEXT: Record<Locale, Text> = {
     tipo: "Tipo di animale",
     tipi: ["Cane", "Gatto", "Altro"],
     messaggio: "Messaggio (facoltativo)",
-    invia: "Invia la richiesta su WhatsApp",
-    whatsappNote: "Si apre WhatsApp con il messaggio già compilato: ti basta premere Invia.",
+    invia: "Rivedi e invia",
+    inviaNote: "Nel passo successivo vedi il riepilogo e scegli se inviarlo su WhatsApp o via email.",
     privacyPrefix: "Useremo questi dati solo per rispondere alla tua richiesta —",
     privacyLink: "informativa privacy",
-    sentHeading: "Richiesta pronta su WhatsApp",
-    sentBody: "Si è aperta la chat con il messaggio già scritto: premi Invia per mandarcelo, ti rispondiamo noi.",
-    sentRetry: "WhatsApp non si è aperto? Aprilo di nuovo",
+    reviewHeading: "Come vuoi inviare la richiesta?",
+    reviewIntro: "Questo è il riepilogo che riceveremo. Si apre già scritto nell'app che scegli: lì ti basta premere Invia.",
+    summaryLabel: "Riepilogo della richiesta",
+    sendWhatsapp: "Invia su WhatsApp",
+    sendEmail: "Invia via email",
+    openedNote: "Si è aperta l'app: premi Invia per completare la richiesta.",
+    gmail: "Non si apre? Apri in Gmail",
+    copySummary: "Copia riepilogo",
+    copyAddress: "Copia indirizzo",
+    copied: "Copiato",
+    copyFailed: "Copia non riuscita: seleziona il testo e copialo a mano.",
+    addressLabel: "Il nostro indirizzo email",
+    tooLong: "Il riepilogo è troppo lungo per aprirsi già scritto nell'app di posta: premendo «Invia via email» lo copiamo per te, poi incollalo nel testo dell'email.",
+    pasteHere: "Incolla qui il riepilogo della richiesta.",
+    emailSubject: (s) => `Richiesta di soggiorno – ${s}`,
+    short: { nome: "Nome", cognome: "Cogn.", telefono: "Tel.", email: "Email", arrivo: "Arr.", partenza: "Part.", adulti: "Ad.", bambini: "Bamb.", appartamento: "App.", soluzione: "Sol.", animale: "Anim.", colonnina: "Ricarica 22 kW", colonninaVilla: "Ricarica 7 kW", ebike: "E-bike" },
     sentEdit: "Modifica la richiesta",
     msgIntro: (s) => `Ciao! Vi scrivo dal sito con una richiesta per ${s}.`,
     msgNights: (n) => `${n} ${n === 1 ? "notte" : "notti"}`,
@@ -117,13 +224,26 @@ const TEXT: Record<Locale, Text> = {
     tipo: "Type of animal",
     tipi: ["Dog", "Cat", "Other"],
     messaggio: "Message (optional)",
-    invia: "Send the request on WhatsApp",
-    whatsappNote: "WhatsApp opens with the message already written: just press Send.",
+    invia: "Review and send",
+    inviaNote: "Next you'll see a summary and choose whether to send it on WhatsApp or by email.",
     privacyPrefix: "We'll only use this information to reply to your request —",
     privacyLink: "privacy policy",
-    sentHeading: "Your request is ready on WhatsApp",
-    sentBody: "The chat has opened with the message already written: press Send to deliver it and we'll get back to you.",
-    sentRetry: "WhatsApp didn't open? Open it again",
+    reviewHeading: "How would you like to send your request?",
+    reviewIntro: "This is the summary we'll receive. It opens already written in the app you choose: just press Send there.",
+    summaryLabel: "Request summary",
+    sendWhatsapp: "Send on WhatsApp",
+    sendEmail: "Send by email",
+    openedNote: "The app has opened: press Send to complete your request.",
+    gmail: "Nothing opened? Open in Gmail",
+    copySummary: "Copy summary",
+    copyAddress: "Copy address",
+    copied: "Copied",
+    copyFailed: "Copying didn't work: select the text and copy it manually.",
+    addressLabel: "Our email address",
+    tooLong: "The summary is too long to open pre-filled in your email app: when you press “Send by email” we'll copy it for you, then paste it into the email.",
+    pasteHere: "Paste the request summary here.",
+    emailSubject: (s) => `Stay request – ${s}`,
+    short: { nome: "Name", cognome: "Surname", telefono: "Tel.", email: "Email", arrivo: "In", partenza: "Out", adulti: "Adults", bambini: "Children", appartamento: "Apt.", soluzione: "Option", animale: "Pet", colonnina: "EV 22 kW", colonninaVilla: "EV 7 kW", ebike: "E-bike" },
     sentEdit: "Edit the request",
     msgIntro: (s) => `Hi! I'm writing from the website with a request for ${s}.`,
     msgNights: (n) => `${n} ${n === 1 ? "night" : "nights"}`,
@@ -154,13 +274,26 @@ const TEXT: Record<Locale, Text> = {
     tipo: "Type d'animal",
     tipi: ["Chien", "Chat", "Autre"],
     messaggio: "Message (facultatif)",
-    invia: "Envoyer la demande sur WhatsApp",
-    whatsappNote: "WhatsApp s'ouvre avec le message déjà rédigé : il suffit d'appuyer sur Envoyer.",
+    invia: "Vérifier et envoyer",
+    inviaNote: "À l'étape suivante, vous verrez le récapitulatif et choisirez de l'envoyer par WhatsApp ou par e-mail.",
     privacyPrefix: "Nous utiliserons ces données uniquement pour répondre à votre demande —",
     privacyLink: "politique de confidentialité",
-    sentHeading: "Votre demande est prête sur WhatsApp",
-    sentBody: "La conversation s'est ouverte avec le message déjà rédigé : appuyez sur Envoyer pour nous le transmettre, nous vous répondrons.",
-    sentRetry: "WhatsApp ne s'est pas ouvert ? Ouvrez-le à nouveau",
+    reviewHeading: "Comment souhaitez-vous envoyer votre demande ?",
+    reviewIntro: "Voici le récapitulatif que nous recevrons. Il s'ouvre déjà rédigé dans l'application choisie : il suffit d'appuyer sur Envoyer.",
+    summaryLabel: "Récapitulatif de la demande",
+    sendWhatsapp: "Envoyer sur WhatsApp",
+    sendEmail: "Envoyer par e-mail",
+    openedNote: "L'application s'est ouverte : appuyez sur Envoyer pour finaliser votre demande.",
+    gmail: "Rien ne s'ouvre ? Ouvrir dans Gmail",
+    copySummary: "Copier le récapitulatif",
+    copyAddress: "Copier l'adresse",
+    copied: "Copié",
+    copyFailed: "La copie n'a pas fonctionné : sélectionnez le texte et copiez-le à la main.",
+    addressLabel: "Notre adresse e-mail",
+    tooLong: "Le récapitulatif est trop long pour s'ouvrir pré-rempli dans votre messagerie : en appuyant sur « Envoyer par e-mail », nous le copions pour vous ; collez-le ensuite dans l'e-mail.",
+    pasteHere: "Collez ici le récapitulatif de la demande.",
+    emailSubject: (s) => `Demande de séjour – ${s}`,
+    short: { nome: "Prénom", cognome: "Nom", telefono: "Tél.", email: "E-mail", arrivo: "Arr.", partenza: "Dép.", adulti: "Adultes", bambini: "Enfants", appartamento: "Appt.", soluzione: "Formule", animale: "Animal", colonnina: "Recharge 22 kW", colonninaVilla: "Recharge 7 kW", ebike: "Vélo él." },
     sentEdit: "Modifier la demande",
     msgIntro: (s) => `Bonjour ! Je vous écris depuis le site avec une demande pour ${s}.`,
     msgNights: (n) => `${n} ${n === 1 ? "nuit" : "nuits"}`,
@@ -191,13 +324,26 @@ const TEXT: Record<Locale, Text> = {
     tipo: "Art des Tieres",
     tipi: ["Hund", "Katze", "Andere"],
     messaggio: "Nachricht (optional)",
-    invia: "Anfrage über WhatsApp senden",
-    whatsappNote: "WhatsApp öffnet sich mit der bereits verfassten Nachricht: einfach auf Senden tippen.",
+    invia: "Prüfen und senden",
+    inviaNote: "Im nächsten Schritt sehen Sie die Zusammenfassung und wählen, ob Sie sie per WhatsApp oder per E-Mail senden.",
     privacyPrefix: "Wir verwenden diese Daten nur, um Ihre Anfrage zu beantworten —",
     privacyLink: "Datenschutzerklärung",
-    sentHeading: "Ihre Anfrage ist in WhatsApp bereit",
-    sentBody: "Der Chat hat sich mit der bereits verfassten Nachricht geöffnet: tippen Sie auf Senden, und wir melden uns bei Ihnen.",
-    sentRetry: "WhatsApp hat sich nicht geöffnet? Erneut öffnen",
+    reviewHeading: "Wie möchten Sie Ihre Anfrage senden?",
+    reviewIntro: "Das ist die Zusammenfassung, die wir erhalten. Sie öffnet sich fertig ausgefüllt in der gewählten App: Dort einfach auf Senden tippen.",
+    summaryLabel: "Zusammenfassung der Anfrage",
+    sendWhatsapp: "Über WhatsApp senden",
+    sendEmail: "Per E-Mail senden",
+    openedNote: "Die App wurde geöffnet: Tippen Sie auf Senden, um Ihre Anfrage abzuschließen.",
+    gmail: "Nichts geöffnet? In Gmail öffnen",
+    copySummary: "Zusammenfassung kopieren",
+    copyAddress: "Adresse kopieren",
+    copied: "Kopiert",
+    copyFailed: "Kopieren hat nicht funktioniert: Markieren Sie den Text und kopieren Sie ihn von Hand.",
+    addressLabel: "Unsere E-Mail-Adresse",
+    tooLong: "Die Zusammenfassung ist zu lang, um ausgefüllt in Ihrem E-Mail-Programm zu öffnen: Wenn Sie auf „Per E-Mail senden“ tippen, kopieren wir sie für Sie; fügen Sie sie dann in die E-Mail ein.",
+    pasteHere: "Fügen Sie hier die Zusammenfassung der Anfrage ein.",
+    emailSubject: (s) => `Aufenthaltsanfrage – ${s}`,
+    short: { nome: "Vorname", cognome: "Name", telefono: "Tel.", email: "E-Mail", arrivo: "Anreise", partenza: "Abreise", adulti: "Erw.", bambini: "Kinder", appartamento: "Apt.", soluzione: "Option", animale: "Tier", colonnina: "Laden 22 kW", colonninaVilla: "Laden 7 kW", ebike: "E-Bike" },
     sentEdit: "Anfrage bearbeiten",
     msgIntro: (s) => `Hallo! Ich schreibe Ihnen über die Website mit einer Anfrage für ${s}.`,
     msgNights: (n) => `${n} ${n === 1 ? "Nacht" : "Nächte"}`,
@@ -339,8 +485,24 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
   const [ebike, setEbike] = useState(false);
   const [ebikeOption, setEbikeOption] = useState("");
   const [message, setMessage] = useState("");
-  const [sentUrl, setSentUrl] = useState<string | null>(null);
+  /* Passo finale: il riepilogo (lo stesso testo di WhatsApp) quando il
+     modulo è valido; null mentre si compila. */
+  const [review, setReview] = useState<string | null>(null);
+  const [opened, setOpened] = useState(false);
+  const [copied, setCopied] = useState<"summary" | "address" | "failed" | null>(null);
+  const reviewHeadingRef = useRef<HTMLHeadingElement>(null);
+  const formHeadingRef = useRef<HTMLHeadingElement>(null);
+  const backToForm = useRef(false);
   const today = useToday();
+
+  // Focus sul titolo del passo che compare (riepilogo o modulo).
+  useEffect(() => {
+    if (review !== null) reviewHeadingRef.current?.focus();
+    else if (backToForm.current) {
+      backToForm.current = false;
+      formHeadingRef.current?.focus();
+    }
+  }, [review]);
 
   function updateAdults(value: number) {
     setAdults(value);
@@ -357,55 +519,195 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
     if (value && checkOut && checkOut <= value) setCheckOut("");
   }
 
-  function buildMessage() {
+  /* Riepilogo della richiesta: è il testo del messaggio WhatsApp e il corpo
+     dell'email. `compact` accorcia solo le etichette (email troppo lunga). */
+  function buildMessage(compact = false) {
     const dateFormatter = new Intl.DateTimeFormat(INTL_TAG[locale], { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
     const nights = Math.round((parseInputDate(checkOut).getTime() - parseInputDate(checkIn).getTime()) / 86_400_000);
+    const label = compact
+      ? text.short
+      : {
+          nome: text.nome,
+          cognome: text.cognome,
+          telefono: text.telefono,
+          email: text.email,
+          arrivo: t("booking", "arrivo", locale),
+          partenza: t("booking", "partenza", locale),
+          adulti: t("booking", "adulti", locale),
+          bambini: t("booking", "bambini", locale),
+          appartamento: text.appartamento,
+          soluzione: text.soluzione,
+          animale: text.msgAnimale,
+          colonnina: text.colonnina,
+          colonninaVilla: text.colonninaVilla,
+          ebike: text.ebike,
+        };
     const lines = [
       text.msgIntro(isVilla ? "Villa Relax" : "Agriturismo La Mora"),
       "",
-      `${text.nome}: ${firstName.trim()}`,
-      `${text.cognome}: ${lastName.trim()}`,
-      `${text.telefono}: ${phone.trim()}`,
-      `${text.email}: ${email.trim()}`,
-      `${t("booking", "arrivo", locale)}: ${dateFormatter.format(parseInputDate(checkIn))}`,
-      `${t("booking", "partenza", locale)}: ${dateFormatter.format(parseInputDate(checkOut))} (${text.msgNights(nights)})`,
-      `${t("booking", "adulti", locale)}: ${adults}`,
+      `${label.nome}: ${firstName.trim()}`,
+      `${label.cognome}: ${lastName.trim()}`,
+      `${label.telefono}: ${phone.trim()}`,
+      `${label.email}: ${email.trim()}`,
+      `${label.arrivo}: ${dateFormatter.format(parseInputDate(checkIn))}`,
+      `${label.partenza}: ${dateFormatter.format(parseInputDate(checkOut))} (${text.msgNights(nights)})`,
+      `${label.adulti}: ${adults}`,
     ];
     if (childAges.length > 0) {
-      lines.push(`${t("booking", "bambini", locale)}: ${childAges.length} (${childAges.map((age) => (age === "0" ? "<1" : age)).join(", ")})`);
+      lines.push(`${label.bambini}: ${childAges.length} (${childAges.map((age) => (age === "0" ? "<1" : age)).join(", ")})`);
     }
-    if (preference) lines.push(`${isVilla ? text.soluzione : text.appartamento}: ${preference}`);
-    if (pets) lines.push(`${text.msgAnimale}: ${petType} (${text.taglia}: ${petSize})`);
-    if (evCharger) lines.push(`${isVilla ? text.colonninaVilla : text.colonnina}: ${text.si}`);
-    if (!isVilla && ebike) lines.push(`${text.ebike}: ${ebikeOption}`);
+    if (preference) lines.push(`${isVilla ? label.soluzione : label.appartamento}: ${preference}`);
+    if (pets) lines.push(`${label.animale}: ${petType} (${text.taglia}: ${petSize})`);
+    if (evCharger) lines.push(`${isVilla ? label.colonninaVilla : label.colonnina}: ${text.si}`);
+    if (!isVilla && ebike) lines.push(`${label.ebike}: ${ebikeOption}`);
     if (message.trim()) lines.push("", message.trim());
     return lines.join("\n");
   }
 
+  /* Oggetto dell'email: "Richiesta di soggiorno – <struttura>", con le date
+     (sempre presenti: sono campi obbligatori del modulo). */
+  function emailSubject() {
+    const short = new Intl.DateTimeFormat(INTL_TAG[locale], { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "UTC" });
+    const dates = checkIn && checkOut ? ` (${short.format(parseInputDate(checkIn))} – ${short.format(parseInputDate(checkOut))})` : "";
+    return `${text.emailSubject(isVilla ? "Villa Relax Assisi" : "Agriturismo La Mora")}${dates}`;
+  }
+
+  /* Corpo dell'email per il link mailto: riepilogo completo; se il link
+     supera MAILTO_MAX, etichette accorciate; se è ancora troppo lungo,
+     "paste": il riepilogo si copia negli appunti e nel corpo resta l'invito
+     a incollarlo (avviso visibile nel passo finale, mai un errore muto). */
+  function emailPlan(summary: string): { body: string; mode: "full" | "short" | "paste" } {
+    const subject = emailSubject();
+    const fits = (body: string) => mailtoHref(subject, body).length <= MAILTO_MAX;
+    if (fits(summary)) return { body: summary, mode: "full" };
+    const compact = buildMessage(true);
+    if (fits(compact)) return { body: compact, mode: "short" };
+    return { body: text.pasteHere, mode: "paste" };
+  }
+
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildMessage())}`;
-    window.open(url, "_blank", "noopener,noreferrer");
-    setSentUrl(url);
+    setOpened(false);
+    setCopied(null);
+    setReview(buildMessage());
+  }
+
+  /* WhatsApp: stesso link e stesso testo di sempre. */
+  function sendWhatsapp(summary: string) {
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(summary)}`, "_blank", "noopener,noreferrer");
+    setOpened(true);
+  }
+
+  /* Email: il link mailto si costruisce solo qui, al click. */
+  async function sendEmail(summary: string) {
+    const plan = emailPlan(summary);
+    if (plan.mode === "paste") setCopied((await copyText(summary)) ? "summary" : "failed");
+    openLink(mailtoHref(emailSubject(), plan.body));
+    setOpened(true);
+  }
+
+  async function copy(value: string, what: "summary" | "address") {
+    setCopied((await copyText(value)) ? what : "failed");
+  }
+
+  function backToEdit() {
+    backToForm.current = true;
+    setReview(null);
   }
 
   const privacyHref = withLocale(locale, "/privacy/");
   const privacyLinkClass = "underline decoration-ink-soft/40 underline-offset-4 hover:text-ink";
+  const privacyNote = (
+    <>
+      {text.privacyPrefix}{" "}
+      {isVilla ? (
+        <a href={privacyHref} className={privacyLinkClass}>
+          {text.privacyLink}
+        </a>
+      ) : (
+        <Link href={privacyHref} className={privacyLinkClass}>
+          {text.privacyLink}
+        </Link>
+      )}
+    </>
+  );
 
-  if (sentUrl) {
+  if (review !== null) {
+    const address = contactEmail();
+    const plan = emailPlan(review);
+    const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(address)}&su=${encodeURIComponent(emailSubject())}&body=${encodeURIComponent(toCrlf(review))}`;
+    const linkClass = "text-[13px] text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry";
+    const smallButton =
+      "rounded-[3px] border border-ink/20 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.05em] text-ink transition-colors hover:border-raspberry hover:text-raspberry";
     return (
-      <div role="status" className="py-4 text-center">
-        <h3 id={titleId} className="font-display text-[24px] font-normal leading-[1.25] text-ink">
-          {text.sentHeading}
-        </h3>
-        <p className="mx-auto mt-3 max-w-[420px] text-[14px] leading-[1.7] text-ink-soft">{text.sentBody}</p>
-        <div className="mt-6 flex flex-col items-center gap-3">
-          <a href={sentUrl} target="_blank" rel="noopener noreferrer" className="text-[13px] text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry">
-            {text.sentRetry}
+      <div className="space-y-4">
+        <div className="text-center">
+          <h2 id={titleId} ref={reviewHeadingRef} tabIndex={-1} className="font-display text-[24px] font-normal leading-[1.25] text-ink outline-none [text-wrap:balance] sm:text-[26px]">
+            {text.reviewHeading}
+          </h2>
+          <p className="mx-auto mt-2 max-w-[440px] text-[13px] leading-[1.6] text-ink-soft">{text.reviewIntro}</p>
+        </div>
+
+        {/* Riepilogo in sola lettura: lo stesso testo che parte su WhatsApp
+            e nell'email. Scorrevole e raggiungibile da tastiera. */}
+        <div
+          role="region"
+          aria-label={text.summaryLabel}
+          tabIndex={0}
+          className="max-h-[38vh] overflow-y-auto whitespace-pre-wrap break-words rounded-[3px] border border-ink/10 bg-white px-4 py-3 text-[13.5px] leading-[1.6] text-ink outline-none focus-visible:border-ink/40"
+        >
+          {review}
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          <button
+            type="button"
+            onClick={() => sendWhatsapp(review)}
+            className="flex w-full items-center justify-center gap-2.5 rounded-[3px] bg-raspberry px-5 py-4 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
+          >
+            <WhatsAppIcon />
+            {text.sendWhatsapp}
+          </button>
+          <button
+            type="button"
+            onClick={() => sendEmail(review)}
+            className="flex w-full items-center justify-center gap-2.5 rounded-[3px] bg-olive-950 px-5 py-4 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#141810]"
+          >
+            <RequestIcon />
+            {text.sendEmail}
+          </button>
+        </div>
+
+        {plan.mode === "paste" && <p className="rounded-[3px] bg-white px-4 py-3 text-[13px] leading-[1.6] text-ink">{text.tooLong}</p>}
+
+        {/* Esito: l'invio non è automatico, va confermato nell'app. Spazio
+            riservato, così il testo che compare non sposta nulla. */}
+        <p aria-live="polite" className="min-h-[2.6em] text-center text-[14px] font-semibold leading-[1.3] text-ink">
+          {opened ? text.openedNote : ""}
+        </p>
+
+        <div className="space-y-3 border-t border-ink/10 pt-4 text-center">
+          <a href={gmailHref} target="_blank" rel="noopener noreferrer" onClick={() => setOpened(true)} className={linkClass}>
+            {text.gmail}
           </a>
-          <button type="button" onClick={() => setSentUrl(null)} className="text-[12px] font-semibold uppercase tracking-[0.05em] text-ink-soft transition-colors hover:text-ink">
+          <p className="text-[13px] leading-[1.5] text-ink-soft">
+            {text.addressLabel}: <span className="break-all text-ink">{address}</span>
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <button type="button" onClick={() => copy(review, "summary")} className={smallButton}>
+              {text.copySummary}
+            </button>
+            <button type="button" onClick={() => copy(address, "address")} className={smallButton}>
+              {text.copyAddress}
+            </button>
+          </div>
+          <p aria-live="polite" className="min-h-[1.5em] text-[12px] text-ink-soft">
+            {copied === "failed" ? text.copyFailed : copied ? text.copied : ""}
+          </p>
+          <button type="button" onClick={backToEdit} className="text-[12px] font-semibold uppercase tracking-[0.05em] text-ink-soft transition-colors hover:text-ink">
             {text.sentEdit}
           </button>
+          <p className="text-[12px] leading-[1.6] text-ink-soft">{privacyNote}</p>
         </div>
       </div>
     );
@@ -414,7 +716,7 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
       <div className="text-center">
-        <h2 id={titleId} className="font-display text-[26px] font-normal leading-[1.2] text-ink">
+        <h2 id={titleId} ref={formHeadingRef} tabIndex={-1} className="font-display text-[26px] font-normal leading-[1.2] text-ink outline-none">
           {text.title}
         </h2>
         <p className="mt-1.5 text-[13px] leading-[1.6] text-ink-soft">{text.intro}</p>
@@ -600,22 +902,13 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
         type="submit"
         className="mt-1 flex w-full items-center justify-center gap-2.5 rounded-[3px] bg-raspberry px-5 py-4 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#8a3844]"
       >
-        <WhatsAppIcon />
         {text.invia}
+        <span aria-hidden="true">→</span>
       </button>
       <p className="text-center text-[12px] leading-[1.6] text-ink-soft">
-        {text.whatsappNote}
+        {text.inviaNote}
         <br />
-        {text.privacyPrefix}{" "}
-        {isVilla ? (
-          <a href={privacyHref} className={privacyLinkClass}>
-            {text.privacyLink}
-          </a>
-        ) : (
-          <Link href={privacyHref} className={privacyLinkClass}>
-            {text.privacyLink}
-          </Link>
-        )}
+        {privacyNote}
       </p>
     </form>
   );
