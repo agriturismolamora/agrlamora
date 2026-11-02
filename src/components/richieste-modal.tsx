@@ -3,12 +3,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
+import { Fragment, useEffect, useId, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
 import { APARTMENTS } from "@/data/apartments";
 import { getVillaConfigurations, VILLA_LOGO_ALT, VILLA_LOGO_BLACK, VILLA_MAX_GUESTS } from "@/data/villa";
 import type { Locale } from "@/lib/i18n";
 import { splitLocaleFromPath, withLocale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
+import {
+  WEBMAIL_NAMES,
+  detectEmailProvider,
+  isMobileDevice,
+  mailtoUrl,
+  webmailUrl,
+  type EmailProvider,
+  type Webmail,
+} from "@/lib/email-provider";
 
 const WHATSAPP_NUMBER = "393934363917";
 
@@ -23,16 +32,27 @@ function contactEmail() {
 }
 
 /* Oltre questa lunghezza alcuni client di posta (o Windows) troncano o
-   ignorano il link mailto. */
-const MAILTO_MAX = 1800;
+   ignorano il link mailto; stesso limite per i link alle webmail. */
+const EMAIL_LINK_MAX = 1800;
 
-/* A capo CRLF nei corpi email (RFC 6068). */
-function toCrlf(value: string) {
-  return value.replace(/\r?\n/g, "\r\n");
-}
+/* Webmail a cui il pulsante "Invia via email" apre da solo una bozza nel
+   browser (solo computer, servizio riconosciuto dal dominio dell'utente,
+   vedi src/lib/email-provider.ts): solo quelli col formato del link
+   confermato da documentazione ufficiale. A novembre 2026 nessuno dei tre
+   lo è (Gmail view=cm, Outlook deeplink/compose, Yahoo compose: solo forum
+   e gist), quindi la lista è vuota e si usa sempre mailto. Per attivarne
+   uno basta aggiungerlo qui: indicazione sotto il pulsante e link "Apri
+   in:" si adeguano da soli. */
+const VERIFIED_WEBMAILS: Webmail[] = [];
 
-function mailtoHref(subject: string, body: string) {
-  return `mailto:${contactEmail()}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(toCrlf(body))}`;
+/* Link "Non si apre? Apri in:": Gmail c'era già (scelta esplicita
+   dell'utente, link invariato), gli altri solo se verificati. */
+const FALLBACK_WEBMAILS = (Object.keys(WEBMAIL_NAMES) as Webmail[]).filter((w) => w === "gmail" || VERIFIED_WEBMAILS.includes(w));
+
+type EmailTarget = Webmail | "mailto";
+
+function isVerifiedWebmail(provider: EmailProvider): provider is Webmail {
+  return (VERIFIED_WEBMAILS as string[]).includes(provider);
 }
 
 /* Apre un link (mailto) come un clic su <a>: stesso effetto di
@@ -129,7 +149,12 @@ type Text = {
   sendWhatsapp: string;
   sendEmail: string;
   openedNote: string;
-  gmail: string;
+  /* Riga sotto "Invia via email": cosa si aprirà (app di posta o webmail). */
+  emailHintApp: string;
+  emailHintWebmail: (service: string) => string;
+  /* "Non si apre? Apri in: Gmail · …" e nome accessibile di ogni link. */
+  openIn: string;
+  openInLabel: (service: string) => string;
   copySummary: string;
   copyAddress: string;
   copied: string;
@@ -139,7 +164,7 @@ type Text = {
   pasteHere: string;
   emailSubject: (struttura: string) => string;
   /* Etichette accorciate, solo per il corpo dell'email quando il link
-     mailto supererebbe MAILTO_MAX caratteri. */
+     (mailto o webmail) supererebbe EMAIL_LINK_MAX caratteri. */
   short: ShortLabels;
   sentEdit: string;
   msgIntro: (struttura: string) => string;
@@ -184,7 +209,10 @@ const TEXT: Record<Locale, Text> = {
     sendWhatsapp: "Invia su WhatsApp",
     sendEmail: "Invia via email",
     openedNote: "Si è aperta l'app: premi Invia per completare la richiesta.",
-    gmail: "Non si apre? Apri in Gmail",
+    emailHintApp: "Si aprirà la tua app di posta",
+    emailHintWebmail: (s) => `Si aprirà ${s} nel browser`,
+    openIn: "Non si apre? Apri in:",
+    openInLabel: (s) => `Apri la bozza in ${s} (nuova scheda)`,
     copySummary: "Copia riepilogo",
     copyAddress: "Copia indirizzo",
     copied: "Copiato",
@@ -234,7 +262,10 @@ const TEXT: Record<Locale, Text> = {
     sendWhatsapp: "Send on WhatsApp",
     sendEmail: "Send by email",
     openedNote: "The app has opened: press Send to complete your request.",
-    gmail: "Nothing opened? Open in Gmail",
+    emailHintApp: "Your email app will open",
+    emailHintWebmail: (s) => `${s} will open in your browser`,
+    openIn: "Nothing opened? Open in:",
+    openInLabel: (s) => `Open the draft in ${s} (new tab)`,
     copySummary: "Copy summary",
     copyAddress: "Copy address",
     copied: "Copied",
@@ -284,7 +315,10 @@ const TEXT: Record<Locale, Text> = {
     sendWhatsapp: "Envoyer sur WhatsApp",
     sendEmail: "Envoyer par e-mail",
     openedNote: "L'application s'est ouverte : appuyez sur Envoyer pour finaliser votre demande.",
-    gmail: "Rien ne s'ouvre ? Ouvrir dans Gmail",
+    emailHintApp: "Votre application de messagerie s'ouvrira",
+    emailHintWebmail: (s) => `${s} s'ouvrira dans le navigateur`,
+    openIn: "Rien ne s'ouvre ? Ouvrir dans :",
+    openInLabel: (s) => `Ouvrir le brouillon dans ${s} (nouvel onglet)`,
     copySummary: "Copier le récapitulatif",
     copyAddress: "Copier l'adresse",
     copied: "Copié",
@@ -334,7 +368,10 @@ const TEXT: Record<Locale, Text> = {
     sendWhatsapp: "Über WhatsApp senden",
     sendEmail: "Per E-Mail senden",
     openedNote: "Die App wurde geöffnet: Tippen Sie auf Senden, um Ihre Anfrage abzuschließen.",
-    gmail: "Nichts geöffnet? In Gmail öffnen",
+    emailHintApp: "Ihre E-Mail-App wird geöffnet",
+    emailHintWebmail: (s) => `${s} wird im Browser geöffnet`,
+    openIn: "Nichts geöffnet? Öffnen in:",
+    openInLabel: (s) => `Entwurf in ${s} öffnen (neuer Tab)`,
     copySummary: "Zusammenfassung kopieren",
     copyAddress: "Adresse kopieren",
     copied: "Kopiert",
@@ -490,6 +527,7 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
   const [review, setReview] = useState<string | null>(null);
   const [opened, setOpened] = useState(false);
   const [copied, setCopied] = useState<"summary" | "address" | "failed" | null>(null);
+  const emailHintId = useId();
   const reviewHeadingRef = useRef<HTMLHeadingElement>(null);
   const formHeadingRef = useRef<HTMLHeadingElement>(null);
   const backToForm = useRef(false);
@@ -572,13 +610,30 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
     return `${text.emailSubject(isVilla ? "Villa Relax Assisi" : "Agriturismo La Mora")}${dates}`;
   }
 
-  /* Corpo dell'email per il link mailto: riepilogo completo; se il link
-     supera MAILTO_MAX, etichette accorciate; se è ancora troppo lungo,
-     "paste": il riepilogo si copia negli appunti e nel corpo resta l'invito
-     a incollarlo (avviso visibile nel passo finale, mai un errore muto). */
-  function emailPlan(summary: string): { body: string; mode: "full" | "short" | "paste" } {
-    const subject = emailSubject();
-    const fits = (body: string) => mailtoHref(subject, body).length <= MAILTO_MAX;
+  /* Link della bozza (mailto o webmail) per un dato corpo. `account`:
+     indirizzo Gmail dell'utente, solo per l'apertura automatica. */
+  function draftLink(target: EmailTarget, account?: string) {
+    return (body: string) => {
+      const draft = { to: contactEmail(), subject: emailSubject(), body };
+      return target === "mailto" ? mailtoUrl(draft) : webmailUrl(target, draft, account);
+    };
+  }
+
+  /* Dove si apre la bozza: webmail nel browser solo su computer, se il
+     servizio riconosciuto dal dominio dell'utente è verificato; altrimenti
+     (telefono, tablet, iCloud, altri domini, email non valida) l'app di
+     posta con mailto. */
+  function emailTarget(): EmailTarget {
+    const provider = detectEmailProvider(email);
+    return isVerifiedWebmail(provider) && !isMobileDevice(navigator) ? provider : "mailto";
+  }
+
+  /* Corpo dell'email: riepilogo completo; se il link supera EMAIL_LINK_MAX,
+     etichette accorciate; se è ancora troppo lungo, "paste": il riepilogo si
+     copia negli appunti e nel corpo resta l'invito a incollarlo (avviso
+     visibile nel passo finale, mai un errore muto). */
+  function emailPlan(summary: string, link: (body: string) => string): { body: string; mode: "full" | "short" | "paste" } {
+    const fits = (body: string) => link(body).length <= EMAIL_LINK_MAX;
     if (fits(summary)) return { body: summary, mode: "full" };
     const compact = buildMessage(true);
     if (fits(compact)) return { body: compact, mode: "short" };
@@ -598,11 +653,28 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
     setOpened(true);
   }
 
-  /* Email: il link mailto si costruisce solo qui, al click. */
+  /* Email: destinazione e link si decidono solo qui, al click. */
   async function sendEmail(summary: string) {
-    const plan = emailPlan(summary);
-    if (plan.mode === "paste") setCopied((await copyText(summary)) ? "summary" : "failed");
-    openLink(mailtoHref(emailSubject(), plan.body));
+    const target = emailTarget();
+    const link = draftLink(target, target === "gmail" ? email : undefined);
+    const plan = emailPlan(summary, link);
+    if (target === "mailto") {
+      if (plan.mode === "paste") setCopied((await copyText(summary)) ? "summary" : "failed");
+      openLink(link(plan.body));
+    } else {
+      /* window.open subito, dentro il gesto dell'utente (altrimenti il
+         blocco popup la ferma): la copia parte prima, l'esito arriva dopo. */
+      const copying = plan.mode === "paste" ? copyText(summary) : null;
+      window.open(link(plan.body), "_blank", "noopener,noreferrer");
+      if (copying) setCopied((await copying) ? "summary" : "failed");
+    }
+    setOpened(true);
+  }
+
+  /* Link "Apri in:": la copia del riepilogo (se troppo lungo) parte nel
+     clic, la nuova scheda la apre il link stesso. */
+  function openFallback(paste: boolean, summary: string) {
+    if (paste) copy(summary, "summary");
     setOpened(true);
   }
 
@@ -634,8 +706,16 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
 
   if (review !== null) {
     const address = contactEmail();
-    const plan = emailPlan(review);
-    const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(address)}&su=${encodeURIComponent(emailSubject())}&body=${encodeURIComponent(toCrlf(review))}`;
+    /* Previsione per l'indicazione sotto il pulsante e per l'avviso: il
+       passo finale esiste solo nel browser, dopo l'invio del modulo; al
+       click la scelta si rifà da capo. */
+    const target = emailTarget();
+    const plan = emailPlan(review, draftLink(target, target === "gmail" ? email : undefined));
+    const fallbacks = FALLBACK_WEBMAILS.map((service) => {
+      const link = draftLink(service);
+      const servicePlan = emailPlan(review, link);
+      return { service, href: link(servicePlan.body), paste: servicePlan.mode === "paste" };
+    });
     const linkClass = "text-[13px] text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry";
     const smallButton =
       "rounded-[3px] border border-ink/20 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.05em] text-ink transition-colors hover:border-raspberry hover:text-raspberry";
@@ -671,11 +751,16 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
           <button
             type="button"
             onClick={() => sendEmail(review)}
+            aria-describedby={emailHintId}
             className="flex w-full items-center justify-center gap-2.5 rounded-[3px] bg-olive-950 px-5 py-4 font-sans text-[12px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:bg-[#141810]"
           >
             <RequestIcon />
             {text.sendEmail}
           </button>
+          {/* Sotto il pulsante email (seconda colonna da tablet in su). */}
+          <p id={emailHintId} className="-mt-1.5 text-center text-[12px] leading-[1.4] text-ink-soft sm:col-start-2">
+            {target === "mailto" ? text.emailHintApp : text.emailHintWebmail(WEBMAIL_NAMES[target])}
+          </p>
         </div>
 
         {plan.mode === "paste" && <p className="rounded-[3px] bg-white px-4 py-3 text-[13px] leading-[1.6] text-ink">{text.tooLong}</p>}
@@ -687,9 +772,24 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
         </p>
 
         <div className="space-y-3 border-t border-ink/10 pt-4 text-center">
-          <a href={gmailHref} target="_blank" rel="noopener noreferrer" onClick={() => setOpened(true)} className={linkClass}>
-            {text.gmail}
-          </a>
+          <p className="text-[13px] leading-[1.6] text-ink-soft">
+            {text.openIn}{" "}
+            {fallbacks.map(({ service, href, paste }, i) => (
+              <Fragment key={service}>
+                {i > 0 && <span aria-hidden="true"> · </span>}
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={text.openInLabel(WEBMAIL_NAMES[service])}
+                  onClick={() => openFallback(paste, review)}
+                  className={linkClass}
+                >
+                  {WEBMAIL_NAMES[service]}
+                </a>
+              </Fragment>
+            ))}
+          </p>
           <p className="text-[13px] leading-[1.5] text-ink-soft">
             {text.addressLabel}: <span className="break-all text-ink">{address}</span>
           </p>

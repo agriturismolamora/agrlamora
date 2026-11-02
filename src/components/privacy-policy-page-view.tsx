@@ -40,9 +40,10 @@ function buildSections(locale: Locale): LegalSection[] {
           <>
             <p>
               <strong>Richieste di prenotazione o informazioni.</strong> Se ci scrivi su WhatsApp o per email, o ci chiami per chiedere disponibilità o informazioni, tratti direttamente con noi.
-              Il modulo di richiesta del sito prepara soltanto il riepilogo: sei tu a inviarlo, dalla tua app WhatsApp o dalla tua app di
-              posta (o da Gmail, se scegli quell&apos;opzione); i dati non passano dai server del sito e il sito non li salva in un proprio
-              database. Nome, contatti, date del soggiorno ed eventuali richieste particolari (es. esigenze alimentari,
+              Il modulo di richiesta del sito prepara soltanto il riepilogo: sei tu a inviarlo, dalla tua app WhatsApp, dalla tua app di
+              posta o da un servizio di posta web (come Gmail); in quest&apos;ultimo caso la bozza si apre nel tuo account su quel servizio.
+              L&apos;indirizzo email che scrivi nel modulo serve anche, solo nel tuo browser, a capire quale servizio di posta aprire. I dati
+              non passano dai server del sito e il sito non li salva in un proprio database. Nome, contatti, date del soggiorno ed eventuali richieste particolari (es. esigenze alimentari,
               animali al seguito) vengono trattati manualmente da chi gestisce la struttura per rispondere alla richiesta, organizzare il
               soggiorno e adempiere agli obblighi di legge legati all’ospitalità (es. comunicazioni alla Questura, tassa di soggiorno).
               Base giuridica: esecuzione di misure precontrattuali o contrattuali su tua richiesta (art. 6.1.b GDPR) e, per gli obblighi
@@ -225,9 +226,10 @@ function buildSections(locale: Locale): LegalSection[] {
           <>
             <p>
               <strong>Booking or information requests.</strong> If you write to us on WhatsApp or by email, or call us to ask about availability or information, you deal directly with us.
-              The site&apos;s request form only prepares the summary: you send it yourself, from your WhatsApp app or your email app (or
-              Gmail, if you choose that option); the data does not pass through the site&apos;s servers and the site does not store it in
-              its own database. Name, contact details, stay dates, and any special requests (e.g. dietary needs, pets) are handled
+              The site&apos;s request form only prepares the summary: you send it yourself, from your WhatsApp app, your email app or a
+              webmail service (such as Gmail); in the latter case the draft opens in your account on that service. The email address you
+              enter in the form is also used, only in your browser, to work out which email service to open. The data does not pass
+              through the site&apos;s servers and the site does not store it in its own database. Name, contact details, stay dates, and any special requests (e.g. dietary needs, pets) are handled
               manually by the property’s staff to reply to the request, organise the stay, and comply with hospitality-related legal
               obligations (e.g. reporting to local authorities, tourist tax). Legal basis: performance of pre-contractual or contractual
               measures at your request (Art. 6.1.b GDPR), and, for legal obligations, Art. 6.1.c GDPR.
@@ -409,8 +411,10 @@ function buildSections(locale: Locale): LegalSection[] {
             <p>
               <strong>Demandes de réservation ou d’informations.</strong> Si vous nous écrivez sur WhatsApp ou par e-mail, ou nous appelez pour demander des disponibilités ou des informations, vous
               traitez directement avec nous. Le formulaire de demande du site prépare seulement le récapitulatif : c’est vous qui
-              l’envoyez, depuis votre application WhatsApp ou votre messagerie (ou Gmail, si vous choisissez cette option) ; les données ne
-              transitent pas par les serveurs du site et le site ne les stocke pas dans sa propre base. Le nom, les coordonnées, les dates du séjour
+              l’envoyez, depuis votre application WhatsApp, votre messagerie ou un service de messagerie en ligne (comme Gmail) ; dans ce
+              dernier cas, le brouillon s’ouvre dans votre compte sur ce service. L’adresse e-mail saisie dans le formulaire sert aussi,
+              uniquement dans votre navigateur, à choisir le service de messagerie à ouvrir. Les données ne transitent pas par les
+              serveurs du site et le site ne les stocke pas dans sa propre base. Le nom, les coordonnées, les dates du séjour
               et toute demande particulière (par ex. besoins alimentaires, animaux) sont traités manuellement par le personnel de
               l’établissement pour répondre à la demande, organiser le séjour et respecter les obligations légales liées à l’hébergement
               touristique (par ex. déclarations aux autorités, taxe de séjour). Base juridique : exécution de mesures précontractuelles
@@ -601,9 +605,11 @@ function buildSections(locale: Locale): LegalSection[] {
           <>
             <p>
               <strong>Buchungs- oder Informationsanfragen.</strong> Wenn Sie uns per WhatsApp, E-Mail oder Telefon nach Verfügbarkeit oder Informationen fragen, handeln Sie direkt mit uns.
-              Das Anfrageformular der Website bereitet nur die Zusammenfassung vor: Sie senden sie selbst, über Ihre WhatsApp-App oder Ihr
-              E-Mail-Programm (oder Gmail, wenn Sie diese Option wählen); die Daten laufen nicht über die Server der Website, und die
-              Website speichert sie nicht in einer eigenen Datenbank. Name, Kontaktdaten, Aufenthaltsdaten und etwaige besondere Wünsche (z. B.
+              Das Anfrageformular der Website bereitet nur die Zusammenfassung vor: Sie senden sie selbst, über Ihre WhatsApp-App, Ihr
+              E-Mail-Programm oder einen Webmail-Dienst (wie Gmail); im letzteren Fall öffnet sich der Entwurf in Ihrem Konto bei diesem
+              Dienst. Die E-Mail-Adresse, die Sie im Formular angeben, wird außerdem nur in Ihrem Browser verwendet, um zu erkennen,
+              welcher E-Mail-Dienst geöffnet wird. Die Daten laufen nicht über die Server der Website, und die Website speichert sie
+              nicht in einer eigenen Datenbank. Name, Kontaktdaten, Aufenthaltsdaten und etwaige besondere Wünsche (z. B.
               Ernährungsbedürfnisse, Haustiere) werden manuell vom Personal der Unterkunft verarbeitet, um die Anfrage zu beantworten,
               den Aufenthalt zu organisieren und gesetzliche Pflichten im Zusammenhang mit der Beherbergung zu erfüllen (z. B. Meldungen
               an Behörden, Kurtaxe). Rechtsgrundlage: Erfüllung vorvertraglicher oder vertraglicher Maßnahmen auf Ihre Anfrage (Art.
