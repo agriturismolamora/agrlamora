@@ -38,18 +38,22 @@ const EMAIL_LINK_MAX = 1800;
 /* Webmail a cui il pulsante "Invia via email" apre da solo una bozza nel
    browser (solo computer, servizio riconosciuto dal dominio dell'utente,
    vedi src/lib/email-provider.ts): solo quelli col formato del link
-   confermato da documentazione ufficiale. A novembre 2026 nessuno dei tre
-   lo è (Gmail view=cm, Outlook deeplink/compose, Yahoo compose: solo forum
-   e gist), quindi la lista è vuota e si usa sempre mailto. Per attivarne
-   uno basta aggiungerlo qui: indicazione sotto il pulsante e link "Apri
-   in:" si adeguano da soli. */
-const VERIFIED_WEBMAILS: Webmail[] = [];
-
-/* Link "Non si apre? Apri in:": Gmail c'era già (scelta esplicita
-   dell'utente, link invariato), gli altri solo se verificati. */
-const FALLBACK_WEBMAILS = (Object.keys(WEBMAIL_NAMES) as Webmail[]).filter((w) => w === "gmail" || VERIFIED_WEBMAILS.includes(w));
+   verificato a mano con un account reale (nessuno dei tre è documentato
+   ufficialmente). Gmail verificato il 2 novembre 2026; Outlook e Yahoo
+   Mail disattivati finché non si provano a mano. Gli stessi servizi sono
+   gli unici link di "Non si apre? Apri in:". */
+const VERIFIED_WEBMAILS: Webmail[] = ["gmail"];
 
 type EmailTarget = Webmail | "mailto";
+
+/* Avviso dopo il click: "opened" (app o webmail aperti); "noApp" solo su
+   computer con mailto, se la pagina non ha perso il focus (nessuna app di
+   posta registrata, probabilmente). */
+type Notice = "opened" | "noApp" | null;
+
+/* Attesa prima di suggerire le alternative a un mailto che non ha aperto
+   nulla (nessun blur né visibilitychange nel frattempo). */
+const MAILTO_WATCH_MS = 1500;
 
 function isVerifiedWebmail(provider: EmailProvider): provider is Webmail {
   return (VERIFIED_WEBMAILS as string[]).includes(provider);
@@ -152,6 +156,11 @@ type Text = {
   /* Riga sotto "Invia via email": cosa si aprirà (app di posta o webmail). */
   emailHintApp: string;
   emailHintWebmail: (service: string) => string;
+  /* Computer con mailto: le alternative valgono se manca l'app di posta. */
+  emailHintNoApp: string;
+  /* Computer con mailto, nessuna app aperta (euristica): `services` sono i
+     link "Apri in:" attivi (null se nessuno), `address` l'indirizzo. */
+  noAppNote: (services: string | null, address: string) => string;
   /* "Non si apre? Apri in: Gmail · …" e nome accessibile di ogni link. */
   openIn: string;
   openInLabel: (service: string) => string;
@@ -211,6 +220,8 @@ const TEXT: Record<Locale, Text> = {
     openedNote: "Si è aperta l'app: premi Invia per completare la richiesta.",
     emailHintApp: "Si aprirà la tua app di posta",
     emailHintWebmail: (s) => `Si aprirà ${s} nel browser`,
+    emailHintNoApp: "Se sul tuo computer non c'è un'app di posta, usa le alternative qui sotto",
+    noAppNote: (s, a) => `Se non si è aperta nessuna app di posta, usa le alternative qui sotto: ${s ? `Apri in ${s} oppure ` : ""}Copia riepilogo e incollalo in una nuova email a ${a}.`,
     openIn: "Non si apre? Apri in:",
     openInLabel: (s) => `Apri la bozza in ${s} (nuova scheda)`,
     copySummary: "Copia riepilogo",
@@ -264,6 +275,8 @@ const TEXT: Record<Locale, Text> = {
     openedNote: "The app has opened: press Send to complete your request.",
     emailHintApp: "Your email app will open",
     emailHintWebmail: (s) => `${s} will open in your browser`,
+    emailHintNoApp: "If your computer has no email app, use the alternatives below",
+    noAppNote: (s, a) => `If no email app opened, use the alternatives below: ${s ? `Open in ${s}, or ` : ""}Copy summary and paste it into a new email to ${a}.`,
     openIn: "Nothing opened? Open in:",
     openInLabel: (s) => `Open the draft in ${s} (new tab)`,
     copySummary: "Copy summary",
@@ -317,6 +330,8 @@ const TEXT: Record<Locale, Text> = {
     openedNote: "L'application s'est ouverte : appuyez sur Envoyer pour finaliser votre demande.",
     emailHintApp: "Votre application de messagerie s'ouvrira",
     emailHintWebmail: (s) => `${s} s'ouvrira dans le navigateur`,
+    emailHintNoApp: "Si votre ordinateur n'a pas d'application de messagerie, utilisez les alternatives ci-dessous",
+    noAppNote: (s, a) => `Si aucune application de messagerie ne s'est ouverte, utilisez les alternatives ci-dessous : ${s ? `Ouvrir dans ${s}, ou ` : ""}Copier le récapitulatif, puis collez-le dans un nouvel e-mail à ${a}.`,
     openIn: "Rien ne s'ouvre ? Ouvrir dans :",
     openInLabel: (s) => `Ouvrir le brouillon dans ${s} (nouvel onglet)`,
     copySummary: "Copier le récapitulatif",
@@ -370,6 +385,8 @@ const TEXT: Record<Locale, Text> = {
     openedNote: "Die App wurde geöffnet: Tippen Sie auf Senden, um Ihre Anfrage abzuschließen.",
     emailHintApp: "Ihre E-Mail-App wird geöffnet",
     emailHintWebmail: (s) => `${s} wird im Browser geöffnet`,
+    emailHintNoApp: "Falls auf Ihrem Computer keine E-Mail-App eingerichtet ist, nutzen Sie die Alternativen unten",
+    noAppNote: (s, a) => `Falls sich keine E-Mail-App geöffnet hat, nutzen Sie die Alternativen unten: ${s ? `In ${s} öffnen oder ` : ""}Zusammenfassung kopieren und in eine neue E-Mail an ${a} einfügen.`,
     openIn: "Nichts geöffnet? Öffnen in:",
     openInLabel: (s) => `Entwurf in ${s} öffnen (neuer Tab)`,
     copySummary: "Zusammenfassung kopieren",
@@ -525,13 +542,17 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
   /* Passo finale: il riepilogo (lo stesso testo di WhatsApp) quando il
      modulo è valido; null mentre si compila. */
   const [review, setReview] = useState<string | null>(null);
-  const [opened, setOpened] = useState(false);
+  const [notice, setNotice] = useState<Notice>(null);
   const [copied, setCopied] = useState<"summary" | "address" | "failed" | null>(null);
   const emailHintId = useId();
   const reviewHeadingRef = useRef<HTMLHeadingElement>(null);
   const formHeadingRef = useRef<HTMLHeadingElement>(null);
   const backToForm = useRef(false);
+  /* Ferma l'attesa dell'esito di un mailto (vedi watchMailto). */
+  const stopMailtoWatch = useRef<(() => void) | null>(null);
   const today = useToday();
+
+  useEffect(() => () => stopMailtoWatch.current?.(), []);
 
   // Focus sul titolo del passo che compare (riepilogo o modulo).
   useEffect(() => {
@@ -640,9 +661,35 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
     return { body: text.pasteHere, mode: "paste" };
   }
 
+  function showNotice(value: Notice) {
+    stopMailtoWatch.current?.();
+    setNotice(value);
+  }
+
+  /* Computer con mailto: se nessuna app di posta è registrata il link non
+     apre nulla e la pagina resta in primo piano. Un blur o un cambio di
+     visibilità entro MAILTO_WATCH_MS vale come "app aperta"; altrimenti si
+     suggeriscono le alternative. Sceglie solo l'avviso: non blocca né
+     nasconde nulla. */
+  function watchMailto() {
+    showNotice(null);
+    const finish = (result: Notice) => {
+      window.removeEventListener("blur", onLeave);
+      document.removeEventListener("visibilitychange", onLeave);
+      window.clearTimeout(timer);
+      stopMailtoWatch.current = null;
+      if (result) setNotice(result);
+    };
+    const onLeave = () => finish("opened");
+    const timer = window.setTimeout(() => finish(document.hidden ? "opened" : "noApp"), MAILTO_WATCH_MS);
+    window.addEventListener("blur", onLeave);
+    document.addEventListener("visibilitychange", onLeave);
+    stopMailtoWatch.current = () => finish(null);
+  }
+
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setOpened(false);
+    showNotice(null);
     setCopied(null);
     setReview(buildMessage());
   }
@@ -650,7 +697,7 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
   /* WhatsApp: stesso link e stesso testo di sempre. */
   function sendWhatsapp(summary: string) {
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(summary)}`, "_blank", "noopener,noreferrer");
-    setOpened(true);
+    showNotice("opened");
   }
 
   /* Email: destinazione e link si decidono solo qui, al click. */
@@ -660,22 +707,25 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
     const plan = emailPlan(summary, link);
     if (target === "mailto") {
       if (plan.mode === "paste") setCopied((await copyText(summary)) ? "summary" : "failed");
+      // Telefoni e tablet: come prima, l'app di posta c'è sempre.
+      if (isMobileDevice(navigator)) showNotice("opened");
+      else watchMailto();
       openLink(link(plan.body));
     } else {
       /* window.open subito, dentro il gesto dell'utente (altrimenti il
          blocco popup la ferma): la copia parte prima, l'esito arriva dopo. */
       const copying = plan.mode === "paste" ? copyText(summary) : null;
       window.open(link(plan.body), "_blank", "noopener,noreferrer");
+      showNotice("opened");
       if (copying) setCopied((await copying) ? "summary" : "failed");
     }
-    setOpened(true);
   }
 
   /* Link "Apri in:": la copia del riepilogo (se troppo lungo) parte nel
      clic, la nuova scheda la apre il link stesso. */
   function openFallback(paste: boolean, summary: string) {
     if (paste) copy(summary, "summary");
-    setOpened(true);
+    showNotice("opened");
   }
 
   async function copy(value: string, what: "summary" | "address") {
@@ -683,6 +733,7 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
   }
 
   function backToEdit() {
+    stopMailtoWatch.current?.();
     backToForm.current = true;
     setReview(null);
   }
@@ -711,14 +762,23 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
        click la scelta si rifà da capo. */
     const target = emailTarget();
     const plan = emailPlan(review, draftLink(target, target === "gmail" ? email : undefined));
-    const fallbacks = FALLBACK_WEBMAILS.map((service) => {
+    const fallbacks = VERIFIED_WEBMAILS.map((service) => {
       const link = draftLink(service);
       const servicePlan = emailPlan(review, link);
       return { service, href: link(servicePlan.body), paste: servicePlan.mode === "paste" };
     });
+    /* Computer con mailto: l'app di posta potrebbe mancare, quindi
+       indicazione, avviso e "Copia riepilogo" puntano alle alternative. */
+    const mobile = isMobileDevice(navigator);
+    const mailtoOnDesktop = !mobile && target === "mailto";
+    const emailHint = mobile ? text.emailHintApp : target === "mailto" ? text.emailHintNoApp : text.emailHintWebmail(WEBMAIL_NAMES[target]);
+    const noAppNote = text.noAppNote(fallbacks.length ? fallbacks.map(({ service }) => WEBMAIL_NAMES[service]).join(" / ") : null, address);
+    const notices = mailtoOnDesktop ? [text.openedNote, noAppNote] : [text.openedNote];
     const linkClass = "text-[13px] text-raspberry underline decoration-raspberry/30 underline-offset-4 hover:decoration-raspberry";
     const smallButton =
       "rounded-[3px] border border-ink/20 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.05em] text-ink transition-colors hover:border-raspberry hover:text-raspberry";
+    const strongButton =
+      "rounded-[3px] border border-raspberry bg-raspberry px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.05em] text-cream transition-colors hover:border-[#8a3844] hover:bg-[#8a3844]";
     return (
       <div className="space-y-4">
         <div className="text-center">
@@ -759,17 +819,25 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
           </button>
           {/* Sotto il pulsante email (seconda colonna da tablet in su). */}
           <p id={emailHintId} className="-mt-1.5 text-center text-[12px] leading-[1.4] text-ink-soft sm:col-start-2">
-            {target === "mailto" ? text.emailHintApp : text.emailHintWebmail(WEBMAIL_NAMES[target])}
+            {emailHint}
           </p>
         </div>
 
         {plan.mode === "paste" && <p className="rounded-[3px] bg-white px-4 py-3 text-[13px] leading-[1.6] text-ink">{text.tooLong}</p>}
 
-        {/* Esito: l'invio non è automatico, va confermato nell'app. Spazio
-            riservato, così il testo che compare non sposta nulla. */}
-        <p aria-live="polite" className="min-h-[2.6em] text-center text-[14px] font-semibold leading-[1.3] text-ink">
-          {opened ? text.openedNote : ""}
-        </p>
+        {/* Esito: l'invio non è automatico, va confermato nell'app. Gli avvisi
+            possibili sono già qui, invisibili, nella stessa cella: lo spazio è
+            quello del più lungo e quando uno compare non si sposta nulla. */}
+        <div className="grid text-center text-[14px] font-semibold leading-[1.3] text-ink wrap-break-word">
+          {notices.map((note) => (
+            <p key={note} aria-hidden="true" className="invisible col-start-1 row-start-1">
+              {note}
+            </p>
+          ))}
+          <p aria-live="polite" className="col-start-1 row-start-1">
+            {notice === "opened" ? text.openedNote : notice === "noApp" ? noAppNote : ""}
+          </p>
+        </div>
 
         <div className="space-y-3 border-t border-ink/10 pt-4 text-center">
           <p className="text-[13px] leading-[1.6] text-ink-soft">
@@ -794,7 +862,7 @@ function RequestForm({ struttura, locale, titleId }: { struttura: "lamora" | "vi
             {text.addressLabel}: <span className="break-all text-ink">{address}</span>
           </p>
           <div className="flex flex-wrap items-center justify-center gap-2">
-            <button type="button" onClick={() => copy(review, "summary")} className={smallButton}>
+            <button type="button" onClick={() => copy(review, "summary")} className={mailtoOnDesktop ? strongButton : smallButton}>
               {text.copySummary}
             </button>
             <button type="button" onClick={() => copy(address, "address")} className={smallButton}>
