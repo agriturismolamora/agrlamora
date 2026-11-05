@@ -2,9 +2,10 @@ import type { Locale } from "@/lib/i18n";
 
 /* Foto PROVVISORIE inviate da Paolo (novembre 2026): il prato è stato rifatto
    e le foto notturne sono in arrivo, le definitive sostituiranno queste.
-   Un solo punto dati per foto. Per sostituirne una basta sovrascrivere il file
-   in public/ con lo stesso nome (o cambiare `src` qui): gallerie e pagine si
-   aggiornano da sole, gli alt si cambiano solo se cambia il soggetto.
+   Un solo punto dati per foto. Per sostituirne una: file nuovo in public/ con un
+   nome nuovo e `src` aggiornato qui (le varianti restano in cache 31 giorni, con
+   lo stesso nome chi ha già visitato il sito vedrebbe la vecchia foto); gallerie
+   e pagine si aggiornano da sole, gli alt si cambiano solo se cambia il soggetto.
    Filigrana: la aggiunge WatermarkedImage, i file non la contengono. */
 export type LocalizedPhoto = { src: string; alt: Record<Locale, string> };
 
