@@ -1,4 +1,5 @@
 import { WatermarkedImage } from "@/components/watermarked-image";
+import { FARMHOUSE_LAWN_ENTRANCE } from "@/data/provisional-photos";
 import Link from "next/link";
 import { getGoogleReviews } from "@/lib/google-reviews";
 import { Reveal } from "@/components/scroll-reveal";
@@ -431,10 +432,10 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
           <Reveal>
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
               <WatermarkedImage
-                src="/images/struttura/foto dell esterno della struttura.webp"
-                alt="Agriturismo La Mora, gestito dalla famiglia Mazzoli"
+                src={FARMHOUSE_LAWN_ENTRANCE.src}
+                alt={FARMHOUSE_LAWN_ENTRANCE.alt[locale]}
                 fill
-                sizes="(max-width: 640px) 100vw, 440px"
+                sizes="(max-width: 1023px) 92vw, 440px"
                 className="object-cover"
               />
             </div>

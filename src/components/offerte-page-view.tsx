@@ -14,6 +14,7 @@ import { bbitOfferteUrl } from "@/lib/bbit-widget-urls";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { EUROCHOCOLATE_2026 } from "@/data/promo";
+import { FARMHOUSE_LAWN_ENTRANCE } from "@/data/provisional-photos";
 import { PromoLine } from "@/components/promo-line";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
@@ -459,10 +460,10 @@ export function OffertePageView({ locale }: { locale: Locale }) {
           <Reveal delay={100} className="order-1 sm:order-2">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
               <WatermarkedImage
-                src="/images/struttura/foto dell esterno della struttura.webp"
-                alt="Esterno di Agriturismo La Mora"
+                src={FARMHOUSE_LAWN_ENTRANCE.src}
+                alt={FARMHOUSE_LAWN_ENTRANCE.alt[locale]}
                 fill
-                sizes="(max-width: 640px) 100vw, 540px"
+                sizes="(max-width: 640px) 92vw, 500px"
                 className="object-cover"
               />
             </div>

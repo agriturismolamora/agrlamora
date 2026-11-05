@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n";
+import { SAGITTARIO_GARDEN_FARMHOUSE, SAGITTARIO_GARDEN_GAZEBO, type LocalizedPhoto } from "@/data/provisional-photos";
 
 /* Contenuto editoriale per pagina di ogni appartamento, in aggiunta ai dati
    già presenti in apartments.ts (che restano la fonte per nome/specifiche/
@@ -273,11 +274,17 @@ const TEXT_BY_LOCALE: Record<Locale, Record<string, TextOnly>> = {
   },
 };
 
+/* Foto provvisorie in coda alla galleria, con alt tradotti. */
+const PROVISIONAL_GALLERY: Record<string, LocalizedPhoto[]> = {
+  sagittario: [SAGITTARIO_GARDEN_GAZEBO, SAGITTARIO_GARDEN_FARMHOUSE],
+};
+
 export function getApartmentDetails(locale: Locale): Record<string, ApartmentDetail> {
   const text = TEXT_BY_LOCALE[locale];
   const merged: Record<string, ApartmentDetail> = {};
   for (const slug of Object.keys(GALLERIES)) {
-    merged[slug] = { ...text[slug], gallery: GALLERIES[slug] };
+    const provisional = (PROVISIONAL_GALLERY[slug] ?? []).map((photo) => ({ src: photo.src, alt: photo.alt[locale] }));
+    merged[slug] = { ...text[slug], gallery: [...GALLERIES[slug], ...provisional] };
   }
   return merged;
 }
