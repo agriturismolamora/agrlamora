@@ -11,6 +11,7 @@ import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
+import { ALT_ASSISI_SUNSET, ALT_BASILICA_SAN_FRANCESCO, ALT_BREAKFAST, ALT_BREAKFAST_ROOM } from "@/data/photo-alts";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -247,7 +248,7 @@ export function ColazionePageView({ locale }: { locale: Locale }) {
       <section className="relative flex h-[86vh] min-h-[560px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/colazione/colazione bio agriturismo la mora.webp"
-          alt="Colazione biologica servita ad Agriturismo La Mora"
+          alt={ALT_BREAKFAST[locale]}
           fill
           priority
           fetchPriority="high"
@@ -277,7 +278,7 @@ export function ColazionePageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[3/4] w-full max-w-[220px] overflow-hidden rounded-[3px] shadow-[0_35px_70px_-30px_rgba(0,0,0,0.6)]">
               <WatermarkedImage
                 src="/images/colazione/sala con colazione pronta agriturismo.webp"
-                alt="Sala comune con la colazione pronta ad Agriturismo La Mora"
+                alt={ALT_BREAKFAST_ROOM[locale]}
                 fill
                 sizes="220px"
                 className="object-cover"
@@ -299,7 +300,7 @@ export function ColazionePageView({ locale }: { locale: Locale }) {
               <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-[3px] sm:aspect-[16/11]">
                 <WatermarkedImage
                   src="/images/colazione/colazione bio agriturismo la mora.webp"
-                  alt="Colazione biologica servita ad Agriturismo La Mora"
+                  alt={ALT_BREAKFAST[locale]}
                   fill
                   sizes="(max-width: 640px) 100vw, 540px"
                   className="object-cover"
@@ -338,7 +339,7 @@ export function ColazionePageView({ locale }: { locale: Locale }) {
               <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-[3px] sm:order-2 sm:aspect-[16/11]">
                 <WatermarkedImage
                   src="/images/colazione/sala con colazione pronta agriturismo.webp"
-                  alt="Sala comune con la colazione pronta ad Agriturismo La Mora"
+                  alt={ALT_BREAKFAST_ROOM[locale]}
                   fill
                   sizes="(max-width: 640px) 100vw, 540px"
                   className="object-cover"
@@ -378,7 +379,7 @@ export function ColazionePageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] sm:aspect-[16/11]">
               <Image
                 src="/images/ottavo centenario san francesco/basilica di san francesco di assisi ottavo centenario.webp"
-                alt="Basilica di San Francesco d'Assisi"
+                alt={ALT_BASILICA_SAN_FRANCESCO[locale]}
                 fill
                 sizes="(max-width: 640px) 100vw, 540px"
                 className="object-cover"
@@ -412,7 +413,7 @@ export function ColazionePageView({ locale }: { locale: Locale }) {
       <section className="relative flex h-[64vh] min-h-[440px] items-center justify-center overflow-hidden">
         <WatermarkedImage
           src="/images/territorio/assisi/assisi con tramonto.jpg"
-          alt="Assisi al tramonto, vista dalla campagna umbra"
+          alt={ALT_ASSISI_SUNSET[locale]}
           fill
           sizes="100vw"
           className="object-cover"

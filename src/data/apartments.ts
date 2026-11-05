@@ -21,7 +21,7 @@ export type Apartment = {
   name: string;
   zodiac: ZodiacKey;
   image: string;
-  alt: string;
+  alt: Record<Locale, string>;
   href: string;
   petFriendly?: boolean;
   /* Dati reali confermati (occupazione/letti/bagni/mq), stesso formato
@@ -48,7 +48,7 @@ export const APARTMENTS: Apartment[] = [
     name: "Gemelli",
     zodiac: "gemelli",
     image: "/images/alloggi/appartamento gemelli/stanza letto app gemelli.jpeg",
-    alt: "Camera da letto dell'appartamento Gemelli, Agriturismo La Mora",
+    alt: { it: "Camera da letto dell'appartamento Gemelli, Agriturismo La Mora", en: "Bedroom of the Gemelli apartment, Agriturismo La Mora", fr: "Chambre de l'appartement Gemelli, Agriturismo La Mora", de: "Schlafzimmer des Apartments Gemelli, Agriturismo La Mora" },
     href: "/alloggi/gemelli/",
     petFriendly: true,
     maxGuests: 4,
@@ -62,7 +62,7 @@ export const APARTMENTS: Apartment[] = [
     name: "Bilancia",
     zodiac: "bilancia",
     image: "/images/alloggi/appartamento bilancia/foto letto matrimoniale verticale bilancia.jpeg",
-    alt: "Camera da letto dell'appartamento Bilancia, Agriturismo La Mora",
+    alt: { it: "Camera da letto dell'appartamento Bilancia, Agriturismo La Mora", en: "Bedroom of the Bilancia apartment, Agriturismo La Mora", fr: "Chambre de l'appartement Bilancia, Agriturismo La Mora", de: "Schlafzimmer des Apartments Bilancia, Agriturismo La Mora" },
     href: "/alloggi/bilancia/",
     maxGuests: 8,
     beds: 8,
@@ -75,7 +75,7 @@ export const APARTMENTS: Apartment[] = [
     name: "Pesci",
     zodiac: "pesci",
     image: "/images/alloggi/appartamento pesci/vista da davanti letto matrimoniale stanza pesci.jpeg",
-    alt: "Camera da letto dell'appartamento Pesci, Agriturismo La Mora",
+    alt: { it: "Camera da letto dell'appartamento Pesci, Agriturismo La Mora", en: "Bedroom of the Pesci apartment, Agriturismo La Mora", fr: "Chambre de l'appartement Pesci, Agriturismo La Mora", de: "Schlafzimmer des Apartments Pesci, Agriturismo La Mora" },
     href: "/alloggi/pesci/",
     maxGuests: 4,
     beds: 4,
@@ -88,7 +88,7 @@ export const APARTMENTS: Apartment[] = [
     name: "Acquario",
     zodiac: "acquario",
     image: "/images/alloggi/appartamento acquario/orizzontale letto acquario.jpeg",
-    alt: "Camera da letto dell'appartamento Acquario, Agriturismo La Mora",
+    alt: { it: "Camera da letto dell'appartamento Acquario, Agriturismo La Mora", en: "Bedroom of the Acquario apartment, Agriturismo La Mora", fr: "Chambre de l'appartement Acquario, Agriturismo La Mora", de: "Schlafzimmer des Apartments Acquario, Agriturismo La Mora" },
     href: "/alloggi/acquario/",
     maxGuests: 4,
     beds: 4,
@@ -105,7 +105,7 @@ export const APARTMENTS: Apartment[] = [
        gazebo privato — verificata anche nel ritaglio verticale 3:4 della
        card, dove resta leggibile. */
     image: "/images/alloggi/appartamento sagittario/gazebo sagittario 1.jpeg",
-    alt: "Esterno in pietra dell'appartamento Sagittario con gazebo e giardino privato, Agriturismo La Mora",
+    alt: { it: "Esterno in pietra dell'appartamento Sagittario con gazebo e giardino privato, Agriturismo La Mora", en: "Stone exterior of the Sagittario apartment with gazebo and private garden, Agriturismo La Mora", fr: "Extérieur en pierre de l'appartement Sagittario avec gazebo et jardin privé, Agriturismo La Mora", de: "Steinfassade des Apartments Sagittario mit Pavillon und privatem Garten, Agriturismo La Mora" },
     href: "/alloggi/sagittario/",
     petFriendly: true,
     maxGuests: 6,

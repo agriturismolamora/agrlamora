@@ -15,14 +15,13 @@ const ARIA_LABEL: Record<Locale, string> = {
    di sezione. Tutti i loghi in public/certificazioni/, in un riquadro di
    dimensioni identiche (object-contain, mai ritagliati) così restano
    allineati alla stessa altezza nonostante le proporzioni diverse dei
-   singoli file. Alt in italiano, tranne dove serve tradurlo (badge ecobnb,
-   con il nome della struttura). Nessun logo è cliccabile. */
-const CERTIFICATIONS: { src: string; alt: string | Record<Locale, string> }[] = [
-  { src: "/certificazioni/ICEA%20certification.png", alt: "Certificazione ICEA" },
-  { src: "/certificazioni/agriturismo%20italia%20certifiazione.png", alt: "Certificazione Agriturismo Italia" },
-  { src: "/certificazioni/beb%20certification.png", alt: "Certificazione Bed & Breakfast" },
-  { src: "/certificazioni/top%20bnb%20certification.png", alt: "Certificazione Top B&B" },
-  { src: "/certificazioni/tripadvisor%20certification.svg", alt: "Certificazione TripAdvisor" },
+   singoli file. Alt nelle 4 lingue. Nessun logo è cliccabile. */
+const CERTIFICATIONS: { src: string; alt: Record<Locale, string> }[] = [
+  { src: "/certificazioni/ICEA%20certification.png", alt: { it: "Certificazione ICEA", en: "ICEA certification", fr: "Certification ICEA", de: "ICEA-Zertifizierung" } },
+  { src: "/certificazioni/agriturismo%20italia%20certifiazione.png", alt: { it: "Certificazione Agriturismo Italia", en: "Agriturismo Italia certification", fr: "Certification Agriturismo Italia", de: "Agriturismo-Italia-Zertifizierung" } },
+  { src: "/certificazioni/beb%20certification.png", alt: { it: "Certificazione Bed & Breakfast", en: "Bed & Breakfast certification", fr: "Certification Bed & Breakfast", de: "Bed-&-Breakfast-Zertifizierung" } },
+  { src: "/certificazioni/top%20bnb%20certification.png", alt: { it: "Certificazione Top B&B", en: "Top B&B certification", fr: "Certification Top B&B", de: "Top-B&B-Zertifizierung" } },
+  { src: "/certificazioni/tripadvisor%20certification.svg", alt: { it: "Certificazione TripAdvisor", en: "TripAdvisor certification", fr: "Certification TripAdvisor", de: "TripAdvisor-Zertifizierung" } },
   /* Badge ecobnb fornito dal titolare (ottobre 2026), copia web 512×512
      dell'originale, proporzioni e colori invariati. Non cliccabile: manca
      un URL di profilo ecobnb confermato. */
@@ -52,7 +51,7 @@ export function CertificationsMarquee({ locale }: { locale: Locale }) {
     <section aria-label={ARIA_LABEL[locale]} className="overflow-hidden bg-cream-dim py-8 md:py-10">
       <MarqueeTrack className="flex w-max">
         {[...CERTIFICATIONS, ...CERTIFICATIONS].map((cert, i) => (
-          <CertLogo key={`${cert.src}-${i}`} src={cert.src} alt={typeof cert.alt === "string" ? cert.alt : cert.alt[locale]} />
+          <CertLogo key={`${cert.src}-${i}`} src={cert.src} alt={cert.alt[locale]} />
         ))}
       </MarqueeTrack>
     </section>

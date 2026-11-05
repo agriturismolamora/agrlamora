@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { ALT_POOL_PANORAMIC_DAY } from "@/data/photo-alts";
 
 /* Sezione "Vivere La Mora": grande momento fotografico su piscina e spazi
    verdi. Composizione diversa da StructureHighlights (già approvata, non
@@ -71,7 +72,7 @@ export function OutdoorLife({ locale }: { locale: Locale }) {
       <div className="relative h-[62vh] min-h-[380px] w-full overflow-hidden sm:h-[72vh]">
         <WatermarkedImage
           src="/images/piscina/foto piscina di giorno.webp"
-          alt="La piscina panoramica di Agriturismo La Mora vista di giorno"
+          alt={ALT_POOL_PANORAMIC_DAY[locale]}
           fill
           sizes="100vw"
           className="object-cover"

@@ -13,6 +13,7 @@ import { MapsButton } from "@/components/maps-button";
 import { EUROCHOCOLATE_2026 } from "@/data/promo";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
+import { ALT_ASSISI_SUNSET, ALT_PERUGIA_CENTRE } from "@/data/photo-alts";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -683,7 +684,7 @@ export function TerritorioPageView({ locale }: { locale: Locale }) {
       <section className="relative flex h-[64vh] min-h-[460px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/territorio/assisi/assisi con tramonto.jpg"
-          alt="Assisi al tramonto vista dalla campagna umbra"
+          alt={ALT_ASSISI_SUNSET[locale]}
           fill
           priority
           fetchPriority="high"
@@ -820,7 +821,7 @@ export function TerritorioPageView({ locale }: { locale: Locale }) {
             <div className="relative mt-10 aspect-[16/8] overflow-hidden rounded-[3px]">
               <WatermarkedImage
                 src="/images/territorio/perugia/perugia vista alto.jpg"
-                alt="Vista dall'alto del centro storico di Perugia"
+                alt={ALT_PERUGIA_CENTRE[locale]}
                 fill
                 sizes="(max-width: 1140px) 100vw, 1060px"
                 className="object-cover"

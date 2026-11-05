@@ -3,6 +3,7 @@ import { getFacebookPhotos } from "@/lib/facebook-photos";
 import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import type { Locale } from "@/lib/i18n";
+import { ALT_APARTMENT_KITCHEN_SHORT, ALT_FOOTBALL_GARDEN, ALT_HORSES, ALT_KIDS_AREA, ALT_POOL } from "@/data/photo-alts";
 
 /* URL reale della pagina Facebook della struttura, fornito dal titolare. */
 const FACEBOOK_URL = "https://www.facebook.com/p/Agriturismo-la-Mora-di-Assisi-100066662774182/";
@@ -19,18 +20,18 @@ const TEXT: Record<Locale, { heading: string; subLive: string; subFallback: stri
    finto, sempre fotografia vera — vedi il commento in facebook-photos.ts
    per come/quando collegare le foto vere della Pagina via Graph API. */
 const FALLBACK_PHOTOS = [
-  { id: "cavalli", src: "/images/home/foto dei cavalli.webp", alt: "I cavalli di Agriturismo La Mora" },
-  { id: "piscina-lato", src: "/images/piscina/piscina agriturismo la mora lato.jpeg", alt: "Piscina di Agriturismo La Mora" },
+  { id: "cavalli", src: "/images/home/foto dei cavalli.webp", alt: ALT_HORSES },
+  { id: "piscina-lato", src: "/images/piscina/piscina agriturismo la mora lato.jpeg", alt: ALT_POOL },
   {
     id: "scivolo",
     src: "/images/piscina/esterno parco agriturismo con scivolo per bambini.jpg",
-    alt: "Area giochi per bambini di Agriturismo La Mora",
+    alt: ALT_KIDS_AREA,
   },
-  { id: "cucina", src: "/images/struttura/immagine cucina arredata.jpeg", alt: "Cucina arredata di uno degli appartamenti" },
+  { id: "cucina", src: "/images/struttura/immagine cucina arredata.jpeg", alt: ALT_APARTMENT_KITCHEN_SHORT },
   {
     id: "campo",
     src: "/images/piscina/esterno agriturismo con vista struttura e rete calcio piu campo da calcio.jpg",
-    alt: "Campo da calcio e giardino di Agriturismo La Mora",
+    alt: ALT_FOOTBALL_GARDEN,
   },
 ] as const;
 
@@ -64,7 +65,7 @@ function FacebookMark({ size = 22, variant = "brand" }: { size?: number; variant
 
 export async function FacebookFeed({ locale }: { locale: Locale }) {
   const fb = await getFacebookPhotos();
-  const photos = fb.configured && fb.photos.length > 0 ? fb.photos : FALLBACK_PHOTOS;
+  const photos = fb.configured && fb.photos.length > 0 ? fb.photos : FALLBACK_PHOTOS.map((photo) => ({ ...photo, alt: photo.alt[locale] }));
   const text = TEXT[locale];
 
   return (

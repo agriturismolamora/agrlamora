@@ -138,7 +138,7 @@ export function AlloggiPageView({ locale }: { locale: Locale }) {
                   <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] bg-ink/5">
                     <WatermarkedImage
                       src={apt.image}
-                      alt={apt.alt}
+                      alt={apt.alt[locale]}
                       fill
                       sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 380px"
                       className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"

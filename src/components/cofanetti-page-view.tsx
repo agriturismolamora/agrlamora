@@ -9,6 +9,7 @@ import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
+import { ALT_POOL, ALT_SANTA_MARIA_ANGELI } from "@/data/photo-alts";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -179,7 +180,7 @@ export function CofanettiPageView({ locale }: { locale: Locale }) {
       <section className="relative flex h-[86vh] min-h-[560px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/home/foto della piscina agriturismo la mora.webp"
-          alt="Piscina di Agriturismo La Mora"
+          alt={ALT_POOL[locale]}
           fill
           priority
           fetchPriority="high"
@@ -260,7 +261,7 @@ export function CofanettiPageView({ locale }: { locale: Locale }) {
       <section className="relative flex h-[64vh] min-h-[440px] items-center justify-center overflow-hidden">
         <WatermarkedImage
           src="/images/territorio/assisi/basilica di santa maria degli angeli agriturismo la mora.jpg"
-          alt="Basilica di Santa Maria degli Angeli, vicino Assisi"
+          alt={ALT_SANTA_MARIA_ANGELI[locale]}
           fill
           sizes="100vw"
           className="object-cover"

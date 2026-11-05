@@ -4,6 +4,7 @@ import { Reveal } from "@/components/scroll-reveal";
 import { HoverFill } from "@/components/hover-fill";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { ALT_BASILICA_DISTANCE, ALT_EREMO_SUBASIO, ALT_PERUGIA_AERIAL } from "@/data/photo-alts";
 
 /* Territorio: griglia asimmetrica con gerarchia geografica (Assisi grande,
    dintorni più piccoli) invece di una lista di destinazioni. Copy scritto
@@ -72,7 +73,7 @@ export function TerritorySection({ locale }: { locale: Locale }) {
           <Reveal delay={80} className="relative aspect-[4/3] overflow-hidden rounded-[3px] lg:aspect-auto lg:h-full">
             <WatermarkedImage
               src="/images/territorio/assisi/basilica di assisi.jpg"
-              alt="Basilica di San Francesco ad Assisi, a 7,5 km da Agriturismo La Mora"
+              alt={ALT_BASILICA_DISTANCE[locale]}
               fill
               sizes="(max-width: 1024px) 100vw, 60vw"
               className="object-cover"
@@ -91,7 +92,7 @@ export function TerritorySection({ locale }: { locale: Locale }) {
             <Reveal delay={160} className="relative aspect-[4/3] overflow-hidden rounded-[3px]">
               <WatermarkedImage
                 src="/images/territorio/assisi/eremo delle carceri assisi.jpg"
-                alt="Eremo delle Carceri, sul Monte Subasio ad Assisi"
+                alt={ALT_EREMO_SUBASIO[locale]}
                 fill
                 sizes="(max-width: 1024px) 50vw, 30vw"
                 className="object-cover"
@@ -106,7 +107,7 @@ export function TerritorySection({ locale }: { locale: Locale }) {
             <Reveal delay={240} className="relative aspect-[4/3] overflow-hidden rounded-[3px]">
               <WatermarkedImage
                 src="/images/territorio/perugia/perugia vista alto.jpg"
-                alt="Perugia vista dall'alto, capoluogo dell'Umbria"
+                alt={ALT_PERUGIA_AERIAL[locale]}
                 fill
                 sizes="(max-width: 1024px) 50vw, 30vw"
                 className="object-cover"

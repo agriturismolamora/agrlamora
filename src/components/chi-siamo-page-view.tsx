@@ -14,6 +14,7 @@ import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
+import { ALT_AERIAL_COUNTRYSIDE, ALT_ASSISI_SUNSET, ALT_COMMON_INTERIOR, ALT_ENTRANCE_CART, ALT_FARMHOUSE_AERIAL, ALT_GARDEN_CORNER, ALT_POOL_PANORAMIC } from "@/data/photo-alts";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -243,7 +244,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
       <section className="relative flex h-[92vh] min-h-[600px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/home/foto dell agriturismo dall alto.webp"
-          alt="Agriturismo La Mora visto dall'alto, nella campagna umbra vicino Assisi"
+          alt={ALT_AERIAL_COUNTRYSIDE[locale]}
           fill
           priority
           fetchPriority="high"
@@ -271,7 +272,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[3/4] w-full max-w-[220px] overflow-hidden rounded-[3px] shadow-[0_35px_70px_-30px_rgba(0,0,0,0.6)]">
               <WatermarkedImage
                 src="/images/home/esterno agriturismo la mora carretto e agriturismo.webp"
-                alt="Ingresso di Agriturismo La Mora con carretto d'epoca"
+                alt={ALT_ENTRANCE_CART[locale]}
                 fill
                 sizes="220px"
                 className="object-cover"
@@ -293,7 +294,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
               <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-[3px] sm:aspect-[16/11]">
                 <WatermarkedImage
                   src="/images/struttura/foto vista alto agriturismo la mora assisi.webp"
-                  alt="Il casale di Agriturismo La Mora visto dall'alto"
+                  alt={ALT_FARMHOUSE_AERIAL[locale]}
                   fill
                   sizes="(max-width: 640px) 100vw, 540px"
                   className="object-cover"
@@ -321,7 +322,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
               <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-[3px] sm:order-2 sm:aspect-[16/11]">
                 <WatermarkedImage
                   src="/images/struttura/immagine di una sala dell agriturismo.webp"
-                  alt="Interno arredato di uno degli spazi comuni di Agriturismo La Mora"
+                  alt={ALT_COMMON_INTERIOR[locale]}
                   fill
                   sizes="(max-width: 640px) 100vw, 540px"
                   className="object-cover"
@@ -345,7 +346,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
             <div className="relative mt-10 aspect-[16/8] overflow-hidden rounded-[3px] sm:mt-14">
               <WatermarkedImage
                 src="/images/home/foto della piscina agriturismo la mora.webp"
-                alt="Piscina panoramica di Agriturismo La Mora"
+                alt={ALT_POOL_PANORAMIC[locale]}
                 fill
                 sizes="(max-width: 1140px) 100vw, 1060px"
                 className="object-cover"
@@ -375,7 +376,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
               <WatermarkedImage
                 src="/images/piscina/esterno parco agriturismo con casetta.webp"
-                alt="Angolo di giardino di Agriturismo La Mora"
+                alt={ALT_GARDEN_CORNER[locale]}
                 fill
                 sizes="(max-width: 640px) 100vw, 500px"
                 className="object-cover"
@@ -398,7 +399,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] sm:aspect-[16/11]">
               <WatermarkedImage
                 src="/images/territorio/assisi/assisi con tramonto.jpg"
-                alt="Assisi al tramonto, vista dalla campagna umbra"
+                alt={ALT_ASSISI_SUNSET[locale]}
                 fill
                 sizes="(max-width: 640px) 100vw, 540px"
                 className="object-cover"

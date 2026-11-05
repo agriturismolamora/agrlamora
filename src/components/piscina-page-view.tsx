@@ -9,6 +9,7 @@ import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
 import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
 import { faqPageNode } from "@/lib/structured-data";
+import { ALT_POOL_DAY, ALT_POOL_PANORAMIC, ALT_POOL_RELAX, ALT_POOL_SIDE } from "@/data/photo-alts";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -202,7 +203,7 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
       <section className="relative flex h-[68vh] min-h-[480px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/piscina/piscina agriturismo la mora di notte.jpeg"
-          alt="Piscina panoramica di Agriturismo La Mora"
+          alt={ALT_POOL_PANORAMIC[locale]}
           fill
           priority
           fetchPriority="high"
@@ -276,7 +277,7 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[16/10] overflow-hidden rounded-[3px]">
               <WatermarkedImage
                 src="/images/piscina/foto piscina di giorno.webp"
-                alt="Piscina di Agriturismo La Mora durante il giorno"
+                alt={ALT_POOL_DAY[locale]}
                 fill
                 sizes="(max-width: 640px) 100vw, 700px"
                 className="object-cover"
@@ -287,7 +288,7 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[16/10] overflow-hidden rounded-[3px] sm:aspect-auto sm:h-full">
               <WatermarkedImage
                 src="/images/piscina/piscina agriturismo la mora lato.jpeg"
-                alt="Vista laterale della piscina"
+                alt={ALT_POOL_SIDE[locale]}
                 fill
                 sizes="(max-width: 640px) 100vw, 330px"
                 className="object-cover"
@@ -303,7 +304,7 @@ export function PiscinaPageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[4/3] overflow-hidden rounded-[3px]">
               <WatermarkedImage
                 src="/images/piscina/esterno parco agriturismo con casetta.webp"
-                alt="Area relax accanto alla piscina di Agriturismo La Mora"
+                alt={ALT_POOL_RELAX[locale]}
                 fill
                 sizes="(max-width: 640px) 100vw, 500px"
                 className="object-cover"

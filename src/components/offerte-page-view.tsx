@@ -18,6 +18,7 @@ import { FARMHOUSE_LAWN_ENTRANCE } from "@/data/provisional-photos";
 import { PromoLine } from "@/components/promo-line";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
+import { ALT_APARTMENT_KITCHEN, ALT_ASSISI_SUNSET, ALT_ENTRANCE, ALT_POOLSIDE_CHAIRS } from "@/data/photo-alts";
 
 const OFFERS_WIDGET_TEXT: Record<Locale, { label: string; heading: string }> = {
   it: { label: "Offerte in corso", heading: "Le promozioni attive in questo momento" },
@@ -292,7 +293,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
       <section className="relative flex h-[86vh] min-h-[560px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/home/esterno agriturismo la mora carretto e agriturismo.webp"
-          alt="Ingresso di Agriturismo La Mora"
+          alt={ALT_ENTRANCE[locale]}
           fill
           priority
           fetchPriority="high"
@@ -390,7 +391,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
               <WatermarkedImage
                 src="/images/piscina/piscina vista sedie e piscina.jpg"
-                alt="Sedie a bordo piscina di Agriturismo La Mora"
+                alt={ALT_POOLSIDE_CHAIRS[locale]}
                 fill
                 sizes="(max-width: 640px) 100vw, 540px"
                 className="object-cover"
@@ -477,7 +478,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
               <WatermarkedImage
                 src="/images/struttura/immagine cucina arredata.jpeg"
-                alt="Cucina arredata di uno degli appartamenti di Agriturismo La Mora"
+                alt={ALT_APARTMENT_KITCHEN[locale]}
                 fill
                 sizes="(max-width: 640px) 100vw, 540px"
                 className="object-cover"
@@ -546,7 +547,7 @@ export function OffertePageView({ locale }: { locale: Locale }) {
       <section className="relative flex h-[64vh] min-h-[440px] items-center justify-center overflow-hidden">
         <WatermarkedImage
           src="/images/territorio/assisi/assisi con tramonto.jpg"
-          alt="Assisi al tramonto vista dalla campagna umbra"
+          alt={ALT_ASSISI_SUNSET[locale]}
           fill
           sizes="100vw"
           className="object-cover"

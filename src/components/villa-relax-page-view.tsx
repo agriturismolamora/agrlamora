@@ -17,7 +17,7 @@ import {
   VILLA_HOST_NAME,
   VILLA_HOST_IMAGE,
   VILLA_CIN,
-  VILLA_GALLERY,
+  getVillaGallery,
   VILLA_LOGO_ALT,
   VILLA_LOGO_WHITE,
   VILLA_WHATSAPP_NUMBER,
@@ -32,6 +32,7 @@ import { withLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
 import { villaNode } from "@/lib/structured-data";
+import { ALT_VILLA_COUNTRYSIDE, ALT_VILLA_DINING, ALT_VILLA_EXTERIOR_CLASSIC, ALT_VILLA_POOL } from "@/data/photo-alts";
 
 const VILLA_OFFERS_WIDGET_TEXT: Record<Locale, { label: string; heading: string }> = {
   it: { label: "Offerte in corso", heading: "Le promozioni attive per Villa Relax" },
@@ -57,6 +58,13 @@ const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
     title: "Villa Relax: Villa mit privatem Pool in Assisi",
     description: "Villa Relax, in Assisi: eine unabhängige Villa mit privatem Pool, Garten und bis zu 16 Betten auf 6 Schlafzimmer. Ideal für Gruppen und große Familien in der umbrischen Landschaft, nahe der Basilika des Heiligen Franziskus.",
   },
+};
+
+const VILLA_HOST_ALT: Record<Locale, (name: string) => string> = {
+  it: (name) => `${name}, gestore di Villa Relax`,
+  en: (name) => `${name}, host of Villa Relax`,
+  fr: (name) => `${name}, hôte de Villa Relax`,
+  de: (name) => `${name}, Gastgeber der Villa Relax`,
 };
 
 export function getVillaRelaxMetadata(locale: Locale) {
@@ -377,7 +385,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
         <WatermarkedImage
           mark="villa"
           src="/images/villa/vista esterno della villa.webp"
-          alt="Villa Relax, villa indipendente nella campagna di Assisi"
+          alt={ALT_VILLA_COUNTRYSIDE[locale]}
           fill
           priority
           fetchPriority="high"
@@ -434,7 +442,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
                 <WatermarkedImage
                   mark="villa"
                   src="/images/villa/villa esterno.webp"
-                  alt="Esterno di Villa Relax, arredata in stile classico"
+                  alt={ALT_VILLA_EXTERIOR_CLASSIC[locale]}
                   fill
                   sizes="(max-width: 640px) 100vw, 540px"
                   className="object-cover"
@@ -463,7 +471,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
                 <WatermarkedImage
                   mark="villa"
                   src="/images/villa/sala da pranzo villa interno.webp"
-                  alt="Sala da pranzo interna di Villa Relax"
+                  alt={ALT_VILLA_DINING[locale]}
                   fill
                   sizes="(max-width: 640px) 100vw, 540px"
                   className="object-cover"
@@ -509,7 +517,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
             </h2>
           </Reveal>
           <div className="mt-8">
-            <ApartmentGallery images={VILLA_GALLERY} locale={locale} mark="villa" />
+            <ApartmentGallery images={getVillaGallery(locale)} locale={locale} mark="villa" />
           </div>
         </div>
       </section>
@@ -555,7 +563,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
               <WatermarkedImage
                 mark="villa"
                 src="/images/villa/piscina esterna della villa.webp"
-                alt="Piscina privata di Villa Relax"
+                alt={ALT_VILLA_POOL[locale]}
                 fill
                 sizes="(max-width: 640px) 100vw, 500px"
                 className="object-cover"
@@ -586,7 +594,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
               <Image
                 src={VILLA_HOST_IMAGE}
-                alt={`${VILLA_HOST_NAME}, gestore di Villa Relax`}
+                alt={VILLA_HOST_ALT[locale](VILLA_HOST_NAME)}
                 fill
                 sizes="(max-width: 640px) 100vw, 280px"
                 className="object-cover"

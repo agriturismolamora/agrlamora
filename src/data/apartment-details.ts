@@ -11,10 +11,10 @@ import { SAGITTARIO_GARDEN_FARMHOUSE, SAGITTARIO_GARDEN_GAZEBO, type LocalizedPh
    questo file. Dotazioni comuni a tutte le unità: PROJECT-BRIEF.md
    sezione 1.
 
-   Struttura: la galleria (foto/alt) è UNICA per appartamento, condivisa da
-   tutte le lingue (le foto non cambiano) — il testo editoriale (tagline,
-   descrizione, dotazioni) è invece tradotto per lingua. getApartmentDetails
-   unisce le due parti al momento dell'uso. */
+   Struttura: la galleria è UNICA per appartamento, condivisa da tutte le
+   lingue (le foto non cambiano), con l'alt di ogni foto nelle 4 lingue accanto
+   al file — il testo editoriale (tagline, descrizione, dotazioni) è tradotto
+   per lingua. getApartmentDetails unisce le due parti al momento dell'uso. */
 export type GalleryImage = { src: string; alt: string };
 
 export type ApartmentDetail = {
@@ -25,59 +25,59 @@ export type ApartmentDetail = {
   gallery: GalleryImage[];
 };
 
-const GALLERIES: Record<string, GalleryImage[]> = {
+const GALLERIES: Record<string, LocalizedPhoto[]> = {
   gemelli: [
-    { src: "/images/alloggi/appartamento gemelli/stanza letto app gemelli.jpeg", alt: "Camera da letto dell'appartamento Gemelli" },
-    { src: "/images/alloggi/appartamento gemelli/camera da letto app gemelli.jpeg", alt: "Vista della camera da letto di Gemelli" },
-    { src: "/images/alloggi/appartamento gemelli/letto matrimoniale gemelli.jpeg", alt: "Letto matrimoniale dell'appartamento Gemelli" },
-    { src: "/images/alloggi/appartamento gemelli/salotto gemelli.jpeg", alt: "Soggiorno dell'appartamento Gemelli" },
-    { src: "/images/alloggi/appartamento gemelli/cucinotto gemelli.jpeg", alt: "Angolo cottura attrezzato di Gemelli" },
-    { src: "/images/alloggi/appartamento gemelli/bagnetto gemelli.jpeg", alt: "Bagno dell'appartamento Gemelli" },
-    { src: "/images/alloggi/appartamento gemelli/area cani appartamento gemelli esterno .jpg", alt: "Giardino privato di Gemelli" },
+    { src: "/images/alloggi/appartamento gemelli/stanza letto app gemelli.jpeg", alt: { it: "Camera da letto dell'appartamento Gemelli", en: "Bedroom of the Gemelli apartment", fr: "Chambre de l'appartement Gemelli", de: "Schlafzimmer des Apartments Gemelli" } },
+    { src: "/images/alloggi/appartamento gemelli/camera da letto app gemelli.jpeg", alt: { it: "Vista della camera da letto di Gemelli", en: "View of the Gemelli bedroom", fr: "Vue de la chambre de Gemelli", de: "Blick in das Schlafzimmer von Gemelli" } },
+    { src: "/images/alloggi/appartamento gemelli/letto matrimoniale gemelli.jpeg", alt: { it: "Letto matrimoniale dell'appartamento Gemelli", en: "Double bed in the Gemelli apartment", fr: "Lit double de l'appartement Gemelli", de: "Doppelbett im Apartment Gemelli" } },
+    { src: "/images/alloggi/appartamento gemelli/salotto gemelli.jpeg", alt: { it: "Soggiorno dell'appartamento Gemelli", en: "Living room of the Gemelli apartment", fr: "Salon de l'appartement Gemelli", de: "Wohnzimmer des Apartments Gemelli" } },
+    { src: "/images/alloggi/appartamento gemelli/cucinotto gemelli.jpeg", alt: { it: "Angolo cottura attrezzato di Gemelli", en: "Equipped kitchenette in Gemelli", fr: "Coin cuisine équipé de Gemelli", de: "Ausgestattete Küchenzeile von Gemelli" } },
+    { src: "/images/alloggi/appartamento gemelli/bagnetto gemelli.jpeg", alt: { it: "Bagno dell'appartamento Gemelli", en: "Bathroom of the Gemelli apartment", fr: "Salle de bain de l'appartement Gemelli", de: "Badezimmer des Apartments Gemelli" } },
+    { src: "/images/alloggi/appartamento gemelli/area cani appartamento gemelli esterno .jpg", alt: { it: "Giardino privato di Gemelli", en: "Private garden of Gemelli", fr: "Jardin privé de Gemelli", de: "Privater Garten von Gemelli" } },
   ],
   bilancia: [
-    { src: "/images/alloggi/appartamento bilancia/foto letto matrimoniale verticale bilancia.jpeg", alt: "Camera matrimoniale dell'appartamento Bilancia" },
-    { src: "/images/alloggi/appartamento bilancia/foto verticale camera vista scrivania bilancia.jpeg", alt: "Camera da letto con scrivania di Bilancia" },
-    { src: "/images/alloggi/appartamento bilancia/foto orizzontale letto e sala intera orizzontale bilancia.jpeg", alt: "Camera da letto e soggiorno dell'appartamento Bilancia" },
-    { src: "/images/alloggi/appartamento bilancia/foto verticale salotto e cucina bilancia.jpeg", alt: "Soggiorno e cucina dell'appartamento Bilancia" },
-    { src: "/images/alloggi/appartamento bilancia/foto cucina verticale bilancia.jpeg", alt: "Cucina attrezzata dell'appartamento Bilancia" },
-    { src: "/images/alloggi/appartamento bilancia/foto orizzontale cucina bilancia.jpeg", alt: "Vista della cucina di Bilancia" },
-    { src: "/images/alloggi/appartamento bilancia/foto cucinotto bilancia verticale.jpeg", alt: "Angolo cottura dell'appartamento Bilancia" },
-    { src: "/images/alloggi/appartamento bilancia/bagno orizzontale bilancia.jpeg", alt: "Bagno dell'appartamento Bilancia" },
-    { src: "/images/alloggi/appartamento bilancia/bagno verticale bilancia.jpeg", alt: "Vista del bagno di Bilancia" },
-    { src: "/images/alloggi/appartamento bilancia/orizzontale foto esterno.jpeg", alt: "Esterno dell'appartamento Bilancia" },
+    { src: "/images/alloggi/appartamento bilancia/foto letto matrimoniale verticale bilancia.jpeg", alt: { it: "Camera matrimoniale dell'appartamento Bilancia", en: "Double bedroom of the Bilancia apartment", fr: "Chambre double de l'appartement Bilancia", de: "Doppelzimmer des Apartments Bilancia" } },
+    { src: "/images/alloggi/appartamento bilancia/foto verticale camera vista scrivania bilancia.jpeg", alt: { it: "Camera da letto con scrivania di Bilancia", en: "Bilancia bedroom with desk", fr: "Chambre avec bureau de Bilancia", de: "Schlafzimmer mit Schreibtisch von Bilancia" } },
+    { src: "/images/alloggi/appartamento bilancia/foto orizzontale letto e sala intera orizzontale bilancia.jpeg", alt: { it: "Camera da letto e soggiorno dell'appartamento Bilancia", en: "Bedroom and living room of the Bilancia apartment", fr: "Chambre et salon de l'appartement Bilancia", de: "Schlaf- und Wohnzimmer des Apartments Bilancia" } },
+    { src: "/images/alloggi/appartamento bilancia/foto verticale salotto e cucina bilancia.jpeg", alt: { it: "Soggiorno e cucina dell'appartamento Bilancia", en: "Living room and kitchen of the Bilancia apartment", fr: "Salon et cuisine de l'appartement Bilancia", de: "Wohnzimmer und Küche des Apartments Bilancia" } },
+    { src: "/images/alloggi/appartamento bilancia/foto cucina verticale bilancia.jpeg", alt: { it: "Cucina attrezzata dell'appartamento Bilancia", en: "Equipped kitchen of the Bilancia apartment", fr: "Cuisine équipée de l'appartement Bilancia", de: "Ausgestattete Küche des Apartments Bilancia" } },
+    { src: "/images/alloggi/appartamento bilancia/foto orizzontale cucina bilancia.jpeg", alt: { it: "Vista della cucina di Bilancia", en: "View of the Bilancia kitchen", fr: "Vue de la cuisine de Bilancia", de: "Blick in die Küche von Bilancia" } },
+    { src: "/images/alloggi/appartamento bilancia/foto cucinotto bilancia verticale.jpeg", alt: { it: "Angolo cottura dell'appartamento Bilancia", en: "Kitchenette of the Bilancia apartment", fr: "Coin cuisine de l'appartement Bilancia", de: "Küchenzeile des Apartments Bilancia" } },
+    { src: "/images/alloggi/appartamento bilancia/bagno orizzontale bilancia.jpeg", alt: { it: "Bagno dell'appartamento Bilancia", en: "Bathroom of the Bilancia apartment", fr: "Salle de bain de l'appartement Bilancia", de: "Badezimmer des Apartments Bilancia" } },
+    { src: "/images/alloggi/appartamento bilancia/bagno verticale bilancia.jpeg", alt: { it: "Vista del bagno di Bilancia", en: "View of the Bilancia bathroom", fr: "Vue de la salle de bain de Bilancia", de: "Blick ins Badezimmer von Bilancia" } },
+    { src: "/images/alloggi/appartamento bilancia/orizzontale foto esterno.jpeg", alt: { it: "Esterno dell'appartamento Bilancia", en: "Exterior of the Bilancia apartment", fr: "Extérieur de l'appartement Bilancia", de: "Außenbereich des Apartments Bilancia" } },
   ],
   pesci: [
-    { src: "/images/alloggi/appartamento pesci/vista da davanti letto matrimoniale stanza pesci.jpeg", alt: "Camera da letto dell'appartamento Pesci" },
-    { src: "/images/alloggi/appartamento pesci/letto matrimoniale con davanti letto a castello due singoli pesci appartamento.webp", alt: "Letto matrimoniale e letto a castello dell'appartamento Pesci" },
-    { src: "/images/alloggi/appartamento pesci/saletta principale appartamento pesci.webp", alt: "Soggiorno dell'appartamento Pesci" },
-    { src: "/images/alloggi/appartamento pesci/cucinotto pesci.webp", alt: "Angolo cottura attrezzato di Pesci" },
-    { src: "/images/alloggi/appartamento pesci/bagnetto intero stanza pesci.jpeg", alt: "Bagno dell'appartamento Pesci" },
+    { src: "/images/alloggi/appartamento pesci/vista da davanti letto matrimoniale stanza pesci.jpeg", alt: { it: "Camera da letto dell'appartamento Pesci", en: "Bedroom of the Pesci apartment", fr: "Chambre de l'appartement Pesci", de: "Schlafzimmer des Apartments Pesci" } },
+    { src: "/images/alloggi/appartamento pesci/letto matrimoniale con davanti letto a castello due singoli pesci appartamento.webp", alt: { it: "Letto matrimoniale e letto a castello dell'appartamento Pesci", en: "Double bed and bunk bed in the Pesci apartment", fr: "Lit double et lit superposé de l'appartement Pesci", de: "Doppelbett und Etagenbett im Apartment Pesci" } },
+    { src: "/images/alloggi/appartamento pesci/saletta principale appartamento pesci.webp", alt: { it: "Soggiorno dell'appartamento Pesci", en: "Living room of the Pesci apartment", fr: "Salon de l'appartement Pesci", de: "Wohnzimmer des Apartments Pesci" } },
+    { src: "/images/alloggi/appartamento pesci/cucinotto pesci.webp", alt: { it: "Angolo cottura attrezzato di Pesci", en: "Equipped kitchenette in Pesci", fr: "Coin cuisine équipé de Pesci", de: "Ausgestattete Küchenzeile von Pesci" } },
+    { src: "/images/alloggi/appartamento pesci/bagnetto intero stanza pesci.jpeg", alt: { it: "Bagno dell'appartamento Pesci", en: "Bathroom of the Pesci apartment", fr: "Salle de bain de l'appartement Pesci", de: "Badezimmer des Apartments Pesci" } },
   ],
   acquario: [
-    { src: "/images/alloggi/appartamento acquario/orizzontale letto acquario.jpeg", alt: "Camera da letto dell'appartamento Acquario" },
-    { src: "/images/alloggi/appartamento acquario/acquario verticale letto matrimoniale.jpeg", alt: "Letto matrimoniale dell'appartamento Acquario" },
-    { src: "/images/alloggi/appartamento acquario/letto matrimoniale orizzontale acquario.jpeg", alt: "Vista della camera matrimoniale di Acquario" },
-    { src: "/images/alloggi/appartamento acquario/letto a castello acquario verticale.webp", alt: "Letto a castello dell'appartamento Acquario" },
-    { src: "/images/alloggi/appartamento acquario/tavolo arredato orizzontale acquario.jpeg", alt: "Tavolo da pranzo dell'appartamento Acquario" },
-    { src: "/images/alloggi/appartamento acquario/cucinotto orizzontale acquario.webp", alt: "Angolo cottura attrezzato di Acquario" },
-    { src: "/images/alloggi/appartamento acquario/bagno intero acquario orizzontale.jpeg", alt: "Bagno dell'appartamento Acquario" },
-    { src: "/images/alloggi/appartamento acquario/doccia verticale acquario.webp", alt: "Doccia dell'appartamento Acquario" },
+    { src: "/images/alloggi/appartamento acquario/orizzontale letto acquario.jpeg", alt: { it: "Camera da letto dell'appartamento Acquario", en: "Bedroom of the Acquario apartment", fr: "Chambre de l'appartement Acquario", de: "Schlafzimmer des Apartments Acquario" } },
+    { src: "/images/alloggi/appartamento acquario/acquario verticale letto matrimoniale.jpeg", alt: { it: "Letto matrimoniale dell'appartamento Acquario", en: "Double bed in the Acquario apartment", fr: "Lit double de l'appartement Acquario", de: "Doppelbett im Apartment Acquario" } },
+    { src: "/images/alloggi/appartamento acquario/letto matrimoniale orizzontale acquario.jpeg", alt: { it: "Vista della camera matrimoniale di Acquario", en: "View of the Acquario double bedroom", fr: "Vue de la chambre double d'Acquario", de: "Blick in das Doppelzimmer von Acquario" } },
+    { src: "/images/alloggi/appartamento acquario/letto a castello acquario verticale.webp", alt: { it: "Letto a castello dell'appartamento Acquario", en: "Bunk bed in the Acquario apartment", fr: "Lit superposé de l'appartement Acquario", de: "Etagenbett im Apartment Acquario" } },
+    { src: "/images/alloggi/appartamento acquario/tavolo arredato orizzontale acquario.jpeg", alt: { it: "Tavolo da pranzo dell'appartamento Acquario", en: "Dining table in the Acquario apartment", fr: "Table à manger de l'appartement Acquario", de: "Esstisch im Apartment Acquario" } },
+    { src: "/images/alloggi/appartamento acquario/cucinotto orizzontale acquario.webp", alt: { it: "Angolo cottura attrezzato di Acquario", en: "Equipped kitchenette in Acquario", fr: "Coin cuisine équipé d'Acquario", de: "Ausgestattete Küchenzeile von Acquario" } },
+    { src: "/images/alloggi/appartamento acquario/bagno intero acquario orizzontale.jpeg", alt: { it: "Bagno dell'appartamento Acquario", en: "Bathroom of the Acquario apartment", fr: "Salle de bain de l'appartement Acquario", de: "Badezimmer des Apartments Acquario" } },
+    { src: "/images/alloggi/appartamento acquario/doccia verticale acquario.webp", alt: { it: "Doccia dell'appartamento Acquario", en: "Shower in the Acquario apartment", fr: "Douche de l'appartement Acquario", de: "Dusche im Apartment Acquario" } },
   ],
   sagittario: [
-    { src: "/images/alloggi/appartamento sagittario/IMG_8781.jpeg", alt: "Gazebo e giardino privato dell'appartamento Sagittario" },
-    { src: "/images/alloggi/appartamento sagittario/gazebo sagittario 1.jpeg", alt: "Gazebo privato dell'appartamento Sagittario" },
-    { src: "/images/alloggi/appartamento sagittario/IMG_8782.jpeg", alt: "Zona pranzo sotto il gazebo di Sagittario" },
-    { src: "/images/alloggi/appartamento sagittario/gazebo sagittario 2.jpeg", alt: "Tavolo sotto il gazebo di Sagittario" },
-    { src: "/images/alloggi/appartamento sagittario/gazebo sagittario 3.jpeg", alt: "Vista del gazebo esterno di Sagittario" },
-    { src: "/images/alloggi/appartamento sagittario/Area cani appartamento sagittario.jpg", alt: "Giardino privato di Sagittario" },
-    { src: "/images/alloggi/appartamento sagittario/arredamento tavolo sagittario.jpeg", alt: "Interno arredato dell'appartamento Sagittario" },
-    { src: "/images/alloggi/appartamento sagittario/IMG_8896.jpeg", alt: "Camera da letto dell'appartamento Sagittario" },
-    { src: "/images/alloggi/appartamento sagittario/IMG_8897.jpeg", alt: "Camera con letto a castello dell'appartamento Sagittario" },
-    { src: "/images/alloggi/appartamento sagittario/IMG_8899.jpeg", alt: "Vista della camera da letto di Sagittario" },
-    { src: "/images/alloggi/appartamento sagittario/IMG_8901.jpeg", alt: "Zona pranzo interna dell'appartamento Sagittario" },
-    { src: "/images/alloggi/appartamento sagittario/IMG_8893.jpeg", alt: "Bagno con doccia dell'appartamento Sagittario" },
-    { src: "/images/alloggi/appartamento sagittario/IMG_8900.jpeg", alt: "Bagno dell'appartamento Sagittario" },
+    { src: "/images/alloggi/appartamento sagittario/IMG_8781.jpeg", alt: { it: "Gazebo e giardino privato dell'appartamento Sagittario", en: "Gazebo and private garden of the Sagittario apartment", fr: "Gazebo et jardin privé de l'appartement Sagittario", de: "Pavillon und privater Garten des Apartments Sagittario" } },
+    { src: "/images/alloggi/appartamento sagittario/gazebo sagittario 1.jpeg", alt: { it: "Gazebo privato dell'appartamento Sagittario", en: "Private gazebo of the Sagittario apartment", fr: "Gazebo privé de l'appartement Sagittario", de: "Privater Pavillon des Apartments Sagittario" } },
+    { src: "/images/alloggi/appartamento sagittario/IMG_8782.jpeg", alt: { it: "Zona pranzo sotto il gazebo di Sagittario", en: "Dining area under the Sagittario gazebo", fr: "Coin repas sous le gazebo de Sagittario", de: "Essbereich unter dem Pavillon von Sagittario" } },
+    { src: "/images/alloggi/appartamento sagittario/gazebo sagittario 2.jpeg", alt: { it: "Tavolo sotto il gazebo di Sagittario", en: "Table under the Sagittario gazebo", fr: "Table sous le gazebo de Sagittario", de: "Tisch unter dem Pavillon von Sagittario" } },
+    { src: "/images/alloggi/appartamento sagittario/gazebo sagittario 3.jpeg", alt: { it: "Vista del gazebo esterno di Sagittario", en: "View of the Sagittario outdoor gazebo", fr: "Vue du gazebo extérieur de Sagittario", de: "Blick auf den Außenpavillon von Sagittario" } },
+    { src: "/images/alloggi/appartamento sagittario/Area cani appartamento sagittario.jpg", alt: { it: "Giardino privato di Sagittario", en: "Private garden of Sagittario", fr: "Jardin privé de Sagittario", de: "Privater Garten von Sagittario" } },
+    { src: "/images/alloggi/appartamento sagittario/arredamento tavolo sagittario.jpeg", alt: { it: "Interno arredato dell'appartamento Sagittario", en: "Furnished interior of the Sagittario apartment", fr: "Intérieur meublé de l'appartement Sagittario", de: "Möblierter Innenraum des Apartments Sagittario" } },
+    { src: "/images/alloggi/appartamento sagittario/IMG_8896.jpeg", alt: { it: "Camera da letto dell'appartamento Sagittario", en: "Bedroom of the Sagittario apartment", fr: "Chambre de l'appartement Sagittario", de: "Schlafzimmer des Apartments Sagittario" } },
+    { src: "/images/alloggi/appartamento sagittario/IMG_8897.jpeg", alt: { it: "Camera con letto a castello dell'appartamento Sagittario", en: "Bedroom with bunk bed in the Sagittario apartment", fr: "Chambre avec lit superposé de l'appartement Sagittario", de: "Schlafzimmer mit Etagenbett im Apartment Sagittario" } },
+    { src: "/images/alloggi/appartamento sagittario/IMG_8899.jpeg", alt: { it: "Vista della camera da letto di Sagittario", en: "View of the Sagittario bedroom", fr: "Vue de la chambre de Sagittario", de: "Blick in das Schlafzimmer von Sagittario" } },
+    { src: "/images/alloggi/appartamento sagittario/IMG_8901.jpeg", alt: { it: "Zona pranzo interna dell'appartamento Sagittario", en: "Indoor dining area of the Sagittario apartment", fr: "Coin repas intérieur de l'appartement Sagittario", de: "Essbereich im Innenraum des Apartments Sagittario" } },
+    { src: "/images/alloggi/appartamento sagittario/IMG_8893.jpeg", alt: { it: "Bagno con doccia dell'appartamento Sagittario", en: "Bathroom with shower in the Sagittario apartment", fr: "Salle de bain avec douche de l'appartement Sagittario", de: "Badezimmer mit Dusche im Apartment Sagittario" } },
+    { src: "/images/alloggi/appartamento sagittario/IMG_8900.jpeg", alt: { it: "Bagno dell'appartamento Sagittario", en: "Bathroom of the Sagittario apartment", fr: "Salle de bain de l'appartement Sagittario", de: "Badezimmer des Apartments Sagittario" } },
   ],
 };
 
@@ -283,8 +283,8 @@ export function getApartmentDetails(locale: Locale): Record<string, ApartmentDet
   const text = TEXT_BY_LOCALE[locale];
   const merged: Record<string, ApartmentDetail> = {};
   for (const slug of Object.keys(GALLERIES)) {
-    const provisional = (PROVISIONAL_GALLERY[slug] ?? []).map((photo) => ({ src: photo.src, alt: photo.alt[locale] }));
-    merged[slug] = { ...text[slug], gallery: [...GALLERIES[slug], ...provisional] };
+    const photos = [...GALLERIES[slug], ...(PROVISIONAL_GALLERY[slug] ?? [])];
+    merged[slug] = { ...text[slug], gallery: photos.map((photo) => ({ src: photo.src, alt: photo.alt[locale] })) };
   }
   return merged;
 }

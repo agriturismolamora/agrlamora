@@ -5,6 +5,7 @@ import { PinnedHold } from "@/components/pinned-hold";
 import { HoverFill } from "@/components/hover-fill";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { ALT_AERIAL_ASSISI } from "@/data/photo-alts";
 
 /* Indice editoriale: foto fissa a piena altezza a sinistra (tocca il bordo
    del browser, nessun container che la isoli), lista a destra con 3 righe
@@ -16,7 +17,6 @@ import { withLocale } from "@/lib/i18n";
    temi prima raccontati in "Esperienze La Mora" (sezione eliminata: questo
    contenuto ci si sovrappone di proposito, non è un errore di ripetizione). */
 const HERO_IMAGE = "/images/struttura/foto vista alto agriturismo la mora assisi.webp";
-const HERO_ALT = "Vista dall'alto di Agriturismo La Mora, Assisi";
 
 function getSignatures(locale: Locale) {
   const titles: Record<Locale, string[]> = {
@@ -54,7 +54,7 @@ export function StructureHighlights({ locale }: { locale: Locale }) {
             <Reveal className="absolute inset-0" as="div">
               <WatermarkedImage
                 src={HERO_IMAGE}
-                alt={HERO_ALT}
+                alt={ALT_AERIAL_ASSISI[locale]}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"

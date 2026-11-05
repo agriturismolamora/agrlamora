@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/scroll-reveal";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { ALT_EV_CHARGER, ALT_GUESTS_EBIKE } from "@/data/photo-alts";
 
 /* Sostituisce la vecchia EvChargingSection (sezioncina piccola, solo
    colonnina): su richiesta esplicita del titolare, la colonnina di ricarica
@@ -118,7 +119,7 @@ export function SustainabilitySection({ locale }: { locale: Locale }) {
             <div className="relative aspect-[4/3] overflow-hidden rounded-[3px]">
               <WatermarkedImage
                 src="/images/servizi-extra/e-bike/immagine di due persone con ebike.webp"
-                alt="Ospiti in e-bike sulla strada di campagna vicino ad Agriturismo La Mora"
+                alt={ALT_GUESTS_EBIKE[locale]}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
@@ -141,7 +142,7 @@ export function SustainabilitySection({ locale }: { locale: Locale }) {
             <div className="relative aspect-[4/3] overflow-hidden rounded-[3px]">
               <WatermarkedImage
                 src="/images/servizi-extra/ricarica-elettrica/ricarica elettrica macchina.jpg"
-                alt="Colonnina di ricarica per auto elettriche nel parcheggio di Agriturismo La Mora"
+                alt={ALT_EV_CHARGER[locale]}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"

@@ -10,6 +10,7 @@ import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
+import { ALT_EBIKE_RENTAL, ALT_EREMO_NEAR_ASSISI, ALT_HORSE, ALT_LAWN, ALT_PLAYGROUND, ALT_POOL_EVENING, ALT_POOL_PANORAMIC, ALT_POOL_PANORAMIC_SIDE } from "@/data/photo-alts";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -245,7 +246,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
       <section className="relative flex h-[92vh] min-h-[600px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/piscina/piscina agriturismo la mora.webp"
-          alt="Piscina panoramica di Agriturismo La Mora"
+          alt={ALT_POOL_PANORAMIC[locale]}
           fill
           priority
           fetchPriority="high"
@@ -273,7 +274,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[3/4] w-full max-w-[220px] overflow-hidden rounded-[3px] shadow-[0_35px_70px_-30px_rgba(0,0,0,0.6)]">
               <WatermarkedImage
                 src="/images/piscina/foto esterno prato verde con panchina in legno e campo da calcio.webp"
-                alt="Prato verde di Agriturismo La Mora"
+                alt={ALT_LAWN[locale]}
                 fill
                 sizes="220px"
                 className="object-cover"
@@ -294,7 +295,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] sm:aspect-[4/5]">
               <WatermarkedImage
                 src="/images/servizi-extra/e-bike/immagine di due persone con ebike.webp"
-                alt="Noleggio e-bike di Agriturismo La Mora"
+                alt={ALT_EBIKE_RENTAL[locale]}
                 fill
                 sizes="(max-width: 640px) 100vw, 540px"
                 className="object-cover"
@@ -361,7 +362,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
               <WatermarkedImage
                 src="/images/piscina/piscina agriturismo la mora lato.jpeg"
-                alt="Piscina panoramica di Agriturismo La Mora, vista laterale"
+                alt={ALT_POOL_PANORAMIC_SIDE[locale]}
                 fill
                 sizes="(max-width: 640px) 100vw, 540px"
                 className="object-cover"
@@ -377,7 +378,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
               <WatermarkedImage
                 src="/images/piscina/esterno parco agriturismo con scivolo per bambini.jpg"
-                alt="Parco giochi per bambini di Agriturismo La Mora"
+                alt={ALT_PLAYGROUND[locale]}
                 fill
                 sizes="(max-width: 640px) 100vw, 540px"
                 className="object-cover"
@@ -397,7 +398,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
       <section className="relative flex h-[80vh] min-h-[520px] items-center overflow-hidden">
         <WatermarkedImage
           src="/images/servizi-extra/equitazione/foto di un cavallo agriturismo la mora.jpeg"
-          alt="Uno dei cavalli dell'azienda agricola di Agriturismo La Mora"
+          alt={ALT_HORSE[locale]}
           fill
           sizes="100vw"
           className="object-cover"
@@ -444,7 +445,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
               <WatermarkedImage
                 src="/images/territorio/assisi/eremo delle carceri assisi.jpg"
-                alt="Eremo delle Carceri sul Monte Subasio, vicino Assisi"
+                alt={ALT_EREMO_NEAR_ASSISI[locale]}
                 fill
                 sizes="(max-width: 640px) 100vw, 540px"
                 className="object-cover"
@@ -457,7 +458,7 @@ export function AttivitaPageView({ locale }: { locale: Locale }) {
       <section className="relative flex h-[76vh] min-h-[480px] items-center justify-center overflow-hidden">
         <WatermarkedImage
           src="/images/piscina/piscina agriturismo la mora di notte.jpeg"
-          alt="Piscina di Agriturismo La Mora illuminata di sera"
+          alt={ALT_POOL_EVENING[locale]}
           fill
           sizes="100vw"
           className="object-cover"

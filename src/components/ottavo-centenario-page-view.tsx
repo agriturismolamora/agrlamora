@@ -5,6 +5,7 @@ import { BookingModalButton } from "@/components/booking-modal-button";
 import type { Locale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
+import { ALT_BASILICA_SAN_FRANCESCO, ALT_CENTENARY_ASSISI, ALT_SAINT_FRANCIS } from "@/data/photo-alts";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -114,7 +115,7 @@ export function OttavoCentenarioPageView({ locale }: { locale: Locale }) {
       <section className="relative flex h-[64vh] min-h-[460px] items-end overflow-hidden">
         <Image
           src="/images/ottavo centenario san francesco/basilica di san francesco di assisi ottavo centenario.webp"
-          alt="Basilica di San Francesco d'Assisi"
+          alt={ALT_BASILICA_SAN_FRANCESCO[locale]}
           fill
           priority
           fetchPriority="high"
@@ -170,7 +171,7 @@ export function OttavoCentenarioPageView({ locale }: { locale: Locale }) {
             <div className="relative mt-14 aspect-[16/9] overflow-hidden rounded-[3px]">
               <Image
                 src="/images/ottavo centenario san francesco/assisi per ostensione delle spoglie di san francesco ottavo centenario.jpg"
-                alt="Assisi durante le celebrazioni per l'Ottavo Centenario di San Francesco"
+                alt={ALT_CENTENARY_ASSISI[locale]}
                 fill
                 sizes="(max-width: 640px) 100vw, 700px"
                 className="object-cover"
@@ -186,7 +187,7 @@ export function OttavoCentenarioPageView({ locale }: { locale: Locale }) {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px]">
               <Image
                 src="/images/ottavo centenario san francesco/san francesco.jpg"
-                alt="San Francesco d'Assisi"
+                alt={ALT_SAINT_FRANCIS[locale]}
                 fill
                 sizes="(max-width: 640px) 100vw, 500px"
                 className="object-cover"

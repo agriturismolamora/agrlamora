@@ -2,6 +2,7 @@ import { WatermarkedImage } from "@/components/watermarked-image";
 import { Reveal } from "@/components/scroll-reveal";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import { ALT_VILLA_POOL_NEAR_ASSISI } from "@/data/photo-alts";
 
 /* Villa Relax aveva una pagina completa e una voce di menu propria, ma
    nessun richiamo in homepage: chi non nota il menu non scopre mai
@@ -47,7 +48,7 @@ export function VillaTeaser({ locale }: { locale: Locale }) {
         <Reveal className="relative aspect-[4/5] overflow-hidden rounded-[3px] sm:aspect-[16/11]">
           <WatermarkedImage
             src="/images/villa/vista esterno della villa.webp"
-            alt="Villa Relax, villa indipendente con piscina privata vicino ad Assisi"
+            alt={ALT_VILLA_POOL_NEAR_ASSISI[locale]}
             fill
             sizes="(max-width: 640px) 100vw, 540px"
             className="object-cover"

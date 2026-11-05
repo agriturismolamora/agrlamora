@@ -18,6 +18,7 @@ import {
   DIRECT_PRICE_FLEX_CONDITION,
   OTA_PRICES,
 } from "@/data/price-comparison";
+import { ALT_SAGITTARIO_GAZEBO } from "@/data/photo-alts";
 
 /* Le due condizioni tariffarie sono stringhe italiane fisse in
    price-comparison.ts (dato di business, non contenuto editoriale): qui
@@ -226,7 +227,7 @@ export async function PriceComparisonSection({ locale }: { locale: Locale }) {
             <div className="relative aspect-[16/10] lg:aspect-auto">
               <WatermarkedImage
                 src="/images/alloggi/appartamento sagittario/gazebo sagittario 2.jpeg"
-                alt="Gazebo esterno privato dell'appartamento Sagittario, Agriturismo La Mora"
+                alt={ALT_SAGITTARIO_GAZEBO[locale]}
                 fill
                 sizes="(max-width: 1024px) 100vw, 45vw"
                 className="object-cover object-[50%_35%]"

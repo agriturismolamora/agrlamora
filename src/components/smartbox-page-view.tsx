@@ -4,6 +4,7 @@ import { HoverFill } from "@/components/hover-fill";
 import type { Locale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
+import { ALT_SMARTBOX } from "@/data/photo-alts";
 
 const METADATA_TEXT: Record<Locale, { title: string; description: string }> = {
   it: {
@@ -116,7 +117,7 @@ export function SmartboxPageView({ locale }: { locale: Locale }) {
       <section className="relative flex h-[46vh] min-h-[340px] items-end overflow-hidden">
         <WatermarkedImage
           src="/images/home/foto della piscina agriturismo la mora.webp"
-          alt="Agriturismo La Mora, la struttura che ti aspetta con il tuo cofanetto Smartbox"
+          alt={ALT_SMARTBOX[locale]}
           fill
           priority
           fetchPriority="high"

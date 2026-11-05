@@ -8,6 +8,7 @@
    il punteggio 9.7/10. Per aggiornare: modifica SOLO questo file. */
 
 import type { Locale } from "@/lib/i18n";
+import { ALT_VILLA_DINING, ALT_VILLA_POOL, type LocalizedAlt } from "@/data/photo-alts";
 
 export type GalleryImage = { src: string; alt: string };
 
@@ -197,21 +198,25 @@ export function getVillaDistances(locale: Locale) {
 
 export const VILLA_DISTANCES = VILLA_DISTANCES_BY_LOCALE.it;
 
-export const VILLA_GALLERY: GalleryImage[] = [
-  { src: "/images/villa/villa esterna.webp", alt: "Villa Relax vista dall'esterno, ad Assisi" },
-  { src: "/images/villa/villa esterno.webp", alt: "Esterno di Villa Relax nella campagna umbra" },
-  { src: "/images/villa/vista esterno villa dall alto.webp", alt: "Villa Relax vista dall'alto" },
-  { src: "/images/villa/vista esterno della villa.webp", alt: "Vista d'insieme di Villa Relax" },
-  { src: "/images/villa/villa vista scalinata.webp", alt: "Scalinata d'ingresso di Villa Relax" },
-  { src: "/images/villa/esterno villa di notte.webp", alt: "Villa Relax di sera" },
-  { src: "/images/villa/esterno villa di notte entrata.webp", alt: "Ingresso di Villa Relax di sera" },
-  { src: "/images/villa/piscina esterna della villa.webp", alt: "Piscina privata di Villa Relax" },
-  { src: "/images/villa/piscina della villa esterno arredata.webp", alt: "Bordo piscina arredato di Villa Relax" },
-  { src: "/images/villa/foto vista giaridno.webp", alt: "Giardino di Villa Relax" },
-  { src: "/images/villa/gazebo arredato villa esterno.webp", alt: "Gazebo esterno arredato di Villa Relax" },
-  { src: "/images/villa/esterno con barbeque.webp", alt: "Area barbecue di Villa Relax" },
-  { src: "/images/villa/esterno giochi.webp", alt: "Spazio giochi esterno di Villa Relax" },
-  { src: "/images/villa/sala da pranzo villa interno.webp", alt: "Sala da pranzo interna di Villa Relax" },
+const VILLA_GALLERY: { src: string; alt: LocalizedAlt }[] = [
+  { src: "/images/villa/villa esterna.webp", alt: { it: "Villa Relax vista dall'esterno, ad Assisi", en: "Villa Relax seen from outside, in Assisi", fr: "Villa Relax vue de l'extérieur, à Assise", de: "Villa Relax von außen, in Assisi" } },
+  { src: "/images/villa/villa esterno.webp", alt: { it: "Esterno di Villa Relax nella campagna umbra", en: "Exterior of Villa Relax in the Umbrian countryside", fr: "Extérieur de Villa Relax dans la campagne ombrienne", de: "Außenansicht der Villa Relax in der umbrischen Landschaft" } },
+  { src: "/images/villa/vista esterno villa dall alto.webp", alt: { it: "Villa Relax vista dall'alto", en: "Villa Relax seen from above", fr: "Villa Relax vue d'en haut", de: "Villa Relax von oben" } },
+  { src: "/images/villa/vista esterno della villa.webp", alt: { it: "Vista d'insieme di Villa Relax", en: "Overall view of Villa Relax", fr: "Vue d'ensemble de Villa Relax", de: "Gesamtansicht der Villa Relax" } },
+  { src: "/images/villa/villa vista scalinata.webp", alt: { it: "Scalinata d'ingresso di Villa Relax", en: "Entrance steps of Villa Relax", fr: "Escalier d'entrée de Villa Relax", de: "Eingangstreppe der Villa Relax" } },
+  { src: "/images/villa/esterno villa di notte.webp", alt: { it: "Villa Relax di sera", en: "Villa Relax in the evening", fr: "Villa Relax le soir", de: "Villa Relax am Abend" } },
+  { src: "/images/villa/esterno villa di notte entrata.webp", alt: { it: "Ingresso di Villa Relax di sera", en: "Entrance of Villa Relax in the evening", fr: "Entrée de Villa Relax le soir", de: "Eingang der Villa Relax am Abend" } },
+  { src: "/images/villa/piscina esterna della villa.webp", alt: ALT_VILLA_POOL },
+  { src: "/images/villa/piscina della villa esterno arredata.webp", alt: { it: "Bordo piscina arredato di Villa Relax", en: "Furnished poolside of Villa Relax", fr: "Bord de piscine aménagé de Villa Relax", de: "Möblierter Poolbereich der Villa Relax" } },
+  { src: "/images/villa/foto vista giaridno.webp", alt: { it: "Giardino di Villa Relax", en: "Garden of Villa Relax", fr: "Jardin de Villa Relax", de: "Garten der Villa Relax" } },
+  { src: "/images/villa/gazebo arredato villa esterno.webp", alt: { it: "Gazebo esterno arredato di Villa Relax", en: "Furnished outdoor gazebo of Villa Relax", fr: "Gazebo extérieur meublé de Villa Relax", de: "Möblierter Außenpavillon der Villa Relax" } },
+  { src: "/images/villa/esterno con barbeque.webp", alt: { it: "Area barbecue di Villa Relax", en: "Barbecue area of Villa Relax", fr: "Espace barbecue de Villa Relax", de: "Grillbereich der Villa Relax" } },
+  { src: "/images/villa/esterno giochi.webp", alt: { it: "Spazio giochi esterno di Villa Relax", en: "Outdoor play area of Villa Relax", fr: "Espace de jeux extérieur de Villa Relax", de: "Spielbereich im Freien der Villa Relax" } },
+  { src: "/images/villa/sala da pranzo villa interno.webp", alt: ALT_VILLA_DINING },
 ];
+
+export function getVillaGallery(locale: Locale): GalleryImage[] {
+  return VILLA_GALLERY.map((photo) => ({ src: photo.src, alt: photo.alt[locale] }));
+}
 
 export const VILLA_WHATSAPP_NUMBER = "393934363917";

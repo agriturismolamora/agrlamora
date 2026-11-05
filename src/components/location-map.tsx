@@ -29,7 +29,7 @@ const MAPS_LABEL: Record<Locale, string> = {
    Francesco 6 km). */
 const CONFIG: Record<
   Struttura,
-  { address: string; mapsUrl: string; image: string; alt: string; text: Record<Locale, Omit<Text, "maps">> }
+  { address: string; mapsUrl: string; image: string; alt: Record<Locale, string>; text: Record<Locale, Omit<Text, "maps">> }
 > = {
   lamora: {
     address: "Via Fonte Citerna, 7 — 06081 Assisi PG",
@@ -37,7 +37,12 @@ const CONFIG: Record<
       "https://www.google.com/maps/search/?api=1&query=" +
       encodeURIComponent("Agriturismo La Mora, Via Fonte Citerna 7, 06081 Assisi PG"),
     image: "/images/home/mappa%20della%20zona%20agriturismo%20la%20mora.png",
-    alt: "Mappa della zona intorno ad Agriturismo La Mora, ad Assisi",
+    alt: {
+      it: "Mappa della zona intorno ad Agriturismo La Mora, ad Assisi",
+      en: "Map of the area around Agriturismo La Mora, in Assisi",
+      fr: "Carte des environs de l'Agriturismo La Mora, à Assise",
+      de: "Karte der Umgebung von Agriturismo La Mora in Assisi",
+    },
     text: {
       it: {
         label: "Dove siamo",
@@ -65,7 +70,12 @@ const CONFIG: Record<
     address: "Via di Bassano, 19 — 06081 Rivotorto di Assisi (PG)",
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(`Villa Relax, ${VILLA_ADDRESS}`),
     image: "/images/home/villa%20relax%20posizione%20reale.png",
-    alt: "Mappa illustrata della zona intorno a Villa Relax, a Rivotorto di Assisi, tra Assisi e Spello",
+    alt: {
+      it: "Mappa illustrata della zona intorno a Villa Relax, a Rivotorto di Assisi, tra Assisi e Spello",
+      en: "Illustrated map of the area around Villa Relax, in Rivotorto di Assisi, between Assisi and Spello",
+      fr: "Carte illustrée des environs de Villa Relax, à Rivotorto di Assisi, entre Assise et Spello",
+      de: "Illustrierte Karte der Umgebung der Villa Relax in Rivotorto di Assisi, zwischen Assisi und Spello",
+    },
     text: {
       it: {
         label: "Dove siamo",
@@ -108,7 +118,7 @@ export function LocationMap({ locale, struttura = "lamora" }: { locale: Locale; 
         <Reveal className="relative aspect-[4/3] w-full bg-cream-dim sm:aspect-[16/10] lg:aspect-auto lg:w-[58%]">
           <Image
             src={config.image}
-            alt={config.alt}
+            alt={config.alt[locale]}
             fill
             sizes="(max-width: 1024px) 100vw, 58vw"
             className="object-cover object-center"

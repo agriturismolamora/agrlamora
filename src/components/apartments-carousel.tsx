@@ -485,7 +485,7 @@ function CardFace({
       onMouseLeave={onMouseLeave}
       onClick={onClick}
     >
-      <WatermarkedImage src={apt.image} alt={apt.alt} fill quality={92} sizes={sizes} className="object-cover" />
+      <WatermarkedImage src={apt.image} alt={apt.alt[locale]} fill quality={92} sizes={sizes} className="object-cover" />
 
       {apt.petFriendly && <PetBadge locale={locale} />}
 
