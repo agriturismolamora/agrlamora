@@ -108,7 +108,7 @@ export function useLightbox(images: GalleryImage[], locale: Locale, mark: Waterm
         )}
 
         <div className="relative h-[80vh] w-full max-w-[1100px]" onClick={(e) => e.stopPropagation()}>
-          <WatermarkedImage mark={mark} src={images[index].src} alt={images[index].alt} fill sizes="100vw" className="object-contain" priority />
+          <WatermarkedImage mark={mark} src={images[index].src} alt={images[index].alt} fill sizes="(max-width: 1100px) 100vw, 1100px" className="object-contain" priority />
         </div>
 
         <span className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[12px] uppercase tracking-[0.1em] text-cream/50">

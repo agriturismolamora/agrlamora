@@ -1,11 +1,12 @@
 import Image, { type ImageProps } from "next/image";
+import { LAMORA_LOGO_WHITE_SMALL } from "@/data/logos";
 import { VILLA_LOGO_WHITE } from "@/data/villa";
 
 /* Logo della filigrana: La Mora ovunque, Villa Relax (scritte bianche)
    sulle foto delle pagine Villa (mark="villa"). width/height servono solo
    per le proporzioni. */
 const MARKS = {
-  lamora: { src: "/images/logo/logo-bianco-agriturismo-la-mora.png", width: 1448, height: 1086 },
+  lamora: { src: LAMORA_LOGO_WHITE_SMALL, width: 1448, height: 1086 },
   villa: VILLA_LOGO_WHITE,
 };
 /* "none": foto di terzi (es. il Ristorante Carfagna) mostrate con i
@@ -31,7 +32,7 @@ export function WatermarkedImage({ className, alt, mark: markKind = "lamora", ..
       aria-hidden="true"
       className="pointer-events-none absolute bottom-[3%] right-[3%] z-[1] w-[14%] min-w-[38px] max-w-[84px] select-none opacity-45 drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]"
     >
-      <Image src={logo.src} alt="" width={logo.width} height={logo.height} sizes="84px" className="h-auto w-full" draggable={false} />
+      <Image src={logo.src} alt="" width={logo.width} height={logo.height} unoptimized className="h-auto w-full" draggable={false} />
     </span>
   );
 

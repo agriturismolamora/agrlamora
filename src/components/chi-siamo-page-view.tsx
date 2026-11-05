@@ -347,7 +347,7 @@ export async function ChiSiamoPageView({ locale }: { locale: Locale }) {
                 src="/images/home/foto della piscina agriturismo la mora.webp"
                 alt="Piscina panoramica di Agriturismo La Mora"
                 fill
-                sizes="100vw"
+                sizes="(max-width: 1140px) 100vw, 1060px"
                 className="object-cover"
               />
             </div>

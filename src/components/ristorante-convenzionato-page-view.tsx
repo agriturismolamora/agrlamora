@@ -13,6 +13,7 @@ import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { SITE_URL, absoluteUrl, pageMetadata } from "@/lib/seo";
 import { LD_ID, faqPageNode, type JsonLdNode } from "@/lib/structured-data";
+import { LAMORA_LOGO_WHITE_SMALL } from "@/data/logos";
 
 const WHATSAPP_NUMBER = "393934363917";
 
@@ -370,11 +371,11 @@ export function RistoranteConvenzionatoPageView({ locale }: { locale: Locale }) 
             className="absolute -inset-x-[45%] -inset-y-[40%] rounded-full bg-[radial-gradient(closest-side,rgba(20,14,7,0.5),rgba(20,14,7,0))]"
           />
           <Image
-            src="/images/logo/logo-bianco-agriturismo-la-mora.png"
+            src={LAMORA_LOGO_WHITE_SMALL}
             alt="Agriturismo La Mora"
             width={1448}
             height={1086}
-            sizes="(max-width: 640px) 54px, 86px"
+            unoptimized
             loading="eager"
             className="relative h-10 w-auto sm:h-16"
           />

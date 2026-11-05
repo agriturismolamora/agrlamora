@@ -822,7 +822,7 @@ export function TerritorioPageView({ locale }: { locale: Locale }) {
                 src="/images/territorio/perugia/perugia vista alto.jpg"
                 alt="Vista dall'alto del centro storico di Perugia"
                 fill
-                sizes="100vw"
+                sizes="(max-width: 1140px) 100vw, 1060px"
                 className="object-cover"
               />
             </div>

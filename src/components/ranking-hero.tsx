@@ -84,6 +84,7 @@ export function RankingHero({ locale }: { locale: Locale }) {
               alt={text.badgeAlt}
               width={1536}
               height={1024}
+              unoptimized
               className="h-auto w-full"
             />
           </div>

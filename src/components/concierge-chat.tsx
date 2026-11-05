@@ -8,7 +8,8 @@ import { withLocale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
 
 const HOST_NAME = "Paolo";
-const HOST_PHOTO = "/images/villa/paologestoreagriturismolamora.webp";
+/* Avatar piccolo già dimensionato, senza ottimizzatore: la chat è in ogni pagina. */
+const HOST_PHOTO = "/images/villa/paolo-avatar-168.webp";
 
 const PHONE_DISPLAY = "393 4363917";
 const WHATSAPP_URL = "https://wa.me/393934363917";
@@ -461,7 +462,7 @@ export function ConciergeChat({ locale }: { locale: Locale }) {
           <div className="flex items-center justify-between gap-3 bg-olive-950 px-4 py-3.5 text-cream">
             <div className="flex min-w-0 items-center gap-3">
               <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-cream/20">
-                <Image src={HOST_PHOTO} alt={HOST_ALT[locale]} fill sizes="40px" className="object-cover" />
+                <Image src={HOST_PHOTO} alt={HOST_ALT[locale]} fill unoptimized className="object-cover" />
                 <span
                   aria-hidden="true"
                   className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-olive-950 bg-[#4caf50]"
@@ -568,7 +569,7 @@ export function ConciergeChat({ locale }: { locale: Locale }) {
         className="relative flex h-14 w-14 items-center justify-center rounded-full shadow-[0_18px_36px_-16px_rgba(28,33,23,0.6)] transition-transform duration-200 hover:scale-105"
       >
         <span className="relative block h-full w-full overflow-hidden rounded-full border-2 border-cream">
-          <Image src={HOST_PHOTO} alt={HOST_ALT[locale]} fill sizes="56px" className="object-cover" />
+          <Image src={HOST_PHOTO} alt={HOST_ALT[locale]} fill unoptimized className="object-cover" />
         </span>
         {!open && (
           <span

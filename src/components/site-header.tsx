@@ -12,6 +12,7 @@ import { BookingModalButton } from "@/components/booking-modal-button";
 import { NO_DIRECT_BOOKING_PATHS } from "@/components/booking-bar";
 import { getActivePromos } from "@/data/promo";
 import { useNow } from "@/hooks/use-now";
+import { LAMORA_LOGO_WHITE_SMALL } from "@/data/logos";
 
 type NavChild = {
   label: string;
@@ -475,10 +476,11 @@ export function SiteHeader({ locale }: { locale: Locale }) {
                     className="flex shrink-0 items-center gap-3"
                   >
                     <Image
-                      src="/images/logo/logo-bianco-agriturismo-la-mora.png"
+                      src={LAMORA_LOGO_WHITE_SMALL}
                       alt="Agriturismo La Mora, Assisi - Perugia (Umbria)"
                       width={140}
                       height={105}
+                      unoptimized
                       className="h-12 w-auto sm:h-[52px]"
                     />
                     {/* Su telefono va su due righe larghe quanto la parola
@@ -625,10 +627,11 @@ export function SiteHeader({ locale }: { locale: Locale }) {
                 className="flex items-center"
               >
                 <Image
-                  src="/images/logo/logo-bianco-agriturismo-la-mora.png"
+                  src={LAMORA_LOGO_WHITE_SMALL}
                   alt="Agriturismo La Mora, Assisi - Perugia (Umbria)"
                   width={148}
                   height={111}
+                  unoptimized
                   className="h-14 w-auto sm:h-16"
                 />
               </Link>

@@ -4,6 +4,7 @@ import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
 import { BookingModalButton } from "@/components/booking-modal-button";
 import type { BlogTheme } from "@/data/blog-posts";
+import { LAMORA_LOGO_WHITE_SMALL, LAMORA_LOGO_DARK_SMALL } from "@/data/logos";
 
 /* Striscia "chi scrive": in tutti gli articoli del blog, sotto titolo e
    lead, perché chi arriva da Google su un articolo capisca subito di essere
@@ -55,10 +56,11 @@ export function BrandStrip({ locale, theme = "default" }: { locale: Locale; them
     <aside aria-label={text.name} className={`mt-8 flex flex-col gap-4 rounded-[6px] px-5 py-5 ${c.box}`}>
       <div className="flex min-w-0 flex-1 items-center gap-4">
         <Image
-          src={c.dark ? "/images/logo/logo-bianco-agriturismo-la-mora.png" : "/images/logo/logo agriturismo la mora.png"}
+          src={c.dark ? LAMORA_LOGO_WHITE_SMALL : LAMORA_LOGO_DARK_SMALL}
           alt=""
           width={72}
           height={54}
+          unoptimized
           className="h-auto w-[60px] shrink-0 sm:w-[72px]"
         />
         <div className="min-w-0">

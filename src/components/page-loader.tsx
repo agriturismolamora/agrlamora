@@ -34,10 +34,11 @@ export function PageLoader() {
       className="fixed inset-0 z-[500] flex items-center justify-center bg-[rgba(28,33,23,0.4)] backdrop-blur-sm"
     >
       <Image
-        src="/images/favicon/favicon%20icona%20agriturismo%20la%20mora.png"
+        src="/images/favicon/favicon-agriturismo-la-mora-192.png"
         alt=""
         width={64}
         height={64}
+        unoptimized
         className="h-11 w-11 animate-mora-breathe sm:h-12 sm:w-12"
       />
     </div>

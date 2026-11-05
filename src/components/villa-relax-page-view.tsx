@@ -405,6 +405,7 @@ export function VillaRelaxPageView({ locale }: { locale: Locale }) {
                 alt={VILLA_LOGO_ALT}
                 width={168}
                 height={138}
+                unoptimized
                 loading="eager"
                 className="relative h-auto w-full"
               />

@@ -36,7 +36,7 @@ export function VillaLogoLink({
 
   return (
     <a href={href} onClick={handleClick} className={className}>
-      <Image src={VILLA_LOGO_WHITE.src} alt={VILLA_LOGO_ALT} width={width} height={height} className={imgClassName} />
+      <Image src={VILLA_LOGO_WHITE.src} alt={VILLA_LOGO_ALT} width={width} height={height} unoptimized className={imgClassName} />
     </a>
   );
 }

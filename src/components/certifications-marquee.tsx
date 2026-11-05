@@ -41,7 +41,7 @@ function CertLogo({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="flex shrink-0 items-center px-9 md:px-12">
       <div className="relative h-16 w-[135px] md:h-[76px] md:w-[158px]">
-        <Image src={src} alt={alt} fill sizes="158px" className="object-contain" />
+        <Image src={src} alt={alt} fill unoptimized className="object-contain" />
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ import { openCookiePreferences } from "@/lib/consent";
 import { RecensioniBadge } from "@/components/recensioni-badge";
 import { VillaLogoLink } from "@/components/villa-logo-link";
 import { useNow } from "@/hooks/use-now";
+import { LAMORA_LOGO_WHITE_SMALL } from "@/data/logos";
 
 const ADDRESS = "Via Fonte Citerna, 7 — 06081 Assisi (PG)";
 const MAPS_URL =
@@ -145,7 +146,7 @@ export function SiteFooter({ locale, buildYear }: { locale: Locale; buildYear: n
   }
 
   const logo = (
-    <Image src="/images/logo/logo-bianco-agriturismo-la-mora.png" alt="Agriturismo La Mora" width={140} height={105} className="h-auto w-[100px] sm:w-[112px]" />
+    <Image src={LAMORA_LOGO_WHITE_SMALL} alt="Agriturismo La Mora" width={140} height={105} unoptimized className="h-auto w-[100px] sm:w-[112px]" />
   );
   const logoLabel = `Agriturismo La Mora — ${t("nav", "torna", locale)}`;
 

@@ -43,6 +43,14 @@ const nextConfig: NextConfig = {
     // immagini "sfocate" segnalate nel blog, non solo un problema di
     // sorgente. Elenco chiuso, non un range: solo i valori realmente usati.
     qualities: [75, 90, 92],
+    // Consumo di Vercel (Image Optimization): un solo formato, varianti
+    // generate una volta sola per 31 giorni e solo le larghezze che servono
+    // davvero (misurate sulle pagine: telefoni 2x e 3x, riquadri fino a 540 px,
+    // hero a tutta larghezza). Il logo della hero usa 384 e 828.
+    formats: ["image/webp"],
+    minimumCacheTTL: 2678400,
+    deviceSizes: [640, 828, 1080, 1200, 1920],
+    imageSizes: [96, 256, 384],
     remotePatterns: [
       // Foto profilo reali dei recensori, servite da Google (Places API).
       { protocol: "https", hostname: "lh3.googleusercontent.com" },

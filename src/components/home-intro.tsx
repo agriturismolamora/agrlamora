@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import styles from "@/components/home-intro.module.css";
+import { LAMORA_LOGO_WHITE_SMALL } from "@/data/logos";
 
 /* Apertura esclusiva della homepage: un sipario che si apre sulla hero
    già pronta sotto, non uno schermo di caricamento.
@@ -71,11 +72,12 @@ export function HomeIntro() {
       <div className={styles.content}>
         <div className={styles.logo}>
           <Image
-            src="/images/logo/logo-bianco-agriturismo-la-mora.png"
+            src={LAMORA_LOGO_WHITE_SMALL}
             alt="Agriturismo La Mora"
             width={280}
             height={210}
             priority
+            unoptimized
             className="h-auto w-[150px] sm:w-[190px]"
           />
         </div>

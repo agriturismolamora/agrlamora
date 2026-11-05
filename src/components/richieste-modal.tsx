@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Fragment, useEffect, useId, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
 import { APARTMENTS } from "@/data/apartments";
-import { getVillaConfigurations, VILLA_LOGO_ALT, VILLA_LOGO_BLACK, VILLA_MAX_GUESTS } from "@/data/villa";
+import { LAMORA_LOGO_DARK_SMALL } from "@/data/logos";
+import { getVillaConfigurations, VILLA_LOGO_ALT, VILLA_LOGO_BLACK_SMALL, VILLA_MAX_GUESTS } from "@/data/villa";
 import type { Locale } from "@/lib/i18n";
 import { splitLocaleFromPath, withLocale } from "@/lib/i18n";
 import { t } from "@/lib/dictionary";
@@ -1162,9 +1163,9 @@ export function RichiesteModal({ locale }: { locale: Locale }) {
               fondo chiaro) sulle pagine Villa, La Mora altrove. */}
           <div className="flex justify-center pb-3">
             {struttura === "villa" ? (
-              <Image src={VILLA_LOGO_BLACK.src} alt={VILLA_LOGO_ALT} width={96} height={79} className="h-auto w-[96px]" />
+              <Image src={VILLA_LOGO_BLACK_SMALL} alt={VILLA_LOGO_ALT} width={96} height={79} unoptimized className="h-auto w-[96px]" />
             ) : (
-              <Image src="/images/logo/logo agriturismo la mora.png" alt="Agriturismo La Mora" width={1448} height={1086} className="h-auto w-[104px]" />
+              <Image src={LAMORA_LOGO_DARK_SMALL} alt="Agriturismo La Mora" width={1448} height={1086} unoptimized className="h-auto w-[104px]" />
             )}
           </div>
           <RequestForm key={struttura} struttura={struttura} locale={locale} titleId={titleId} />
